@@ -1,4 +1,5 @@
-import requests
+import json
+import pandas as pd
 import streamlit as st
 
 st.set_page_config(
@@ -7,48 +8,12 @@ st.set_page_config(
     layout="wide"
 )
 
-SEC_HEADERS = {
-    "User-Agent": "EquityLens AI research app https://github.com/dhananikeya/equitylens-ai"
-}
+@st.cache_data
+def load_company_data():
+    with open("data/company_metrics.json", "r") as file:
+        return json.load(file)
 
-COMPANIES = {
-    "Rubrik (RBRK)": {
-        "ticker": "RBRK",
-        "cik": "1943896"
-    },
-    "Snowflake (SNOW)": {
-        "ticker": "SNOW",
-        "cik": "1640147"
-    },
-    "MongoDB (MDB)": {
-        "ticker": "MDB",
-        "cik": "1441816"
-    },
-    "Datadog (DDOG)": {
-        "ticker": "DDOG",
-        "cik": "1561550"
-    },
-    "Cloudflare (NET)": {
-        "ticker": "NET",
-        "cik": "1477333"
-    }
-}
-
-
-@st.cache_data(ttl=3600)
-def get_company_facts(cik):
-    cik = str(cik).zfill(10)
-    url = f"https://data.sec.gov/api/xbrl/companyfacts/CIK{cik}.json"
-
-    response = requests.get(
-        url,
-        headers=SEC_HEADERS,
-        timeout=20
-    )
-    response.raise_for_status()
-
-    return response.json()
-
+company_data = load_company_data()
 
 st.title("EquityLens AI")
 
@@ -71,7 +36,7 @@ st.markdown("**Industry:** Cloud & Data Infrastructure Software")
 
 selected_companies = st.multiselect(
     "Select companies to compare",
-    list(COMPANIES.keys()),
+    list(company_data.keys()),
     default=[
         "Rubrik (RBRK)",
         "Snowflake (SNOW)",
@@ -83,25 +48,26 @@ if st.button("Run Comparison"):
     if len(selected_companies) < 2:
         st.warning("Please select at least two companies to compare.")
     else:
-        st.subheader("SEC Data Connection Test")
+        rows = []
 
         for company in selected_companies:
-            cik = COMPANIES[company]["cik"]
+            data = company_data[company]
 
-            try:
-                data = get_company_facts(cik)
+            rows.append({
+                "Company": company,
+                "Revenue": data["revenue"],
+                "Gross Profit": data["gross_profit"],
+                "Operating Income": data["operating_income"],
+                "Net Income": data["net_income"],
+                "Cash": data["cash"],
+                "Assets": data["assets"]
+            })
 
-                st.success(
-                    f"{company}: SEC connection successful"
-                )
+        df = pd.DataFrame(rows)
 
-                st.write(
-                    "SEC company name:",
-                    data.get("entityName", "Not available")
-                )
+        st.subheader("Financial Comparison")
+        st.dataframe(df, use_container_width=True)
 
-            except Exception as e:
-                st.error(
-                    f"Could not retrieve SEC data for {company}"
-                )
-                st.write(e)
+        st.caption(
+            "Current values are placeholders until verified filing data is loaded into company_metrics.json."
+        )
