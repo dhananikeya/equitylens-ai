@@ -1,0 +1,52 @@
+{
+  "MongoDB (MDB)": {
+    "ticker": "MDB",
+    "industry": "Cloud & Data Infrastructure Software",
+    "revenue": null,
+    "gross_profit": null,
+    "operating_income": null,
+    "net_income": null,
+    "cash": null,
+    "assets": null
+  },
+  "Snowflake (SNOW)": {
+    "ticker": "SNOW",
+    "industry": "Cloud & Data Infrastructure Software",
+    "revenue": null,
+    "gross_profit": null,
+    "operating_income": null,
+    "net_income": null,
+    "cash": null,
+    "assets": null
+  },
+  "Rubrik (RBRK)": {
+    "ticker": "RBRK",
+    "industry": "Cloud & Data Infrastructure Software",
+    "revenue": null,
+    "gross_profit": null,
+    "operating_income": null,
+    "net_income": null,
+    "cash": null,
+    "assets": null
+  },
+  "Datadog (DDOG)": {
+    "ticker": "DDOG",
+    "industry": "Cloud & Data Infrastructure Software",
+    "revenue": null,
+    "gross_profit": null,
+    "operating_income": null,
+    "net_income": null,
+    "cash": null,
+    "assets": null
+  },
+  "Cloudflare (NET)": {
+    "ticker": "NET",
+    "industry": "Cloud & Data Infrastructure Software",
+    "revenue": null,
+    "gross_profit": null,
+    "operating_income": null,
+    "net_income": null,
+    "cash": null,
+    "assets": null
+  }
+}
