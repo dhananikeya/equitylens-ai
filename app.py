@@ -21,19 +21,31 @@ st.write(
 
 st.markdown("---")
 
-st.header("Company Comparison")
+st.header("Industry Comparison")
 
-company_1 = st.selectbox(
-    "Select first company",
-    ["AvePoint", "Rubrik", "Box"]
+industry = st.selectbox(
+    "Select industry",
+    ["Cloud & Data Infrastructure Software"]
 )
 
-company_2 = st.selectbox(
-    "Select second company",
-    ["Rubrik", "AvePoint", "Box"]
+companies = [
+    "Rubrik (RBRK)",
+    "Snowflake (SNOW)",
+    "MongoDB (MDB)",
+    "Datadog (DDOG)",
+    "Cloudflare (NET)"
+]
+
+selected_companies = st.multiselect(
+    "Select companies to compare",
+    companies,
+    default=["Rubrik (RBRK)", "Snowflake (SNOW)", "MongoDB (MDB)"]
 )
 
-if st.button("Compare Companies"):
-    st.success(
-        f"Preparing comparison between {company_1} and {company_2}"
-    )
+if st.button("Run Comparison"):
+    if len(selected_companies) < 2:
+        st.warning("Please select at least two companies to compare.")
+    else:
+        st.success(
+            "Preparing comparison for: " + ", ".join(selected_companies)
+        )
