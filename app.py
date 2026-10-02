@@ -21,7 +21,10 @@ st.set_page_config(
 st.markdown(
     """
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
     :root {
+        --el-font: "IBM Plex Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
         /* Follow Streamlit's active System / Light / Dark theme automatically. */
         --el-bg: var(--background-color);
         --el-surface: var(--secondary-background-color);
@@ -40,7 +43,13 @@ st.markdown(
         --el-red: #DC2626;
     }
 
+    html, body, .stApp, .stApp * {
+        font-family: var(--el-font);
+    }
+
     .stApp {
+        font-size: 0.98rem;
+        line-height: 1.55;
         background:
             radial-gradient(
                 circle at 10% 0%,
@@ -65,7 +74,7 @@ st.markdown(
     .el-hero {
         padding: 2rem 2.2rem;
         border: 1px solid var(--el-border);
-        border-radius: 24px;
+        border-radius: 10px;
         background: linear-gradient(135deg, var(--el-surface), var(--el-surface-2));
         box-shadow: 0 20px 60px rgba(0,0,0,0.22);
         margin-bottom: 1.4rem;
@@ -74,7 +83,7 @@ st.markdown(
     .el-company-hero {
         padding: 1.6rem 1.8rem;
         border: 1px solid var(--el-border);
-        border-radius: 22px;
+        border-radius: 10px;
         background: linear-gradient(135deg, var(--el-surface-2), var(--el-surface));
         margin: 0.8rem 0 1.3rem 0;
     }
@@ -82,8 +91,8 @@ st.markdown(
     .el-kicker {
         color: var(--el-teal);
         font-size: 0.78rem;
-        font-weight: 800;
-        letter-spacing: 0.14em;
+        font-weight: 600;
+        letter-spacing: 0.10em;
         text-transform: uppercase;
         margin-bottom: 0.45rem;
     }
@@ -91,8 +100,8 @@ st.markdown(
     .el-title {
         font-size: clamp(2.2rem, 5vw, 4.2rem);
         line-height: 0.98;
-        font-weight: 800;
-        letter-spacing: -0.04em;
+        font-weight: 700;
+        letter-spacing: -0.025em;
         color: var(--el-text);
         margin: 0 0 0.8rem 0;
     }
@@ -102,8 +111,8 @@ st.markdown(
     .el-company-title {
         font-size: clamp(1.8rem, 4vw, 3rem);
         line-height: 1.05;
-        font-weight: 800;
-        letter-spacing: -0.035em;
+        font-weight: 700;
+        letter-spacing: -0.02em;
         color: var(--el-text);
         margin-bottom: 0.5rem;
     }
@@ -125,12 +134,12 @@ st.markdown(
 
     .el-badge {
         padding: 0.42rem 0.7rem;
-        border-radius: 999px;
+        border-radius: 8px;
         border: 1px solid var(--el-border);
         background: color-mix(in srgb, var(--el-text) 5%, transparent);
         color: color-mix(in srgb, var(--el-text) 78%, transparent);
         font-size: 0.78rem;
-        font-weight: 650;
+        font-weight: 600;
     }
 
     .el-section {
@@ -149,7 +158,7 @@ st.markdown(
 
     .el-section-title {
         font-size: 1.65rem;
-        font-weight: 750;
+        font-weight: 700;
         color: var(--el-text);
         letter-spacing: -0.02em;
         margin: 0;
@@ -157,7 +166,7 @@ st.markdown(
 
     .el-summary-card, .el-change-card, .el-risk-card {
         border: 1px solid var(--el-border);
-        border-radius: 18px;
+        border-radius: 12px;
         background: linear-gradient(180deg, var(--el-surface-2), var(--el-surface));
         box-shadow: 0 10px 30px rgba(0,0,0,0.12);
     }
@@ -173,7 +182,7 @@ st.markdown(
     .el-summary-label {
         color: var(--el-muted);
         font-size: 0.88rem;
-        font-weight: 650;
+        font-weight: 600;
         margin-bottom: 0.55rem;
     }
 
@@ -181,8 +190,8 @@ st.markdown(
         color: var(--el-text);
         font-size: 1.7rem;
         line-height: 1.2;
-        font-weight: 800;
-        letter-spacing: -0.03em;
+        font-weight: 700;
+        letter-spacing: -0.015em;
         overflow-wrap: anywhere;
     }
 
@@ -194,7 +203,7 @@ st.markdown(
     .el-change-title, .el-risk-title {
         color: var(--el-text);
         font-size: 1rem;
-        font-weight: 800;
+        font-weight: 700;
         margin-bottom: 0.35rem;
     }
 
@@ -216,7 +225,7 @@ st.markdown(
     div[data-testid="stMetric"] {
         background: linear-gradient(180deg, var(--el-surface-2), var(--el-surface));
         border: 1px solid var(--el-border);
-        border-radius: 18px;
+        border-radius: 12px;
         padding: 1rem 1.1rem;
         box-shadow: 0 10px 30px rgba(0,0,0,0.14);
     }
@@ -226,11 +235,11 @@ st.markdown(
 
     .stButton > button {
         min-height: 3rem;
-        border-radius: 14px;
+        border-radius: 8px;
         border: 1px solid rgba(45, 212, 191, 0.35);
         background: linear-gradient(135deg, #13B8A6, #2F7FEA);
         color: white;
-        font-weight: 750;
+        font-weight: 700;
         padding: 0.7rem 1.35rem;
         box-shadow: 0 10px 28px rgba(47,127,234,0.18);
     }
@@ -244,19 +253,19 @@ st.markdown(
     div[data-baseweb="select"] > div {
         background: var(--el-surface);
         border-color: var(--el-border);
-        border-radius: 14px;
+        border-radius: 8px;
     }
 
     div[data-testid="stDataFrame"] {
         border: 1px solid var(--el-border);
-        border-radius: 16px;
+        border-radius: 10px;
         overflow: hidden;
         background: color-mix(in srgb, var(--el-surface) 88%, transparent);
     }
 
     div[data-testid="stExpander"] {
         border: 1px solid var(--el-border);
-        border-radius: 16px;
+        border-radius: 10px;
         background: color-mix(in srgb, var(--el-surface) 82%, transparent);
     }
 
@@ -269,12 +278,39 @@ st.markdown(
 
     .stCaption, small { color: var(--el-muted) !important; }
 
+    h1, h2, h3, h4, h5, h6,
+    [data-testid="stHeadingWithActionElements"] {
+        font-family: var(--el-font) !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.018em;
+    }
+
+    p, li, label, input, textarea, button,
+    [data-testid="stMarkdownContainer"],
+    [data-testid="stMetricLabel"],
+    [data-testid="stMetricValue"],
+    [data-baseweb="tab"] {
+        font-family: var(--el-font) !important;
+    }
+
+    [data-baseweb="tab"] {
+        font-weight: 600 !important;
+        letter-spacing: 0.005em;
+    }
+
+    .stButton > button,
+    .stLinkButton > a {
+        font-weight: 600 !important;
+        letter-spacing: 0.005em;
+    }
+
+
     .el-product-hero {
         position: relative;
         overflow: hidden;
         padding: clamp(2rem, 5vw, 4.3rem);
         border: 1px solid var(--el-border);
-        border-radius: 30px;
+        border-radius: 18px;
         background:
             radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--el-blue) 20%, transparent), transparent 30%),
             radial-gradient(circle at 12% 90%, color-mix(in srgb, var(--el-teal) 18%, transparent), transparent 32%),
@@ -288,13 +324,13 @@ st.markdown(
         align-items: center;
         gap: .45rem;
         padding: .38rem .68rem;
-        border-radius: 999px;
+        border-radius: 7px;
         border: 1px solid color-mix(in srgb, var(--el-teal) 38%, transparent);
         background: color-mix(in srgb, var(--el-teal) 9%, transparent);
         color: var(--el-teal);
         font-size: .76rem;
-        font-weight: 800;
-        letter-spacing: .08em;
+        font-weight: 600;
+        letter-spacing: .07em;
         text-transform: uppercase;
         margin-bottom: 1rem;
     }
@@ -302,10 +338,10 @@ st.markdown(
     .el-product-title {
         max-width: 980px;
         margin: 0;
-        font-size: clamp(2.8rem, 7vw, 5.8rem);
-        line-height: .94;
-        letter-spacing: -.055em;
-        font-weight: 850;
+        font-size: clamp(2.6rem, 6vw, 4.7rem);
+        line-height: 1.0;
+        letter-spacing: -.035em;
+        font-weight: 700;
         color: var(--el-text);
     }
 
@@ -333,12 +369,12 @@ st.markdown(
 
     .el-trust-item {
         border: 1px solid var(--el-border);
-        border-radius: 16px;
+        border-radius: 10px;
         background: color-mix(in srgb, var(--el-surface) 88%, transparent);
         padding: .85rem 1rem;
         text-align: center;
         font-size: .82rem;
-        font-weight: 720;
+        font-weight: 600;
         color: color-mix(in srgb, var(--el-text) 78%, transparent);
     }
 
@@ -353,7 +389,7 @@ st.markdown(
         min-height: 170px;
         padding: 1.25rem;
         border: 1px solid var(--el-border);
-        border-radius: 20px;
+        border-radius: 12px;
         background: linear-gradient(180deg, var(--el-surface-2), var(--el-surface));
         box-shadow: 0 12px 35px rgba(0,0,0,.09);
     }
@@ -361,7 +397,7 @@ st.markdown(
     .el-feature-num {
         color: var(--el-teal);
         font-size: .76rem;
-        font-weight: 850;
+        font-weight: 600;
         letter-spacing: .08em;
         text-transform: uppercase;
     }
@@ -370,7 +406,7 @@ st.markdown(
         margin-top: .5rem;
         color: var(--el-text);
         font-size: 1.12rem;
-        font-weight: 820;
+        font-weight: 700;
     }
 
     .el-feature-copy {
@@ -384,7 +420,7 @@ st.markdown(
         min-height: 150px;
         padding: 1.15rem;
         border: 1px solid var(--el-border);
-        border-radius: 19px;
+        border-radius: 12px;
         background: color-mix(in srgb, var(--el-surface) 92%, transparent);
         box-shadow: 0 10px 30px rgba(0,0,0,.08);
     }
@@ -392,7 +428,7 @@ st.markdown(
     .el-company-card-ticker {
         color: var(--el-teal);
         font-size: .78rem;
-        font-weight: 850;
+        font-weight: 600;
         letter-spacing: .08em;
     }
 
@@ -400,7 +436,7 @@ st.markdown(
         margin-top: .25rem;
         color: var(--el-text);
         font-size: 1.08rem;
-        font-weight: 820;
+        font-weight: 700;
     }
 
     .el-company-card-meta {
@@ -413,7 +449,7 @@ st.markdown(
     .el-answer-card {
         padding: 1.2rem 1.3rem;
         border: 1px solid color-mix(in srgb, var(--el-teal) 28%, var(--el-border));
-        border-radius: 20px;
+        border-radius: 12px;
         background:
             linear-gradient(135deg,
                 color-mix(in srgb, var(--el-teal) 7%, var(--el-surface)),
@@ -424,7 +460,7 @@ st.markdown(
     .el-answer-kicker {
         color: var(--el-teal);
         font-size: .76rem;
-        font-weight: 850;
+        font-weight: 600;
         letter-spacing: .09em;
         text-transform: uppercase;
         margin-bottom: .4rem;
