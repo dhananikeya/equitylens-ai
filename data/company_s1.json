@@ -53,97 +53,573 @@
     "form": "S-1",
     "source_url": "https://www.sec.gov/Archives/edgar/data/1640147/000162828020013010/0001628280-20-013010-index.htm",
     "historical_context": "Snowflake's S-1 presented the company as a cloud-native data platform designed to consolidate data, analytics, and data-sharing workloads across public clouds, with a consumption-based revenue model.",
-    "what_to_learn": "The filing provides historical context for Snowflake's consumption model, cloud-provider dependence, customer expansion, large market opportunity, and the economics of usage-based software."
+    "what_to_learn": "The filing provides historical context for Snowflake's consumption model, cloud-provider dependence, customer expansion, large market opportunity, and the economics of usage-based software.",
+    "filing_details": {
+      "business_revenue_model": [
+        "Snowflake described a cloud-native data platform delivered as a service, with customers paying based primarily on consumption of compute and storage resources.",
+        "The filing emphasized that the platform was designed to operate across the major public clouds rather than requiring customers to manage database infrastructure themselves."
+      ],
+      "customers_go_to_market": [
+        "Snowflake described a direct enterprise sales motion supported by technology, consulting, reseller, and cloud-provider partnerships.",
+        "The filing emphasized expanding usage within existing customers as workloads, users, and data moved onto the platform."
+      ],
+      "growth_market_opportunity": [
+        "Management identified growth opportunities in acquiring new customers, increasing consumption by existing customers, expanding internationally, and broadening platform use cases.",
+        "The S-1 framed the long-term opportunity around continued migration of enterprise data and analytics workloads to the cloud."
+      ],
+      "competition_differentiation": [
+        "Snowflake positioned its architecture around separation of storage and compute, workload scalability, cross-cloud availability, and secure data sharing.",
+        "The filing identified competition from legacy database vendors, cloud providers, and other cloud data platforms."
+      ],
+      "risk_factors": [
+        "The filing highlighted reliance on cloud infrastructure providers, intense competition, the need to sustain customer consumption, security and privacy obligations, and a history of operating losses.",
+        "Because revenue depended on customer usage, Snowflake noted that changes in consumption could make results less predictable."
+      ],
+      "financial_history": [
+        "The S-1 showed rapid revenue growth alongside substantial operating losses as Snowflake invested heavily in sales, marketing, research and development, and cloud infrastructure.",
+        "Management discussed the importance of product revenue growth, remaining performance obligations, and customer consumption as operating indicators."
+      ],
+      "ipo_capitalization_dilution": [
+        "Snowflake's registration materials described multiple classes of common stock with different voting rights, giving Class B holders greater voting power than Class A holders.",
+        "The filing also described pre-IPO preferred stock converting into common stock in connection with the offering."
+      ],
+      "proceeds_management_ownership": [
+        "Snowflake stated that offering proceeds would be available for general corporate purposes, including working capital, operating expenses, and capital expenditures.",
+        "The filing also disclosed significant ownership and voting influence held by founders, executives, directors, and pre-IPO investors."
+      ]
+    }
   },
   "MongoDB (MDB)": {
     "filed_date": "2017-09-21",
     "form": "S-1",
     "source_url": "https://www.sec.gov/Archives/edgar/data/1441816/000104746917006246/a2233386zs-1a.htm",
     "historical_context": "MongoDB's IPO filing described a modern general-purpose database platform built around its document model, an open-source adoption strategy, and paid enterprise subscriptions.",
-    "what_to_learn": "The filing is useful for studying MongoDB's open-source-to-paid conversion strategy, customer growth, enterprise adoption, recurring subscriptions, and early competitive positioning."
+    "what_to_learn": "The filing is useful for studying MongoDB's open-source-to-paid conversion strategy, customer growth, enterprise adoption, recurring subscriptions, and early competitive positioning.",
+    "filing_details": {
+      "business_revenue_model": [
+        "MongoDB described a modern database platform built around its document data model, with revenue generated primarily from subscriptions and related services.",
+        "The filing explained how its open-source community helped drive developer adoption while paid offerings provided enterprise features, support, and commercial capabilities."
+      ],
+      "customers_go_to_market": [
+        "MongoDB described a combination of direct sales, self-service adoption, partners, and an open-source developer community as routes to customer acquisition.",
+        "The company emphasized converting users into paying customers and expanding usage across additional applications and teams."
+      ],
+      "growth_market_opportunity": [
+        "Management identified growth through broader enterprise adoption, expansion of cloud offerings, international growth, and conversion of developers and organizations already using MongoDB.",
+        "The filing framed application modernization and growth in unstructured and semi-structured data as important demand drivers."
+      ],
+      "competition_differentiation": [
+        "MongoDB emphasized its flexible document model, developer experience, scalability, and ability to support a broad range of modern applications.",
+        "The filing identified legacy database vendors, public cloud providers, and emerging database technologies as competitors."
+      ],
+      "risk_factors": [
+        "The S-1 discussed operating losses, dependence on continued adoption of MongoDB, competition from much larger vendors, open-source licensing issues, and the need to convert free users into paying customers.",
+        "It also identified cloud-provider relationships, security, privacy, intellectual property, and international expansion as material areas of risk."
+      ],
+      "financial_history": [
+        "MongoDB's filing showed fast subscription revenue growth while the company remained unprofitable and continued to invest heavily in sales and marketing and research and development.",
+        "The S-1 distinguished subscription revenue from services revenue and discussed recurring revenue as central to the business model."
+      ],
+      "ipo_capitalization_dilution": [
+        "The registration statement described Class A and Class B common stock with different voting rights, with Class B carrying greater voting power.",
+        "Preferred stock outstanding before the IPO was expected to convert into common stock in connection with the offering."
+      ],
+      "proceeds_management_ownership": [
+        "MongoDB said it expected to use proceeds for general corporate purposes, including working capital and potential acquisitions or investments.",
+        "The filing disclosed principal stockholders and the continuing voting influence of founders, executives, directors, and pre-IPO investors."
+      ]
+    }
   },
   "Datadog (DDOG)": {
     "filed_date": "2019-08-23",
     "form": "S-1",
     "source_url": "https://www.sec.gov/Archives/edgar/data/1561550/000119312519227783/d745413ds1.htm",
     "historical_context": "Datadog's S-1 described a monitoring and analytics platform built to give developers, IT operations teams, and business users a shared view of cloud infrastructure and applications.",
-    "what_to_learn": "The filing shows how Datadog expanded from infrastructure monitoring into a broader observability platform and used a land-and-expand subscription model."
+    "what_to_learn": "The filing shows how Datadog expanded from infrastructure monitoring into a broader observability platform and used a land-and-expand subscription model.",
+    "filing_details": {
+      "business_revenue_model": [
+        "Datadog described a SaaS monitoring and analytics platform that brought infrastructure, application performance, logs, and related telemetry into one product environment.",
+        "Revenue was driven primarily by subscriptions to the platform and additional products adopted by customers."
+      ],
+      "customers_go_to_market": [
+        "The filing described a land-and-expand model in which customers could begin with a limited deployment and add hosts, users, workloads, or additional Datadog products over time.",
+        "Datadog used both self-service adoption and a direct sales organization, particularly for larger customers."
+      ],
+      "growth_market_opportunity": [
+        "Management highlighted cloud adoption, DevOps practices, application complexity, and the need for unified monitoring as drivers of market expansion.",
+        "Growth priorities included new customers, international expansion, additional products, and deeper usage within the installed base."
+      ],
+      "competition_differentiation": [
+        "Datadog emphasized a unified cloud platform, ease of deployment, integrations, collaboration across development and operations teams, and rapid product expansion.",
+        "The S-1 identified monitoring vendors, log-management providers, open-source tools, and cloud-platform monitoring products as competitors."
+      ],
+      "risk_factors": [
+        "The filing discussed a history of rapid growth that might not continue, competition, dependence on cloud and third-party integrations, security and privacy obligations, and the need to retain and expand customers.",
+        "Datadog also noted that customer usage and technology trends could change quickly in the cloud-monitoring market."
+      ],
+      "financial_history": [
+        "The S-1 showed strong revenue growth while Datadog continued to invest substantially in sales and marketing and research and development.",
+        "Management highlighted recurring subscription revenue and expansion within existing customers as important parts of the financial model."
+      ],
+      "ipo_capitalization_dilution": [
+        "Datadog's filing described multiple classes of common stock with different voting rights, including higher voting power for Class B shares.",
+        "Pre-IPO preferred stock was expected to convert into common stock as part of the offering."
+      ],
+      "proceeds_management_ownership": [
+        "The company expected to use offering proceeds for general corporate purposes, including working capital, operating expenses, capital expenditures, and possible acquisitions or investments.",
+        "The filing detailed substantial ownership positions held by founders, executives, directors, employees, and venture investors."
+      ]
+    }
   },
   "Cloudflare (NET)": {
     "filed_date": "2019-09-03",
     "form": "S-1/A",
     "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000119312519235734/0001193125-19-235734-index.htm",
     "historical_context": "Cloudflare's IPO materials positioned its global network as a platform for improving the security, performance, and reliability of internet-facing applications.",
-    "what_to_learn": "The S-1 is useful for understanding Cloudflare's global network strategy, freemium adoption model, infrastructure economics, customer growth, and early security and performance positioning."
+    "what_to_learn": "The S-1 is useful for understanding Cloudflare's global network strategy, freemium adoption model, infrastructure economics, customer growth, and early security and performance positioning.",
+    "filing_details": {
+      "business_revenue_model": [
+        "Cloudflare described a global network delivering security, performance, and reliability services to internet applications and infrastructure.",
+        "The filing explained a freemium model with free users feeding adoption and paid customers purchasing subscription plans and additional products."
+      ],
+      "customers_go_to_market": [
+        "Cloudflare described self-service adoption for smaller customers alongside an enterprise sales organization for larger accounts.",
+        "The company used its large free user base, developer adoption, channel relationships, and direct sales efforts to acquire and expand customers."
+      ],
+      "growth_market_opportunity": [
+        "The S-1 identified continued internet growth, movement to the cloud, rising cybersecurity needs, and expansion of Cloudflare's product portfolio as long-term opportunities.",
+        "Management planned to grow internationally, add enterprise customers, and launch additional services on its global network."
+      ],
+      "competition_differentiation": [
+        "Cloudflare emphasized its globally distributed network, integrated security and performance capabilities, and ability to deploy new services across that network.",
+        "The filing identified hardware vendors, cloud-security vendors, content-delivery networks, DNS providers, and cloud infrastructure companies as competitors."
+      ],
+      "risk_factors": [
+        "The S-1 discussed continued operating losses, intense competition, dependence on internet infrastructure and third-party networks, security incidents, abuse of the platform, and regulatory risks.",
+        "It also noted that free services and rapid product expansion could increase operating complexity and costs."
+      ],
+      "financial_history": [
+        "The filing showed rapid revenue growth accompanied by continued net losses as Cloudflare invested in network infrastructure, research and development, sales, and marketing.",
+        "Subscription revenue from paid customers was the central revenue engine described in the filing."
+      ],
+      "ipo_capitalization_dilution": [
+        "Cloudflare described a dual-class common-stock structure with Class B shares carrying greater voting power than Class A shares.",
+        "The filing explained conversion of preferred stock and the dilution that new public investors would experience in the offering."
+      ],
+      "proceeds_management_ownership": [
+        "Cloudflare expected to use proceeds for general corporate purposes, including working capital, operating expenses, capital expenditures, and possible acquisitions or investments.",
+        "The filing disclosed continuing voting influence held by founders, executives, directors, and significant pre-IPO stockholders."
+      ]
+    }
   },
   "Elastic (ESTC)": {
     "filed_date": "2018-09-05",
     "form": "S-1",
     "source_url": "https://www.sec.gov/Archives/edgar/data/1707753/000119312518266861/d588632ds1.htm",
     "historical_context": "Elastic's S-1 described a company built around the Elastic Stack and Elasticsearch, using an open-source foundation to support search, logging, analytics, and related workloads.",
-    "what_to_learn": "The filing helps explain Elastic's open-source distribution strategy, subscription model, cloud opportunity, developer adoption, and the risks of competing with larger platform providers."
+    "what_to_learn": "The filing helps explain Elastic's open-source distribution strategy, subscription model, cloud opportunity, developer adoption, and the risks of competing with larger platform providers.",
+    "filing_details": {
+      "business_revenue_model": [
+        "Elastic described a business built around the Elastic Stack and Elasticsearch, monetized through subscriptions, hosted cloud offerings, support, and related services.",
+        "The filing emphasized an open-source distribution model that encouraged broad developer adoption while paid tiers added commercial features and support."
+      ],
+      "customers_go_to_market": [
+        "Elastic combined community-led adoption with direct enterprise sales, partners, and a hosted cloud service.",
+        "The company described expanding customers from initial search or logging use cases into additional workloads across the Elastic Stack."
+      ],
+      "growth_market_opportunity": [
+        "Management highlighted opportunities in search, logging, security analytics, observability-related workloads, cloud deployment, and international expansion.",
+        "The S-1 presented community adoption and expansion into additional use cases as important growth mechanisms."
+      ],
+      "competition_differentiation": [
+        "Elastic emphasized the flexibility of its open-source stack, developer community, speed and scale of search, and ability to address multiple data-search and analytics use cases.",
+        "The filing identified Splunk, cloud infrastructure providers, search products, and specialized monitoring and analytics vendors as competitors."
+      ],
+      "risk_factors": [
+        "The S-1 discussed reliance on open-source adoption, competition from cloud providers using open-source components, operating losses, security and privacy risks, and the need to convert free adoption into paid subscriptions.",
+        "Elastic also identified licensing, intellectual property, international growth, and customer retention as material risks."
+      ],
+      "financial_history": [
+        "The filing showed rapid subscription and total revenue growth while Elastic continued to report operating and net losses.",
+        "Management discussed the shift toward recurring subscriptions and the growing importance of Elastic Cloud."
+      ],
+      "ipo_capitalization_dilution": [
+        "Elastic's registration materials described common-stock issuance, preferred-stock conversion, and dilution to investors purchasing shares in the IPO.",
+        "The filing also set out capitalization before and after the offering and the effect of outstanding equity awards."
+      ],
+      "proceeds_management_ownership": [
+        "Elastic stated that proceeds were intended for working capital and general corporate purposes and could also support acquisitions or investments.",
+        "The filing disclosed significant holdings by founders, directors, executives, and venture investors."
+      ]
+    }
   },
   "Dynatrace (DT)": {
     "filed_date": "2019-07-05",
     "form": "S-1",
     "source_url": "https://www.sec.gov/Archives/edgar/data/1773383/000119312519189566/d668054ds1.htm",
     "historical_context": "Dynatrace's S-1 presented its platform as a software-intelligence and application-performance platform for complex enterprise and cloud environments.",
-    "what_to_learn": "The filing provides historical context for Dynatrace's move toward a unified observability platform, subscription transformation, enterprise customer base, and cloud-monitoring opportunity."
+    "what_to_learn": "The filing provides historical context for Dynatrace's move toward a unified observability platform, subscription transformation, enterprise customer base, and cloud-monitoring opportunity.",
+    "filing_details": {
+      "business_revenue_model": [
+        "Dynatrace described a software-intelligence platform for monitoring application performance, infrastructure, user experience, and complex cloud environments.",
+        "The filing emphasized the company's transition from legacy products toward a subscription-based Dynatrace platform."
+      ],
+      "customers_go_to_market": [
+        "Dynatrace sold primarily to large enterprises through a direct sales force supported by strategic partners and resellers.",
+        "The S-1 described opportunities to migrate existing customers to the newer platform and expand deployments across additional applications and environments."
+      ],
+      "growth_market_opportunity": [
+        "Management highlighted cloud migration, application complexity, digital transformation, and enterprise observability needs as growth drivers.",
+        "Growth priorities included converting customers to the newer platform, adding enterprise customers, expanding internationally, and broadening product capabilities."
+      ],
+      "competition_differentiation": [
+        "Dynatrace emphasized automation, artificial intelligence, full-stack monitoring, and a unified data model as platform differentiators.",
+        "The filing described competition from application-performance monitoring, infrastructure monitoring, log-management, and cloud-platform vendors."
+      ],
+      "risk_factors": [
+        "The S-1 identified risks around migrating customers from Classic products, intense competition, dependence on enterprise renewals, debt, intellectual property, and the company's controlled-company status.",
+        "It also warned that failure to keep pace with changing cloud technologies could harm growth."
+      ],
+      "financial_history": [
+        "The filing described a business moving toward recurring subscription revenue while continuing to support legacy license arrangements during the transition.",
+        "Management discussed annualized recurring revenue as an important indicator of the subscription transformation."
+      ],
+      "ipo_capitalization_dilution": [
+        "The S-1 stated that affiliates of Thoma Bravo would retain significant ownership after the IPO, making Dynatrace a controlled company under NYSE rules.",
+        "The offering included shares sold by Dynatrace and shares sold by existing stockholders, with the company receiving no proceeds from selling-stockholder shares."
+      ],
+      "proceeds_management_ownership": [
+        "Dynatrace described use of company proceeds for general corporate purposes and transactions connected with its capital structure, while selling stockholders retained proceeds from shares they sold.",
+        "The filing disclosed substantial continuing ownership and control by Thoma Bravo affiliates."
+      ]
+    }
   },
   "Akamai (AKAM)": {
     "filed_date": "1999-08-21",
     "form": "S-1 / S-1A",
     "source_url": "https://www.sec.gov/Archives/edgar/data/1086222/000095013599004906/0000950135-99-004906-index.htm",
     "historical_context": "Akamai's IPO-era filings describe an early internet infrastructure company focused on improving the delivery of online content through a distributed network.",
-    "what_to_learn": "The filing is useful as a historical look at the economics and risks of internet infrastructure before modern cloud computing, including network expansion, customer adoption, and technology execution."
+    "what_to_learn": "The filing is useful as a historical look at the economics and risks of internet infrastructure before modern cloud computing, including network expansion, customer adoption, and technology execution.",
+    "filing_details": {
+      "business_revenue_model": [
+        "Akamai's IPO filing described a distributed internet content-delivery service designed to improve the speed and reliability of delivering web content.",
+        "Its model depended on operating a network of servers positioned across many internet locations and charging customers for delivery and related services."
+      ],
+      "customers_go_to_market": [
+        "The filing described selling services to internet content providers, web businesses, and enterprises that needed faster and more reliable delivery of online content.",
+        "Akamai also relied on relationships with network providers and hosting partners to expand the reach of its distributed infrastructure."
+      ],
+      "growth_market_opportunity": [
+        "Management framed rapid growth in internet traffic, richer online content, and congestion on the public internet as the core market opportunity.",
+        "The company planned to grow its server footprint, customer base, service capabilities, and international network presence."
+      ],
+      "competition_differentiation": [
+        "Akamai emphasized its distributed architecture, proprietary routing and mapping technology, and a large network of geographically dispersed servers.",
+        "The filing discussed competition from other content-delivery approaches, hosting providers, network operators, and technologies customers could deploy themselves."
+      ],
+      "risk_factors": [
+        "The S-1 highlighted Akamai's limited operating history, early-stage revenue base, expected losses, dependence on continued internet growth, infrastructure reliability, and rapidly changing technology.",
+        "It also discussed dependence on third-party networks and the challenge of scaling operations quickly."
+      ],
+      "financial_history": [
+        "The IPO-era filing reflected an early-stage company with limited revenue and significant spending to build network capacity, technology, sales, and operations.",
+        "Management expected substantial continuing investment as the company attempted to scale its service."
+      ],
+      "ipo_capitalization_dilution": [
+        "The registration statement described issuance of common stock to public investors, conversion of preferred securities, outstanding options, and the resulting dilution.",
+        "Because the company was still at an early stage, the filing emphasized that the IPO valuation was not based on a long public trading history."
+      ],
+      "proceeds_management_ownership": [
+        "Akamai planned to use offering proceeds for working capital, expansion of network infrastructure, sales and marketing, research and development, and other general corporate purposes.",
+        "The filing disclosed significant holdings by founders, directors, employees, and early venture investors."
+      ]
+    }
   },
   "Palo Alto Networks (PANW)": {
     "filed_date": "2012-04-06",
     "form": "S-1",
     "source_url": "https://www.sec.gov/Archives/edgar/data/1327567/000119312512153764/d318373ds1.htm",
     "historical_context": "Palo Alto Networks' S-1 framed the company around next-generation network security designed to identify applications, users, and threats more precisely than traditional firewall architectures.",
-    "what_to_learn": "The filing provides historical context for the company's original platform thesis, hardware-plus-subscription model, channel strategy, and early enterprise cybersecurity competition."
+    "what_to_learn": "The filing provides historical context for the company's original platform thesis, hardware-plus-subscription model, channel strategy, and early enterprise cybersecurity competition.",
+    "filing_details": {
+      "business_revenue_model": [
+        "Palo Alto Networks described a next-generation network-security platform combining firewall appliances with recurring subscriptions and support.",
+        "The filing emphasized application, user, and content visibility as a core part of its product architecture."
+      ],
+      "customers_go_to_market": [
+        "The company sold through a channel-focused model using distributors and resellers, supported by its own sales organization.",
+        "The filing described enterprise, service-provider, and government customers and emphasized adding new customers while expanding product and subscription adoption."
+      ],
+      "growth_market_opportunity": [
+        "Management linked growth to increasing cybersecurity threats, application complexity, data-center change, and replacement of legacy firewall architectures.",
+        "The company planned to grow its customer base, expand internationally, add security subscriptions, and continue investing in product development."
+      ],
+      "competition_differentiation": [
+        "Palo Alto Networks emphasized application-level visibility and control, integrated threat prevention, and a purpose-built security architecture.",
+        "The S-1 identified large network-security vendors and other established security companies as major competitors."
+      ],
+      "risk_factors": [
+        "The filing discussed intense competition, reliance on channel partners, customer concentration within large enterprises, product defects, security threats, rapid technological change, and a limited operating history at scale.",
+        "Management also warned that growth depended on maintaining brand recognition and customer goodwill in a fast-moving market."
+      ],
+      "financial_history": [
+        "The S-1 showed rapid growth in product, subscription, and support revenue while the company continued to invest heavily in sales and marketing and research and development.",
+        "Recurring subscription and support revenue were presented as increasingly important components of the business."
+      ],
+      "ipo_capitalization_dilution": [
+        "The registration statement described the shares offered by the company and selling stockholders, capitalization before and after the IPO, and dilution to new investors.",
+        "The company applied to list its common stock on the NYSE under the PANW ticker."
+      ],
+      "proceeds_management_ownership": [
+        "Palo Alto Networks said the offering was intended to increase capitalization and financial flexibility, create a public market, obtain additional capital, and increase visibility.",
+        "The company would not receive proceeds from shares sold by selling stockholders."
+      ]
+    }
   },
   "Zscaler (ZS)": {
     "filed_date": "2018-02-16",
     "form": "S-1",
     "source_url": "https://www.sec.gov/Archives/edgar/data/1713683/000119312518048303/d400527ds1.htm",
     "historical_context": "Zscaler's S-1 described a cloud-native security architecture built around securely connecting users to applications as enterprises adopted cloud services and mobile work.",
-    "what_to_learn": "The filing is useful for understanding Zscaler's original zero-trust and cloud-security thesis, subscription model, network architecture, customer adoption, and competition with perimeter-security products."
+    "what_to_learn": "The filing is useful for understanding Zscaler's original zero-trust and cloud-security thesis, subscription model, network architecture, customer adoption, and competition with perimeter-security products.",
+    "filing_details": {
+      "business_revenue_model": [
+        "Zscaler described a cloud-native security platform delivered as a subscription service, designed to securely connect users to applications without routing traffic through traditional perimeter appliances.",
+        "Revenue was driven primarily by recurring subscriptions to cloud-security services."
+      ],
+      "customers_go_to_market": [
+        "The filing described a direct sales organization supported by channel partners, service providers, resellers, and strategic technology relationships.",
+        "Zscaler emphasized acquiring enterprise customers and expanding subscriptions as customers added users and security services."
+      ],
+      "growth_market_opportunity": [
+        "Management linked the opportunity to cloud adoption, mobility, software-as-a-service use, and the declining effectiveness of traditional network perimeters.",
+        "Growth priorities included larger enterprise customers, international expansion, new products, and increased adoption within existing accounts."
+      ],
+      "competition_differentiation": [
+        "Zscaler emphasized its cloud-native architecture, globally distributed security cloud, policy enforcement close to users, and ability to reduce dependence on on-premises security appliances.",
+        "The filing identified traditional network-security vendors, cloud-security providers, and other security technologies as competitors."
+      ],
+      "risk_factors": [
+        "The S-1 discussed intense competition, customer renewal risk, channel dependence, security incidents, infrastructure availability, operating losses, and the need to scale sales and support.",
+        "The company also identified privacy, regulatory, international, and intellectual-property risks."
+      ],
+      "financial_history": [
+        "The filing showed strong subscription-revenue growth while Zscaler continued to incur operating and net losses.",
+        "Management described recurring subscription revenue and expansion within enterprise customers as central to the financial model."
+      ],
+      "ipo_capitalization_dilution": [
+        "The S-1 described the common shares to be sold in the offering, conversion of preferred stock, outstanding equity awards, and dilution to new investors.",
+        "The filing also set out capitalization on an actual and pro forma basis around the IPO."
+      ],
+      "proceeds_management_ownership": [
+        "Zscaler intended to use proceeds for general corporate purposes, including working capital, sales and marketing, research and development, administrative matters, and capital expenditures.",
+        "The company also said proceeds could be used for acquisitions or investments in complementary technologies, products, or businesses."
+      ]
+    }
   },
   "CrowdStrike (CRWD)": {
     "filed_date": "2019-05-14",
     "form": "S-1",
     "source_url": "https://www.sec.gov/Archives/edgar/data/1535527/000104746919003095/a2238800zs-1.htm",
     "historical_context": "CrowdStrike's S-1 described a cloud-native security platform built to protect customers from breaches using endpoint telemetry, cloud computing, artificial intelligence, and a shared data architecture.",
-    "what_to_learn": "The filing shows CrowdStrike's early platform strategy, subscription economics, module expansion model, customer growth, and the network effects management associated with shared security telemetry."
+    "what_to_learn": "The filing shows CrowdStrike's early platform strategy, subscription economics, module expansion model, customer growth, and the network effects management associated with shared security telemetry.",
+    "filing_details": {
+      "business_revenue_model": [
+        "CrowdStrike described the Falcon platform as a cloud-native cybersecurity platform using endpoint telemetry, cloud-scale data, artificial intelligence, and modular subscription products.",
+        "The business model centered on recurring subscriptions, with customers able to add additional Falcon modules over time."
+      ],
+      "customers_go_to_market": [
+        "CrowdStrike described a land-and-expand model supported by direct sales, channel partners, technology alliances, and managed-security relationships.",
+        "The filing emphasized growth in subscription customers and adoption of multiple cloud modules within existing accounts."
+      ],
+      "growth_market_opportunity": [
+        "Management identified endpoint replacement, cloud workloads, threat intelligence, identity and related security use cases as expansion opportunities.",
+        "The S-1 emphasized new-customer acquisition, additional module adoption, international growth, and continued platform expansion."
+      ],
+      "competition_differentiation": [
+        "CrowdStrike emphasized a single lightweight agent, cloud-native architecture, shared threat telemetry, and rapid deployment of new modules.",
+        "The filing described competition from legacy endpoint-security vendors, newer cloud-security companies, and large technology providers."
+      ],
+      "risk_factors": [
+        "The S-1 discussed customer-renewal risk, intense competition, operating losses, reliance on cloud infrastructure, cybersecurity incidents, privacy obligations, and the need to scale operations.",
+        "It also warned that failure to maintain effective threat detection or prevent breaches affecting customers could harm the company's reputation."
+      ],
+      "financial_history": [
+        "The filing showed rapid subscription-revenue and annual-recurring-revenue growth while CrowdStrike continued to report substantial operating and net losses.",
+        "Management used subscription ARR and customer adoption of multiple modules as important indicators of business momentum."
+      ],
+      "ipo_capitalization_dilution": [
+        "CrowdStrike described Class A and Class B common stock with different voting rights, giving Class B holders greater voting power.",
+        "The registration statement also described conversion of preferred stock and dilution to purchasers in the public offering."
+      ],
+      "proceeds_management_ownership": [
+        "CrowdStrike said proceeds would be used primarily for general corporate purposes and could also support acquisitions or investments in complementary technologies or businesses.",
+        "The filing disclosed significant voting influence retained by founders, executives, directors, and pre-IPO investors."
+      ]
+    }
   },
   "Okta (OKTA)": {
     "filed_date": "2017-03-13",
     "form": "S-1",
     "source_url": "https://www.sec.gov/Archives/edgar/data/1660134/000119312517080301/d289173ds1.htm",
     "historical_context": "Okta's S-1 positioned identity as a foundational layer for securely connecting people to technology and described the Okta Identity Cloud as an independent cloud identity platform.",
-    "what_to_learn": "The filing is useful for understanding Okta's original identity-platform thesis, recurring subscription model, enterprise adoption, customer retention, and competition with larger technology vendors."
+    "what_to_learn": "The filing is useful for understanding Okta's original identity-platform thesis, recurring subscription model, enterprise adoption, customer retention, and competition with larger technology vendors.",
+    "filing_details": {
+      "business_revenue_model": [
+        "Okta described the Okta Identity Cloud as an independent cloud platform for securely connecting people to applications and technology.",
+        "Revenue came primarily from subscriptions, with professional services representing a smaller part of the business."
+      ],
+      "customers_go_to_market": [
+        "Okta used a direct sales force supported by channel and technology partners and targeted organizations ranging from smaller businesses to large enterprises.",
+        "The filing emphasized acquiring new customers and expanding deployments through additional users, applications, and identity products."
+      ],
+      "growth_market_opportunity": [
+        "Management linked growth to cloud adoption, mobile work, proliferation of applications, and the growing importance of identity as a security layer.",
+        "Growth priorities included enterprise expansion, international markets, new use cases, and broader customer-identity adoption."
+      ],
+      "competition_differentiation": [
+        "Okta emphasized independence from any single application or infrastructure vendor, a broad integration network, cloud architecture, and ease of deployment.",
+        "The filing identified identity vendors, large enterprise-software companies, infrastructure providers, and internally developed solutions as competition."
+      ],
+      "risk_factors": [
+        "The S-1 highlighted operating losses, intense competition, the need to retain and expand customers, privacy and security risks, service interruptions, and dependence on third-party cloud and technology providers.",
+        "The filing also discussed rapid technological change and the need to maintain a large integration ecosystem."
+      ],
+      "financial_history": [
+        "Okta's filing showed rapid subscription-revenue growth while the company continued to generate operating and net losses.",
+        "Management highlighted subscription revenue, customer growth, and expansion of existing customer relationships as key operating measures."
+      ],
+      "ipo_capitalization_dilution": [
+        "The registration statement described Class A and Class B common stock with different voting rights and the conversion of preferred stock in connection with the IPO.",
+        "It also described dilution to new investors and outstanding employee equity awards."
+      ],
+      "proceeds_management_ownership": [
+        "Okta stated that it intended to use offering proceeds for working capital and other general corporate purposes, including funding growth strategies.",
+        "The filing also allowed for potential acquisitions or investments in complementary businesses, products, services, technologies, or assets."
+      ]
+    }
   },
   "Fortinet (FTNT)": {
     "filed_date": "2009-08-10",
     "form": "S-1",
     "source_url": "https://www.sec.gov/Archives/edgar/data/1262039/000119312509169817/ds1.htm",
     "historical_context": "Fortinet's S-1 described a network-security company selling integrated security appliances together with recurring security-subscription and support services.",
-    "what_to_learn": "The filing provides historical context for Fortinet's appliance-plus-services model, channel distribution, security research, hardware economics, and the recurring revenue created by subscriptions and support."
+    "what_to_learn": "The filing provides historical context for Fortinet's appliance-plus-services model, channel distribution, security research, hardware economics, and the recurring revenue created by subscriptions and support.",
+    "filing_details": {
+      "business_revenue_model": [
+        "Fortinet described a network-security business centered on FortiGate appliances combined with recurring security subscriptions, updates, and technical-support services.",
+        "The filing explained that hardware sales created an installed base that could generate recurring service and support revenue."
+      ],
+      "customers_go_to_market": [
+        "Fortinet relied heavily on distributors, resellers, and other channel partners to reach enterprise, service-provider, government, and smaller-business customers.",
+        "The company emphasized broad channel coverage and continued sale of security subscriptions and support after appliance deployment."
+      ],
+      "growth_market_opportunity": [
+        "Management identified rising network threats, increased internet connectivity, and demand for integrated security as growth drivers.",
+        "Expansion priorities included new products, international markets, larger enterprise customers, and additional channel relationships."
+      ],
+      "competition_differentiation": [
+        "Fortinet emphasized integrated security functions, proprietary hardware acceleration, performance, and price-performance across its appliance portfolio.",
+        "The filing described competition from much larger network and security companies as well as specialized security vendors."
+      ],
+      "risk_factors": [
+        "The S-1 discussed intense competition, channel dependence, rapid technological change, product defects, supply-chain and manufacturing exposure, economic weakness, and dependence on key executives.",
+        "It also identified customer-support quality, intellectual-property disputes, and international operations as important risks."
+      ],
+      "financial_history": [
+        "The filing showed a mix of product revenue and higher-recurring service revenue from security subscriptions and support.",
+        "Management discussed investments in product development, channel expansion, and international growth as major uses of operating resources."
+      ],
+      "ipo_capitalization_dilution": [
+        "Fortinet's registration statement described common stock sold by the company and selling stockholders, the conversion of preferred stock, and dilution to new public investors.",
+        "The company would receive no proceeds from shares sold by selling stockholders."
+      ],
+      "proceeds_management_ownership": [
+        "Fortinet planned to use proceeds for working capital and general corporate purposes, including new-product development and capital expenditures.",
+        "The filing also allowed for acquisitions of complementary businesses, products, services, or technologies."
+      ]
+    }
   },
   "SentinelOne (S)": {
     "filed_date": "2021-06-03",
     "form": "S-1",
     "source_url": "https://www.sec.gov/Archives/edgar/data/1583708/000162828021011624/sentineloneincs-1initialpu.htm",
     "historical_context": "SentinelOne's S-1 presented an autonomous cybersecurity platform designed to protect endpoints, cloud workloads, identities, and data using AI-driven detection and response.",
-    "what_to_learn": "The filing is useful for understanding SentinelOne's autonomous-security thesis, subscription growth, cloud-native architecture, competitive positioning, and the costs of scaling a high-growth cybersecurity platform."
+    "what_to_learn": "The filing is useful for understanding SentinelOne's autonomous-security thesis, subscription growth, cloud-native architecture, competitive positioning, and the costs of scaling a high-growth cybersecurity platform.",
+    "filing_details": {
+      "business_revenue_model": [
+        "SentinelOne described the Singularity Platform as an autonomous cybersecurity platform protecting endpoints, cloud workloads, identities, and data through AI-driven detection and response.",
+        "The company generated revenue primarily through subscriptions to its platform and additional modules."
+      ],
+      "customers_go_to_market": [
+        "The filing described a land-and-expand sales motion using a direct sales force together with distributors, resellers, managed service providers, and technology partners.",
+        "SentinelOne emphasized adding customers and expanding them into additional modules and protected endpoints over time."
+      ],
+      "growth_market_opportunity": [
+        "Management linked the market opportunity to replacement of legacy antivirus, growth in cloud workloads, escalating cyber threats, and demand for automated security operations.",
+        "Growth priorities included enterprise expansion, international markets, additional security modules, and broader platform adoption."
+      ],
+      "competition_differentiation": [
+        "SentinelOne emphasized autonomous detection and response, AI models running on endpoints, a unified data platform, and reduced dependence on manual analyst intervention.",
+        "The filing identified legacy endpoint vendors, cloud-native security competitors, and large platform companies as competitors."
+      ],
+      "risk_factors": [
+        "The S-1 discussed substantial operating losses, intense competition, rapid technology change, customer retention, security incidents, cloud-service dependencies, and the need to scale sales and support.",
+        "It also identified privacy, regulatory, intellectual-property, and international risks."
+      ],
+      "financial_history": [
+        "The filing showed very rapid revenue and ARR growth alongside significant operating and net losses as SentinelOne invested heavily in sales and marketing and research and development.",
+        "Management highlighted ARR, customer growth, and adoption of multiple modules as important measures of the subscription business."
+      ],
+      "ipo_capitalization_dilution": [
+        "SentinelOne described a dual-class common-stock structure that gave Class B holders greater voting power than Class A holders.",
+        "The registration statement also described preferred-stock conversion, employee equity awards, and dilution to new investors."
+      ],
+      "proceeds_management_ownership": [
+        "The company expected to use offering proceeds for general corporate purposes, including working capital, operating expenses, and capital expenditures, with potential use for acquisitions or investments.",
+        "The filing disclosed continuing voting influence held by founders, executives, directors, and major pre-IPO investors."
+      ]
+    }
   },
   "Tenable (TENB)": {
     "filed_date": "2018-06-29",
     "form": "S-1",
     "source_url": "https://www.sec.gov/Archives/edgar/data/1660280/000119312518209705/d548092ds1.htm",
     "historical_context": "Tenable's S-1 described a cybersecurity company focused on vulnerability management and what it called Cyber Exposure, helping organizations understand and reduce technology-related security risk.",
-    "what_to_learn": "The filing gives historical context for Tenable's vulnerability-management roots, subscription model, enterprise customer strategy, market expansion, and competition across security and exposure management."
+    "what_to_learn": "The filing gives historical context for Tenable's vulnerability-management roots, subscription model, enterprise customer strategy, market expansion, and competition across security and exposure management.",
+    "filing_details": {
+      "business_revenue_model": [
+        "Tenable described a cybersecurity platform rooted in vulnerability management and expanded around the concept of Cyber Exposure.",
+        "Revenue was generated primarily through subscriptions and support for software products used to identify and manage technology vulnerabilities."
+      ],
+      "customers_go_to_market": [
+        "The filing described a direct sales organization supported by distributors, resellers, and other channel partners serving organizations across industries and geographies.",
+        "Tenable emphasized converting users of its widely adopted products into commercial customers and expanding deployments across larger environments."
+      ],
+      "growth_market_opportunity": [
+        "Management linked growth to expanding attack surfaces, cloud and mobile adoption, regulatory requirements, and the need for organizations to understand cyber risk.",
+        "Growth priorities included enterprise expansion, international growth, new products, and extending vulnerability management into broader exposure management."
+      ],
+      "competition_differentiation": [
+        "Tenable emphasized broad asset visibility, vulnerability research, scale, analytics, and the installed base associated with Nessus.",
+        "The filing identified vulnerability-management vendors, security-platform companies, cloud providers, and internally developed tools as competition."
+      ],
+      "risk_factors": [
+        "The S-1 discussed operating losses, intense competition, customer retention, security and privacy risks, reliance on channel partners, rapid technological change, and the need to scale operations.",
+        "It also identified international growth, intellectual property, and the possibility that customers could use free or lower-cost alternatives."
+      ],
+      "financial_history": [
+        "The filing showed strong subscription-revenue growth while Tenable continued to invest in sales and marketing, research and development, and international expansion.",
+        "Management described recurring subscription revenue and customer expansion as central to the company's financial model."
+      ],
+      "ipo_capitalization_dilution": [
+        "Tenable's registration statement described the common stock issued in the IPO, conversion of preferred stock, outstanding equity awards, and dilution to new investors.",
+        "The filing also presented capitalization before and after the offering."
+      ],
+      "proceeds_management_ownership": [
+        "Tenable said it intended to use proceeds for general corporate purposes, including working capital and potential acquisitions or investments in complementary businesses, products, or technologies.",
+        "The filing disclosed significant holdings by founders, directors, executives, and venture investors."
+      ]
+    }
   }
 }
