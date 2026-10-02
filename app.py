@@ -666,9 +666,10 @@ render_summary_cards([
     )
 ])
 
-peer_tab, company_tab, learn_tab = st.tabs([
+peer_tab, company_tab, sec_tracker_tab, learn_tab = st.tabs([
     "Peer Comparison",
     "Company Research",
+    "SEC Filing Tracker",
     "Learn the Basics"
 ])
 
@@ -1664,6 +1665,105 @@ with company_tab:
             f"{format_money(capital.get('cash_and_investments'))} of cash and investments "
             f"and {format_money(capital.get('total_debt'))} of debt."
         )
+
+with sec_tracker_tab:
+    section("SEC Monitor", "Filing Tracker")
+
+    st.write(
+        "This tracker combines the recent SEC filings collected for every company covered by EquityLens. "
+        "It records the issuer, ticker, form, SEC filing date, SEC acceptance timestamp when available, "
+        "the period the filing covers, when EquityLens first detected it, and a direct link to the original filing."
+    )
+
+    st.caption(
+        "The SEC does not publish an exact future posting time before a filing is submitted. "
+        "EquityLens can track actual filings immediately after they appear and can separately add announced "
+        "earnings dates or estimated filing windows later."
+    )
+
+    tracker_rows = []
+    for tracked_company, feed in sec_filings.items():
+        entity_name = feed.get("entity_name", tracked_company.split(" (")[0])
+        tracked_ticker = feed.get("ticker", "")
+        for filing in feed.get("filings", []):
+            tracker_rows.append({
+                "Company": entity_name,
+                "Ticker": tracked_ticker,
+                "Form": filing.get("form", ""),
+                "SEC Filed Date": filing.get("filing_date", ""),
+                "SEC Accepted": filing.get("acceptance_datetime", ""),
+                "Report Period": filing.get("report_date", ""),
+                "Description": filing.get("description", "") or filing.get("primary_document", ""),
+                "Items": filing.get("items", ""),
+                "First Seen by EquityLens (UTC)": filing.get("first_seen_utc", ""),
+                "Accession Number": filing.get("accession_number", ""),
+                "SEC Filing": filing.get("url", "")
+            })
+
+    tracker_df = pd.DataFrame(tracker_rows)
+
+    if tracker_df.empty:
+        st.info("The filing tracker is waiting for the SEC monitor to populate data.")
+    else:
+        tracker_df = tracker_df.sort_values(
+            by=["SEC Filed Date", "SEC Accepted"],
+            ascending=False,
+            na_position="last"
+        )
+
+        filter_cols = st.columns(2)
+        with filter_cols[0]:
+            tracker_company = st.selectbox(
+                "Company",
+                ["All companies"] + sorted(tracker_df["Company"].dropna().unique().tolist()),
+                key="sec_tracker_company"
+            )
+        with filter_cols[1]:
+            form_options = sorted(
+                [form for form in tracker_df["Form"].dropna().unique().tolist() if form]
+            )
+            tracker_forms = st.multiselect(
+                "Filing type",
+                form_options,
+                default=[],
+                key="sec_tracker_forms"
+            )
+
+        filtered_tracker = tracker_df.copy()
+        if tracker_company != "All companies":
+            filtered_tracker = filtered_tracker[
+                filtered_tracker["Company"] == tracker_company
+            ]
+        if tracker_forms:
+            filtered_tracker = filtered_tracker[
+                filtered_tracker["Form"].isin(tracker_forms)
+            ]
+
+        st.dataframe(
+            filtered_tracker,
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "SEC Filing": st.column_config.LinkColumn(
+                    "SEC Filing",
+                    display_text="Open filing"
+                )
+            }
+        )
+
+        st.download_button(
+            "Download filing tracker as CSV",
+            data=filtered_tracker.to_csv(index=False).encode("utf-8"),
+            file_name="equitylens_sec_filing_tracker.csv",
+            mime="text/csv",
+            use_container_width=True
+        )
+
+        st.caption(
+            f"Showing {len(filtered_tracker):,} filing records from the current monitored set. "
+            "The monitor checks for new SEC submissions every 15 minutes."
+        )
+
 
 with learn_tab:
     section("Learning", "Understand the Numbers")
