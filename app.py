@@ -753,6 +753,11 @@ with peer_tab:
             )
 
             section("Trend", "Three-Year Revenue")
+            st.caption(
+                "Use this view to compare the direction and pace of reported revenue growth. "
+                "Fiscal years may end on different dates, so the chart is best read as a company-reported annual trend rather than a same-calendar-period comparison."
+            )
+
             revenue_rows = []
             for company in selected_companies:
                 for item in company_data[company].get("history", []):
@@ -769,6 +774,80 @@ with peer_tab:
                         columns="Company",
                         values="Revenue"
                     )
+                )
+
+                st.markdown("**Trend context**")
+                trend_rows = []
+                for company in selected_companies:
+                    history = company_data[company].get("history", [])
+                    if not history:
+                        continue
+
+                    first = history[0]
+                    latest_hist = history[-1]
+                    prior_hist = history[-2] if len(history) >= 2 else None
+
+                    start_revenue = first.get("revenue")
+                    latest_revenue = latest_hist.get("revenue")
+                    latest_growth = (
+                        calc_growth(latest_revenue, prior_hist.get("revenue"))
+                        if prior_hist else None
+                    )
+                    total_change = calc_growth(latest_revenue, start_revenue)
+
+                    periods = max(len(history) - 1, 0)
+                    cagr = None
+                    if (
+                        periods > 0
+                        and start_revenue not in (None, 0)
+                        and latest_revenue is not None
+                        and start_revenue > 0
+                        and latest_revenue > 0
+                    ):
+                        cagr = (
+                            (latest_revenue / start_revenue) ** (1 / periods) - 1
+                        ) * 100
+
+                    start_margin = calc_margin(
+                        first.get("operating_income"),
+                        start_revenue
+                    )
+                    latest_margin = calc_margin(
+                        latest_hist.get("operating_income"),
+                        latest_revenue
+                    )
+                    margin_change = (
+                        latest_margin - start_margin
+                        if latest_margin is not None and start_margin is not None
+                        else None
+                    )
+
+                    trend_rows.append({
+                        "Company": company,
+                        "Latest FY": latest_hist.get("fiscal_year"),
+                        "Latest Revenue": format_money(latest_revenue),
+                        "Latest YoY Growth": pct(latest_growth),
+                        "Multi-Year Revenue Change": pct(total_change),
+                        "Annualized Growth": pct(cagr),
+                        "Operating Margin Change": (
+                            f"{margin_change:+.1f} pts"
+                            if margin_change is not None else "N/A"
+                        )
+                    })
+
+                st.dataframe(
+                    pd.DataFrame(trend_rows),
+                    use_container_width=True,
+                    hide_index=True
+                )
+
+                st.markdown("**How to read this**")
+                st.write(
+                    "The chart shows absolute revenue over time, while the table separates growth rate from company size. "
+                    "Latest YoY Growth measures the change from the prior reported fiscal year. "
+                    "Multi-Year Revenue Change measures the total change from the first year shown to the latest year. "
+                    "Annualized Growth converts that multi-year change into an average annual rate. "
+                    "Operating Margin Change shows how many percentage points reported operating margin moved over the same period."
                 )
 
             section("Qualitative Research", "Risk & Business Model")
