@@ -310,13 +310,51 @@ st.markdown(
 )
 
 coverage_cols = st.columns(4)
-coverage_cols[0].metric("Companies Covered", len(company_data))
-coverage_cols[1].metric("Industry", "Cloud Software")
-coverage_cols[2].metric("Latest Data", "Q2 2026 / FY27")
-coverage_cols[3].metric(
-    "Market Data",
-    "Private Live" if public_market_data_enabled else "Public Filing Mode"
-)
+
+summary_cards = [
+    ("Companies Covered", str(len(company_data))),
+    ("Industry", "Cloud & Data Infrastructure Software"),
+    ("Latest Data", "Q2 2026 / FY2027"),
+    (
+        "Market Data",
+        "Private Live" if public_market_data_enabled else "Public Filing Mode"
+    )
+]
+
+for col, (label, value) in zip(coverage_cols, summary_cards):
+    with col:
+        st.markdown(
+            f"""
+            <div style="
+                min-height: 150px;
+                padding: 1.25rem 1.35rem;
+                border: 1px solid rgba(148, 163, 184, 0.18);
+                border-radius: 20px;
+                background: linear-gradient(180deg, rgba(17,35,56,0.96), rgba(13,27,42,0.96));
+                box-shadow: 0 10px 30px rgba(0,0,0,0.14);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            ">
+                <div style="
+                    color: #94A3B8;
+                    font-size: 0.92rem;
+                    font-weight: 650;
+                    margin-bottom: 0.65rem;
+                ">{label}</div>
+                <div style="
+                    color: #EAF2F8;
+                    font-size: 2rem;
+                    line-height: 1.2;
+                    font-weight: 800;
+                    letter-spacing: -0.03em;
+                    white-space: normal;
+                    overflow-wrap: anywhere;
+                ">{value}</div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
 st.markdown(
     """
