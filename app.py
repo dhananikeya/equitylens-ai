@@ -30,6 +30,10 @@ def format_money(value):
     return f"{sign}${value:,.0f}"
 
 
+def pct(value):
+    return f"{value:.1f}%" if value is not None else "N/A"
+
+
 company_data = load_company_data()
 
 st.title("EquityLens AI")
@@ -46,9 +50,7 @@ st.write(
 )
 
 st.markdown("---")
-
 st.header("Industry Comparison")
-
 st.markdown("**Industry:** Cloud & Data Infrastructure Software")
 
 selected_companies = st.multiselect(
@@ -79,16 +81,25 @@ if st.button("Run Comparison"):
             operating_margin = (operating_income / revenue) * 100 if revenue else None
             net_margin = (net_income / revenue) * 100 if revenue else None
 
+            history = data.get("history", [])
+            revenue_growth = None
+            if len(history) >= 2:
+                current = history[-1]["revenue"]
+                prior = history[-2]["revenue"]
+                if prior:
+                    revenue_growth = ((current - prior) / prior) * 100
+
             rows.append({
                 "Company": company,
                 "FY": data.get("fiscal_year"),
                 "Revenue": format_money(revenue),
+                "YoY Revenue Growth": pct(revenue_growth),
                 "Gross Profit": format_money(gross_profit),
-                "Gross Margin": f"{gross_margin:.1f}%" if gross_margin is not None else "N/A",
+                "Gross Margin": pct(gross_margin),
                 "Operating Income": format_money(operating_income),
-                "Operating Margin": f"{operating_margin:.1f}%" if operating_margin is not None else "N/A",
+                "Operating Margin": pct(operating_margin),
                 "Net Income": format_money(net_income),
-                "Net Margin": f"{net_margin:.1f}%" if net_margin is not None else "N/A",
+                "Net Margin": pct(net_margin),
                 "Cash": format_money(data["cash"]),
                 "Assets": format_money(data["assets"]),
                 "SEC Filing": data.get("filing_url", "")
@@ -115,19 +126,51 @@ if st.button("Run Comparison"):
         )
 
         st.markdown("---")
-        st.subheader("Quick Comparison")
+        st.subheader("Three-Year Revenue Trend")
 
-        metric_df = pd.DataFrame(
-            [
-                {
+        revenue_rows = []
+        for company in selected_companies:
+            for item in company_data[company].get("history", []):
+                revenue_rows.append({
                     "Company": company,
-                    "Revenue": company_data[company]["revenue"],
-                    "Gross Profit": company_data[company]["gross_profit"],
-                    "Operating Income": company_data[company]["operating_income"],
-                    "Net Income": company_data[company]["net_income"]
-                }
-                for company in selected_companies
-            ]
-        ).set_index("Company")
+                    "Fiscal Year": str(item["fiscal_year"]),
+                    "Revenue": item["revenue"]
+                })
 
-        st.bar_chart(metric_df["Revenue"])
+        revenue_df = pd.DataFrame(revenue_rows)
+
+        if not revenue_df.empty:
+            revenue_chart = revenue_df.pivot(
+                index="Fiscal Year",
+                columns="Company",
+                values="Revenue"
+            )
+            st.line_chart(revenue_chart)
+
+        st.subheader("Three-Year Operating Margin Trend")
+
+        margin_rows = []
+        for company in selected_companies:
+            for item in company_data[company].get("history", []):
+                revenue = item["revenue"]
+                operating_income = item["operating_income"]
+                operating_margin = (
+                    (operating_income / revenue) * 100
+                    if revenue else None
+                )
+
+                margin_rows.append({
+                    "Company": company,
+                    "Fiscal Year": str(item["fiscal_year"]),
+                    "Operating Margin": operating_margin
+                })
+
+        margin_df = pd.DataFrame(margin_rows)
+
+        if not margin_df.empty:
+            margin_chart = margin_df.pivot(
+                index="Fiscal Year",
+                columns="Company",
+                values="Operating Margin"
+            )
+            st.line_chart(margin_chart)
