@@ -209,6 +209,20 @@ The project has involved:
 - Managing data-quality and source-linking considerations
 - Thinking through how AI can support research without replacing user judgment
 
+## Ownership and Use
+
+**Author: Keya Dhanani**
+
+EquityLens AI was independently designed and developed by Keya Dhanani.
+
+Unless otherwise stated, the original source code, interface design, written explanations, project-specific research structure, and documentation in this repository are proprietary and all rights are reserved.
+
+Public SEC filings, company disclosures, company names, trademarks, and third-party source materials are not claimed as original EquityLens AI property. Those materials remain subject to the rights and terms of their respective owners and are cited or linked where applicable.
+
+No permission is granted to reproduce, redistribute, republish, sell, sublicense, or create a substantially similar copy of the original EquityLens AI application or its original written content except where permitted by applicable law or platform terms.
+
+For permission requests, contact the project author directly.
+
 ## Data Use and Disclaimer
 
 EquityLens AI is an independent educational and research project. It is not affiliated with, sponsored by, or endorsed by any similarly named company, product, service, financial institution, broker, exchange, or data provider.
