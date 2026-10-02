@@ -1,4 +1,5 @@
 import json
+import requests
 import pandas as pd
 import streamlit as st
 
@@ -19,6 +20,58 @@ def load_company_data():
 def load_company_analysis():
     with open("data/company_analysis.json", "r") as file:
         return json.load(file)
+
+
+@st.cache_data(ttl=300)
+def get_live_market_data(symbols):
+    api_key = st.secrets["FINIMPULSE_API_KEY"]
+
+    url = "https://api.finimpulse.com/v1/search-lite"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}"
+    }
+
+    payload = {
+        "symbols": symbols,
+        "quote_types": ["stock"],
+        "select_identifiers": [
+            "display_name",
+            "current_price",
+            "current_price_update_time",
+            "regular_market_price_change_percent",
+            "regular_market_volume",
+            "amount_usd",
+            "fifty_two_week_low",
+            "fifty_two_week_high"
+        ],
+        "limit": len(symbols)
+    }
+
+    response = requests.post(
+        url,
+        headers=headers,
+        json=payload,
+        timeout=20
+    )
+    response.raise_for_status()
+
+    body = response.json()
+    result = body.get("result", [])
+
+    if isinstance(result, dict):
+        if "items" in result and isinstance(result["items"], list):
+            result = result["items"]
+        else:
+            result = [result]
+
+    market_data = {}
+    for item in result:
+        symbol = item.get("symbol")
+        if symbol:
+            market_data[symbol] = item
+
+    return market_data
 
 
 def format_money(value):
@@ -46,13 +99,13 @@ company_analysis = load_company_analysis()
 st.title("EquityLens AI")
 
 st.subheader(
-    "AI-powered capital markets research using SEC filings and financial data"
+    "AI-powered capital markets research using SEC filings and live market data"
 )
 
 st.write(
     """
     EquityLens AI helps users compare public companies using financial metrics,
-    SEC filings, risk factors, and AI-powered research insights.
+    SEC filings, live market data, risk factors, and AI-powered research insights.
     """
 )
 
@@ -74,6 +127,77 @@ if st.button("Run Comparison"):
     if len(selected_companies) < 2:
         st.warning("Please select at least two companies to compare.")
     else:
+        symbols = [company_data[company]["ticker"] for company in selected_companies]
+
+        try:
+            live_market = get_live_market_data(symbols)
+        except Exception as e:
+            live_market = {}
+            st.warning(
+                "Live market data is temporarily unavailable. "
+                "The filing-based comparison below is still available."
+            )
+            st.caption(str(e))
+
+        st.subheader("Live Market Snapshot")
+
+        market_rows = []
+        for company in selected_companies:
+            ticker = company_data[company]["ticker"]
+            market = live_market.get(ticker, {})
+
+            market_cap = market.get("amount_usd")
+            cash = company_data[company].get("cash")
+
+            enterprise_value = None
+            if market_cap is not None and cash is not None:
+                # Debt will be added to the model next. Until then, this is a
+                # simplified net-cash EV estimate rather than full enterprise value.
+                enterprise_value = market_cap - cash
+
+            market_rows.append({
+                "Company": company,
+                "Price": (
+                    f"${market.get('current_price'):,.2f}"
+                    if market.get("current_price") is not None
+                    else "N/A"
+                ),
+                "Daily Change": (
+                    pct(market.get("regular_market_price_change_percent"))
+                    if market.get("regular_market_price_change_percent") is not None
+                    else "N/A"
+                ),
+                "Market Cap": format_money(market_cap),
+                "52W Low": (
+                    f"${market.get('fifty_two_week_low'):,.2f}"
+                    if market.get("fifty_two_week_low") is not None
+                    else "N/A"
+                ),
+                "52W High": (
+                    f"${market.get('fifty_two_week_high'):,.2f}"
+                    if market.get("fifty_two_week_high") is not None
+                    else "N/A"
+                ),
+                "Volume": (
+                    f"{market.get('regular_market_volume'):,}"
+                    if market.get("regular_market_volume") is not None
+                    else "N/A"
+                ),
+                "Price Updated": market.get("current_price_update_time", "N/A"),
+                "Simplified EV": format_money(enterprise_value)
+            })
+
+        st.dataframe(
+            pd.DataFrame(market_rows),
+            use_container_width=True,
+            hide_index=True
+        )
+
+        st.caption(
+            "FinImpulse market prices may be delayed. Simplified EV currently equals "
+            "market cap minus cash; debt will be incorporated in the next valuation upgrade."
+        )
+
         rows = []
 
         for company in selected_companies:
