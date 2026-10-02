@@ -101,13 +101,13 @@ public_market_data_enabled = bool(st.secrets.get("PUBLIC_MARKET_DATA_ENABLED", F
 st.title("EquityLens AI")
 
 st.subheader(
-    "AI-powered capital markets research using SEC filings and live market data"
+    "AI-powered capital markets research using SEC filings, financial data, and market-data integrations"
 )
 
 st.write(
     """
     EquityLens AI helps users compare public companies using financial metrics,
-    SEC filings, live market data, risk factors, and AI-powered research insights.
+    SEC filings, risk factors, capital-structure data, and market-data integrations.
     """
 )
 
@@ -179,6 +179,40 @@ if st.button("Run Comparison"):
                 st.caption(str(e))
 
             st.subheader("Live Market Snapshot")
+
+            st.markdown("**Current Price Direction**")
+            price_columns = st.columns(len(selected_companies))
+
+            for idx, company in enumerate(selected_companies):
+                ticker = company_data[company]["ticker"]
+                market = live_market.get(ticker, {})
+                close = market.get("close")
+                percent_change = market.get("percent_change")
+
+                price_text = (
+                    f"$" + f"{float(close):,.2f}"
+                    if close not in (None, "")
+                    else "N/A"
+                )
+
+                delta_text = None
+                if percent_change not in (None, ""):
+                    try:
+                        delta_text = f"{float(percent_change):.2f}%"
+                    except (TypeError, ValueError):
+                        delta_text = None
+
+                price_columns[idx].metric(
+                    label=ticker,
+                    value=price_text,
+                    delta=delta_text,
+                    delta_color="normal"
+                )
+
+            st.caption(
+                "Green indicates a positive daily change, red indicates a negative daily change, "
+                "and no color indicates unavailable or unchanged market data."
+            )
 
             market_rows = []
             for company in selected_companies:
