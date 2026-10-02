@@ -459,7 +459,22 @@ SUBGROUPS = {
         "Zscaler (ZS)"
     ],
     "Enterprise / AI Platforms": [],
-    "AI / Compute Infrastructure": []
+    "AI / Compute Infrastructure": [],
+    "Endpoint / XDR": [
+        "CrowdStrike (CRWD)",
+        "SentinelOne (S)"
+    ],
+    "Identity Security": [
+        "Okta (OKTA)"
+    ],
+    "Network Security": [
+        "Palo Alto Networks (PANW)",
+        "Fortinet (FTNT)",
+        "Zscaler (ZS)"
+    ],
+    "Exposure Management": [
+        "Tenable (TENB)"
+    ]
 }
 
 st.markdown(
@@ -853,21 +868,27 @@ with company_tab:
         m4.metric("Operating Margin", pct(qm["operating_margin"]))
 
     section("Earnings", "What Changed This Quarter?")
-    for title, copy in build_change_notes(qdata):
-        st.markdown(
-            f"""
-            <div class="el-change-card">
-                <div class="el-change-title">{title}</div>
-                <p class="el-change-copy">{copy}</p>
-            </div>
-            """,
-            unsafe_allow_html=True
+    change_notes = build_change_notes(qdata)
+    if change_notes:
+        for title, copy in change_notes:
+            st.markdown(
+                f"""
+                <div class="el-change-card">
+                    <div class="el-change-title">{title}</div>
+                    <p class="el-change-copy">{copy}</p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+        st.caption(
+            "These statements are calculated from reported SEC filing figures. "
+            "They describe changes and do not rate the company or make an investment recommendation."
         )
-
-    st.caption(
-        "These statements are calculated from reported SEC filing figures. "
-        "They describe changes and do not rate the company or make an investment recommendation."
-    )
+    else:
+        st.info(
+            "Quarter-over-quarter change analysis will appear here when a newer quarterly filing "
+            "is added to the structured dataset. The latest annual filing is available below."
+        )
 
     section("Financial Snapshot", "Latest Quarter + LTM")
     quarter_cols = st.columns(4)
