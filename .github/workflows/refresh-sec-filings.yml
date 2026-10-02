@@ -4,6 +4,10 @@ on:
   schedule:
     - cron: "*/15 * * * *"
   workflow_dispatch:
+  push:
+    paths:
+      - "scripts/update_sec_filings.py"
+      - ".github/workflows/refresh-sec-filings.yml"
 
 permissions:
   contents: write
