@@ -12,6 +12,7 @@ import json
 import re
 import time
 import urllib.request
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -58,23 +59,39 @@ def filing_url(cik: str, accession: str, primary_document: str) -> str:
     )
 
 
-def recent_filings(submissions: dict, cik: str) -> list[dict]:
+def recent_filings(
+    submissions: dict,
+    cik: str,
+    previous_first_seen: dict[str, str],
+    observed_at_utc: str,
+) -> list[dict]:
     recent = submissions.get("filings", {}).get("recent", {})
     forms = recent.get("form", [])
     count = min(len(forms), MAX_FILINGS_PER_COMPANY)
     rows = []
 
+    def value(field: str, index: int, default=""):
+        values = recent.get(field, [])
+        return values[index] if index < len(values) else default
+
     for i in range(count):
-        accession = recent.get("accessionNumber", [""] * count)[i]
-        primary_document = recent.get("primaryDocument", [""] * count)[i]
+        accession = value("accessionNumber", i)
+        primary_document = value("primaryDocument", i)
         rows.append(
             {
                 "form": forms[i],
-                "filing_date": recent.get("filingDate", [""] * count)[i],
-                "report_date": recent.get("reportDate", [""] * count)[i],
+                "filing_date": value("filingDate", i),
+                "acceptance_datetime": value("acceptanceDateTime", i),
+                "report_date": value("reportDate", i),
                 "accession_number": accession,
                 "primary_document": primary_document,
-                "description": recent.get("primaryDocDescription", [""] * count)[i],
+                "description": value("primaryDocDescription", i),
+                "items": value("items", i),
+                "is_xbrl": value("isXBRL", i, 0),
+                "is_inline_xbrl": value("isInlineXBRL", i, 0),
+                "first_seen_utc": previous_first_seen.get(
+                    accession, observed_at_utc
+                ),
                 "url": filing_url(cik, accession, primary_document)
                 if accession and primary_document
                 else "",
@@ -86,6 +103,12 @@ def recent_filings(submissions: dict, cik: str) -> list[dict]:
 
 def main() -> None:
     metrics = json.loads(METRICS_PATH.read_text(encoding="utf-8"))
+    previous_output = (
+        json.loads(OUTPUT_PATH.read_text(encoding="utf-8"))
+        if OUTPUT_PATH.exists()
+        else {}
+    )
+    observed_at_utc = datetime.now(timezone.utc).isoformat(timespec="seconds")
     output = {}
 
     for company_name, company in metrics.items():
@@ -94,11 +117,23 @@ def main() -> None:
             f"https://data.sec.gov/submissions/CIK{cik}.json"
         )
 
+        previous_first_seen = {
+            filing.get("accession_number", ""): filing.get("first_seen_utc", "")
+            for filing in previous_output.get(company_name, {}).get("filings", [])
+            if filing.get("accession_number")
+        }
+
         output[company_name] = {
             "ticker": company.get("ticker", ""),
             "cik": cik,
             "entity_name": submissions.get("name", company_name),
-            "filings": recent_filings(submissions, cik),
+            "last_checked_utc": observed_at_utc,
+            "filings": recent_filings(
+                submissions,
+                cik,
+                previous_first_seen,
+                observed_at_utc,
+            ),
         }
 
         # Stay comfortably below the SEC's published fair-access ceiling.
