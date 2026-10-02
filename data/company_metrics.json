@@ -22,12 +22,15 @@
   "Rubrik (RBRK)": {
     "ticker": "RBRK",
     "industry": "Cloud & Data Infrastructure Software",
-    "revenue": null,
-    "gross_profit": null,
-    "operating_income": null,
-    "net_income": null,
-    "cash": null,
-    "assets": null
+    "fiscal_year": 2026,
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1943896/000194389626000033/arsfinal.pdf",
+    "revenue": 1316191000,
+    "gross_profit": 1054314000,
+    "operating_income": -345416000,
+    "net_income": -348828000,
+    "cash": 380196000,
+    "assets": 2766536000
   },
   "Datadog (DDOG)": {
     "ticker": "DDOG",
