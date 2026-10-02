@@ -1124,9 +1124,25 @@ with home_tab:
 
     section("Start here", "Research a company in seconds")
 
+    home_industry = st.selectbox(
+        "Choose industry",
+        industries,
+        key="home_industry"
+    )
+
+    home_industry_companies = [
+        name for name, company in company_data.items()
+        if company.get("industry", "Unclassified") == home_industry
+    ]
+
+    st.caption(
+        f"{len(home_industry_companies)} covered compan"
+        f"{'y' if len(home_industry_companies) == 1 else 'ies'} in {home_industry}."
+    )
+
     home_company = st.selectbox(
-        "Search company or ticker",
-        list(company_data.keys()),
+        "Choose company",
+        home_industry_companies,
         format_func=lambda name: (
             f"{company_data[name].get('ticker', '')} · {name.split(' (')[0]}"
         ),
@@ -1237,8 +1253,8 @@ with home_tab:
     else:
         st.caption("Recent SEC filing activity will appear here as the automated filing monitor populates.")
 
-    section("Coverage", "Featured companies")
-    featured_companies = list(company_data.keys())[:6]
+    section("Coverage", f"{home_industry} companies")
+    featured_companies = home_industry_companies[:6]
     featured_cols = st.columns(3)
     for idx, featured_company in enumerate(featured_companies):
         featured_data = company_data[featured_company]
@@ -1741,9 +1757,25 @@ with peer_tab:
 with company_tab:
     section("Deep Dive", "Company Research View")
 
+    research_industry = st.selectbox(
+        "Industry",
+        industries,
+        key="research_industry"
+    )
+
+    research_industry_companies = [
+        name for name, company in company_data.items()
+        if company.get("industry", "Unclassified") == research_industry
+    ]
+
+    st.caption(
+        f"Showing {len(research_industry_companies)} covered compan"
+        f"{'y' if len(research_industry_companies) == 1 else 'ies'} in {research_industry}."
+    )
+
     research_company = st.selectbox(
-        "Search company or ticker",
-        list(company_data.keys()),
+        "Company",
+        research_industry_companies,
         format_func=lambda name: (
             f"{company_data[name].get('ticker', '')} · "
             f"{name.split(' (')[0]}"
@@ -2272,13 +2304,28 @@ with ask_tab:
         "It does not provide buy, sell, hold, ranking, or personalized investment recommendations."
     )
 
+    ask_industry = st.selectbox(
+        "Industry",
+        industries,
+        key="ai_chat_industry"
+    )
+
+    ask_industry_companies = [
+        name for name, company in company_data.items()
+        if company.get("industry", "Unclassified") == ask_industry
+    ]
+
     ask_company = st.selectbox(
         "Research company",
-        list(company_data.keys()),
+        ask_industry_companies,
         format_func=lambda name: (
             f"{company_data[name].get('ticker', '')} · {name.split(' (')[0]}"
         ),
         key="ai_chat_company"
+    )
+
+    st.caption(
+        f"Researching {company_data[ask_company].get('ticker', '')} in {ask_industry}."
     )
 
     openai_client_available = get_openai_client() is not None
