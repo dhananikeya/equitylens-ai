@@ -1126,7 +1126,7 @@ render_summary_cards([
 home_tab, company_tab, peer_tab, ask_tab, sec_tracker_tab, learn_tab = st.tabs([
     "Home",
     "Explore Companies",
-    "Compare",
+    "Industry Comparison",
     "Ask EquityLens",
     "Filings",
     "Learn"
@@ -1134,8 +1134,8 @@ home_tab, company_tab, peer_tab, ask_tab, sec_tracker_tab, learn_tab = st.tabs([
 
 with home_tab:
     st.info(
-        "New to financial statements? Start in Learn. Know the company you want? Search below. "
-        "Comparing competitors? Open Compare."
+        "New to financial statements? Start in Learn. Want to understand a company at IPO? Open Explore Companies. "
+        "Comparing competitors? Open Industry Comparison."
     )
 
     section("Start here", "Research a company in seconds")
@@ -1202,8 +1202,8 @@ with home_tab:
         st.link_button("Open latest supporting SEC filing", source_url)
 
     st.caption(
-        "Continue in Explore Companies for the full research view, including filing history, "
-        "financial trends, business-model analysis, risks, S-1 context, and source-linked calculations."
+        "Continue in Explore Companies for an S-1-focused view of how the company described its business, "
+        "strategy, market opportunity, and risks when it prepared to go public."
     )
 
     section("Why EquityLens", "Research built to be understandable and verifiable")
@@ -1771,542 +1771,97 @@ with peer_tab:
             )
 
 with company_tab:
-    section("Deep Dive", "Company Research View")
-
-    research_industry = st.selectbox(
-        "Industry",
-        industries,
-        key="research_industry"
-    )
-
-    research_industry_companies = [
-        name for name, company in company_data.items()
-        if company.get("industry", "Unclassified") == research_industry
-    ]
+    section("Explore Companies", "Read the Company Through Its S-1")
 
     st.caption(
-        f"Showing {len(research_industry_companies)} covered compan"
-        f"{'y' if len(research_industry_companies) == 1 else 'ies'} in {research_industry}."
+        "This view is intentionally focused on the company's S-1 or IPO registration materials. "
+        "It does not mix in later 10-K or 10-Q results, so the historical IPO story stays separate from current performance."
     )
 
-    research_company = st.selectbox(
+    explore_industry = st.selectbox(
+        "Industry",
+        industries,
+        key="explore_s1_industry"
+    )
+
+    explore_companies = [
+        name for name, company in company_data.items()
+        if company.get("industry", "Unclassified") == explore_industry
+    ]
+
+    explore_company = st.selectbox(
         "Company",
-        research_industry_companies,
+        explore_companies,
         format_func=lambda name: (
-            f"{company_data[name].get('ticker', '')} · "
-            f"{name.split(' (')[0]}"
+            f"{company_data[name].get('ticker', '')} · {name.split(' (')[0]}"
         ),
-        key="research_company"
+        key="explore_s1_company"
     )
 
-    data = company_data[research_company]
-    analysis = company_analysis.get(research_company, {})
-    qdata = company_quarterly.get(research_company, {})
-    latest = qdata.get("latest_quarter", {})
-    ltm = qdata.get("ltm", {})
-    capital = data.get("capital_structure", {})
-    qm = quarterly_metrics(qdata)
-
-    ticker = data.get("ticker", "")
-    company_name = research_company.split(" (")[0]
+    explore_data = company_data.get(explore_company, {})
+    explore_s1 = company_s1.get(explore_company, {})
+    explore_ticker = explore_data.get("ticker", "")
+    explore_name = explore_company.split(" (")[0]
 
     st.markdown(
         f"""
         <div class="el-company-hero">
-            <div class="el-kicker">{ticker} · {data.get('industry', '')}</div>
-            <div class="el-company-title">{company_name}</div>
-            <p class="el-subtitle">{analysis.get('business_model', '')}</p>
+            <div class="el-kicker">{explore_ticker} · {explore_data.get('industry', '')}</div>
+            <div class="el-company-title">{explore_name}</div>
+            <p class="el-subtitle">
+                Historical IPO research based on the company's S-1 registration materials.
+            </p>
             <div class="el-badges">
-                <span class="el-badge">{qdata.get('quarter_label', 'Latest quarter')}</span>
-                <span class="el-badge">10-K + 10-Q sourced</span>
-                <span class="el-badge">Neutral research</span>
+                <span class="el-badge">{explore_s1.get('form', 'S-1')}</span>
+                <span class="el-badge">SEC EDGAR source</span>
+                <span class="el-badge">Historical filing context</span>
             </div>
         </div>
         """,
         unsafe_allow_html=True
     )
 
-    filing_feed = sec_filings.get(research_company, {})
-    recent_sec_filings = filing_feed.get("filings", [])
-    if recent_sec_filings:
-        section("Live SEC Monitor", "Recent SEC Filings")
-        st.caption(
-            "Automatically refreshed from the SEC submissions API every 15 minutes. "
-            "Scheduled GitHub Actions can occasionally run late, so a newly disseminated filing may take a little longer to appear."
-        )
-
-        filing_rows = []
-        for filing in recent_sec_filings[:8]:
-            filing_rows.append({
-                "Filed": filing.get("filing_date", ""),
-                "Form": filing.get("form", ""),
-                "Description": filing.get("description", "") or filing.get("primary_document", ""),
-                "SEC Filing": filing.get("url", "")
-            })
-
-        st.dataframe(
-            pd.DataFrame(filing_rows),
-            use_container_width=True,
-            hide_index=True,
-            column_config={
-                "SEC Filing": st.column_config.LinkColumn(
-                    "SEC Filing",
-                    display_text="Open filing"
-                )
-            }
-        )
-        st.caption(
-            "This feed surfaces newly posted filings automatically. Financial metrics and qualitative analysis "
-            "are updated separately when the filing contains data that can be standardized reliably."
-        )
-
-
-    source_cols = st.columns(2)
-    with source_cols[0]:
-        st.caption("Primary annual source")
-        if data.get("filing_url"):
-            st.link_button("Open latest 10-K / annual filing", data.get("filing_url"))
-        else:
-            st.write("Source not available")
-    with source_cols[1]:
-        st.caption("Primary quarterly source")
-        if qdata.get("source_filing"):
-            st.link_button("Open latest quarterly / source filing", qdata.get("source_filing"))
-        else:
-            st.write("Source not available")
-
-    st.caption(
-        "Reported figures come from the linked company filings. Growth rates, margins, and LTM values shown in EquityLens may be calculated from those reported figures."
-    )
-
-
-    if public_market_data_enabled:
-        try:
-            market = get_live_market_data([ticker]).get(ticker, {})
-        except Exception:
-            market = {}
-
-        if market:
-            close = market.get("close")
-            change = market.get("percent_change")
-            m1, m2, m3, m4 = st.columns(4)
-            m1.metric(
-                "Market Price",
-                f"${float(close):,.2f}" if close not in (None, "") else "N/A",
-                delta=(
-                    f"{float(change):.2f}%"
-                    if change not in (None, "")
-                    else None
-                )
-            )
-            m2.metric("Latest Quarter", qdata.get("quarter_label", "N/A"))
-            m3.metric("Quarter Revenue", format_money(qm["revenue"]))
-            m4.metric("YoY Revenue Growth", pct(qm["yoy_growth"]))
-    else:
-        m1, m2, m3, m4 = st.columns(4)
-        m1.metric("Latest Quarter", qdata.get("quarter_label", "N/A"))
-        m2.metric("Quarter Revenue", format_money(qm["revenue"]))
-        m3.metric("YoY Revenue Growth", pct(qm["yoy_growth"]))
-        m4.metric("Operating Margin", pct(qm["operating_margin"]))
-
-    section("Earnings", "What Changed This Quarter?")
-    change_notes = build_change_notes(qdata)
-    if change_notes:
-        for title, copy in change_notes:
-            st.markdown(
-                f"""
-                <div class="el-change-card">
-                    <div class="el-change-title">{title}</div>
-                    <p class="el-change-copy">{copy}</p>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-        st.caption(
-            "These statements are calculated from reported SEC filing figures. "
-            "They describe changes and do not rate the company or make an investment recommendation."
-        )
-    else:
-        st.info(
-            "Quarter-over-quarter change analysis will appear here when a newer quarterly filing "
-            "is added to the structured dataset. The latest annual filing is available below."
-        )
-
-    section("Financial Snapshot", "Latest Quarter + LTM")
-    quarter_cols = st.columns(4)
-    quarter_cols[0].metric("Quarter Revenue", format_money(latest.get("revenue")))
-    quarter_cols[1].metric("Gross Margin", pct(qm["gross_margin"]))
-    quarter_cols[2].metric("Operating Margin", pct(qm["operating_margin"]))
-    quarter_cols[3].metric("Net Income", format_money(latest.get("net_income")))
-
-    ltm_revenue = ltm.get("revenue")
-    ltm_cols = st.columns(4)
-    ltm_cols[0].metric("LTM Revenue", format_money(ltm_revenue))
-    ltm_cols[1].metric(
-        "LTM Gross Margin",
-        pct(calc_margin(ltm.get("gross_profit"), ltm_revenue))
-    )
-    ltm_cols[2].metric(
-        "LTM Operating Margin",
-        pct(calc_margin(ltm.get("operating_income"), ltm_revenue))
-    )
-    ltm_cols[3].metric("LTM Net Income", format_money(ltm.get("net_income")))
-
-    section("Balance Sheet", "Capital Structure")
-    render_summary_cards([
-        (
-            "Shares Outstanding",
-            f"{capital.get('shares_outstanding'):,}"
-            if capital.get("shares_outstanding") is not None else "N/A"
-        ),
-        ("Debt", format_money(capital.get("total_debt"))),
-        (
-            "Cash + Investments",
-            format_money(capital.get("cash_and_investments"))
-        ),
-        ("Balance Sheet Date", capital.get("balance_sheet_as_of", "N/A"))
-    ])
-
-    section("Trend", "Historical Financials")
-    history = data.get("history", [])
-    history_df = pd.DataFrame(history)
-    if not history_df.empty:
-        display_history = history_df.copy()
-        display_history["Operating Margin"] = (
-            display_history["operating_income"]
-            / display_history["revenue"] * 100
-        )
-        st.line_chart(
-            display_history.set_index(
-                display_history["fiscal_year"].astype(str)
-            )[["revenue"]].rename(columns={"revenue": "Revenue"})
-        )
-        st.line_chart(
-            display_history.set_index(
-                display_history["fiscal_year"].astype(str)
-            )[["Operating Margin"]]
-        )
-
-    section("IPO History", "What the S-1 Said")
-    s1 = company_s1.get(research_company, {})
-    if s1:
-        st.caption(
-            "An S-1 is the registration statement a company files before an initial public offering. "
-            "It is historical, so EquityLens uses it to show how the company originally described its business, strategy, and risks rather than as a source for current financial figures."
-        )
-
-        s1_cols = st.columns([1, 3])
-        with s1_cols[0]:
-            st.markdown("**Filing**")
-            st.write(s1.get("form", "S-1"))
+    if explore_s1:
+        meta_left, meta_right = st.columns(2)
+        with meta_left:
+            st.markdown("**Registration form**")
+            st.write(explore_s1.get("form", "S-1"))
+        with meta_right:
             st.markdown("**Filed**")
-            st.write(s1.get("filed_date", "N/A"))
-        with s1_cols[1]:
-            st.markdown("**Historical IPO context**")
-            st.write(s1.get("historical_context", "N/A"))
-            st.markdown("**What this filing can teach you**")
-            st.write(s1.get("what_to_learn", "N/A"))
+            st.write(explore_s1.get("filed_date", "N/A"))
 
-        if s1.get("source_url"):
-            st.caption("Primary source: SEC EDGAR S-1 registration filing")
+        section("Company Story", "How the Company Described Itself")
+        st.write(explore_s1.get("historical_context", "No S-1 summary is available yet."))
+
+        section("Research Guide", "What to Look for in the S-1")
+        st.write(explore_s1.get("what_to_learn", "No research guide is available yet."))
+
+        section("How to Read It", "Questions to Keep in Mind")
+        st.markdown(
+            """
+            - **Business model:** What product or service did the company say it sells, and how does it make money?
+            - **Growth strategy:** How did management describe the path to adding customers, products, or markets?
+            - **Market opportunity:** What market did the company believe it was addressing at the time of the IPO?
+            - **Competitive position:** Which alternatives, technologies, or competitors did the filing identify?
+            - **Risk factors:** What could materially affect the business, operations, or ability to grow?
+            - **Economics:** What did the filing reveal about revenue mix, costs, profitability, and capital needs?
+            """
+        )
+
+        if explore_s1.get("source_url"):
             st.link_button(
                 "Open original S-1 on SEC EDGAR",
-                s1.get("source_url"),
-                key=f"s1_source_{ticker}"
+                explore_s1.get("source_url"),
+                key=f"explore_s1_source_{explore_ticker}"
             )
 
-        st.caption(
-            "S-1 information is presented as historical company context. Current company facts and financial performance should be read from the latest 10-K, 10-Q, and other current filings."
+        st.info(
+            "S-1 filings are historical documents. This tab explains the company's IPO-era story rather than its current financial condition. "
+            "Use Industry Comparison and Filings for later-period research."
         )
     else:
-        st.info("No S-1 research has been added for this company yet.")
+        st.info("S-1 research has not been added for this company yet.")
 
-    section("Filings", "10-K vs Latest 10-Q Snapshot")
-    annual_revenue = data.get("revenue")
-    filing_rows = [
-        {
-            "Filing": "Latest 10-K",
-            "Period": data.get("fiscal_year_end", "N/A"),
-            "Revenue": format_money(annual_revenue),
-            "Operating Margin": pct(
-                calc_margin(data.get("operating_income"), annual_revenue)
-            ),
-            "Net Income": format_money(data.get("net_income")),
-            "Source": data.get("filing_url", "")
-        },
-        {
-            "Filing": "Latest 10-Q",
-            "Period": qdata.get("period_end", "N/A"),
-            "Revenue": format_money(latest.get("revenue")),
-            "Operating Margin": pct(qm["operating_margin"]),
-            "Net Income": format_money(latest.get("net_income")),
-            "Source": qdata.get("source_filing", "")
-        }
-    ]
-
-    st.dataframe(
-        pd.DataFrame(filing_rows),
-        use_container_width=True,
-        hide_index=True,
-        column_config={
-            "Source": st.column_config.LinkColumn(
-                "Source",
-                display_text="Open filing"
-            )
-        }
-    )
-    st.caption(
-        "Annual and quarterly periods are different lengths, so the table is a filing snapshot, "
-        "not a direct period-for-period comparison."
-    )
-
-    section("Timeline", "Recent Filing Timeline")
-    timeline = pd.DataFrame([
-        {
-            "Date / Period End": data.get("fiscal_year_end", "N/A"),
-            "Form": "10-K",
-            "What it covers": "Annual financials, business model, and risk disclosures",
-            "Source": data.get("filing_url", "")
-        },
-        {
-            "Date / Period End": qdata.get("period_end", "N/A"),
-            "Form": "10-Q",
-            "What it covers": "Latest quarterly financial performance",
-            "Source": qdata.get("source_filing", "")
-        }
-    ])
-
-    st.dataframe(
-        timeline,
-        use_container_width=True,
-        hide_index=True,
-        column_config={
-            "Source": st.column_config.LinkColumn(
-                "Source",
-                display_text="Open filing"
-            )
-        }
-    )
-
-    section("Qualitative Research", "Business Model & Risk Themes")
-    detail_cols = st.columns(2)
-
-    with detail_cols[0]:
-        st.markdown("**Business model**")
-        st.write(analysis.get("business_model", "N/A"))
-        st.markdown("**Primary revenue source**")
-        st.write(analysis.get("primary_revenue_source", "N/A"))
-        st.markdown("**Customer type**")
-        st.write(analysis.get("customer_type", "N/A"))
-        st.markdown("**Platform dependency**")
-        st.write(analysis.get("platform_dependency", "N/A"))
-
-    with detail_cols[1]:
-        themes = analysis.get("key_risk_themes", [])
-        items = "".join(f"<li>{theme}</li>" for theme in themes)
-        st.markdown(
-            f"""
-            <div class="el-risk-card">
-                <div class="el-risk-title">Key risk themes</div>
-                <ul class="el-risk-list">{items}</ul>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-        st.markdown("**Competitive risk**")
-        st.write(analysis.get("competitive_risk", "N/A"))
-        st.markdown("**Operational risk**")
-        st.write(analysis.get("operational_risk", "N/A"))
-
-    section("Balanced View", "Bull Case & Bear Case Factors")
-    st.caption(
-        "These factors summarize reported financial trends and company disclosures. "
-        "They are presented for educational research only and do not constitute a buy, sell, or hold recommendation."
-    )
-
-    bull_factors = []
-    bear_factors = []
-
-    if qm.get("yoy_growth") is not None:
-        if qm["yoy_growth"] > 0:
-            bull_factors.append({
-                "title": "Revenue growth",
-                "detail": f"Latest-quarter revenue changed {qm['yoy_growth']:+.1f}% year over year.",
-                "source": "Calculated by EquityLens from reported quarterly revenue"
-            })
-        elif qm["yoy_growth"] < 0:
-            bear_factors.append({
-                "title": "Revenue growth",
-                "detail": f"Latest-quarter revenue changed {qm['yoy_growth']:+.1f}% year over year.",
-                "source": "Calculated by EquityLens from reported quarterly revenue"
-            })
-
-    if qm.get("operating_margin") is not None and qm.get("prior_q_operating_margin") is not None:
-        margin_delta = qm["operating_margin"] - qm["prior_q_operating_margin"]
-        factor = {
-            "title": "Operating margin trend",
-            "detail": (
-                f"Operating margin changed {margin_delta:+.1f} percentage points sequentially, "
-                f"from {qm['prior_q_operating_margin']:.1f}% to {qm['operating_margin']:.1f}%."
-            ),
-            "source": "Calculated by EquityLens from reported operating income and revenue"
-        }
-        if margin_delta > 0:
-            bull_factors.append(factor)
-        elif margin_delta < 0:
-            bear_factors.append(factor)
-
-    latest_net = latest.get("net_income")
-    if latest_net is not None:
-        if latest_net > 0:
-            bull_factors.append({
-                "title": "Latest net income",
-                "detail": f"The latest reported quarter shows net income of {format_money(latest_net)}.",
-                "source": "Reported in the latest quarterly filing"
-            })
-        elif latest_net < 0:
-            bear_factors.append({
-                "title": "Latest net income",
-                "detail": f"The latest reported quarter shows a net loss of {format_money(latest_net)}.",
-                "source": "Reported in the latest quarterly filing"
-            })
-
-    cash_value = capital.get("cash_and_investments")
-    debt_value = capital.get("total_debt")
-    if cash_value is not None and debt_value is not None:
-        if cash_value > debt_value:
-            bull_factors.append({
-                "title": "Cash relative to debt",
-                "detail": (
-                    f"Reported cash and investments of {format_money(cash_value)} exceed "
-                    f"reported debt of {format_money(debt_value)}."
-                ),
-                "source": "Reported balance-sheet figures"
-            })
-        elif debt_value > cash_value:
-            bear_factors.append({
-                "title": "Debt relative to cash",
-                "detail": (
-                    f"Reported debt of {format_money(debt_value)} exceeds "
-                    f"cash and investments of {format_money(cash_value)}."
-                ),
-                "source": "Reported balance-sheet figures"
-            })
-
-    competitive_risk = analysis.get("competitive_risk")
-    if competitive_risk:
-        bear_factors.append({
-            "title": "Competitive risk",
-            "detail": competitive_risk,
-            "source": "Summarized from company risk disclosures"
-        })
-
-    operational_risk = analysis.get("operational_risk")
-    if operational_risk:
-        bear_factors.append({
-            "title": "Operational risk",
-            "detail": operational_risk,
-            "source": "Summarized from company risk disclosures"
-        })
-
-    profitability_history = analysis.get("profitability_history", "")
-    if profitability_history:
-        lowered = profitability_history.lower()
-        if any(term in lowered for term in ["positive", "profitable", "narrowed", "improved"]):
-            bull_factors.append({
-                "title": "Profitability history",
-                "detail": profitability_history,
-                "source": "Summarized from company-reported results"
-            })
-        if any(term in lowered for term in ["loss", "losses", "unprofitable"]):
-            bear_factors.append({
-                "title": "Profitability history",
-                "detail": profitability_history,
-                "source": "Summarized from company-reported results"
-            })
-
-    factor_cols = st.columns(2)
-    with factor_cols[0]:
-        st.markdown("### Bull Case Factors")
-        if bull_factors:
-            for i, factor in enumerate(bull_factors[:5]):
-                st.markdown(
-                    f"""
-                    <div class="el-risk-card">
-                        <div class="el-risk-title">{factor['title']}</div>
-                        <p class="el-change-copy">{factor['detail']}</p>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-                st.caption(f"Source: {factor['source']}")
-        else:
-            st.info("No positive factor is being highlighted from the current structured dataset.")
-
-    with factor_cols[1]:
-        st.markdown("### Bear Case Factors")
-        if bear_factors:
-            for i, factor in enumerate(bear_factors[:5]):
-                st.markdown(
-                    f"""
-                    <div class="el-risk-card">
-                        <div class="el-risk-title">{factor['title']}</div>
-                        <p class="el-change-copy">{factor['detail']}</p>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-                st.caption(f"Source: {factor['source']}")
-        else:
-            st.info("No risk factor is being highlighted from the current structured dataset.")
-
-    filing_source = qdata.get("source_filing") or data.get("filing_url")
-    if filing_source:
-        st.link_button(
-            "Open supporting SEC filing",
-            filing_source,
-            key=f"balanced_view_source_{ticker}"
-        )
-
-    section("Grounded Research", "Quick Questions")
-    research_question = st.selectbox(
-        "Choose a question",
-        [
-            "How fast is revenue growing?",
-            "Is operating profitability improving sequentially?",
-            "What does the company primarily sell?",
-            "What are the main disclosed risk themes?",
-            "How much cash and debt does it report?"
-        ]
-    )
-
-    if research_question == "How fast is revenue growing?":
-        st.info(
-            f"Latest-quarter revenue was {format_money(qm['revenue'])}. "
-            f"That represents {pct(qm['yoy_growth'])} year-over-year growth "
-            f"and {pct(qm['qoq_growth'])} sequential growth."
-        )
-    elif research_question == "Is operating profitability improving sequentially?":
-        current_margin = qm["operating_margin"]
-        prior_margin = qm["prior_q_operating_margin"]
-        if current_margin is not None and prior_margin is not None:
-            delta = current_margin - prior_margin
-            st.info(
-                f"Operating margin changed from {prior_margin:.1f}% in the prior quarter "
-                f"to {current_margin:.1f}% in the latest quarter, a change of {delta:+.1f} percentage points."
-            )
-        else:
-            st.info("The current structured dataset is insufficient to calculate that comparison.")
-    elif research_question == "What does the company primarily sell?":
-        st.info(analysis.get("primary_revenue_source", "Not available."))
-    elif research_question == "What are the main disclosed risk themes?":
-        st.info("; ".join(analysis.get("key_risk_themes", [])) or "Not available.")
-    elif research_question == "How much cash and debt does it report?":
-        st.info(
-            f"Latest structured capital data shows "
-            f"{format_money(capital.get('cash_and_investments'))} of cash and investments "
-            f"and {format_money(capital.get('total_debt'))} of debt."
-        )
 
 with ask_tab:
     section("Grounded AI research assistant", "Ask EquityLens AI")
