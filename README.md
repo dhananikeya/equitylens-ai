@@ -37,3 +37,19 @@ AI-powered capital markets research platform for comparing SEC filings, financia
 ## Project Goal
 
 EquityLens AI is a personal project designed to make public-company research more accessible by turning complex SEC filings into standardized, comparable financial and qualitative insights.
+
+
+## Data Use and Disclaimer
+
+EquityLens AI is an educational and research project. It does not provide
+personalized investment advice, investment recommendations, or guarantees of
+future performance.
+
+The public demo is designed around publicly available SEC filings and
+company-reported disclosures. Market-data integrations may be used in private
+development environments only when permitted by the relevant provider's
+licensing terms and exchange entitlements.
+
+Financial information may be delayed, incomplete, or changed by later filings
+or restatements. Users should verify material information against original SEC
+filings and company disclosures before making financial decisions.
