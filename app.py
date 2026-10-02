@@ -781,17 +781,17 @@ st.markdown(
     """
     <div class="el-product-hero">
         <div class="el-eyebrow">EquityLens AI · Public-company research</div>
-        <h1 class="el-product-title">Understand companies.<br><span>Not documents.</span></h1>
+        <h1 class="el-product-title">Understand public companies.<br><span>Without digging through hundreds of pages.</span></h1>
         <p class="el-product-subtitle">
-            Turn dense SEC filings into clear financial trends, business-model context,
-            risk themes, and side-by-side company comparisons. Every important insight
-            stays connected to the underlying filing so you can verify the source yourself.
+            Explore financial performance, business models, risks, and SEC filings in one place.
+            EquityLens turns dense company disclosures into structured research while keeping the
+            underlying source visible. EquityLens informs. You decide.
         </p>
         <div class="el-badges">
             <span class="el-badge">SEC EDGAR sourced</span>
-            <span class="el-badge">10-K · 10-Q · 8-K · S-1</span>
-            <span class="el-badge">Grounded research</span>
-            <span class="el-badge">No buy / sell calls</span>
+            <span class="el-badge">Calculations shown</span>
+            <span class="el-badge">Direct filing links</span>
+            <span class="el-badge">No investment recommendations</span>
         </div>
     </div>
     """,
@@ -801,16 +801,16 @@ st.markdown(
 st.markdown(
     """
     <div class="el-trust-strip">
-        <div class="el-trust-item">Primary-source filings</div>
-        <div class="el-trust-item">Reported vs. calculated labels</div>
-        <div class="el-trust-item">Quarterly + LTM context</div>
-        <div class="el-trust-item">Direct source links</div>
+        <div class="el-trust-item">Primary SEC sources</div>
+        <div class="el-trust-item">Reported vs. calculated</div>
+        <div class="el-trust-item">Plain-language explanations</div>
+        <div class="el-trust-item">Source-linked research</div>
     </div>
     """,
     unsafe_allow_html=True
 )
 
-with st.expander("How EquityLens handles sources and calculations"):
+with st.expander("Methodology & source standards"):
     st.markdown(
         """
         **Reported** — taken from a company filing or company-reported disclosure.
@@ -827,18 +827,11 @@ with st.expander("How EquityLens handles sources and calculations"):
     )
 
 
-latest_period = max(
-    [q.get("period_end", "") for q in company_quarterly.values()] or [""]
-)
-
 render_summary_cards([
-    ("Companies Covered", str(len(company_data))),
+    ("Companies", str(len(company_data))),
     ("Industries", str(len(industries))),
-    ("Latest Filing Period", latest_period or "N/A"),
-    (
-        "Market Data",
-        "Private Live" if public_market_data_enabled else "Public Filing Mode"
-    )
+    ("Primary Source", "SEC EDGAR"),
+    ("Monitoring", "Automatic SEC checks")
 ])
 
 home_tab, company_tab, peer_tab, ask_tab, sec_tracker_tab, learn_tab = st.tabs([
@@ -851,6 +844,11 @@ home_tab, company_tab, peer_tab, ask_tab, sec_tracker_tab, learn_tab = st.tabs([
 ])
 
 with home_tab:
+    st.info(
+        "New to financial statements? Start in Learn. Know the company you want? Search below. "
+        "Comparing competitors? Open Compare."
+    )
+
     section("Start here", "Research a company in seconds")
 
     home_company = st.selectbox(
@@ -903,29 +901,68 @@ with home_tab:
         "financial trends, business-model analysis, risks, S-1 context, and source-linked calculations."
     )
 
-    section("Research workflow", "From filing to something a human can actually use")
+    section("Why EquityLens", "Research built to be understandable and verifiable")
     st.markdown(
         """
         <div class="el-feature-grid">
             <div class="el-feature-card">
-                <div class="el-feature-num">01 · Source</div>
-                <div class="el-feature-title">Start with primary filings</div>
-                <div class="el-feature-copy">EquityLens organizes 10-K, 10-Q, 8-K, and S-1 filings instead of making you hunt through SEC pages manually.</div>
+                <div class="el-feature-num">01 · Understand</div>
+                <div class="el-feature-title">Make finance easier to read</div>
+                <div class="el-feature-copy">Plain-language explanations sit beside reported numbers so users can understand what a metric means before interpreting it.</div>
             </div>
             <div class="el-feature-card">
-                <div class="el-feature-num">02 · Standardize</div>
-                <div class="el-feature-title">Make companies comparable</div>
-                <div class="el-feature-copy">Reported figures are converted into consistent growth, margin, LTM, capital-structure, and trend views.</div>
+                <div class="el-feature-num">02 · Compare</div>
+                <div class="el-feature-title">Put peers on the same page</div>
+                <div class="el-feature-copy">Standardized growth, margins, LTM results, capital structure, business models, and risks make peer research easier to follow.</div>
             </div>
             <div class="el-feature-card">
-                <div class="el-feature-num">03 · Explain</div>
-                <div class="el-feature-title">Keep the context attached</div>
-                <div class="el-feature-copy">Business models, disclosed risks, and plain-language explanations sit beside the numbers with links back to the source.</div>
+                <div class="el-feature-num">03 · Verify</div>
+                <div class="el-feature-title">Show the source</div>
+                <div class="el-feature-copy">Material figures and filing-based research stay connected to original SEC sources so users can inspect the underlying disclosure themselves.</div>
             </div>
         </div>
         """,
         unsafe_allow_html=True
     )
+
+    section("Recently updated", "Latest SEC filings detected")
+    recent_filing_rows = []
+    for company_name, feed in sec_filings.items():
+        ticker = company_data.get(company_name, {}).get("ticker", feed.get("ticker", ""))
+        for filing in feed.get("filings", [])[:3]:
+            filing_date = filing.get("filing_date", "")
+            if filing_date:
+                recent_filing_rows.append({
+                    "Company": f"{ticker} · {company_name.split(' (')[0]}",
+                    "Filed": filing_date,
+                    "Form": filing.get("form", ""),
+                    "Description": filing.get("description", "") or filing.get("primary_document", ""),
+                    "SEC Filing": filing.get("url", "")
+                })
+
+    if recent_filing_rows:
+        recent_filing_rows = sorted(
+            recent_filing_rows,
+            key=lambda row: row["Filed"],
+            reverse=True
+        )[:5]
+        st.dataframe(
+            pd.DataFrame(recent_filing_rows),
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "SEC Filing": st.column_config.LinkColumn(
+                    "SEC Filing",
+                    display_text="Open filing"
+                )
+            }
+        )
+        st.caption(
+            "The filing monitor checks covered companies automatically. Newly detected filings may appear "
+            "before EquityLens has standardized every financial or qualitative field from that filing."
+        )
+    else:
+        st.caption("Recent SEC filing activity will appear here as the automated filing monitor populates.")
 
     section("Coverage", "Featured companies")
     featured_companies = list(company_data.keys())[:6]
@@ -954,6 +991,9 @@ with home_tab:
     st.info(
         "EquityLens separates company-reported figures from calculations and summaries, "
         "links material claims back to SEC filings, and keeps interpretation separate from the source data."
+    )
+    st.caption(
+        "Built by Keya Dhanani · Independent public-markets research project"
     )
 
 
