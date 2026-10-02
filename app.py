@@ -1031,6 +1031,10 @@ st.caption(
     available financial information. It does not provide personalized investment
     advice, investment recommendations, rankings, or guarantees of future performance.
 
+    EquityLens AI is an independent personal research project and is not affiliated
+    with, sponsored by, or endorsed by any similarly named company, product, service,
+    financial institution, broker, exchange, or data provider.
+
     Financial information may be delayed, incomplete, or affected by later filings
     and restatements. Users should verify material information against the original
     SEC filings and company disclosures before making financial decisions.
