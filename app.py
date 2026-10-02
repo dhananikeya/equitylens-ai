@@ -15,6 +15,12 @@ def load_company_data():
         return json.load(file)
 
 
+@st.cache_data
+def load_company_analysis():
+    with open("data/company_analysis.json", "r") as file:
+        return json.load(file)
+
+
 def format_money(value):
     if value is None:
         return "N/A"
@@ -35,6 +41,7 @@ def pct(value):
 
 
 company_data = load_company_data()
+company_analysis = load_company_analysis()
 
 st.title("EquityLens AI")
 
@@ -174,3 +181,47 @@ if st.button("Run Comparison"):
                 values="Operating Margin"
             )
             st.line_chart(margin_chart)
+
+
+st.markdown("---")
+st.subheader("Risk & Business Model Comparison")
+
+analysis_rows = []
+
+for company in selected_companies:
+    analysis = company_analysis.get(company, {})
+
+    analysis_rows.append({
+        "Company": company,
+        "Business Model": analysis.get("business_model", ""),
+        "Revenue Source": analysis.get("primary_revenue_source", ""),
+        "Customer Type": analysis.get("customer_type", ""),
+        "Platform Dependency": analysis.get("platform_dependency", ""),
+        "Competitive Risk": analysis.get("competitive_risk", ""),
+        "Operational Risk": analysis.get("operational_risk", ""),
+        "Profitability History": analysis.get("profitability_history", ""),
+        "Customer Concentration": analysis.get("customer_concentration", "")
+    })
+
+analysis_df = pd.DataFrame(analysis_rows)
+
+st.dataframe(
+    analysis_df,
+    use_container_width=True,
+    hide_index=True
+)
+
+with st.expander("View key risk themes"):
+    for company in selected_companies:
+        analysis = company_analysis.get(company, {})
+        themes = analysis.get("key_risk_themes", [])
+        st.markdown(f"**{company}**")
+        if themes:
+            for theme in themes:
+                st.write(f"• {theme}")
+        else:
+            st.write("Qualitative analysis not added yet.")
+
+        source = analysis.get("source_filing")
+        if source:
+            st.markdown(f"[Open source filing]({source})")
