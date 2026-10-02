@@ -124,74 +124,80 @@ if st.button("Run Comparison"):
     if len(selected_companies) < 2:
         st.warning("Please select at least two companies to compare.")
     else:
-        symbols = [company_data[company]["ticker"] for company in selected_companies]
+        if public_market_data_enabled:
+            symbols = [company_data[company]["ticker"] for company in selected_companies]
 
-        try:
-            live_market = get_live_market_data(symbols)
-        except Exception as e:
-            live_market = {}
-            st.warning(
-                "Live market data is temporarily unavailable. "
-                "The filing-based comparison below is still available."
+            try:
+                live_market = get_live_market_data(symbols)
+            except Exception as e:
+                live_market = {}
+                st.warning(
+                    "Live market data is temporarily unavailable. "
+                    "The filing-based comparison below is still available."
+                )
+                st.caption(str(e))
+
+            st.subheader("Live Market Snapshot")
+
+            market_rows = []
+            for company in selected_companies:
+                ticker = company_data[company]["ticker"]
+                market = live_market.get(ticker, {})
+
+                fifty_two_week = market.get("fifty_two_week", {})
+                if not isinstance(fifty_two_week, dict):
+                    fifty_two_week = {}
+
+                close = market.get("close")
+                percent_change = market.get("percent_change")
+                volume = market.get("volume")
+
+                market_rows.append({
+                    "Company": company,
+                    "Price": (
+                        f"$" + f"{float(close):,.2f}"
+                        if close not in (None, "")
+                        else "N/A"
+                    ),
+                    "Daily Change": (
+                        f"{float(percent_change):.2f}%"
+                        if percent_change not in (None, "")
+                        else "N/A"
+                    ),
+                    "52W Low": (
+                        f"$" + f"{float(fifty_two_week.get('low')):,.2f}"
+                        if fifty_two_week.get("low") not in (None, "")
+                        else "N/A"
+                    ),
+                    "52W High": (
+                        f"$" + f"{float(fifty_two_week.get('high')):,.2f}"
+                        if fifty_two_week.get("high") not in (None, "")
+                        else "N/A"
+                    ),
+                    "Volume": (
+                        f"{int(float(volume)):,}"
+                        if volume not in (None, "")
+                        else "N/A"
+                    ),
+                    "Price Updated": market.get("datetime", "N/A"),
+                    "Exchange": market.get("exchange", "N/A")
+                })
+
+            st.dataframe(
+                pd.DataFrame(market_rows),
+                use_container_width=True,
+                hide_index=True
             )
-            st.caption(str(e))
 
-        st.subheader("Live Market Snapshot")
-
-        market_rows = []
-        for company in selected_companies:
-            ticker = company_data[company]["ticker"]
-            market = live_market.get(ticker, {})
-
-            fifty_two_week = market.get("fifty_two_week", {})
-            if not isinstance(fifty_two_week, dict):
-                fifty_two_week = {}
-
-            close = market.get("close")
-            percent_change = market.get("percent_change")
-            volume = market.get("volume")
-
-            market_rows.append({
-                "Company": company,
-                "Price": (
-                    f"$" + f"{float(close):,.2f}"
-                    if close not in (None, "")
-                    else "N/A"
-                ),
-                "Daily Change": (
-                    f"{float(percent_change):.2f}%"
-                    if percent_change not in (None, "")
-                    else "N/A"
-                ),
-                "52W Low": (
-                    f"$" + f"{float(fifty_two_week.get('low')):,.2f}"
-                    if fifty_two_week.get("low") not in (None, "")
-                    else "N/A"
-                ),
-                "52W High": (
-                    f"$" + f"{float(fifty_two_week.get('high')):,.2f}"
-                    if fifty_two_week.get("high") not in (None, "")
-                    else "N/A"
-                ),
-                "Volume": (
-                    f"{int(float(volume)):,}"
-                    if volume not in (None, "")
-                    else "N/A"
-                ),
-                "Price Updated": market.get("datetime", "N/A"),
-                "Exchange": market.get("exchange", "N/A")
-            })
-
-        st.dataframe(
-            pd.DataFrame(market_rows),
-            use_container_width=True,
-            hide_index=True
-        )
-
-        st.caption(
-            "Market data is provided by Twelve Data. Availability and latency depend "
-            "on the Twelve Data plan and exchange entitlements."
-        )
+            st.caption(
+                "Market data is provided by Twelve Data. Availability and latency depend "
+                "on the Twelve Data plan and exchange entitlements."
+            )
+        else:
+            st.info(
+                "Live market data is disabled in this public demo. "
+                "Financial analysis is based on publicly available SEC filings."
+            )
 
         rows = []
 
@@ -344,3 +350,28 @@ with st.expander("View key risk themes"):
         source = analysis.get("source_filing")
         if source:
             st.markdown(f"[Open source filing]({source})")
+
+
+st.markdown("---")
+st.subheader("Data Sources")
+st.write(
+    """
+    - SEC EDGAR filings, including Forms 10-K, 10-Q, 8-K, and S-1
+    - Company-reported financial statements and disclosures
+    - Market data integrations may be used in private development environments,
+      subject to provider licensing and exchange entitlements
+    """
+)
+
+st.subheader("Important Disclosures")
+st.caption(
+    """
+    EquityLens AI is an educational and research tool that analyzes publicly
+    available financial information. It does not provide personalized investment
+    advice, investment recommendations, or guarantees of future performance.
+
+    Financial information may be delayed, incomplete, or affected by later filings
+    and restatements. Users should verify material information against the original
+    SEC filings and company disclosures before making financial decisions.
+    """
+)
