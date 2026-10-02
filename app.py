@@ -555,6 +555,7 @@ company_data = load_json("data/company_metrics.json")
 company_analysis = load_json("data/company_analysis.json")
 company_quarterly = load_json("data/company_quarterly.json")
 company_s1 = load_json("data/company_s1.json")
+sec_filings = load_json("data/sec_filings.json")
 
 public_market_data_enabled = bool(
     st.secrets.get("PUBLIC_MARKET_DATA_ENABLED", False)
@@ -1181,6 +1182,41 @@ with company_tab:
         """,
         unsafe_allow_html=True
     )
+
+    filing_feed = sec_filings.get(research_company, {})
+    recent_sec_filings = filing_feed.get("filings", [])
+    if recent_sec_filings:
+        section("Live SEC Monitor", "Recent SEC Filings")
+        st.caption(
+            "Automatically refreshed from the SEC submissions API every 15 minutes. "
+            "Scheduled GitHub Actions can occasionally run late, so a newly disseminated filing may take a little longer to appear."
+        )
+
+        filing_rows = []
+        for filing in recent_sec_filings[:8]:
+            filing_rows.append({
+                "Filed": filing.get("filing_date", ""),
+                "Form": filing.get("form", ""),
+                "Description": filing.get("description", "") or filing.get("primary_document", ""),
+                "SEC Filing": filing.get("url", "")
+            })
+
+        st.dataframe(
+            pd.DataFrame(filing_rows),
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "SEC Filing": st.column_config.LinkColumn(
+                    "SEC Filing",
+                    display_text="Open filing"
+                )
+            }
+        )
+        st.caption(
+            "This feed surfaces newly posted filings automatically. Financial metrics and qualitative analysis "
+            "are updated separately when the filing contains data that can be standardized reliably."
+        )
+
 
     source_cols = st.columns(2)
     with source_cols[0]:
