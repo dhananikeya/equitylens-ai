@@ -43,8 +43,25 @@ st.markdown(
         --el-red: #DC2626;
     }
 
-    html, body, .stApp, .stApp * {
+    html, body, .stApp {
         font-family: var(--el-font);
+    }
+
+    /* Preserve Streamlit's icon font. Applying the app font to every descendant
+       turns Material Symbol ligatures into literal text such as "double_arrow_right". */
+    .material-symbols-rounded,
+    [data-testid="stIconMaterial"] {
+        font-family: "Material Symbols Rounded" !important;
+        font-weight: normal !important;
+        font-style: normal !important;
+        letter-spacing: normal !important;
+        text-transform: none !important;
+        white-space: nowrap !important;
+        word-wrap: normal !important;
+        direction: ltr !important;
+        font-feature-settings: "liga" !important;
+        -webkit-font-feature-settings: "liga" !important;
+        -webkit-font-smoothing: antialiased !important;
     }
 
     .stApp {
@@ -473,9 +490,103 @@ st.markdown(
     }
 
     @media (max-width: 900px) {
-        .el-trust-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        .el-feature-grid { grid-template-columns: 1fr; }
-        .el-product-hero { border-radius: 22px; }
+        .block-container {
+            padding-top: 1rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-bottom: 2.5rem;
+        }
+
+        .el-product-hero {
+            padding: 1.4rem 1.15rem;
+            border-radius: 12px;
+        }
+
+        .el-product-title {
+            font-size: clamp(2rem, 10vw, 3rem);
+            line-height: 1.04;
+            letter-spacing: -0.025em;
+        }
+
+        .el-product-subtitle {
+            font-size: 0.96rem;
+            line-height: 1.55;
+        }
+
+        .el-badges {
+            gap: .4rem;
+        }
+
+        .el-badge {
+            font-size: .72rem;
+            padding: .34rem .5rem;
+        }
+
+        .el-trust-strip {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: .45rem;
+            margin: .75rem 0 1rem 0;
+        }
+
+        .el-trust-item {
+            padding: .65rem .55rem;
+            font-size: .76rem;
+            line-height: 1.35;
+        }
+
+        .el-feature-grid {
+            grid-template-columns: 1fr;
+            gap: .6rem;
+        }
+
+        .el-feature-card {
+            min-height: 0;
+            padding: 1rem;
+        }
+
+        .el-summary-card {
+            min-height: 88px;
+            padding: .85rem 1rem;
+        }
+
+        .el-summary-label {
+            margin-bottom: .25rem;
+            font-size: .78rem;
+        }
+
+        .el-summary-value {
+            font-size: 1.35rem;
+        }
+
+        .el-company-hero {
+            padding: 1.15rem;
+            margin: .6rem 0 1rem 0;
+        }
+
+        .el-company-title {
+            font-size: 1.7rem;
+        }
+
+        .el-company-card {
+            min-height: 0;
+            padding: 1rem;
+        }
+
+        .el-section {
+            margin-top: 1.2rem;
+        }
+
+        .el-section-title {
+            font-size: 1.35rem;
+        }
+
+        div[data-testid="stExpander"] summary {
+            min-height: 3rem;
+        }
+
+        div[data-testid="stMetric"] {
+            padding: .8rem .9rem;
+        }
     }
 
     footer { visibility: hidden; }
