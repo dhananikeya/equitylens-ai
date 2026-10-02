@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 METRICS_PATH = ROOT / "data" / "company_metrics.json"
 OUTPUT_PATH = ROOT / "data" / "sec_filings.json"
 
-USER_AGENT = "EquityLens-AI/1.0 github.com/dhananikeya/equitylens-ai"
+USER_AGENT = "EquityLens AI research app dhananikeya@gmail.com"
 MAX_FILINGS_PER_COMPANY = 25
 
 
@@ -27,11 +27,20 @@ def get_json(url: str) -> dict:
         url,
         headers={
             "User-Agent": USER_AGENT,
-            "Host": "data.sec.gov",
+            "From": "dhananikeya@gmail.com",
+            "Accept": "application/json",
         },
     )
-    with urllib.request.urlopen(request, timeout=30) as response:
-        return json.loads(response.read().decode("utf-8"))
+    last_error = None
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                return json.loads(response.read().decode("utf-8"))
+        except Exception as exc:
+            last_error = exc
+            if attempt < 2:
+                time.sleep(2 ** attempt)
+    raise last_error
 
 
 def cik_from_filing_url(url: str) -> str:
