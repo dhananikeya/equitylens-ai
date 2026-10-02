@@ -274,7 +274,7 @@
   },
   "Palo Alto Networks (PANW)": {
     "ticker": "PANW",
-    "industry": "Cloud & Data Infrastructure Software",
+    "industry": "Cybersecurity",
     "fiscal_year": 2026,
     "fiscal_year_end": "2026-07-31",
     "source": "10-K",
@@ -313,7 +313,7 @@
   },
   "Zscaler (ZS)": {
     "ticker": "ZS",
-    "industry": "Cloud & Data Infrastructure Software",
+    "industry": "Cybersecurity",
     "fiscal_year": 2026,
     "fiscal_year_end": "2026-07-31",
     "source": "10-K",
@@ -387,6 +387,201 @@
       "cash_and_investments": 1919761000,
       "balance_sheet_as_of": "2025-12-31",
       "source_filing": "https://www.sec.gov/Archives/edgar/data/1086222/000108622226000022/akam-20251231.htm"
+    }
+  },
+  "CrowdStrike (CRWD)": {
+    "ticker": "CRWD",
+    "industry": "Cybersecurity",
+    "fiscal_year": 2026,
+    "fiscal_year_end": "2026-01-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000010/crwd-20260131.htm",
+    "revenue": 4812005000,
+    "gross_profit": 3593076000,
+    "operating_income": -293292000,
+    "net_income": -162502000,
+    "cash": 5230125000,
+    "assets": 11086684000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 3055555000,
+        "operating_income": -19141000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 3953624000,
+        "operating_income": -116400000
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 4812005000,
+        "operating_income": -293292000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 253614090,
+      "shares_as_of": "2026-02-28",
+      "total_debt": 745471000,
+      "cash_and_investments": 5230125000,
+      "balance_sheet_as_of": "2026-01-31",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000010/crwd-20260131.htm"
+    }
+  },
+  "Okta (OKTA)": {
+    "ticker": "OKTA",
+    "industry": "Cybersecurity",
+    "fiscal_year": 2026,
+    "fiscal_year_end": "2026-01-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1660134/000166013426000020/okta-20260131.htm",
+    "revenue": 2919000000,
+    "gross_profit": 2258000000,
+    "operating_income": 149000000,
+    "net_income": 235000000,
+    "cash": 858000000,
+    "assets": 9710000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 2263000000,
+        "operating_income": -516000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 2610000000,
+        "operating_income": -74000000
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 2919000000,
+        "operating_income": 149000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 176887932,
+      "shares_as_of": "2026-02-27",
+      "total_debt": 350000000,
+      "cash_and_investments": 2553000000,
+      "balance_sheet_as_of": "2026-01-31",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1660134/000166013426000020/okta-20260131.htm"
+    }
+  },
+  "Fortinet (FTNT)": {
+    "ticker": "FTNT",
+    "industry": "Cybersecurity",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+    "revenue": 6799600000,
+    "gross_profit": 5470700000,
+    "operating_income": 2084700000,
+    "net_income": 1853400000,
+    "cash": 2495300000,
+    "assets": 10389200000,
+    "history": [
+      {
+        "fiscal_year": 2023,
+        "revenue": 5304800000,
+        "operating_income": 1241100000
+      },
+      {
+        "fiscal_year": 2024,
+        "revenue": 5955800000,
+        "operating_income": 1803400000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 6799600000,
+        "operating_income": 2084700000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": null,
+      "shares_as_of": null,
+      "total_debt": 499700000,
+      "cash_and_investments": 3922200000,
+      "balance_sheet_as_of": "2025-12-31",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm"
+    }
+  },
+  "SentinelOne (S)": {
+    "ticker": "S",
+    "industry": "Cybersecurity",
+    "fiscal_year": 2026,
+    "fiscal_year_end": "2026-01-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm",
+    "revenue": 1001278000,
+    "gross_profit": 742101000,
+    "operating_income": -321309000,
+    "net_income": -450735000,
+    "cash": 169627000,
+    "assets": 2438102000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 621154000,
+        "operating_income": -378416000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 821461000,
+        "operating_income": -329359000
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 1001278000,
+        "operating_income": -321309000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": null,
+      "shares_as_of": null,
+      "total_debt": 0,
+      "cash_and_investments": 769566000,
+      "balance_sheet_as_of": "2026-01-31",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm"
+    }
+  },
+  "Tenable (TENB)": {
+    "ticker": "TENB",
+    "industry": "Cybersecurity",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1660280/000166028026000005/tenb-20251231.htm",
+    "revenue": 999405000,
+    "gross_profit": 780468000,
+    "operating_income": -9168000,
+    "net_income": -36118000,
+    "cash": 187762000,
+    "assets": 1747667000,
+    "history": [
+      {
+        "fiscal_year": 2023,
+        "revenue": 798710000,
+        "operating_income": -52160000
+      },
+      {
+        "fiscal_year": 2024,
+        "revenue": 900021000,
+        "operating_income": -6856000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 999405000,
+        "operating_income": -9168000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": null,
+      "shares_as_of": null,
+      "total_debt": null,
+      "cash_and_investments": 402181000,
+      "balance_sheet_as_of": "2025-12-31",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1660280/000166028026000005/tenb-20251231.htm"
     }
   }
 }
