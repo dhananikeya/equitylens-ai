@@ -1,0 +1,107 @@
+{
+  "Rubrik (RBRK)": {
+    "filed_date": "2024-04-01",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1943896/000119312524083525/0001193125-24-083525-index.htm",
+    "historical_context": "Rubrik entered the public markets describing a subscription-based data security and cyber resilience platform built around protecting enterprise data across cloud, SaaS, and on-premises environments.",
+    "what_to_learn": "The filing is useful for understanding Rubrik's pre-IPO business model, subscription transition, customer expansion strategy, competitive landscape, and the risks management highlighted before becoming a public company."
+  },
+  "Snowflake (SNOW)": {
+    "filed_date": "2020-08-24",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1640147/000162828020013010/0001628280-20-013010-index.htm",
+    "historical_context": "Snowflake's S-1 presented the company as a cloud-native data platform designed to consolidate data, analytics, and data-sharing workloads across public clouds, with a consumption-based revenue model.",
+    "what_to_learn": "The filing provides historical context for Snowflake's consumption model, cloud-provider dependence, customer expansion, large market opportunity, and the economics of usage-based software."
+  },
+  "MongoDB (MDB)": {
+    "filed_date": "2017-09-21",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1441816/000104746917006246/a2233386zs-1a.htm",
+    "historical_context": "MongoDB's IPO filing described a modern general-purpose database platform built around its document model, an open-source adoption strategy, and paid enterprise subscriptions.",
+    "what_to_learn": "The filing is useful for studying MongoDB's open-source-to-paid conversion strategy, customer growth, enterprise adoption, recurring subscriptions, and early competitive positioning."
+  },
+  "Datadog (DDOG)": {
+    "filed_date": "2019-08-23",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1561550/000119312519227783/d745413ds1.htm",
+    "historical_context": "Datadog's S-1 described a monitoring and analytics platform built to give developers, IT operations teams, and business users a shared view of cloud infrastructure and applications.",
+    "what_to_learn": "The filing shows how Datadog expanded from infrastructure monitoring into a broader observability platform and used a land-and-expand subscription model."
+  },
+  "Cloudflare (NET)": {
+    "filed_date": "2019-09-03",
+    "form": "S-1/A",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000119312519235734/0001193125-19-235734-index.htm",
+    "historical_context": "Cloudflare's IPO materials positioned its global network as a platform for improving the security, performance, and reliability of internet-facing applications.",
+    "what_to_learn": "The S-1 is useful for understanding Cloudflare's global network strategy, freemium adoption model, infrastructure economics, customer growth, and early security and performance positioning."
+  },
+  "Elastic (ESTC)": {
+    "filed_date": "2018-09-05",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1707753/000119312518266861/d588632ds1.htm",
+    "historical_context": "Elastic's S-1 described a company built around the Elastic Stack and Elasticsearch, using an open-source foundation to support search, logging, analytics, and related workloads.",
+    "what_to_learn": "The filing helps explain Elastic's open-source distribution strategy, subscription model, cloud opportunity, developer adoption, and the risks of competing with larger platform providers."
+  },
+  "Dynatrace (DT)": {
+    "filed_date": "2019-07-05",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1773383/000119312519189566/d668054ds1.htm",
+    "historical_context": "Dynatrace's S-1 presented its platform as a software-intelligence and application-performance platform for complex enterprise and cloud environments.",
+    "what_to_learn": "The filing provides historical context for Dynatrace's move toward a unified observability platform, subscription transformation, enterprise customer base, and cloud-monitoring opportunity."
+  },
+  "Akamai (AKAM)": {
+    "filed_date": "1999-08-21",
+    "form": "S-1 / S-1A",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1086222/000095013599004906/0000950135-99-004906-index.htm",
+    "historical_context": "Akamai's IPO-era filings describe an early internet infrastructure company focused on improving the delivery of online content through a distributed network.",
+    "what_to_learn": "The filing is useful as a historical look at the economics and risks of internet infrastructure before modern cloud computing, including network expansion, customer adoption, and technology execution."
+  },
+  "Palo Alto Networks (PANW)": {
+    "filed_date": "2012-04-06",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1327567/000119312512153764/d318373ds1.htm",
+    "historical_context": "Palo Alto Networks' S-1 framed the company around next-generation network security designed to identify applications, users, and threats more precisely than traditional firewall architectures.",
+    "what_to_learn": "The filing provides historical context for the company's original platform thesis, hardware-plus-subscription model, channel strategy, and early enterprise cybersecurity competition."
+  },
+  "Zscaler (ZS)": {
+    "filed_date": "2018-02-16",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1713683/000119312518048303/d400527ds1.htm",
+    "historical_context": "Zscaler's S-1 described a cloud-native security architecture built around securely connecting users to applications as enterprises adopted cloud services and mobile work.",
+    "what_to_learn": "The filing is useful for understanding Zscaler's original zero-trust and cloud-security thesis, subscription model, network architecture, customer adoption, and competition with perimeter-security products."
+  },
+  "CrowdStrike (CRWD)": {
+    "filed_date": "2019-05-14",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1535527/000104746919003095/a2238800zs-1.htm",
+    "historical_context": "CrowdStrike's S-1 described a cloud-native security platform built to protect customers from breaches using endpoint telemetry, cloud computing, artificial intelligence, and a shared data architecture.",
+    "what_to_learn": "The filing shows CrowdStrike's early platform strategy, subscription economics, module expansion model, customer growth, and the network effects management associated with shared security telemetry."
+  },
+  "Okta (OKTA)": {
+    "filed_date": "2017-03-13",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1660134/000119312517080301/d289173ds1.htm",
+    "historical_context": "Okta's S-1 positioned identity as a foundational layer for securely connecting people to technology and described the Okta Identity Cloud as an independent cloud identity platform.",
+    "what_to_learn": "The filing is useful for understanding Okta's original identity-platform thesis, recurring subscription model, enterprise adoption, customer retention, and competition with larger technology vendors."
+  },
+  "Fortinet (FTNT)": {
+    "filed_date": "2009-08-10",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1262039/000119312509169817/ds1.htm",
+    "historical_context": "Fortinet's S-1 described a network-security company selling integrated security appliances together with recurring security-subscription and support services.",
+    "what_to_learn": "The filing provides historical context for Fortinet's appliance-plus-services model, channel distribution, security research, hardware economics, and the recurring revenue created by subscriptions and support."
+  },
+  "SentinelOne (S)": {
+    "filed_date": "2021-06-03",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1583708/000162828021011624/sentineloneincs-1initialpu.htm",
+    "historical_context": "SentinelOne's S-1 presented an autonomous cybersecurity platform designed to protect endpoints, cloud workloads, identities, and data using AI-driven detection and response.",
+    "what_to_learn": "The filing is useful for understanding SentinelOne's autonomous-security thesis, subscription growth, cloud-native architecture, competitive positioning, and the costs of scaling a high-growth cybersecurity platform."
+  },
+  "Tenable (TENB)": {
+    "filed_date": "2018-06-29",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1660280/000119312518209705/d548092ds1.htm",
+    "historical_context": "Tenable's S-1 described a cybersecurity company focused on vulnerability management and what it called Cyber Exposure, helping organizations understand and reduce technology-related security risk.",
+    "what_to_learn": "The filing gives historical context for Tenable's vulnerability-management roots, subscription model, enterprise customer strategy, market expansion, and competition across security and exposure management."
+  }
+}
