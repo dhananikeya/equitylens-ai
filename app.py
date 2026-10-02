@@ -1709,7 +1709,18 @@ with learn_tab:
         }
     ]
 
-    for item in learning_items:\n        with st.expander(item["term"]):\n            st.markdown("**What it means**")\n            st.write(item["definition"])\n            st.markdown("**Why it matters**")\n            st.write(item["why"])\n            st.markdown("**How to think about it**")\n            st.write(item["how"])\n            st.markdown("**What to watch for**")\n            st.write(item["watch"])\n\n    section("Source Guide", "How EquityLens Labels Information")
+    for item in learning_items:
+        with st.expander(item["term"]):
+            st.markdown("**What it means**")
+            st.write(item["definition"])
+            st.markdown("**Why it matters**")
+            st.write(item["why"])
+            st.markdown("**How to think about it**")
+            st.write(item["how"])
+            st.markdown("**What to watch for**")
+            st.write(item["watch"])
+
+    section("Source Guide", "How EquityLens Labels Information")
     st.markdown(
         """
         **Reported** — a figure taken from a company filing or company-reported disclosure.
