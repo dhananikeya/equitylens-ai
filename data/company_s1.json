@@ -4,7 +4,49 @@
     "form": "S-1",
     "source_url": "https://www.sec.gov/Archives/edgar/data/1943896/000119312524083525/0001193125-24-083525-index.htm",
     "historical_context": "Rubrik entered the public markets describing a subscription-based data security and cyber resilience platform built around protecting enterprise data across cloud, SaaS, and on-premises environments.",
-    "what_to_learn": "The filing is useful for understanding Rubrik's pre-IPO business model, subscription transition, customer expansion strategy, competitive landscape, and the risks management highlighted before becoming a public company."
+    "what_to_learn": "The filing is useful for understanding Rubrik's pre-IPO business model, subscription transition, customer expansion strategy, competitive landscape, and the risks management highlighted before becoming a public company.",
+    "filing_details": {
+      "business_revenue_model": [
+        "Rubrik described Rubrik Security Cloud (RSC) as a cloud-native SaaS platform built around Zero Trust Data Security.",
+        "The company said it primarily sells subscriptions through its direct sales team and partner network using a land-and-expand model.",
+        "As of January 31, 2024, Subscription ARR was $784.0 million, up 47% from $532.9 million a year earlier, while fiscal 2024 revenue was $627.9 million."
+      ],
+      "customers_go_to_market": [
+        "Rubrik reported more than 6,100 customers as of January 31, 2024, up from more than 5,000 a year earlier.",
+        "It reported 1,742 customers with more than $100,000 in Subscription ARR and 99 customers with more than $1 million in Subscription ARR.",
+        "Its average subscription dollar-based net retention rate was 133% as of January 31, 2024."
+      ],
+      "growth_market_opportunity": [
+        "Management described expansion across additional data sources, applications, security products, and geographies as core growth vectors.",
+        "Rubrik said it intended to keep investing in research and development and its global sales footprint.",
+        "The filing also described strategic acquisitions as a possible way to add technologies and speed new product development."
+      ],
+      "competition_differentiation": [
+        "Rubrik highlighted Zero Trust architecture, time-series data and metadata, a machine-learning-powered data threat engine, and automation as differentiating platform features.",
+        "The platform covered data protection, data threat analytics, data security posture, and cyber recovery.",
+        "Rubrik positioned its approach against products focused only on security or only on backup and recovery."
+      ],
+      "risk_factors": [
+        "Rubrik warned that its recent rapid growth might not continue and that its limited operating history with RSC made forecasting difficult.",
+        "It identified customer acquisition and retention, market growth for data security, competition, and continued operating losses as material risks.",
+        "The filing also discussed risks associated with generative AI, including privacy, intellectual property, security, output accuracy, and regulatory exposure."
+      ],
+      "financial_history": [
+        "Revenue increased from $599.8 million in fiscal 2023 to $627.9 million in fiscal 2024.",
+        "Net loss widened from $277.7 million in fiscal 2023 to $354.2 million in fiscal 2024, and accumulated deficit was $1.68 billion as of January 31, 2024.",
+        "Operating cash flow was $19.3 million in fiscal 2023 and negative $4.5 million in fiscal 2024; free cash flow was negative $15.0 million and negative $24.5 million, respectively."
+      ],
+      "ipo_capitalization_dilution": [
+        "The initial S-1 described a dual-class structure: Class A shares carried one vote per share and Class B shares carried 20 votes per share.",
+        "Rubrik intended to list Class A common stock on the NYSE under the ticker RBRK.",
+        "The initial filing left the IPO share count and price range blank, with those terms to be supplied in later amendments."
+      ],
+      "proceeds_management_ownership": [
+        "Rubrik said the offering was intended to increase capitalization and financial flexibility and create a public market for its Class A common stock.",
+        "Proceeds were expected to help satisfy tax withholding obligations related to certain RSU settlements, with remaining proceeds available for working capital, operating expenses, capital expenditures, and potentially acquisitions or strategic investments.",
+        "The filing disclosed that executive officers, directors, and principal stockholders would retain meaningful voting influence through the Class B structure."
+      ]
+    }
   },
   "Snowflake (SNOW)": {
     "filed_date": "2020-08-24",
