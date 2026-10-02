@@ -440,6 +440,23 @@ industries = sorted({
     for item in company_data.values()
 })
 
+
+SUBGROUPS = {
+    "Data Platforms": [
+        "Snowflake (SNOW)",
+        "MongoDB (MDB)",
+        "Datadog (DDOG)"
+    ],
+    "Cloud / Network Infrastructure": [
+        "Cloudflare (NET)"
+    ],
+    "Cybersecurity": [
+        "Rubrik (RBRK)"
+    ],
+    "Enterprise / AI Platforms": [],
+    "AI / Compute Infrastructure": []
+}
+
 st.markdown(
     """
     <div class="el-hero">
@@ -495,12 +512,37 @@ with peer_tab:
         if data.get("industry", "Unclassified") == selected_industry
     ]
 
-    defaults = industry_companies[:3]
+    subgroup_options = ["All current peers"] + [
+        name for name, members in SUBGROUPS.items()
+        if any(member in industry_companies for member in members)
+    ]
+
+    selected_subgroup = st.selectbox(
+        "Sub-group",
+        subgroup_options,
+        index=0
+    )
+
+    if selected_subgroup == "All current peers":
+        available_companies = industry_companies
+    else:
+        available_companies = [
+            company for company in SUBGROUPS[selected_subgroup]
+            if company in industry_companies
+        ]
+
+    defaults = available_companies[:3]
     selected_companies = st.multiselect(
         "Select companies to compare",
-        industry_companies,
+        available_companies,
         default=defaults
     )
+
+    if selected_subgroup != "All current peers":
+        st.caption(
+            f"Showing the {selected_subgroup} sub-group. "
+            "More companies can be added without changing the comparison workflow."
+        )
 
     if selected_companies:
         section("Balance Sheet", "Capital Structure Snapshot")
