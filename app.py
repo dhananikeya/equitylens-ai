@@ -22,23 +22,36 @@ st.markdown(
     """
     <style>
     :root {
-        --el-bg: #07111F;
-        --el-surface: #0D1B2A;
-        --el-surface-2: #112338;
-        --el-border: rgba(148, 163, 184, 0.18);
-        --el-text: #EAF2F8;
-        --el-muted: #94A3B8;
-        --el-teal: #2DD4BF;
-        --el-blue: #60A5FA;
-        --el-gold: #F6C453;
-        --el-green: #22C55E;
-        --el-red: #EF4444;
+        /* Follow Streamlit's active System / Light / Dark theme automatically. */
+        --el-bg: var(--background-color);
+        --el-surface: var(--secondary-background-color);
+        --el-surface-2: color-mix(
+            in srgb,
+            var(--secondary-background-color) 82%,
+            var(--background-color)
+        );
+        --el-border: color-mix(in srgb, var(--text-color) 16%, transparent);
+        --el-text: var(--text-color);
+        --el-muted: color-mix(in srgb, var(--text-color) 62%, transparent);
+        --el-teal: #14B8A6;
+        --el-blue: #3B82F6;
+        --el-gold: #D99A13;
+        --el-green: #16A34A;
+        --el-red: #DC2626;
     }
 
     .stApp {
         background:
-            radial-gradient(circle at 10% 0%, rgba(45, 212, 191, 0.08), transparent 28%),
-            radial-gradient(circle at 90% 10%, rgba(96, 165, 250, 0.08), transparent 30%),
+            radial-gradient(
+                circle at 10% 0%,
+                color-mix(in srgb, var(--el-teal) 8%, transparent),
+                transparent 28%
+            ),
+            radial-gradient(
+                circle at 90% 10%,
+                color-mix(in srgb, var(--el-blue) 8%, transparent),
+                transparent 30%
+            ),
             var(--el-bg);
         color: var(--el-text);
     }
@@ -53,7 +66,7 @@ st.markdown(
         padding: 2rem 2.2rem;
         border: 1px solid var(--el-border);
         border-radius: 24px;
-        background: linear-gradient(135deg, rgba(13,27,42,0.98), rgba(17,35,56,0.94));
+        background: linear-gradient(135deg, var(--el-surface), var(--el-surface-2));
         box-shadow: 0 20px 60px rgba(0,0,0,0.22);
         margin-bottom: 1.4rem;
     }
@@ -62,7 +75,7 @@ st.markdown(
         padding: 1.6rem 1.8rem;
         border: 1px solid var(--el-border);
         border-radius: 22px;
-        background: linear-gradient(135deg, rgba(17,35,56,0.98), rgba(13,27,42,0.96));
+        background: linear-gradient(135deg, var(--el-surface-2), var(--el-surface));
         margin: 0.8rem 0 1.3rem 0;
     }
 
@@ -99,7 +112,7 @@ st.markdown(
         max-width: 900px;
         font-size: 1.02rem;
         line-height: 1.65;
-        color: #C7D2E1;
+        color: color-mix(in srgb, var(--el-text) 82%, transparent);
         margin: 0;
     }
 
@@ -114,8 +127,8 @@ st.markdown(
         padding: 0.42rem 0.7rem;
         border-radius: 999px;
         border: 1px solid var(--el-border);
-        background: rgba(255,255,255,0.035);
-        color: #CBD5E1;
+        background: color-mix(in srgb, var(--el-text) 5%, transparent);
+        color: color-mix(in srgb, var(--el-text) 78%, transparent);
         font-size: 0.78rem;
         font-weight: 650;
     }
@@ -145,7 +158,7 @@ st.markdown(
     .el-summary-card, .el-change-card, .el-risk-card {
         border: 1px solid var(--el-border);
         border-radius: 18px;
-        background: linear-gradient(180deg, rgba(17,35,56,0.92), rgba(13,27,42,0.92));
+        background: linear-gradient(180deg, var(--el-surface-2), var(--el-surface));
         box-shadow: 0 10px 30px rgba(0,0,0,0.12);
     }
 
@@ -186,7 +199,7 @@ st.markdown(
     }
 
     .el-change-copy {
-        color: #D8E2EE;
+        color: color-mix(in srgb, var(--el-text) 88%, transparent);
         line-height: 1.55;
         margin: 0;
     }
@@ -194,14 +207,14 @@ st.markdown(
     .el-risk-list {
         margin: 0;
         padding-left: 1.1rem;
-        color: #D8E2EE;
+        color: color-mix(in srgb, var(--el-text) 88%, transparent);
         line-height: 1.5;
     }
 
     .el-risk-list li { margin: 0.25rem 0; }
 
     div[data-testid="stMetric"] {
-        background: linear-gradient(180deg, rgba(17,35,56,0.96), rgba(13,27,42,0.96));
+        background: linear-gradient(180deg, var(--el-surface-2), var(--el-surface));
         border: 1px solid var(--el-border);
         border-radius: 18px;
         padding: 1rem 1.1rem;
@@ -229,7 +242,7 @@ st.markdown(
     }
 
     div[data-baseweb="select"] > div {
-        background: rgba(13,27,42,0.92);
+        background: var(--el-surface);
         border-color: var(--el-border);
         border-radius: 14px;
     }
@@ -238,19 +251,19 @@ st.markdown(
         border: 1px solid var(--el-border);
         border-radius: 16px;
         overflow: hidden;
-        background: rgba(13,27,42,0.72);
+        background: color-mix(in srgb, var(--el-surface) 88%, transparent);
     }
 
     div[data-testid="stExpander"] {
         border: 1px solid var(--el-border);
         border-radius: 16px;
-        background: rgba(13,27,42,0.64);
+        background: color-mix(in srgb, var(--el-surface) 82%, transparent);
     }
 
     div[data-testid="stAlert"] { border-radius: 14px; }
 
     hr {
-        border-color: rgba(148, 163, 184, 0.12) !important;
+        border-color: color-mix(in srgb, var(--el-text) 12%, transparent) !important;
         margin: 1.8rem 0 !important;
     }
 
