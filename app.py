@@ -483,9 +483,10 @@ st.markdown(
         <div class="el-kicker">Public Markets Research Platform</div>
         <div class="el-title">EquityLens <span>AI</span></div>
         <p class="el-subtitle">
-            Compare public companies through SEC filings, standardized financials,
+            Learn how public companies work through SEC filings, standardized financials,
             quarterly and LTM performance, capital structure, risk factors, and
-            market-data integrations. EquityLens informs. You decide.
+            peer comparisons. Built for curious users who want to understand the numbers
+            before forming an opinion. EquityLens informs. You decide.
         </p>
         <div class="el-badges">
             <span class="el-badge">SEC-sourced</span>
@@ -513,9 +514,10 @@ render_summary_cards([
     )
 ])
 
-peer_tab, company_tab = st.tabs([
+peer_tab, company_tab, learn_tab = st.tabs([
     "Peer Comparison",
-    "Company Research"
+    "Company Research",
+    "Learn the Basics"
 ])
 
 with peer_tab:
@@ -1161,13 +1163,100 @@ with company_tab:
             f"and {format_money(capital.get('total_debt'))} of debt."
         )
 
+with learn_tab:
+    section("Learning", "Understand the Numbers")
+    st.write(
+        "EquityLens is designed for users who are still learning how to read public-company information. "
+        "The goal is to explain what a metric measures, show the reported or calculated value, and make the original source easy to inspect."
+    )
+
+    learning_items = [
+        (
+            "Revenue",
+            "The money a company reports from selling its products or services before expenses are deducted.",
+            "Useful for understanding the size of the business and whether sales are expanding or shrinking."
+        ),
+        (
+            "Year-over-Year (YoY) Growth",
+            "The percentage change compared with the same reporting period one year earlier.",
+            "Useful for comparing growth while reducing seasonal distortions."
+        ),
+        (
+            "Gross Margin",
+            "Gross profit divided by revenue. It shows how much revenue remains after the direct costs of delivering the product or service.",
+            "Useful for understanding the economics of what the company sells."
+        ),
+        (
+            "Operating Margin",
+            "Operating income divided by revenue. It reflects profitability after core operating expenses.",
+            "A negative operating margin means reported operating expenses exceeded gross profit for that period."
+        ),
+        (
+            "Net Income",
+            "Profit or loss after operating expenses, interest, taxes, and other reported items.",
+            "Useful for seeing the company's bottom-line result, but it can also be affected by non-operating items."
+        ),
+        (
+            "LTM / Trailing Twelve Months",
+            "A rolling twelve-month view built from the latest available reporting periods.",
+            "Useful when the latest annual filing is older than the most recent quarter."
+        ),
+        (
+            "10-K",
+            "The annual report public U.S. companies file with the SEC.",
+            "It typically contains annual financial statements, business information, risk factors, and management discussion."
+        ),
+        (
+            "10-Q",
+            "A quarterly report public U.S. companies file with the SEC.",
+            "It provides more recent financial statements and updates between annual reports."
+        ),
+        (
+            "Cash + Investments",
+            "Cash and selected liquid investments reported on the balance sheet.",
+            "Useful for understanding available financial resources, especially when viewed alongside debt."
+        ),
+        (
+            "Debt",
+            "Borrowed capital reported by the company.",
+            "Debt is not automatically good or bad. Its importance depends on cash flow, repayment terms, interest costs, and the company's broader financial position."
+        )
+    ]
+
+    for term, definition, why_it_matters in learning_items:
+        with st.expander(term):
+            st.write(definition)
+            st.caption(f"Why it matters: {why_it_matters}")
+
+    section("Source Guide", "How EquityLens Labels Information")
+    st.markdown(
+        """
+        **Reported** — a figure taken from a company filing or company-reported disclosure.
+
+        **Calculated by EquityLens** — a metric computed from reported figures, such as revenue growth or operating margin.
+
+        **Educational explanation** — plain-language context explaining what a financial term means. It is not a buy, sell, or hold recommendation.
+
+        **Source** — the original filing or disclosure used for the underlying information. When available, EquityLens links directly to the filing so users can verify the data themselves.
+        """
+    )
+
+    st.info(
+        "EquityLens does not rate companies, predict returns, or tell users what securities to buy or sell. "
+        "It is designed to help users understand public information and perform their own research."
+    )
+
 st.markdown("---")
 section("Methodology", "Data Sources")
 st.write(
     """
-    - SEC EDGAR filings, including Forms 10-K, 10-Q, 8-K, and S-1
-    - Company-reported financial statements and disclosures
-    - Market-data integrations in private environments when permitted by provider licensing
+    **Source priority**
+    1. SEC EDGAR filings, including Forms 10-K, 10-Q, 8-K, and S-1
+    2. Company investor-relations materials and company-reported disclosures
+    3. Market-data providers only where the relevant licensing and exchange permissions allow use
+
+    EquityLens aims to distinguish company-reported figures from metrics calculated inside the app. "
+    "Material figures should include a reporting period and a link to the original source whenever available.
     """
 )
 
