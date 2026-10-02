@@ -27,7 +27,6 @@ def get_json(url: str) -> dict:
         url,
         headers={
             "User-Agent": USER_AGENT,
-            "Accept-Encoding": "gzip, deflate",
             "Host": "data.sec.gov",
         },
     )
