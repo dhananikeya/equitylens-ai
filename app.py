@@ -1712,6 +1712,78 @@ with learn_tab:
         "It is designed to help users understand public information and perform their own research."
     )
 
+    section("Learning Resources", "Curated Video Lessons")
+    st.write(
+        "These external videos are included as supplemental education from established investors, "
+        "finance educators, and primary creators. EquityLens links to the original uploader and does "
+        "not reproduce or claim ownership of their content. Inclusion is not an endorsement of every "
+        "view expressed in a video, and the videos should not be treated as personalized investment advice."
+    )
+
+    video_resources = [
+        {
+            "title": "Valuation: A Preview",
+            "creator": "Aswath Damodaran",
+            "credit": "Professor of Finance, NYU Stern; original YouTube uploader",
+            "url": "https://www.youtube.com/watch?v=LYGYvN5LUbA",
+            "why": (
+                "A useful introduction to how valuation combines financial numbers with a business story, "
+                "and why value and market price are not the same thing."
+            ),
+            "topics": "Valuation, business fundamentals, price vs. value"
+        },
+        {
+            "title": "Introduction to Valuation Class",
+            "creator": "Aswath Damodaran",
+            "credit": "Professor of Finance, NYU Stern; original YouTube uploader",
+            "url": "https://www.youtube.com/watch?v=oi6M5KBWydg",
+            "why": (
+                "Introduces the basic logic behind valuing companies and the role of assumptions, "
+                "financial statements, and judgment."
+            ),
+            "topics": "Valuation foundations, financial analysis"
+        },
+        {
+            "title": "Passing Along My Investment and Economic Principles",
+            "creator": "Ray Dalio",
+            "credit": "Principles by Ray Dalio; original YouTube uploader",
+            "url": "https://www.youtube.com/watch?v=y5LyVSQq3Wc",
+            "why": (
+                "A high-level perspective on how an experienced institutional investor thinks about "
+                "investment principles, economics, diversification, and decision-making."
+            ),
+            "topics": "Investment principles, economics, portfolio thinking"
+        },
+        {
+            "title": "How To Read An Annual Report (10-K)",
+            "creator": "Hamish Hodder",
+            "credit": "Hamish Hodder; original YouTube uploader",
+            "url": "https://www.youtube.com/watch?v=Q0o9S0q0Rr4",
+            "why": (
+                "Walks through how a long-term investor approaches a 10-K and which sections can help "
+                "a reader understand a company's business and financial condition."
+            ),
+            "topics": "10-Ks, annual reports, fundamental research"
+        }
+    ]
+
+    for resource in video_resources:
+        with st.expander(f"▶ {resource['title']} — {resource['creator']}"):
+            st.write(resource["why"])
+            st.caption(f"Topics: {resource['topics']}")
+            st.caption(f"Credit: {resource['credit']}")
+            st.link_button(
+                "Watch on the original YouTube channel",
+                resource["url"],
+                key=f"learning_video_{resource['title']}"
+            )
+
+    st.caption(
+        "External learning resources remain the property of their respective creators and platforms. "
+        "EquityLens provides outbound links and attribution only. Video availability, titles, and content "
+        "may change at the creator's discretion."
+    )
+
 st.markdown("---")
 section("Methodology", "Data Sources")
 st.markdown(
