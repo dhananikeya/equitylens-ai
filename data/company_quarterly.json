@@ -348,5 +348,85 @@
       "operating_income": -133267000,
       "net_income": -63179000
     }
+  },
+  "CrowdStrike (CRWD)": {
+    "quarter_label": "Latest annual filing",
+    "period_end": "2026-01-31",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000010/crwd-20260131.htm",
+    "latest_quarter": {},
+    "prior_quarter": {},
+    "prior_year_quarter": {},
+    "current_ytd": {},
+    "prior_year_ytd": {},
+    "ltm": {
+      "revenue": 4812005000,
+      "gross_profit": 3593076000,
+      "operating_income": -293292000,
+      "net_income": -162502000
+    }
+  },
+  "Okta (OKTA)": {
+    "quarter_label": "Latest annual filing",
+    "period_end": "2026-01-31",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1660134/000166013426000020/okta-20260131.htm",
+    "latest_quarter": {},
+    "prior_quarter": {},
+    "prior_year_quarter": {},
+    "current_ytd": {},
+    "prior_year_ytd": {},
+    "ltm": {
+      "revenue": 2919000000,
+      "gross_profit": 2258000000,
+      "operating_income": 149000000,
+      "net_income": 235000000
+    }
+  },
+  "Fortinet (FTNT)": {
+    "quarter_label": "Latest annual filing",
+    "period_end": "2025-12-31",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+    "latest_quarter": {},
+    "prior_quarter": {},
+    "prior_year_quarter": {},
+    "current_ytd": {},
+    "prior_year_ytd": {},
+    "ltm": {
+      "revenue": 6799600000,
+      "gross_profit": 5470700000,
+      "operating_income": 2084700000,
+      "net_income": 1853400000
+    }
+  },
+  "SentinelOne (S)": {
+    "quarter_label": "Latest annual filing",
+    "period_end": "2026-01-31",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm",
+    "latest_quarter": {},
+    "prior_quarter": {},
+    "prior_year_quarter": {},
+    "current_ytd": {},
+    "prior_year_ytd": {},
+    "ltm": {
+      "revenue": 1001278000,
+      "gross_profit": 742101000,
+      "operating_income": -321309000,
+      "net_income": -450735000
+    }
+  },
+  "Tenable (TENB)": {
+    "quarter_label": "Latest annual filing",
+    "period_end": "2025-12-31",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1660280/000166028026000005/tenb-20251231.htm",
+    "latest_quarter": {},
+    "prior_quarter": {},
+    "prior_year_quarter": {},
+    "current_ytd": {},
+    "prior_year_ytd": {},
+    "ltm": {
+      "revenue": 999405000,
+      "gross_profit": 780468000,
+      "operating_income": -9168000,
+      "net_income": -36118000
+    }
   }
 }
