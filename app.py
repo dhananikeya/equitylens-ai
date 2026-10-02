@@ -10,6 +10,189 @@ st.set_page_config(
 )
 
 
+st.markdown(
+    """
+    <style>
+    /* EquityLens visual system */
+    :root {
+        --el-bg: #07111F;
+        --el-surface: #0D1B2A;
+        --el-surface-2: #112338;
+        --el-border: rgba(148, 163, 184, 0.18);
+        --el-text: #EAF2F8;
+        --el-muted: #94A3B8;
+        --el-teal: #2DD4BF;
+        --el-blue: #60A5FA;
+        --el-gold: #F6C453;
+        --el-green: #22C55E;
+        --el-red: #EF4444;
+    }
+
+    .stApp {
+        background:
+            radial-gradient(circle at 10% 0%, rgba(45, 212, 191, 0.08), transparent 28%),
+            radial-gradient(circle at 90% 10%, rgba(96, 165, 250, 0.08), transparent 30%),
+            var(--el-bg);
+        color: var(--el-text);
+    }
+
+    .block-container {
+        max-width: 1450px;
+        padding-top: 1.8rem;
+        padding-bottom: 4rem;
+    }
+
+    .el-hero {
+        padding: 2rem 2.2rem;
+        border: 1px solid var(--el-border);
+        border-radius: 24px;
+        background: linear-gradient(135deg, rgba(13,27,42,0.98), rgba(17,35,56,0.94));
+        box-shadow: 0 20px 60px rgba(0,0,0,0.22);
+        margin-bottom: 1.4rem;
+    }
+
+    .el-kicker {
+        color: var(--el-teal);
+        font-size: 0.82rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+    }
+
+    .el-title {
+        font-size: clamp(2.2rem, 5vw, 4.2rem);
+        line-height: 0.98;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        color: var(--el-text);
+        margin: 0 0 0.8rem 0;
+    }
+
+    .el-title span {
+        color: var(--el-teal);
+    }
+
+    .el-subtitle {
+        max-width: 850px;
+        font-size: 1.06rem;
+        line-height: 1.7;
+        color: #C7D2E1;
+        margin: 0;
+    }
+
+    .el-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+        margin-top: 1.25rem;
+    }
+
+    .el-badge {
+        padding: 0.42rem 0.7rem;
+        border-radius: 999px;
+        border: 1px solid var(--el-border);
+        background: rgba(255,255,255,0.035);
+        color: #CBD5E1;
+        font-size: 0.78rem;
+        font-weight: 600;
+    }
+
+    .el-section {
+        margin-top: 1.65rem;
+        margin-bottom: 0.55rem;
+    }
+
+    .el-section-label {
+        color: var(--el-teal);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.74rem;
+        font-weight: 800;
+        margin-bottom: 0.2rem;
+    }
+
+    .el-section-title {
+        font-size: 1.65rem;
+        font-weight: 750;
+        color: var(--el-text);
+        letter-spacing: -0.02em;
+        margin: 0;
+    }
+
+    div[data-testid="stMetric"] {
+        background: linear-gradient(180deg, rgba(17,35,56,0.96), rgba(13,27,42,0.96));
+        border: 1px solid var(--el-border);
+        border-radius: 18px;
+        padding: 1rem 1.1rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.14);
+    }
+
+    div[data-testid="stMetricLabel"] {
+        color: var(--el-muted);
+    }
+
+    div[data-testid="stMetricValue"] {
+        color: var(--el-text);
+        font-weight: 750;
+    }
+
+    .stButton > button {
+        min-height: 3rem;
+        border-radius: 14px;
+        border: 1px solid rgba(45, 212, 191, 0.35);
+        background: linear-gradient(135deg, #13B8A6, #2F7FEA);
+        color: white;
+        font-weight: 750;
+        padding: 0.7rem 1.35rem;
+        box-shadow: 0 10px 28px rgba(47,127,234,0.18);
+    }
+
+    .stButton > button:hover {
+        border-color: rgba(45, 212, 191, 0.75);
+        filter: brightness(1.05);
+        color: white;
+    }
+
+    div[data-baseweb="select"] > div {
+        background: rgba(13,27,42,0.92);
+        border-color: var(--el-border);
+        border-radius: 14px;
+    }
+
+    div[data-testid="stDataFrame"] {
+        border: 1px solid var(--el-border);
+        border-radius: 16px;
+        overflow: hidden;
+        background: rgba(13,27,42,0.72);
+    }
+
+    div[data-testid="stExpander"] {
+        border: 1px solid var(--el-border);
+        border-radius: 16px;
+        background: rgba(13,27,42,0.64);
+    }
+
+    div[data-testid="stAlert"] {
+        border-radius: 14px;
+    }
+
+    hr {
+        border-color: rgba(148, 163, 184, 0.12) !important;
+        margin: 1.8rem 0 !important;
+    }
+
+    .stCaption, small {
+        color: var(--el-muted) !important;
+    }
+
+    footer {visibility: hidden;}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 @st.cache_data
 def load_company_data():
     with open("data/company_metrics.json", "r") as file:
@@ -105,22 +288,46 @@ company_analysis = load_company_analysis()
 company_quarterly = load_company_quarterly()
 public_market_data_enabled = bool(st.secrets.get("PUBLIC_MARKET_DATA_ENABLED", False))
 
-st.title("EquityLens AI")
-
-st.subheader(
-    "AI-powered capital markets research using SEC filings, financial data, and market-data integrations"
+st.markdown(
+    """
+    <div class="el-hero">
+        <div class="el-kicker">Public Markets Research Platform</div>
+        <div class="el-title">EquityLens <span>AI</span></div>
+        <p class="el-subtitle">
+            Compare public companies through SEC filings, standardized financials,
+            quarterly and LTM performance, capital structure, risk factors, and
+            market-data integrations. EquityLens informs. You decide.
+        </p>
+        <div class="el-badges">
+            <span class="el-badge">SEC-sourced</span>
+            <span class="el-badge">Quarterly + LTM</span>
+            <span class="el-badge">Peer comparison</span>
+            <span class="el-badge">Neutral research</span>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
 )
 
-st.write(
-    """
-    EquityLens AI helps users compare public companies using financial metrics,
-    SEC filings, risk factors, capital-structure data, and market-data integrations.
-    """
+coverage_cols = st.columns(4)
+coverage_cols[0].metric("Companies Covered", len(company_data))
+coverage_cols[1].metric("Industry", "Cloud Software")
+coverage_cols[2].metric("Latest Data", "Q2 2026 / FY27")
+coverage_cols[3].metric(
+    "Market Data",
+    "Private Live" if public_market_data_enabled else "Public Filing Mode"
 )
 
-st.markdown("---")
-st.header("Industry Comparison")
-st.markdown("**Industry:** Cloud & Data Infrastructure Software")
+st.markdown(
+    """
+    <div class="el-section">
+        <div class="el-section-label">Peer Research</div>
+        <div class="el-section-title">Industry Comparison</div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+st.caption("Cloud & Data Infrastructure Software")
 
 selected_companies = st.multiselect(
     "Select companies to compare",
@@ -133,7 +340,15 @@ selected_companies = st.multiselect(
 )
 
 
-st.subheader("Capital Structure Snapshot")
+st.markdown(
+    """
+    <div class="el-section">
+        <div class="el-section-label">Balance Sheet</div>
+        <div class="el-section-title">Capital Structure Snapshot</div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 capital_rows = []
 for company in selected_companies:
@@ -185,7 +400,7 @@ if st.button("Run Comparison"):
                 )
                 st.caption(str(e))
 
-            st.subheader("Live Market Snapshot")
+            st.markdown("""<div class="el-section"><div class="el-section-label">Market</div><div class="el-section-title">Live Market Snapshot</div></div>""", unsafe_allow_html=True)
 
             st.markdown("**Current Price Direction**")
             price_columns = st.columns(len(selected_companies))
@@ -277,7 +492,7 @@ if st.button("Run Comparison"):
             )
 
 
-            st.subheader("Trading Comps")
+            st.markdown("""<div class="el-section"><div class="el-section-label">Valuation</div><div class="el-section-title">Trading Comps</div></div>""", unsafe_allow_html=True)
 
             comps_rows = []
             for company in selected_companies:
@@ -416,7 +631,7 @@ if st.button("Run Comparison"):
 
         df = pd.DataFrame(rows)
 
-        st.subheader("Financial Comparison")
+        st.markdown("""<div class="el-section"><div class="el-section-label">Fundamentals</div><div class="el-section-title">Financial Comparison</div></div>""", unsafe_allow_html=True)
         st.dataframe(
             df,
             use_container_width=True,
@@ -436,7 +651,7 @@ if st.button("Run Comparison"):
 
 
         st.markdown("---")
-        st.subheader("Quarterly & LTM Analysis")
+        st.markdown("""<div class="el-section"><div class="el-section-label">Earnings</div><div class="el-section-title">Quarterly & LTM Analysis</div></div>""", unsafe_allow_html=True)
 
         quarterly_rows = []
         ltm_rows = []
@@ -564,7 +779,7 @@ if st.button("Run Comparison"):
         )
 
         st.markdown("---")
-        st.subheader("Three-Year Revenue Trend")
+        st.markdown("""<div class="el-section"><div class="el-section-label">Trend</div><div class="el-section-title">Three-Year Revenue Trend</div></div>""", unsafe_allow_html=True)
 
         revenue_rows = []
         for company in selected_companies:
@@ -585,7 +800,7 @@ if st.button("Run Comparison"):
             )
             st.line_chart(revenue_chart)
 
-        st.subheader("Three-Year Operating Margin Trend")
+        st.markdown("""<div class="el-section"><div class="el-section-label">Trend</div><div class="el-section-title">Three-Year Operating Margin Trend</div></div>""", unsafe_allow_html=True)
 
         margin_rows = []
         for company in selected_companies:
@@ -615,7 +830,7 @@ if st.button("Run Comparison"):
 
 
 st.markdown("---")
-st.subheader("Risk & Business Model Comparison")
+st.markdown("""<div class="el-section"><div class="el-section-label">Qualitative Research</div><div class="el-section-title">Risk & Business Model Comparison</div></div>""", unsafe_allow_html=True)
 
 analysis_rows = []
 
@@ -659,7 +874,7 @@ with st.expander("View key risk themes"):
 
 
 st.markdown("---")
-st.subheader("Data Sources")
+st.markdown("""<div class="el-section"><div class="el-section-label">Methodology</div><div class="el-section-title">Data Sources</div></div>""", unsafe_allow_html=True)
 st.write(
     """
     - SEC EDGAR filings, including Forms 10-K, 10-Q, 8-K, and S-1
@@ -669,7 +884,7 @@ st.write(
     """
 )
 
-st.subheader("Important Disclosures")
+st.markdown("""<div class="el-section"><div class="el-section-label">Disclosure</div><div class="el-section-title">Important Disclosures</div></div>""", unsafe_allow_html=True)
 st.caption(
     """
     EquityLens AI is an educational and research tool that analyzes publicly
