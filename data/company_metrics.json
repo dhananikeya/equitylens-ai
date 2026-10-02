@@ -28,7 +28,15 @@
         "revenue": 2463797000,
         "operating_income": -136968000
       }
-    ]
+    ],
+    "capital_structure": {
+      "shares_outstanding": 80634492,
+      "shares_as_of": "2026-07-31",
+      "total_debt": 0,
+      "cash_and_investments": 2411254000,
+      "balance_sheet_as_of": "2026-07-31",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026059830/mdb-20260731.htm"
+    }
   },
   "Snowflake (SNOW)": {
     "ticker": "SNOW",
@@ -59,7 +67,15 @@
         "revenue": 4683946000,
         "operating_income": -1435165000
       }
-    ]
+    ],
+    "capital_structure": {
+      "shares_outstanding": 352455000,
+      "shares_as_of": "2026-07-31",
+      "total_debt": 2283985000,
+      "cash_and_investments": 4300000000,
+      "balance_sheet_as_of": "2026-07-31",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1640147/000164014726000037/snow-20260731.htm"
+    }
   },
   "Rubrik (RBRK)": {
     "ticker": "RBRK",
@@ -90,7 +106,15 @@
         "revenue": 1316191000,
         "operating_income": -345416000
       }
-    ]
+    ],
+    "capital_structure": {
+      "shares_outstanding": 207304433,
+      "shares_as_of": "2026-08-24",
+      "total_debt": 1132895000,
+      "cash_and_investments": 1750000000,
+      "balance_sheet_as_of": "2026-07-31",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1943896/000194389626000060/rbrk-20260731.htm"
+    }
   },
   "Datadog (DDOG)": {
     "ticker": "DDOG",
@@ -121,7 +145,15 @@
         "revenue": 3427158000,
         "operating_income": -44373000
       }
-    ]
+    ],
+    "capital_structure": {
+      "shares_outstanding": 359075024,
+      "shares_as_of": "2026-07-31",
+      "total_debt": 985545000,
+      "cash_and_investments": 4985438000,
+      "balance_sheet_as_of": "2026-06-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1561550/000162828026054458/ddog-20260630.htm"
+    }
   },
   "Cloudflare (NET)": {
     "ticker": "NET",
@@ -152,6 +184,14 @@
         "revenue": 2167937000,
         "operating_income": -207205000
       }
-    ]
+    ],
+    "capital_structure": {
+      "shares_outstanding": 356079715,
+      "shares_as_of": "2026-07-21",
+      "total_debt": 3270266000,
+      "cash_and_investments": 4162798000,
+      "balance_sheet_as_of": "2026-06-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm"
+    }
   }
 }
