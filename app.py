@@ -1311,6 +1311,156 @@ with company_tab:
         st.markdown("**Operational risk**")
         st.write(analysis.get("operational_risk", "N/A"))
 
+    section("Balanced View", "Bull Case & Bear Case Factors")
+    st.caption(
+        "These factors summarize reported financial trends and company disclosures. "
+        "They are presented for educational research only and do not constitute a buy, sell, or hold recommendation."
+    )
+
+    bull_factors = []
+    bear_factors = []
+
+    if qm.get("yoy_growth") is not None:
+        if qm["yoy_growth"] > 0:
+            bull_factors.append({
+                "title": "Revenue growth",
+                "detail": f"Latest-quarter revenue changed {qm['yoy_growth']:+.1f}% year over year.",
+                "source": "Calculated by EquityLens from reported quarterly revenue"
+            })
+        elif qm["yoy_growth"] < 0:
+            bear_factors.append({
+                "title": "Revenue growth",
+                "detail": f"Latest-quarter revenue changed {qm['yoy_growth']:+.1f}% year over year.",
+                "source": "Calculated by EquityLens from reported quarterly revenue"
+            })
+
+    if qm.get("operating_margin") is not None and qm.get("prior_q_operating_margin") is not None:
+        margin_delta = qm["operating_margin"] - qm["prior_q_operating_margin"]
+        factor = {
+            "title": "Operating margin trend",
+            "detail": (
+                f"Operating margin changed {margin_delta:+.1f} percentage points sequentially, "
+                f"from {qm['prior_q_operating_margin']:.1f}% to {qm['operating_margin']:.1f}%."
+            ),
+            "source": "Calculated by EquityLens from reported operating income and revenue"
+        }
+        if margin_delta > 0:
+            bull_factors.append(factor)
+        elif margin_delta < 0:
+            bear_factors.append(factor)
+
+    latest_net = latest.get("net_income")
+    if latest_net is not None:
+        if latest_net > 0:
+            bull_factors.append({
+                "title": "Latest net income",
+                "detail": f"The latest reported quarter shows net income of {format_money(latest_net)}.",
+                "source": "Reported in the latest quarterly filing"
+            })
+        elif latest_net < 0:
+            bear_factors.append({
+                "title": "Latest net income",
+                "detail": f"The latest reported quarter shows a net loss of {format_money(latest_net)}.",
+                "source": "Reported in the latest quarterly filing"
+            })
+
+    cash_value = capital.get("cash_and_investments")
+    debt_value = capital.get("total_debt")
+    if cash_value is not None and debt_value is not None:
+        if cash_value > debt_value:
+            bull_factors.append({
+                "title": "Cash relative to debt",
+                "detail": (
+                    f"Reported cash and investments of {format_money(cash_value)} exceed "
+                    f"reported debt of {format_money(debt_value)}."
+                ),
+                "source": "Reported balance-sheet figures"
+            })
+        elif debt_value > cash_value:
+            bear_factors.append({
+                "title": "Debt relative to cash",
+                "detail": (
+                    f"Reported debt of {format_money(debt_value)} exceeds "
+                    f"cash and investments of {format_money(cash_value)}."
+                ),
+                "source": "Reported balance-sheet figures"
+            })
+
+    competitive_risk = analysis.get("competitive_risk")
+    if competitive_risk:
+        bear_factors.append({
+            "title": "Competitive risk",
+            "detail": competitive_risk,
+            "source": "Summarized from company risk disclosures"
+        })
+
+    operational_risk = analysis.get("operational_risk")
+    if operational_risk:
+        bear_factors.append({
+            "title": "Operational risk",
+            "detail": operational_risk,
+            "source": "Summarized from company risk disclosures"
+        })
+
+    profitability_history = analysis.get("profitability_history", "")
+    if profitability_history:
+        lowered = profitability_history.lower()
+        if any(term in lowered for term in ["positive", "profitable", "narrowed", "improved"]):
+            bull_factors.append({
+                "title": "Profitability history",
+                "detail": profitability_history,
+                "source": "Summarized from company-reported results"
+            })
+        if any(term in lowered for term in ["loss", "losses", "unprofitable"]):
+            bear_factors.append({
+                "title": "Profitability history",
+                "detail": profitability_history,
+                "source": "Summarized from company-reported results"
+            })
+
+    factor_cols = st.columns(2)
+    with factor_cols[0]:
+        st.markdown("### Bull Case Factors")
+        if bull_factors:
+            for i, factor in enumerate(bull_factors[:5]):
+                st.markdown(
+                    f"""
+                    <div class="el-risk-card">
+                        <div class="el-risk-title">{factor['title']}</div>
+                        <p class="el-change-copy">{factor['detail']}</p>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+                st.caption(f"Source: {factor['source']}")
+        else:
+            st.info("No positive factor is being highlighted from the current structured dataset.")
+
+    with factor_cols[1]:
+        st.markdown("### Bear Case Factors")
+        if bear_factors:
+            for i, factor in enumerate(bear_factors[:5]):
+                st.markdown(
+                    f"""
+                    <div class="el-risk-card">
+                        <div class="el-risk-title">{factor['title']}</div>
+                        <p class="el-change-copy">{factor['detail']}</p>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+                st.caption(f"Source: {factor['source']}")
+        else:
+            st.info("No risk factor is being highlighted from the current structured dataset.")
+
+    filing_source = qdata.get("source_filing") or data.get("filing_url")
+    if filing_source:
+        st.link_button(
+            "Open supporting SEC filing",
+            filing_source,
+            key=f"balanced_view_source_{ticker}"
+        )
+
     section("Grounded Research", "Quick Questions")
     research_question = st.selectbox(
         "Choose a question",
