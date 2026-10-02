@@ -1,3 +1,11 @@
+# EquityLens AI
+# Copyright © 2026 Keya Dhanani. All rights reserved.
+# Independently designed and developed by Keya Dhanani.
+# Unauthorized reproduction, redistribution, republication, or creation of a substantially
+# similar copy of this original application code is not permitted except where allowed by law
+# or applicable platform terms. Third-party libraries, public filings, factual source data,
+# company names, and trademarks remain subject to their respective rights and terms.
+
 import json
 import requests
 import pandas as pd
