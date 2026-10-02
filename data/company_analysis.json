@@ -98,5 +98,105 @@
       "Global regulatory and geopolitical exposure"
     ],
     "source_filing": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000016/cloud-20251231.htm"
+  },
+  "Elastic (ESTC)": {
+    "business_model": "Search, observability, and security software built around the Elasticsearch platform, delivered through Elastic Cloud and self-managed subscriptions.",
+    "primary_revenue_source": "Primarily subscription revenue from Elastic Cloud and other subscription offerings, plus a smaller services contribution.",
+    "customer_type": "Developers, technology teams, security teams, and enterprises using search, observability, and security workloads.",
+    "platform_dependency": "Elastic Cloud depends on public-cloud infrastructure and the company also supports self-managed deployments.",
+    "competitive_risk": "Competes with observability, search, security, database, and public-cloud platform vendors.",
+    "operational_risk": "Growth depends on customer expansion, cloud adoption, product execution, and maintaining platform reliability and security.",
+    "profitability_history": "Revenue has grown while GAAP operating losses have narrowed; fiscal 2026 included positive GAAP net income.",
+    "customer_concentration": "One channel partner represented 10% of revenue in the quarter ended July 31, 2026.",
+    "international_exposure": "A substantial portion of revenue is generated outside the United States, creating currency and regulatory exposure.",
+    "key_risk_themes": [
+      "Customer expansion",
+      "Cloud infrastructure dependence",
+      "Competition",
+      "Platform reliability and security",
+      "International exposure",
+      "Channel concentration"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1707753/000170775326000018/estc-20260430.htm"
+  },
+  "Dynatrace (DT)": {
+    "business_model": "Observability and application-performance platform sold primarily through recurring subscriptions.",
+    "primary_revenue_source": "Subscription revenue from the Dynatrace platform, with a smaller services contribution.",
+    "customer_type": "Enterprises and technology teams monitoring applications, infrastructure, user experience, and cloud environments.",
+    "platform_dependency": "Its SaaS delivery relies on cloud infrastructure while the platform monitors workloads across hybrid and multi-cloud environments.",
+    "competitive_risk": "Competes with cloud-native monitoring tools and specialized observability and application-performance vendors.",
+    "operational_risk": "Results depend on renewals, expansion, platform adoption, cloud hosting economics, and product reliability.",
+    "profitability_history": "Dynatrace has reported positive GAAP operating income and net income in recent fiscal years.",
+    "customer_concentration": "The business is diversified across enterprise customers rather than dependent on one disclosed dominant customer.",
+    "international_exposure": "Global operations create currency, regulatory, privacy, and geopolitical exposure.",
+    "key_risk_themes": [
+      "Subscription renewals and expansion",
+      "Observability competition",
+      "Cloud hosting costs",
+      "Platform reliability",
+      "Enterprise IT spending",
+      "International exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1773383/000177338326000019/dt-20260331.htm"
+  },
+  "Palo Alto Networks (PANW)": {
+    "business_model": "Cybersecurity platform spanning network security, cloud security, security operations, and identity security following the CyberArk acquisition.",
+    "primary_revenue_source": "Product sales plus recurring subscription and support revenue, with subscriptions and support representing the majority of revenue.",
+    "customer_type": "Enterprises, governments, and organizations across industries in more than 180 countries.",
+    "platform_dependency": "Products span hardware, software, cloud-delivered security, and third-party cloud environments.",
+    "competitive_risk": "Competes across network security, cloud security, endpoint, identity, and security-operations markets.",
+    "operational_risk": "Results depend on platform adoption, channel execution, product innovation, acquisitions, security reliability, and customer renewals.",
+    "profitability_history": "Palo Alto Networks has remained GAAP profitable, although fiscal 2026 operating margin declined versus fiscal 2025 amid acquisition-related changes.",
+    "customer_concentration": "The company serves a broad global customer base including almost all Fortune 100 companies.",
+    "international_exposure": "Operates globally and is exposed to geopolitical, supply-chain, currency, privacy, and regulatory risks.",
+    "key_risk_themes": [
+      "Platform execution",
+      "Cybersecurity competition",
+      "Acquisition integration",
+      "Channel dependence",
+      "Security incidents",
+      "Global regulatory and geopolitical exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1327567/000132756726000023/panw-20260731.htm"
+  },
+  "Zscaler (ZS)": {
+    "business_model": "Cloud-native security platform focused on zero-trust access and securing users, workloads, and data.",
+    "primary_revenue_source": "Recurring subscription revenue from cloud-delivered security offerings.",
+    "customer_type": "Enterprises and public-sector organizations adopting zero-trust and cloud security architectures.",
+    "platform_dependency": "Service delivery depends on Zscaler's cloud infrastructure, data centers, network connectivity, and third-party infrastructure.",
+    "competitive_risk": "Competes with network-security, cloud-security, secure-access, and platform cybersecurity vendors.",
+    "operational_risk": "Growth depends on renewals, customer expansion, platform availability, data security, and continued enterprise adoption.",
+    "profitability_history": "Zscaler has produced strong revenue growth while continuing to report GAAP operating and net losses.",
+    "customer_concentration": "The company serves a broad enterprise base and relies on continued large-customer expansion.",
+    "international_exposure": "Global operations create regulatory, privacy, currency, and geopolitical exposure.",
+    "key_risk_themes": [
+      "Zero-trust adoption",
+      "Competition",
+      "Cloud service reliability",
+      "Customer expansion and retention",
+      "Cybersecurity incidents",
+      "International regulation"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000157/zs-20260731.htm"
+  },
+  "Akamai (AKAM)": {
+    "business_model": "Cloud infrastructure platform spanning security, content delivery, and cloud computing services.",
+    "primary_revenue_source": "Service revenue across security, delivery, and cloud-computing offerings.",
+    "customer_type": "Enterprises, digital businesses, media companies, and organizations operating internet-facing applications and infrastructure.",
+    "platform_dependency": "Operates a globally distributed network and cloud infrastructure footprint that depends on data centers, network connectivity, hardware, and power.",
+    "competitive_risk": "Competes with CDN, cloud-computing, cybersecurity, and edge-network providers.",
+    "operational_risk": "Results depend on network reliability, infrastructure capacity, security execution, customer retention, and capital investment.",
+    "profitability_history": "Akamai has remained GAAP profitable while shifting its revenue mix toward security and cloud computing.",
+    "customer_concentration": "Broad global customer base with diversified security, delivery, and cloud-computing demand.",
+    "international_exposure": "Global infrastructure and customers create currency, regulatory, geopolitical, and network-operating exposure.",
+    "key_risk_themes": [
+      "Network reliability",
+      "Security competition",
+      "Cloud-computing execution",
+      "Infrastructure investment",
+      "Customer retention",
+      "International exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1086222/000108622226000022/akam-20251231.htm"
   }
 }
