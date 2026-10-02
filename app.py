@@ -430,6 +430,7 @@ def build_change_notes(qdata):
 company_data = load_json("data/company_metrics.json")
 company_analysis = load_json("data/company_analysis.json")
 company_quarterly = load_json("data/company_quarterly.json")
+company_s1 = load_json("data/company_s1.json")
 
 public_market_data_enabled = bool(
     st.secrets.get("PUBLIC_MARKET_DATA_ENABLED", False)
@@ -1178,6 +1179,40 @@ with company_tab:
                 display_history["fiscal_year"].astype(str)
             )[["Operating Margin"]]
         )
+
+    section("IPO History", "What the S-1 Said")
+    s1 = company_s1.get(research_company, {})
+    if s1:
+        st.caption(
+            "An S-1 is the registration statement a company files before an initial public offering. "
+            "It is historical, so EquityLens uses it to show how the company originally described its business, strategy, and risks rather than as a source for current financial figures."
+        )
+
+        s1_cols = st.columns([1, 3])
+        with s1_cols[0]:
+            st.markdown("**Filing**")
+            st.write(s1.get("form", "S-1"))
+            st.markdown("**Filed**")
+            st.write(s1.get("filed_date", "N/A"))
+        with s1_cols[1]:
+            st.markdown("**Historical IPO context**")
+            st.write(s1.get("historical_context", "N/A"))
+            st.markdown("**What this filing can teach you**")
+            st.write(s1.get("what_to_learn", "N/A"))
+
+        if s1.get("source_url"):
+            st.caption("Primary source: SEC EDGAR S-1 registration filing")
+            st.link_button(
+                "Open original S-1 on SEC EDGAR",
+                s1.get("source_url"),
+                key=f"s1_source_{ticker}"
+            )
+
+        st.caption(
+            "S-1 information is presented as historical company context. Current company facts and financial performance should be read from the latest 10-K, 10-Q, and other current filings."
+        )
+    else:
+        st.info("No S-1 research has been added for this company yet.")
 
     section("Filings", "10-K vs Latest 10-Q Snapshot")
     annual_revenue = data.get("revenue")
