@@ -445,13 +445,18 @@ SUBGROUPS = {
     "Data Platforms": [
         "Snowflake (SNOW)",
         "MongoDB (MDB)",
-        "Datadog (DDOG)"
+        "Datadog (DDOG)",
+        "Elastic (ESTC)",
+        "Dynatrace (DT)"
     ],
     "Cloud / Network Infrastructure": [
-        "Cloudflare (NET)"
+        "Cloudflare (NET)",
+        "Akamai (AKAM)"
     ],
     "Cybersecurity": [
-        "Rubrik (RBRK)"
+        "Rubrik (RBRK)",
+        "Palo Alto Networks (PANW)",
+        "Zscaler (ZS)"
     ],
     "Enterprise / AI Platforms": [],
     "AI / Compute Infrastructure": []
