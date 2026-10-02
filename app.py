@@ -22,6 +22,12 @@ def load_company_analysis():
         return json.load(file)
 
 
+@st.cache_data
+def load_company_quarterly():
+    with open("data/company_quarterly.json", "r") as file:
+        return json.load(file)
+
+
 @st.cache_data(ttl=300)
 def get_live_market_data(symbols):
     # Prefer the correctly named secret. The fallback keeps the app working
@@ -96,6 +102,7 @@ def format_multiple(value):
 
 company_data = load_company_data()
 company_analysis = load_company_analysis()
+company_quarterly = load_company_quarterly()
 public_market_data_enabled = bool(st.secrets.get("PUBLIC_MARKET_DATA_ENABLED", False))
 
 st.title("EquityLens AI")
@@ -425,6 +432,135 @@ if st.button("Run Comparison"):
         st.caption(
             "Financial figures are sourced from each company's latest annual Form 10-K. "
             "Fiscal year-end dates differ by company."
+        )
+
+
+        st.markdown("---")
+        st.subheader("Quarterly & LTM Analysis")
+
+        quarterly_rows = []
+        ltm_rows = []
+
+        for company in selected_companies:
+            qdata = company_quarterly.get(company, {})
+            latest = qdata.get("latest_quarter", {})
+            prior_q = qdata.get("prior_quarter", {})
+            prior_y = qdata.get("prior_year_quarter", {})
+            ltm = qdata.get("ltm", {})
+
+            revenue = latest.get("revenue")
+            prior_q_revenue = prior_q.get("revenue")
+            prior_y_revenue = prior_y.get("revenue")
+
+            yoy_growth = (
+                ((revenue - prior_y_revenue) / prior_y_revenue) * 100
+                if revenue is not None and prior_y_revenue
+                else None
+            )
+            qoq_growth = (
+                ((revenue - prior_q_revenue) / prior_q_revenue) * 100
+                if revenue is not None and prior_q_revenue
+                else None
+            )
+
+            gross_margin = (
+                latest.get("gross_profit") / revenue * 100
+                if revenue and latest.get("gross_profit") is not None
+                else None
+            )
+            operating_margin = (
+                latest.get("operating_income") / revenue * 100
+                if revenue and latest.get("operating_income") is not None
+                else None
+            )
+            net_margin = (
+                latest.get("net_income") / revenue * 100
+                if revenue and latest.get("net_income") is not None
+                else None
+            )
+
+            prior_q_op_margin = (
+                prior_q.get("operating_income") / prior_q_revenue * 100
+                if prior_q_revenue and prior_q.get("operating_income") is not None
+                else None
+            )
+            op_margin_change = (
+                operating_margin - prior_q_op_margin
+                if operating_margin is not None and prior_q_op_margin is not None
+                else None
+            )
+
+            quarterly_rows.append({
+                "Company": company,
+                "Quarter": qdata.get("quarter_label", "N/A"),
+                "Revenue": format_money(revenue),
+                "YoY Revenue Growth": pct(yoy_growth),
+                "QoQ Revenue Growth": pct(qoq_growth),
+                "Gross Margin": pct(gross_margin),
+                "Operating Income": format_money(latest.get("operating_income")),
+                "Operating Margin": pct(operating_margin),
+                "QoQ Op. Margin Change": (
+                    f"{op_margin_change:+.1f} pts"
+                    if op_margin_change is not None
+                    else "N/A"
+                ),
+                "Net Income": format_money(latest.get("net_income")),
+                "Net Margin": pct(net_margin),
+                "SEC Filing": qdata.get("source_filing", "")
+            })
+
+            ltm_revenue = ltm.get("revenue")
+            ltm_rows.append({
+                "Company": company,
+                "LTM Revenue": format_money(ltm_revenue),
+                "LTM Gross Margin": pct(
+                    ltm.get("gross_profit") / ltm_revenue * 100
+                    if ltm_revenue and ltm.get("gross_profit") is not None
+                    else None
+                ),
+                "LTM Operating Income": format_money(ltm.get("operating_income")),
+                "LTM Operating Margin": pct(
+                    ltm.get("operating_income") / ltm_revenue * 100
+                    if ltm_revenue and ltm.get("operating_income") is not None
+                    else None
+                ),
+                "LTM Net Income": format_money(ltm.get("net_income")),
+                "LTM Net Margin": pct(
+                    ltm.get("net_income") / ltm_revenue * 100
+                    if ltm_revenue and ltm.get("net_income") is not None
+                    else None
+                )
+            })
+
+        st.markdown("**Latest Quarter**")
+        st.dataframe(
+            pd.DataFrame(quarterly_rows),
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "SEC Filing": st.column_config.LinkColumn(
+                    "SEC Filing",
+                    display_text="Open 10-Q"
+                )
+            }
+        )
+
+        st.caption(
+            "YoY compares the latest quarter with the same quarter one year earlier. "
+            "QoQ compares the latest quarter with the immediately preceding quarter. "
+            "Margin changes are shown in percentage points."
+        )
+
+        st.markdown("**Trailing Twelve Months (LTM)**")
+        st.dataframe(
+            pd.DataFrame(ltm_rows),
+            use_container_width=True,
+            hide_index=True
+        )
+
+        st.caption(
+            "LTM figures are calculated as latest annual results + current year-to-date "
+            "results - comparable prior-year year-to-date results, using SEC filings."
         )
 
         st.markdown("---")
