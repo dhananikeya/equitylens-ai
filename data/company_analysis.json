@@ -198,5 +198,105 @@
       "International exposure"
     ],
     "source_filing": "https://www.sec.gov/Archives/edgar/data/1086222/000108622226000022/akam-20251231.htm"
+  },
+  "CrowdStrike (CRWD)": {
+    "business_model": "Cloud-native cybersecurity platform centered on endpoint, identity, cloud, data, and security-operations workloads delivered through the Falcon platform.",
+    "primary_revenue_source": "Primarily recurring subscription revenue, supplemented by professional services.",
+    "customer_type": "Enterprises, governments, and organizations seeking cloud-delivered cybersecurity and threat-protection capabilities.",
+    "platform_dependency": "Relies on cloud infrastructure, endpoint agents, telemetry, and the availability and resilience of the Falcon platform.",
+    "competitive_risk": "Competes with large cybersecurity platforms, endpoint-security vendors, cloud-security providers, and security-operations tools.",
+    "operational_risk": "Growth depends on subscription renewals, module expansion, platform reliability, incident response, and continued product innovation.",
+    "profitability_history": "Revenue has grown rapidly while GAAP operating results have remained loss-making in the latest fiscal year.",
+    "customer_concentration": "Broad subscription customer base with performance tied to retention and expansion across platform modules.",
+    "international_exposure": "Global operations create regulatory, privacy, currency, and geopolitical exposure.",
+    "key_risk_themes": [
+      "Platform reliability",
+      "Customer retention and expansion",
+      "Cybersecurity competition",
+      "Cloud infrastructure dependence",
+      "Security incidents",
+      "International regulation"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000010/crwd-20260131.htm"
+  },
+  "Okta (OKTA)": {
+    "business_model": "Identity and access-management platform providing workforce identity and customer identity products.",
+    "primary_revenue_source": "Primarily recurring subscription revenue, plus professional services and other revenue.",
+    "customer_type": "Businesses and organizations managing workforce and customer identity, authentication, and access.",
+    "platform_dependency": "Relies on cloud infrastructure and the availability, security, and scalability of its identity platform.",
+    "competitive_risk": "Competes with identity-security vendors, cybersecurity platforms, and large technology providers with bundled identity products.",
+    "operational_risk": "Results depend on subscription renewals, product adoption, platform security, customer trust, and execution across identity products.",
+    "profitability_history": "Fiscal 2026 included positive GAAP operating income and net income after prior-year operating losses.",
+    "customer_concentration": "Broad enterprise customer base with growth driven by renewals and expansion.",
+    "international_exposure": "Global operations create currency, privacy, regulatory, and geopolitical exposure.",
+    "key_risk_themes": [
+      "Identity-platform security",
+      "Customer trust",
+      "Competition",
+      "Subscription renewals",
+      "Product execution",
+      "International regulation"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1660134/000166013426000020/okta-20260131.htm"
+  },
+  "Fortinet (FTNT)": {
+    "business_model": "Cybersecurity platform combining network-security products with recurring security and support services.",
+    "primary_revenue_source": "Product revenue plus recurring service revenue, with services representing the majority of total revenue.",
+    "customer_type": "Enterprises, governments, service providers, and organizations deploying network and cloud security.",
+    "platform_dependency": "Combines proprietary security appliances, software, cloud services, and a global support infrastructure.",
+    "competitive_risk": "Competes across firewall, secure networking, cloud security, and broader cybersecurity platform markets.",
+    "operational_risk": "Results depend on product demand, subscription and support renewals, hardware supply, channel execution, and product security.",
+    "profitability_history": "Fortinet has maintained strong GAAP operating profitability and net income.",
+    "customer_concentration": "Broad customer and channel base across multiple geographies.",
+    "international_exposure": "Substantial international revenue creates currency, regulatory, supply-chain, and geopolitical exposure.",
+    "key_risk_themes": [
+      "Hardware supply and demand",
+      "Service renewals",
+      "Cybersecurity competition",
+      "Channel execution",
+      "Product security",
+      "International exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm"
+  },
+  "SentinelOne (S)": {
+    "business_model": "AI-driven cybersecurity platform focused on endpoint, cloud, identity, and security-operations protection.",
+    "primary_revenue_source": "Primarily recurring subscription revenue from the Singularity platform.",
+    "customer_type": "Enterprises, security teams, and organizations seeking endpoint and cloud-native threat protection.",
+    "platform_dependency": "Relies on cloud infrastructure, endpoint agents, data telemetry, and platform availability.",
+    "competitive_risk": "Competes with endpoint-security, XDR, cloud-security, and broader cybersecurity platform vendors.",
+    "operational_risk": "Growth depends on retention, new-customer acquisition, platform reliability, product innovation, and efficient scaling.",
+    "profitability_history": "Revenue has grown rapidly while GAAP operating and net losses remain substantial.",
+    "customer_concentration": "Broad customer base with results driven by recurring subscription growth and expansion.",
+    "international_exposure": "Global operations create regulatory, currency, privacy, and geopolitical exposure.",
+    "key_risk_themes": [
+      "Recurring subscription growth",
+      "Platform reliability",
+      "Cybersecurity competition",
+      "AI/product execution",
+      "Customer retention",
+      "International exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm"
+  },
+  "Tenable (TENB)": {
+    "business_model": "Exposure-management and vulnerability-management platform helping organizations identify and reduce cyber risk.",
+    "primary_revenue_source": "Primarily subscription revenue from enterprise security and exposure-management products.",
+    "customer_type": "Enterprises, governments, and organizations managing vulnerabilities across IT, cloud, identity, and operational technology.",
+    "platform_dependency": "Relies on cloud infrastructure, vulnerability intelligence, integrations, and platform availability.",
+    "competitive_risk": "Competes with vulnerability-management, cloud-security, exposure-management, and broader cybersecurity vendors.",
+    "operational_risk": "Growth depends on renewals, channel execution, product adoption, acquisitions, and maintaining platform reliability and security.",
+    "profitability_history": "Tenable has approached GAAP operating breakeven but remained net loss-making in fiscal 2025.",
+    "customer_concentration": "Broad enterprise customer base supported by direct sales and channel partners.",
+    "international_exposure": "Global customers and operations create currency, regulatory, privacy, and geopolitical exposure.",
+    "key_risk_themes": [
+      "Subscription renewals",
+      "Exposure-management competition",
+      "Channel execution",
+      "Platform reliability",
+      "Acquisition integration",
+      "International exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1660280/000166028026000005/tenb-20251231.htm"
   }
 }
