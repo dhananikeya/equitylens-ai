@@ -151,6 +151,12 @@ Instead, it presents factual comparisons such as revenue growth, profitability, 
 
 Material financial data is tied back to SEC filings whenever possible.
 
+EquityLens distinguishes between **reported figures**, **metrics calculated by the application**, and **educational explanations**. Primary sources are preferred in this order: SEC filings first, then company investor-relations disclosures, followed by appropriately licensed market-data sources where needed.
+
+### Beginner-Friendly Financial Education
+
+The interface is designed so users do not need prior market expertise to understand the research. Financial terms such as revenue growth, gross margin, operating margin, net income, LTM, 10-K, and 10-Q are explained in plain language without converting those explanations into investment recommendations.
+
 ### Comparable Research
 
 Companies are analyzed using a consistent structure so differences in growth, profitability, business model, and risk are easier to examine.
