@@ -92,6 +92,7 @@ def pct(value):
 
 company_data = load_company_data()
 company_analysis = load_company_analysis()
+public_market_data_enabled = False
 
 st.title("EquityLens AI")
 
