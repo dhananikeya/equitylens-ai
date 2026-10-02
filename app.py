@@ -992,9 +992,6 @@ with home_tab:
         "EquityLens separates company-reported figures from calculations and summaries, "
         "links material claims back to SEC filings, and keeps interpretation separate from the source data."
     )
-    st.caption(
-        "Built by Keya Dhanani · Independent public-markets research project"
-    )
 
 
 with peer_tab:
