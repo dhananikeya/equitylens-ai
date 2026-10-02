@@ -3,7 +3,7 @@
     "ticker": "MDB",
     "cik": "0001441816",
     "entity_name": "MongoDB, Inc.",
-    "last_checked_utc": "2026-10-02T11:48:42+00:00",
+    "last_checked_utc": "2026-10-02T11:53:17+00:00",
     "filings": [
       {
         "form": "8-K",
@@ -16,7 +16,7 @@
         "items": "7.01,8.01,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026063850/mdb-20260925.htm"
       },
       {
@@ -30,7 +30,7 @@
         "items": "5.02,7.01,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026063657/mdb-20260924.htm"
       },
       {
@@ -44,7 +44,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026062905/xslF345X06/wk-form4_1790022368.xml"
       },
       {
@@ -58,7 +58,7 @@
         "items": "",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026059830/mdb-20260731.htm"
       },
       {
@@ -72,7 +72,7 @@
         "items": "2.02,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026059794/mdb-20260901.htm"
       },
       {
@@ -86,7 +86,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026057659/xslF345X06/wk-form4_1787084339.xml"
       },
       {
@@ -100,7 +100,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000195779926000159/xsl144X01/primary_doc.xml"
       },
       {
@@ -114,7 +114,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000195779926000154/xsl144X01/primary_doc.xml"
       },
       {
@@ -128,7 +128,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026048478/xslF345X06/wk-form4_1784234363.xml"
       },
       {
@@ -142,7 +142,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000195779926000125/xsl144X01/primary_doc.xml"
       },
       {
@@ -156,7 +156,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000195779926000124/xsl144X01/primary_doc.xml"
       },
       {
@@ -170,7 +170,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026047908/xslF345X06/wk-form4_1783717656.xml"
       },
       {
@@ -184,7 +184,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026047298/xslF345X06/wk-form4_1783370023.xml"
       },
       {
@@ -198,7 +198,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026047295/xslF345X06/wk-form4_1783369943.xml"
       },
       {
@@ -212,7 +212,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026047293/xslF345X06/wk-form4_1783369850.xml"
       },
       {
@@ -226,7 +226,7 @@
         "items": "5.03,5.07",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026047228/mdb-20260630.htm"
       },
       {
@@ -240,7 +240,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026047001/xslF345X06/wk-form4_1783025380.xml"
       },
       {
@@ -254,7 +254,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026046997/xslF345X06/wk-form4_1783025286.xml"
       },
       {
@@ -268,7 +268,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026046993/xslF345X06/wk-form4_1783025213.xml"
       },
       {
@@ -282,7 +282,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026046989/xslF345X06/wk-form4_1783025147.xml"
       },
       {
@@ -296,7 +296,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026046986/xslF345X06/wk-form4_1783025073.xml"
       },
       {
@@ -310,7 +310,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026046983/xslF345X06/wk-form4_1783024981.xml"
       },
       {
@@ -324,7 +324,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026046975/xslF345X06/wk-form4_1783024879.xml"
       },
       {
@@ -338,7 +338,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026046964/xslF345X06/wk-form4_1783024709.xml"
       },
       {
@@ -352,7 +352,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1441816/000195004726006700/xsl144X01/primary_doc.xml"
       }
     ]
@@ -361,7 +361,7 @@
     "ticker": "SNOW",
     "cik": "0001640147",
     "entity_name": "Snowflake Inc.",
-    "last_checked_utc": "2026-10-02T11:48:42+00:00",
+    "last_checked_utc": "2026-10-02T11:53:17+00:00",
     "filings": [
       {
         "form": "144",
@@ -374,7 +374,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000195917326007179/xsl144X01/primary_doc.xml"
       },
       {
@@ -388,7 +388,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000162828026063478/xslF345X06/wk-form4_1790287028.xml"
       },
       {
@@ -402,7 +402,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000162828026063476/xslF345X06/wk-form4_1790286824.xml"
       },
       {
@@ -416,7 +416,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000195917326007090/xsl144X01/primary_doc.xml"
       },
       {
@@ -430,7 +430,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000195917326007084/xsl144X01/primary_doc.xml"
       },
       {
@@ -444,7 +444,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000162828026063114/xslF345X06/wk-form4_1790119062.xml"
       },
       {
@@ -458,7 +458,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000162828026063112/xslF345X06/wk-form4_1790118970.xml"
       },
       {
@@ -472,7 +472,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000162828026063110/xslF345X06/wk-form4_1790118793.xml"
       },
       {
@@ -486,7 +486,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000162828026063108/xslF345X06/wk-form4_1790118659.xml"
       },
       {
@@ -500,7 +500,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000162828026063106/xslF345X06/wk-form4_1790118563.xml"
       },
       {
@@ -514,7 +514,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000162828026063104/xslF345X06/wk-form4_1790118466.xml"
       },
       {
@@ -528,7 +528,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000162828026063102/xslF345X06/wk-form4_1790118334.xml"
       },
       {
@@ -542,7 +542,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000195917326007072/xsl144X01/primary_doc.xml"
       },
       {
@@ -556,7 +556,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000195917326007060/xsl144X01/primary_doc.xml"
       },
       {
@@ -570,7 +570,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000195917326007042/xsl144X01/primary_doc.xml"
       },
       {
@@ -584,7 +584,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000195917326007025/xsl144X01/primary_doc.xml"
       },
       {
@@ -598,7 +598,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000195917326007018/xsl144X01/primary_doc.xml"
       },
       {
@@ -612,7 +612,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000182173726000014/xslF345X06/wk-form4_1789605493.xml"
       },
       {
@@ -626,7 +626,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000212702526000007/xslF345X06/wk-form4_1789605465.xml"
       },
       {
@@ -640,7 +640,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000201202426000009/xslF345X06/wk-form4_1789605408.xml"
       },
       {
@@ -654,7 +654,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000171547226000010/xslF345X06/wk-form4_1789605388.xml"
       },
       {
@@ -668,7 +668,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000143176826000006/xslF345X06/wk-form4_1789605365.xml"
       },
       {
@@ -682,7 +682,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000197908826000020/xslF345X06/wk-form4_1789605344.xml"
       },
       {
@@ -696,7 +696,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000140234826000018/xslF345X06/wk-form4_1789605319.xml"
       },
       {
@@ -710,7 +710,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000203874026000011/xslF345X06/wk-form4_1789605289.xml"
       }
     ]
@@ -719,7 +719,7 @@
     "ticker": "RBRK",
     "cik": "0001943896",
     "entity_name": "Rubrik, Inc.",
-    "last_checked_utc": "2026-10-02T11:48:42+00:00",
+    "last_checked_utc": "2026-10-02T11:53:17+00:00",
     "filings": [
       {
         "form": "4",
@@ -732,7 +732,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000168576826000003/xslF345X06/form4-09262026_120929.xml"
       },
       {
@@ -746,7 +746,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000195824426000624/xsl144X01/primary_doc.xml"
       },
       {
@@ -760,7 +760,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000201914326000021/xslF345X06/form4-09182026_010938.xml"
       },
       {
@@ -774,7 +774,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000202022026000022/xslF345X06/form4-09182026_010913.xml"
       },
       {
@@ -788,7 +788,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000201914326000019/xslF345X06/form4-09112026_120951.xml"
       },
       {
@@ -802,7 +802,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000195824426000583/xsl144X01/primary_doc.xml"
       },
       {
@@ -816,7 +816,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000170774426000021/xslF345X06/form4-09042026_010941.xml"
       },
       {
@@ -830,7 +830,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000120743326000020/xslF345X06/form4-09042026_120923.xml"
       },
       {
@@ -844,7 +844,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000195004726009087/xsl144X01/primary_doc.xml"
       },
       {
@@ -858,7 +858,7 @@
         "items": "",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000194389626000060/rbrk-20260731.htm"
       },
       {
@@ -872,7 +872,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000182044726000004/xslF345X06/form4-08282026_110821.xml"
       },
       {
@@ -886,7 +886,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000182044726000003/xslF345X06/form3-08282026_110838.xml"
       },
       {
@@ -900,7 +900,7 @@
         "items": "2.02,5.02,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000194389626000055/rbrk-20260826.htm"
       },
       {
@@ -914,7 +914,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000202022026000020/xslF345X06/form4-08252026_040801.xml"
       },
       {
@@ -928,7 +928,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000153906126000013/xslSCHEDULE_13G_X02/primary_doc.xml"
       },
       {
@@ -942,7 +942,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000116755726000192/xslSCHEDULE_13G_X02/primary_doc.xml"
       },
       {
@@ -956,7 +956,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000201914326000017/xslF345X06/form4-08052026_110833.xml"
       },
       {
@@ -970,7 +970,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000120743326000018/xslF345X06/form4-08042026_070803.xml"
       },
       {
@@ -984,7 +984,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000170774426000019/xslF345X06/form4-08042026_070801.xml"
       },
       {
@@ -998,7 +998,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000195004726007563/xsl144X01/primary_doc.xml"
       },
       {
@@ -1012,7 +1012,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000195004726007559/xsl144X01/primary_doc.xml"
       },
       {
@@ -1026,7 +1026,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000210011926001455/xslSCHEDULE_13G_X02/primary_doc.xml"
       },
       {
@@ -1040,7 +1040,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000202022026000018/xslF345X06/form4-07162026_090750.xml"
       },
       {
@@ -1054,7 +1054,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000195004726007128/xsl144X01/primary_doc.xml"
       },
       {
@@ -1068,7 +1068,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1943896/000136605026000010/xslF345X06/form4-07142026_040701.xml"
       }
     ]
@@ -1077,7 +1077,7 @@
     "ticker": "DDOG",
     "cik": "0001561550",
     "entity_name": "Datadog, Inc.",
-    "last_checked_utc": "2026-10-02T11:48:42+00:00",
+    "last_checked_utc": "2026-10-02T11:53:17+00:00",
     "filings": [
       {
         "form": "4",
@@ -1090,7 +1090,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000156155026000320/xslF345X06/wk-form4_1790369004.xml"
       },
       {
@@ -1104,7 +1104,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000156155026000318/xslF345X06/wk-form4_1790196601.xml"
       },
       {
@@ -1118,7 +1118,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000195004726009766/xsl144X01/primary_doc.xml"
       },
       {
@@ -1132,7 +1132,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000195004726009721/xsl144X01/primary_doc.xml"
       },
       {
@@ -1146,7 +1146,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000195004726009720/xsl144X01/primary_doc.xml"
       },
       {
@@ -1160,7 +1160,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000195004726009719/xsl144X01/primary_doc.xml"
       },
       {
@@ -1174,7 +1174,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000156155026000316/xslF345X06/wk-form4_1789591134.xml"
       },
       {
@@ -1188,7 +1188,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000156155026000315/xslF345X06/wk-form4_1789591125.xml"
       },
       {
@@ -1202,7 +1202,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000156155026000314/xslF345X06/wk-form4_1789591119.xml"
       },
       {
@@ -1216,7 +1216,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000156155026000310/xslF345X06/wk-form4_1789504703.xml"
       },
       {
@@ -1230,7 +1230,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000156155026000309/xslF345X06/wk-form4_1789504696.xml"
       },
       {
@@ -1244,7 +1244,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000195004726009428/xsl144X01/primary_doc.xml"
       },
       {
@@ -1258,7 +1258,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000195004726009427/xsl144X01/primary_doc.xml"
       },
       {
@@ -1272,7 +1272,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000195004726009426/xsl144X01/primary_doc.xml"
       },
       {
@@ -1286,7 +1286,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000195004726009416/xsl144X01/primary_doc.xml"
       },
       {
@@ -1300,7 +1300,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000195004726009359/xsl144X01/primary_doc.xml"
       },
       {
@@ -1314,7 +1314,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000195004726009352/xsl144X01/primary_doc.xml"
       },
       {
@@ -1328,7 +1328,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000156155026000306/xslF345X06/wk-form4_1789072462.xml"
       },
       {
@@ -1342,7 +1342,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000146685726000012/xslF345X06/wk-form4_1788985931.xml"
       },
       {
@@ -1356,7 +1356,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000156155026000304/xslF345X06/wk-form4_1788900334.xml"
       },
       {
@@ -1370,7 +1370,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000156155026000303/xslF345X06/wk-form4_1788900329.xml"
       },
       {
@@ -1384,7 +1384,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000195004726009208/xsl144X01/primary_doc.xml"
       },
       {
@@ -1398,7 +1398,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000156155026000300/xslF345X06/wk-form4_1788554259.xml"
       },
       {
@@ -1412,7 +1412,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000156155026000299/xslF345X06/wk-form4_1788554253.xml"
       },
       {
@@ -1426,7 +1426,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1561550/000156155026000298/xslF345X06/wk-form4_1788554248.xml"
       }
     ]
@@ -1435,7 +1435,7 @@
     "ticker": "NET",
     "cik": "0001477333",
     "entity_name": "Cloudflare, Inc.",
-    "last_checked_utc": "2026-10-02T11:48:42+00:00",
+    "last_checked_utc": "2026-10-02T11:53:17+00:00",
     "filings": [
       {
         "form": "4",
@@ -1448,7 +1448,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000136657426000024/xslF345X06/wk-form4_1790198061.xml"
       },
       {
@@ -1462,7 +1462,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000197248126000285/xsl144X01/primary_doc.xml"
       },
       {
@@ -1476,7 +1476,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000147328926000029/xslF345X06/wk-form4_1790023820.xml"
       },
       {
@@ -1490,7 +1490,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000195004726009632/xsl144X01/primary_doc.xml"
       },
       {
@@ -1504,7 +1504,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000147328926000027/xslF345X06/wk-form4_1789513642.xml"
       },
       {
@@ -1518,7 +1518,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000136657426000022/xslF345X06/wk-form4_1789511466.xml"
       },
       {
@@ -1532,7 +1532,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000178695126000023/xslF345X06/form4-09092026_120905.xml"
       },
       {
@@ -1546,7 +1546,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000178695126000020/xslF345X06/wk-form4_1787347752.xml"
       },
       {
@@ -1560,7 +1560,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000178695126000018/xslF345X06/wk-form4_1787347677.xml"
       },
       {
@@ -1574,7 +1574,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000212802526000013/xslF345X06/wk-form4_1787175730.xml"
       },
       {
@@ -1588,7 +1588,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000197939126000015/xslF345X06/wk-form4_1787175432.xml"
       },
       {
@@ -1602,7 +1602,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000147328926000025/xslF345X06/wk-form4_1787175329.xml"
       },
       {
@@ -1616,7 +1616,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000212802526000011/xslF345X06/wk-form4_1787086880.xml"
       },
       {
@@ -1630,7 +1630,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000147328926000023/xslF345X06/wk-form4_1787086821.xml"
       },
       {
@@ -1644,7 +1644,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000197939126000013/xslF345X06/wk-form4_1787086742.xml"
       },
       {
@@ -1658,7 +1658,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000178692526000041/xslF345X06/wk-form4_1787086660.xml"
       },
       {
@@ -1672,7 +1672,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000178695126000016/xslF345X06/wk-form4_1787086127.xml"
       },
       {
@@ -1686,7 +1686,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000195004726008302/xsl144X01/primary_doc.xml"
       },
       {
@@ -1700,7 +1700,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000195004726008267/xsl144X01/primary_doc.xml"
       },
       {
@@ -1714,7 +1714,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000195004726008247/xsl144X01/primary_doc.xml"
       },
       {
@@ -1728,7 +1728,7 @@
         "items": "1.01,2.03,3.02,8.01,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000095010326012340/dp251721_8k.htm"
       },
       {
@@ -1742,7 +1742,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000206272526000018/xslF345X06/wk-form4_1786482230.xml"
       },
       {
@@ -1756,7 +1756,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000147328926000021/xslF345X06/wk-form4_1786057384.xml"
       },
       {
@@ -1770,7 +1770,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000136657426000020/xslF345X06/wk-form4_1786051386.xml"
       },
       {
@@ -1784,7 +1784,7 @@
         "items": "",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm"
       }
     ]
@@ -1793,7 +1793,7 @@
     "ticker": "ESTC",
     "cik": "0001707753",
     "entity_name": "Elastic N.V.",
-    "last_checked_utc": "2026-10-02T11:48:42+00:00",
+    "last_checked_utc": "2026-10-02T11:53:17+00:00",
     "filings": [
       {
         "form": "4",
@@ -1806,7 +1806,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001336/xslF345X06/form4.xml"
       },
       {
@@ -1820,7 +1820,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000195004726009976/xsl144X01/primary_doc.xml"
       },
       {
@@ -1834,7 +1834,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001296/xslF345X06/form4.xml"
       },
       {
@@ -1848,7 +1848,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000195004726009382/xsl144X01/primary_doc.xml"
       },
       {
@@ -1862,7 +1862,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001284/xslF345X06/form4.xml"
       },
       {
@@ -1876,7 +1876,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001282/xslF345X06/form4.xml"
       },
       {
@@ -1890,7 +1890,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001281/xslF345X06/form4.xml"
       },
       {
@@ -1904,7 +1904,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001280/xslF345X06/form4.xml"
       },
       {
@@ -1918,7 +1918,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001279/xslF345X06/form4.xml"
       },
       {
@@ -1932,7 +1932,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001278/xslF345X06/form4.xml"
       },
       {
@@ -1946,7 +1946,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000195004726009286/xsl144X01/primary_doc.xml"
       },
       {
@@ -1960,7 +1960,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001269/xsl144X01/primary_doc.xml"
       },
       {
@@ -1974,7 +1974,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001268/xsl144X01/primary_doc.xml"
       },
       {
@@ -1988,7 +1988,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001267/xsl144X01/primary_doc.xml"
       },
       {
@@ -2002,7 +2002,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001266/xsl144X01/primary_doc.xml"
       },
       {
@@ -2016,7 +2016,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001265/xsl144X01/primary_doc.xml"
       },
       {
@@ -2030,7 +2030,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001264/xsl144X01/primary_doc.xml"
       },
       {
@@ -2044,7 +2044,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000195004726009257/xsl144X01/primary_doc.xml"
       },
       {
@@ -2058,7 +2058,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001248/xslF345X06/form4.xml"
       },
       {
@@ -2072,7 +2072,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000195004726009156/xsl144X01/primary_doc.xml"
       },
       {
@@ -2086,7 +2086,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000195004726009096/xsl144X01/primary_doc.xml"
       },
       {
@@ -2100,7 +2100,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000195004726009095/xsl144X01/primary_doc.xml"
       },
       {
@@ -2114,7 +2114,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001219/xslF345X06/form4.xml"
       },
       {
@@ -2128,7 +2128,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001218/xslF345X06/form4.xml"
       },
       {
@@ -2142,7 +2142,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001217/xslF345X06/form4.xml"
       }
     ]
@@ -2151,7 +2151,7 @@
     "ticker": "DT",
     "cik": "0001773383",
     "entity_name": "Dynatrace, Inc.",
-    "last_checked_utc": "2026-10-02T11:48:42+00:00",
+    "last_checked_utc": "2026-10-02T11:53:17+00:00",
     "filings": [
       {
         "form": "8-K",
@@ -2164,7 +2164,7 @@
         "items": "1.01,2.03,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177338326000059/dt-20260924.htm"
       },
       {
@@ -2178,7 +2178,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000136157026000021/xslSCHEDULE_13D_X02/primary_doc.xml"
       },
       {
@@ -2192,7 +2192,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000178350726000013/xslF345X06/wk-form4_1790024527.xml"
       },
       {
@@ -2206,7 +2206,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000196922326001033/xsl144X01/primary_doc.xml"
       },
       {
@@ -2220,7 +2220,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000154256726000014/xslF345X06/wk-form4_1789589930.xml"
       },
       {
@@ -2234,7 +2234,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000136157026000020/xslSCHEDULE_13D_X02/primary_doc.xml"
       },
       {
@@ -2248,7 +2248,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000154256726000012/xslF345X06/wk-form4_1788996124.xml"
       },
       {
@@ -2262,7 +2262,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000198311226000010/xslF345X06/wk-form4_1788996096.xml"
       },
       {
@@ -2276,7 +2276,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000198938226000016/xslF345X06/wk-form4_1788996061.xml"
       },
       {
@@ -2290,7 +2290,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000123916526000008/xslF345X06/wk-form4_1788996035.xml"
       },
       {
@@ -2304,7 +2304,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000206888426000007/xslF345X06/wk-form4_1788996008.xml"
       },
       {
@@ -2318,7 +2318,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000178350726000011/xslF345X06/wk-form4_1788995977.xml"
       },
       {
@@ -2332,7 +2332,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000136157026000019/xslSCHEDULE_13D_X02/primary_doc.xml"
       },
       {
@@ -2346,7 +2346,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177567926000016/xslF345X06/wk-form4_1788898519.xml"
       },
       {
@@ -2360,7 +2360,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000199156926000010/xslF345X06/wk-form4_1788381395.xml"
       },
       {
@@ -2374,7 +2374,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000136157026000017/xslSCHEDULE_13D_X02/primary_doc.xml"
       },
       {
@@ -2388,7 +2388,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177567926000013/xslF345X06/wk-form4_1787866292.xml"
       },
       {
@@ -2402,7 +2402,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000144348326000004/xslF345X06/wk-form4_1787866231.xml"
       },
       {
@@ -2416,7 +2416,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000199156926000008/xslF345X06/wk-form4_1787866203.xml"
       },
       {
@@ -2430,7 +2430,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000122130226000004/xslF345X06/wk-form4_1787866174.xml"
       },
       {
@@ -2444,7 +2444,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000163936826000004/xslF345X06/wk-form4_1787866146.xml"
       },
       {
@@ -2458,7 +2458,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000125777426000004/xslF345X06/wk-form4_1787866118.xml"
       },
       {
@@ -2472,7 +2472,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000166436726000004/xslF345X06/wk-form4_1787866090.xml"
       },
       {
@@ -2486,7 +2486,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000135475626000009/xslF345X06/wk-form4_1787866048.xml"
       },
       {
@@ -2500,7 +2500,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1773383/000214356926000007/xslF345X06/wk-form4_1787865963.xml"
       }
     ]
@@ -2509,7 +2509,7 @@
     "ticker": "PANW",
     "cik": "0001327567",
     "entity_name": "Palo Alto Networks Inc",
-    "last_checked_utc": "2026-10-02T11:48:42+00:00",
+    "last_checked_utc": "2026-10-02T11:53:17+00:00",
     "filings": [
       {
         "form": "4",
@@ -2522,7 +2522,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000168226026000006/xslF345X06/ownership.xml"
       },
       {
@@ -2536,7 +2536,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000185254026000007/xslF345X06/ownership.xml"
       },
       {
@@ -2550,7 +2550,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000119312526405399/xslF345X06/ownership.xml"
       },
       {
@@ -2564,7 +2564,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000196858226001007/xsl144X01/primary_doc.xml"
       },
       {
@@ -2578,7 +2578,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000195004726009796/xsl144X01/primary_doc.xml"
       },
       {
@@ -2592,7 +2592,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000188228526000024/xslF345X06/ownership.xml"
       },
       {
@@ -2606,7 +2606,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000121923126000008/xslF345X06/form4.xml"
       },
       {
@@ -2620,7 +2620,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000195004726009606/xsl144X01/primary_doc.xml"
       },
       {
@@ -2634,7 +2634,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000177245826000005/xslF345X06/ownership.xml"
       },
       {
@@ -2648,7 +2648,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000119312526393132/xslF345X06/ownership.xml"
       },
       {
@@ -2662,7 +2662,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000196858226000982/xsl144X01/primary_doc.xml"
       },
       {
@@ -2676,7 +2676,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000196858226000970/xsl144X01/primary_doc.xml"
       },
       {
@@ -2690,7 +2690,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000195004726009448/xsl144X01/primary_doc.xml"
       },
       {
@@ -2704,7 +2704,7 @@
         "items": "",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000119312526387982/d175159ds8.htm"
       },
       {
@@ -2718,7 +2718,7 @@
         "items": "",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000132756726000023/panw-20260731.htm"
       },
       {
@@ -2732,7 +2732,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000205537026000007/xslF345X06/ownership.xml"
       },
       {
@@ -2746,7 +2746,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000188228526000022/xslF345X06/ownership.xml"
       },
       {
@@ -2760,7 +2760,7 @@
         "items": "2.02,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000132756726000019/panw-20260901.htm"
       },
       {
@@ -2774,7 +2774,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000188228526000020/xslF345X06/ownership.xml"
       },
       {
@@ -2788,7 +2788,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000195004726008692/xsl144X01/primary_doc.xml"
       },
       {
@@ -2802,7 +2802,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000188228526000017/xslF345X06/ownership.xml"
       },
       {
@@ -2816,7 +2816,7 @@
         "items": "5.02,5.03,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000119312526361122/d180372d8k.htm"
       },
       {
@@ -2830,7 +2830,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000188228526000014/xslF345X06/ownership.xml"
       },
       {
@@ -2844,7 +2844,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000205537026000004/xslF345X06/ownership.xml"
       },
       {
@@ -2858,7 +2858,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327567/000195004726006917/xsl144X01/primary_doc.xml"
       }
     ]
@@ -2867,7 +2867,7 @@
     "ticker": "ZS",
     "cik": "0001713683",
     "entity_name": "Zscaler, Inc.",
-    "last_checked_utc": "2026-10-02T11:48:42+00:00",
+    "last_checked_utc": "2026-10-02T11:53:17+00:00",
     "filings": [
       {
         "form": "4",
@@ -2880,7 +2880,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000195/xslF345X06/wk-form4_1790641219.xml"
       },
       {
@@ -2894,7 +2894,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000196858226001015/xsl144X01/primary_doc.xml"
       },
       {
@@ -2908,7 +2908,7 @@
         "items": "5.02",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000193/zs-20260924.htm"
       },
       {
@@ -2922,7 +2922,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000184/xslF345X06/wk-form4_1790027874.xml"
       },
       {
@@ -2936,7 +2936,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000182/xslF345X06/wk-form4_1790027535.xml"
       },
       {
@@ -2950,7 +2950,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000195004726009716/xsl144X01/primary_doc.xml"
       },
       {
@@ -2964,7 +2964,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000195004726009689/xsl144X01/primary_doc.xml"
       },
       {
@@ -2978,7 +2978,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000180/xslF345X06/wk-form4_1789688771.xml"
       },
       {
@@ -2992,7 +2992,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000178/xslF345X06/wk-form4_1789688713.xml"
       },
       {
@@ -3006,7 +3006,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000176/xslF345X06/wk-form4_1789688660.xml"
       },
       {
@@ -3020,7 +3020,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000174/xslF345X06/wk-form4_1789688583.xml"
       },
       {
@@ -3034,7 +3034,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000172/xslF345X06/wk-form4_1789688527.xml"
       },
       {
@@ -3048,7 +3048,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000170/xslF345X06/wk-form4_1789688475.xml"
       },
       {
@@ -3062,7 +3062,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000195004726009615/xsl144X01/primary_doc.xml"
       },
       {
@@ -3076,7 +3076,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000195004726009610/xsl144X01/primary_doc.xml"
       },
       {
@@ -3090,7 +3090,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000168/xsl144X01/primary_doc.xml"
       },
       {
@@ -3104,7 +3104,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000166/xsl144X01/primary_doc.xml"
       },
       {
@@ -3118,7 +3118,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000164/xsl144X01/primary_doc.xml"
       },
       {
@@ -3132,7 +3132,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000162/xsl144X01/primary_doc.xml"
       },
       {
@@ -3146,7 +3146,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000160/xsl144X01/primary_doc.xml"
       },
       {
@@ -3160,7 +3160,7 @@
         "items": "",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000158/zs_s-8xfy2026.htm"
       },
       {
@@ -3174,7 +3174,7 @@
         "items": "",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000157/zs-20260731.htm"
       },
       {
@@ -3188,7 +3188,7 @@
         "items": "2.02,2.05,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000156/zs-20260901.htm"
       },
       {
@@ -3202,7 +3202,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000132/xslF345X06/wk-form4_1787777837.xml"
       },
       {
@@ -3216,7 +3216,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1713683/000201238326003139/xslSCHEDULE_13G_X02/primary_doc.xml"
       }
     ]
@@ -3225,7 +3225,7 @@
     "ticker": "AKAM",
     "cik": "0001086222",
     "entity_name": "AKAMAI TECHNOLOGIES INC",
-    "last_checked_utc": "2026-10-02T11:48:42+00:00",
+    "last_checked_utc": "2026-10-02T11:53:17+00:00",
     "filings": [
       {
         "form": "4",
@@ -3238,7 +3238,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000181022826000012/xslF345X06/wk-form4_1790628713.xml"
       },
       {
@@ -3252,7 +3252,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000184573926000013/xslF345X06/wk-form4_1790628224.xml"
       },
       {
@@ -3266,7 +3266,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000192109426001052/xsl144X01/primary_doc.xml"
       },
       {
@@ -3280,7 +3280,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000192109426001051/xsl144X01/primary_doc.xml"
       },
       {
@@ -3294,7 +3294,7 @@
         "items": "5.05,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000108622226000089/akam-20260922.htm"
       },
       {
@@ -3308,7 +3308,7 @@
         "items": "1.01,3.02,5.03,7.01,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000119312526401048/d288154d8k.htm"
       },
       {
@@ -3322,7 +3322,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000184557426000018/xslF345X06/wk-form4_1789507920.xml"
       },
       {
@@ -3336,7 +3336,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000186720326000016/xslF345X06/wk-form4_1789417447.xml"
       },
       {
@@ -3350,7 +3350,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000142284926000119/xslSCHEDULE_13G_X02/primary_doc.xml"
       },
       {
@@ -3364,7 +3364,7 @@
         "items": "",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000108622226000086/akam-20260630.htm"
       },
       {
@@ -3378,7 +3378,7 @@
         "items": "2.02,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000108622226000083/akam-20260806.htm"
       },
       {
@@ -3392,7 +3392,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000184557426000016/xslF345X06/wk-form4_1784145921.xml"
       },
       {
@@ -3406,7 +3406,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000192109426000732/xsl144X01/primary_doc.xml"
       },
       {
@@ -3420,7 +3420,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000108622226000075/xslF345X06/wk-form4_1781814681.xml"
       },
       {
@@ -3434,7 +3434,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000192109426000670/xsl144X01/primary_doc.xml"
       },
       {
@@ -3448,7 +3448,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000108622226000073/akam-sx8posderegisteringsh.htm"
       },
       {
@@ -3462,7 +3462,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000108622226000069/xslF345X06/wk-form4_1781554341.xml"
       },
       {
@@ -3476,7 +3476,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000184573926000011/xslF345X06/wk-form4_1781126545.xml"
       },
       {
@@ -3490,7 +3490,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000192109426000625/xsl144X01/primary_doc.xml"
       },
       {
@@ -3504,7 +3504,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000192109426000600/xsl144X01/primary_doc.xml"
       },
       {
@@ -3518,7 +3518,7 @@
         "items": "1.01,2.03,3.02,8.01,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000119312526237084/d144441d8k.htm"
       },
       {
@@ -3532,7 +3532,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000123499826000004/xslF345X06/wk-form4_1779312876.xml"
       },
       {
@@ -3546,7 +3546,7 @@
         "items": "8.01,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000119312526231745/d227940d8k.htm"
       },
       {
@@ -3560,7 +3560,7 @@
         "items": "1.01,2.03,8.01,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000119312526228949/d123781d8k.htm"
       },
       {
@@ -3574,7 +3574,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1086222/000118424426000004/xslF345X06/wk-form4_1778798217.xml"
       }
     ]
@@ -3583,7 +3583,7 @@
     "ticker": "CRWD",
     "cik": "0001535527",
     "entity_name": "CrowdStrike Holdings, Inc.",
-    "last_checked_utc": "2026-10-02T11:48:42+00:00",
+    "last_checked_utc": "2026-10-02T11:53:17+00:00",
     "filings": [
       {
         "form": "144",
@@ -3596,7 +3596,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000195824426000634/xsl144X01/primary_doc.xml"
       },
       {
@@ -3610,7 +3610,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000177856426000175/xslF345X06/form4-09302026_080901.xml"
       },
       {
@@ -3624,7 +3624,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000195004726009890/xsl144X01/primary_doc.xml"
       },
       {
@@ -3638,7 +3638,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000177856426000173/xslF345X06/form4-09282026_080901.xml"
       },
       {
@@ -3652,7 +3652,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000177861026000024/xslF345X06/form4-09252026_090901.xml"
       },
       {
@@ -3666,7 +3666,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000177856426000171/xslF345X06/form4-09242026_080901.xml"
       },
       {
@@ -3680,7 +3680,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000195917326007107/xsl144X01/primary_doc.xml"
       },
       {
@@ -3694,7 +3694,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000192160226000010/xslF345X06/form4-09222026_080910.xml"
       },
       {
@@ -3708,7 +3708,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000196827026000015/xslF345X06/form4-09222026_080908.xml"
       },
       {
@@ -3722,7 +3722,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000177856426000169/xslF345X06/form4-09222026_080906.xml"
       },
       {
@@ -3736,7 +3736,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000177856426000168/xslF345X06/form4-09222026_080903.xml"
       },
       {
@@ -3750,7 +3750,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000177861026000022/xslF345X06/form4-09222026_080901.xml"
       },
       {
@@ -3764,7 +3764,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000177856426000165/xslF345X06/form4-09212026_080901.xml"
       },
       {
@@ -3778,7 +3778,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000131924526000014/xslF345X06/form4-09212026_080911.xml"
       },
       {
@@ -3792,7 +3792,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000187230326000008/xslF345X06/form4-09212026_080909.xml"
       },
       {
@@ -3806,7 +3806,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000125351226000015/xslF345X06/form4-09212026_080907.xml"
       },
       {
@@ -3820,7 +3820,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000120132626000023/xslF345X06/form4-09212026_080905.xml"
       },
       {
@@ -3834,7 +3834,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000144583226000013/xslF345X06/form4-09212026_080903.xml"
       },
       {
@@ -3848,7 +3848,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000122063226000006/xslF345X06/form4-09212026_080901.xml"
       },
       {
@@ -3862,7 +3862,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000095010326014283/xsl144X01/primary_doc.xml"
       },
       {
@@ -3876,7 +3876,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000196858226000999/xsl144X01/primary_doc.xml"
       },
       {
@@ -3890,7 +3890,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000195917326007057/xsl144X01/primary_doc.xml"
       },
       {
@@ -3904,7 +3904,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000144583226000011/xslF345X06/form4-09172026_080903.xml"
       },
       {
@@ -3918,7 +3918,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000177856426000163/xslF345X06/form4-09172026_080901.xml"
       },
       {
@@ -3932,7 +3932,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000196858226000985/xsl144X01/primary_doc.xml"
       }
     ]
@@ -3941,7 +3941,7 @@
     "ticker": "OKTA",
     "cik": "0001660134",
     "entity_name": "Okta, Inc.",
-    "last_checked_utc": "2026-10-02T11:48:42+00:00",
+    "last_checked_utc": "2026-10-02T11:53:17+00:00",
     "filings": [
       {
         "form": "144",
@@ -3954,7 +3954,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000195004726009945/xsl144X01/primary_doc.xml"
       },
       {
@@ -3968,7 +3968,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000170062626000008/xslF345X06/wk-form4_1790283741.xml"
       },
       {
@@ -3982,7 +3982,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000196858226001005/xsl144X01/primary_doc.xml"
       },
       {
@@ -3996,7 +3996,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000161071726000420/xslF345X06/form4.xml"
       },
       {
@@ -4010,7 +4010,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000161071726000419/xslF345X06/form3.xml"
       },
       {
@@ -4024,7 +4024,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000205365226000010/xslF345X06/wk-form4_1790110400.xml"
       },
       {
@@ -4038,7 +4038,7 @@
         "items": "5.02,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000166013426000072/okta-20260914.htm"
       },
       {
@@ -4052,7 +4052,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000195004726009674/xsl144X01/primary_doc.xml"
       },
       {
@@ -4066,7 +4066,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000195004726009668/xsl144X01/primary_doc.xml"
       },
       {
@@ -4080,7 +4080,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000186508426000009/xslF345X06/wk-form4_1789682943.xml"
       },
       {
@@ -4094,7 +4094,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000194098526000006/xslF345X06/wk-form4_1789682885.xml"
       },
       {
@@ -4108,7 +4108,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000170062626000007/xslF345X06/wk-form4_1789682726.xml"
       },
       {
@@ -4122,7 +4122,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000205365226000009/xslF345X06/wk-form4_1789682630.xml"
       },
       {
@@ -4136,7 +4136,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000201003326000006/xslF345X06/wk-form4_1789682573.xml"
       },
       {
@@ -4150,7 +4150,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000175341326000009/xslF345X06/wk-form4_1789597762.xml"
       },
       {
@@ -4164,7 +4164,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000205365226000008/xslF345X06/wk-form4_1789506071.xml"
       },
       {
@@ -4178,7 +4178,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000195004726009346/xsl144X01/primary_doc.xml"
       },
       {
@@ -4192,7 +4192,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000170084226000005/xslF345X06/wk-form4_1788988223.xml"
       },
       {
@@ -4206,7 +4206,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000186508426000008/xslF345X06/wk-form4_1788559461.xml"
       },
       {
@@ -4220,7 +4220,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000195004726009026/xsl144X01/primary_doc.xml"
       },
       {
@@ -4234,7 +4234,7 @@
         "items": "",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000166013426000069/okta-20260731.htm"
       },
       {
@@ -4248,7 +4248,7 @@
         "items": "2.02,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000166013426000068/okta-20260826.htm"
       },
       {
@@ -4262,7 +4262,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000129473526000004/xslF345X06/wk-form4_1787004113.xml"
       },
       {
@@ -4276,7 +4276,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000175341326000007/xslF345X06/wk-form3_1786656564.xml"
       },
       {
@@ -4290,7 +4290,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000031506626002239/xslSCHEDULE_13G_X02/primary_doc.xml"
       }
     ]
@@ -4299,7 +4299,7 @@
     "ticker": "FTNT",
     "cik": "0001262039",
     "entity_name": "Fortinet, Inc.",
-    "last_checked_utc": "2026-10-02T11:48:42+00:00",
+    "last_checked_utc": "2026-10-02T11:53:17+00:00",
     "filings": [
       {
         "form": "4",
@@ -4312,7 +4312,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000166185926000008/xslF345X06/form4-10012026_111002.xml"
       },
       {
@@ -4326,7 +4326,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000121847026000020/xslF345X06/form4-10012026_111042.xml"
       },
       {
@@ -4340,7 +4340,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000145238526000010/xslF345X06/form4-10012026_111022.xml"
       },
       {
@@ -4354,7 +4354,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000189989426000006/xslF345X06/form4-10012026_111002.xml"
       },
       {
@@ -4368,7 +4368,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000182100826000008/xslF345X06/form4-10012026_111031.xml"
       },
       {
@@ -4382,7 +4382,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000130211026000034/xslF345X06/form4-10012026_111025.xml"
       },
       {
@@ -4396,7 +4396,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000164629326000008/xslF345X06/form4-10012026_111013.xml"
       },
       {
@@ -4410,7 +4410,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000201681326000020/xslF345X06/form4-09252026_080926.xml"
       },
       {
@@ -4424,7 +4424,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000195004726009800/xsl144X01/primary_doc.xml"
       },
       {
@@ -4438,7 +4438,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000147633626000014/xslF345X06/form4-09162026_080920.xml"
       },
       {
@@ -4452,7 +4452,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000195004726009432/xsl144X01/primary_doc.xml"
       },
       {
@@ -4466,7 +4466,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000166185926000006/xslF345X06/form4-08132026_090846.xml"
       },
       {
@@ -4480,7 +4480,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000164629326000006/xslF345X06/form4-08132026_090828.xml"
       },
       {
@@ -4494,7 +4494,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000121847026000016/xslF345X06/form4-08132026_090832.xml"
       },
       {
@@ -4508,7 +4508,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000145238526000006/xslF345X06/form4-08132026_090828.xml"
       },
       {
@@ -4522,7 +4522,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000182100826000006/xslF345X06/form4-08132026_090832.xml"
       },
       {
@@ -4536,7 +4536,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000130211026000028/xslF345X06/form4-08132026_090831.xml"
       },
       {
@@ -4550,7 +4550,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000189989426000004/xslF345X06/form4-08132026_090828.xml"
       },
       {
@@ -4564,7 +4564,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000147633626000012/xslF345X06/form4-08042026_090841.xml"
       },
       {
@@ -4578,7 +4578,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000147558626000018/xslF345X06/form4-08042026_090822.xml"
       },
       {
@@ -4592,7 +4592,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000147558726000014/xslF345X06/form4-08042026_090854.xml"
       },
       {
@@ -4606,7 +4606,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000201681326000018/xslF345X06/form4-08042026_090829.xml"
       },
       {
@@ -4620,7 +4620,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000195004726007624/xsl144X01/primary_doc.xml"
       },
       {
@@ -4634,7 +4634,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000195004726007545/xsl144X01/primary_doc.xml"
       },
       {
@@ -4648,7 +4648,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1262039/000195004726007521/xsl144X01/primary_doc.xml"
       }
     ]
@@ -4657,7 +4657,7 @@
     "ticker": "S",
     "cik": "0001583708",
     "entity_name": "SentinelOne, Inc.",
-    "last_checked_utc": "2026-10-02T11:48:42+00:00",
+    "last_checked_utc": "2026-10-02T11:53:17+00:00",
     "filings": [
       {
         "form": "4",
@@ -4670,7 +4670,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000186622226000041/xslF345X06/wk-form4_1789507479.xml"
       },
       {
@@ -4684,7 +4684,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000195824426000589/xsl144X01/primary_doc.xml"
       },
       {
@@ -4698,7 +4698,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000160851126000019/xslF345X06/wk-form4_1789163240.xml"
       },
       {
@@ -4712,7 +4712,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000195004726009290/xsl144X01/primary_doc.xml"
       },
       {
@@ -4726,7 +4726,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000160851126000017/xslF345X06/wk-form4_1789000832.xml"
       },
       {
@@ -4740,7 +4740,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000186622226000039/xslF345X06/wk-form4_1789000780.xml"
       },
       {
@@ -4754,7 +4754,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000184912226000019/xslF345X06/wk-form4_1789000744.xml"
       },
       {
@@ -4768,7 +4768,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000133328026000017/xslF345X06/wk-form4_1789000694.xml"
       },
       {
@@ -4782,7 +4782,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000195004726009214/xsl144X01/primary_doc.xml"
       },
       {
@@ -4796,7 +4796,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000195004726009195/xsl144X01/primary_doc.xml"
       },
       {
@@ -4810,7 +4810,7 @@
         "items": "",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000055/s-20260731.htm"
       },
       {
@@ -4824,7 +4824,7 @@
         "items": "2.02,7.01,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/s-20260827.htm"
       },
       {
@@ -4838,7 +4838,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000116755726000216/xslSCHEDULE_13G_X02/primary_doc.xml"
       },
       {
@@ -4852,7 +4852,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000168941126000015/xslF345X06/wk-form4_1786144137.xml"
       },
       {
@@ -4866,7 +4866,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000151119426000012/xslF345X06/wk-form4_1786143974.xml"
       },
       {
@@ -4880,7 +4880,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000133328026000016/xslF345X06/wk-form4_1786143896.xml"
       },
       {
@@ -4894,7 +4894,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000160851126000015/xslF345X06/wk-form4_1786143760.xml"
       },
       {
@@ -4908,7 +4908,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000186622226000037/xslF345X06/wk-form4_1786141644.xml"
       },
       {
@@ -4922,7 +4922,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000186622226000034/xslF345X06/wk-form4_1785878536.xml"
       },
       {
@@ -4936,7 +4936,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000184912226000012/xslF345X06/wk-form4_1785198558.xml"
       },
       {
@@ -4950,7 +4950,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000184912226000010/xslF345X06/wk-form4_1783386957.xml"
       },
       {
@@ -4964,7 +4964,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000151119426000010/xslF345X06/wk-form4_1783386911.xml"
       },
       {
@@ -4978,7 +4978,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000168941126000012/xslF345X06/wk-form4_1783386867.xml"
       },
       {
@@ -4992,7 +4992,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000162828026046935/xslF345X06/wk-form4_1783024048.xml"
       },
       {
@@ -5006,7 +5006,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000195824426000416/xsl144X01/primary_doc.xml"
       }
     ]
@@ -5015,7 +5015,7 @@
     "ticker": "TENB",
     "cik": "0001660280",
     "entity_name": "Tenable Holdings, Inc.",
-    "last_checked_utc": "2026-10-02T11:48:42+00:00",
+    "last_checked_utc": "2026-10-02T11:53:17+00:00",
     "filings": [
       {
         "form": "8-K",
@@ -5028,7 +5028,7 @@
         "items": "1.01,1.02,2.03,3.02,8.01,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000166028026000039/tenb-20260910.htm"
       },
       {
@@ -5042,7 +5042,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000210012126001025/xslSCHEDULE_13G_X02/primary_doc.xml"
       },
       {
@@ -5056,7 +5056,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000201238326003262/xslSCHEDULE_13G_X02/primary_doc.xml"
       },
       {
@@ -5070,7 +5070,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000165157926000008/xslF345X06/wk-form4_1787688190.xml"
       },
       {
@@ -5084,7 +5084,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000176697926000010/xslF345X06/wk-form4_1787688185.xml"
       },
       {
@@ -5098,7 +5098,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000130940326000011/xslF345X06/wk-form4_1787688177.xml"
       },
       {
@@ -5112,7 +5112,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000134594326000012/xslF345X06/wk-form4_1787688169.xml"
       },
       {
@@ -5126,7 +5126,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000158579926000006/xslF345X06/wk-form4_1787256465.xml"
       },
       {
@@ -5140,7 +5140,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000196858226000855/xsl144X01/primary_doc.xml"
       },
       {
@@ -5154,7 +5154,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000187812726000006/xslF345X06/wk-form4_1786478565.xml"
       },
       {
@@ -5168,7 +5168,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000158579926000004/xslF345X06/wk-form4_1786478557.xml"
       },
       {
@@ -5182,7 +5182,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000134594326000010/xslF345X06/wk-form4_1786146403.xml"
       },
       {
@@ -5196,7 +5196,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000195917326005737/xsl144X01/primary_doc.xml"
       },
       {
@@ -5210,7 +5210,7 @@
         "items": "",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000166028026000035/tenb-20260630.htm"
       },
       {
@@ -5224,7 +5224,7 @@
         "items": "2.02,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000166028026000032/tenb-20260729.htm"
       },
       {
@@ -5238,7 +5238,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000161471826000004/xslF345X06/wk-form4_1781727471.xml"
       },
       {
@@ -5252,7 +5252,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000119312526258577/xslSCHEDULE_13G_X02/primary_doc.xml"
       },
       {
@@ -5266,7 +5266,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000201238326001865/xslSCHEDULE_13G_X02/primary_doc.xml"
       },
       {
@@ -5280,7 +5280,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000176697926000008/xslF345X06/wk-form4_1779836446.xml"
       },
       {
@@ -5294,7 +5294,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000130940326000009/xslF345X06/wk-form4_1779836438.xml"
       },
       {
@@ -5308,7 +5308,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000134594326000008/xslF345X06/wk-form4_1779836432.xml"
       },
       {
@@ -5322,7 +5322,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000165157926000006/xslF345X06/wk-form4_1779836426.xml"
       },
       {
@@ -5336,7 +5336,7 @@
         "items": "7.01,9.01",
         "is_xbrl": 1,
         "is_inline_xbrl": 1,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000166028026000030/tenb-20260521.htm"
       },
       {
@@ -5350,7 +5350,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000132354826000002/xslF345X06/wk-form4_1778879567.xml"
       },
       {
@@ -5364,7 +5364,7 @@
         "items": "",
         "is_xbrl": 0,
         "is_inline_xbrl": 0,
-        "first_seen_utc": "",
+        "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1660280/000187812726000004/xslF345X06/wk-form4_1778879562.xml"
       }
     ]
