@@ -268,6 +268,180 @@ st.markdown(
     }
 
     .stCaption, small { color: var(--el-muted) !important; }
+
+    .el-product-hero {
+        position: relative;
+        overflow: hidden;
+        padding: clamp(2rem, 5vw, 4.3rem);
+        border: 1px solid var(--el-border);
+        border-radius: 30px;
+        background:
+            radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--el-blue) 20%, transparent), transparent 30%),
+            radial-gradient(circle at 12% 90%, color-mix(in srgb, var(--el-teal) 18%, transparent), transparent 32%),
+            linear-gradient(135deg, var(--el-surface), var(--el-surface-2));
+        box-shadow: 0 28px 80px rgba(0,0,0,0.18);
+        margin-bottom: 1.2rem;
+    }
+
+    .el-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: .45rem;
+        padding: .38rem .68rem;
+        border-radius: 999px;
+        border: 1px solid color-mix(in srgb, var(--el-teal) 38%, transparent);
+        background: color-mix(in srgb, var(--el-teal) 9%, transparent);
+        color: var(--el-teal);
+        font-size: .76rem;
+        font-weight: 800;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+    }
+
+    .el-product-title {
+        max-width: 980px;
+        margin: 0;
+        font-size: clamp(2.8rem, 7vw, 5.8rem);
+        line-height: .94;
+        letter-spacing: -.055em;
+        font-weight: 850;
+        color: var(--el-text);
+    }
+
+    .el-product-title span {
+        background: linear-gradient(90deg, var(--el-teal), var(--el-blue));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .el-product-subtitle {
+        max-width: 800px;
+        margin: 1.2rem 0 0 0;
+        font-size: clamp(1rem, 2vw, 1.18rem);
+        line-height: 1.65;
+        color: color-mix(in srgb, var(--el-text) 76%, transparent);
+    }
+
+    .el-trust-strip {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: .7rem;
+        margin: 1rem 0 1.4rem 0;
+    }
+
+    .el-trust-item {
+        border: 1px solid var(--el-border);
+        border-radius: 16px;
+        background: color-mix(in srgb, var(--el-surface) 88%, transparent);
+        padding: .85rem 1rem;
+        text-align: center;
+        font-size: .82rem;
+        font-weight: 720;
+        color: color-mix(in srgb, var(--el-text) 78%, transparent);
+    }
+
+    .el-feature-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: .9rem;
+        margin: .8rem 0 1.2rem 0;
+    }
+
+    .el-feature-card {
+        min-height: 170px;
+        padding: 1.25rem;
+        border: 1px solid var(--el-border);
+        border-radius: 20px;
+        background: linear-gradient(180deg, var(--el-surface-2), var(--el-surface));
+        box-shadow: 0 12px 35px rgba(0,0,0,.09);
+    }
+
+    .el-feature-num {
+        color: var(--el-teal);
+        font-size: .76rem;
+        font-weight: 850;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .el-feature-title {
+        margin-top: .5rem;
+        color: var(--el-text);
+        font-size: 1.12rem;
+        font-weight: 820;
+    }
+
+    .el-feature-copy {
+        margin-top: .45rem;
+        color: color-mix(in srgb, var(--el-text) 72%, transparent);
+        line-height: 1.55;
+        font-size: .92rem;
+    }
+
+    .el-company-card {
+        min-height: 150px;
+        padding: 1.15rem;
+        border: 1px solid var(--el-border);
+        border-radius: 19px;
+        background: color-mix(in srgb, var(--el-surface) 92%, transparent);
+        box-shadow: 0 10px 30px rgba(0,0,0,.08);
+    }
+
+    .el-company-card-ticker {
+        color: var(--el-teal);
+        font-size: .78rem;
+        font-weight: 850;
+        letter-spacing: .08em;
+    }
+
+    .el-company-card-name {
+        margin-top: .25rem;
+        color: var(--el-text);
+        font-size: 1.08rem;
+        font-weight: 820;
+    }
+
+    .el-company-card-meta {
+        margin-top: .55rem;
+        color: var(--el-muted);
+        font-size: .84rem;
+        line-height: 1.45;
+    }
+
+    .el-answer-card {
+        padding: 1.2rem 1.3rem;
+        border: 1px solid color-mix(in srgb, var(--el-teal) 28%, var(--el-border));
+        border-radius: 20px;
+        background:
+            linear-gradient(135deg,
+                color-mix(in srgb, var(--el-teal) 7%, var(--el-surface)),
+                color-mix(in srgb, var(--el-blue) 5%, var(--el-surface)));
+        margin: .8rem 0;
+    }
+
+    .el-answer-kicker {
+        color: var(--el-teal);
+        font-size: .76rem;
+        font-weight: 850;
+        letter-spacing: .09em;
+        text-transform: uppercase;
+        margin-bottom: .4rem;
+    }
+
+    .el-answer-copy {
+        color: color-mix(in srgb, var(--el-text) 88%, transparent);
+        line-height: 1.65;
+        margin: 0;
+    }
+
+    @media (max-width: 900px) {
+        .el-trust-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .el-feature-grid { grid-template-columns: 1fr; }
+        .el-product-hero { border-radius: 22px; }
+    }
+
     footer { visibility: hidden; }
     </style>
     """,
@@ -442,75 +616,57 @@ def calc_growth(current, prior):
 
 def calc_margin(profit, revenue):
     if profit is None or revenue in (None, 0):
-        return None
-    return (profit / revenue) * 100
-
-
-def section(label, title):
-    st.markdown(
-        f"""
-        <div class="el-section">
-            <div class="el-section-label">{label}</div>
-            <div class="el-section-title">{title}</div>
+        return Nonst.markdown(
+    """
+    <div class="el-product-hero">
+        <div class="el-eyebrow">EquityLens AI · Public-company research</div>
+        <h1 class="el-product-title">Understand companies.<br><span>Not documents.</span></h1>
+        <p class="el-product-subtitle">
+            Turn dense SEC filings into clear financial trends, business-model context,
+            risk themes, and side-by-side company comparisons. Every important insight
+            stays connected to the underlying filing so you can verify the source yourself.
+        </p>
+        <div class="el-badges">
+            <span class="el-badge">SEC EDGAR sourced</span>
+            <span class="el-badge">10-K · 10-Q · 8-K · S-1</span>
+            <span class="el-badge">Grounded research</span>
+            <span class="el-badge">No buy / sell calls</span>
         </div>
-        """,
-        unsafe_allow_html=True
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    """
+    <div class="el-trust-strip">
+        <div class="el-trust-item">Primary-source filings</div>
+        <div class="el-trust-item">Reported vs. calculated labels</div>
+        <div class="el-trust-item">Quarterly + LTM context</div>
+        <div class="el-trust-item">Direct source links</div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+with st.expander("How EquityLens handles sources and calculations"):
+    st.markdown(
+        """
+        **Reported** — taken from a company filing or company-reported disclosure.
+
+        **Calculated by EquityLens** — derived from reported figures, such as growth rates,
+        margins, and trailing-twelve-month metrics.
+
+        **Research summary** — plain-language context built from structured company information
+        and filing disclosures. It is not a recommendation.
+
+        **Source priority:** SEC EDGAR first, company investor-relations disclosures second,
+        and appropriately licensed market-data providers where needed.
+        """
     )
 
 
-def render_summary_cards(cards):
-    cols = st.columns(len(cards))
-    for col, (label, value) in zip(cols, cards):
-        with col:
-            st.markdown(
-                f"""
-                <div class="el-summary-card">
-                    <div class="el-summary-label">{label}</div>
-                    <div class="el-summary-value">{value}</div>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-
-
-def quarterly_metrics(qdata):
-    latest = qdata.get("latest_quarter", {})
-    prior_q = qdata.get("prior_quarter", {})
-    prior_y = qdata.get("prior_year_quarter", {})
-
-    revenue = latest.get("revenue")
-    prior_q_revenue = prior_q.get("revenue")
-    prior_y_revenue = prior_y.get("revenue")
-
-    return {
-        "revenue": revenue,
-        "yoy_growth": calc_growth(revenue, prior_y_revenue),
-        "qoq_growth": calc_growth(revenue, prior_q_revenue),
-        "gross_margin": calc_margin(latest.get("gross_profit"), revenue),
-        "operating_margin": calc_margin(latest.get("operating_income"), revenue),
-        "net_margin": calc_margin(latest.get("net_income"), revenue),
-        "prior_q_operating_margin": calc_margin(
-            prior_q.get("operating_income"), prior_q_revenue
-        ),
-        "prior_y_operating_margin": calc_margin(
-            prior_y.get("operating_income"), prior_y_revenue
-        )
-    }
-
-
-def build_change_notes(qdata):
-    latest = qdata.get("latest_quarter", {})
-    prior_q = qdata.get("prior_quarter", {})
-    prior_y = qdata.get("prior_year_quarter", {})
-    m = quarterly_metrics(qdata)
-
-    notes = []
-
-    if m["qoq_growth"] is not None:
-        notes.append((
-            "Sequential revenue",
-            f"Revenue changed {m['qoq_growth']:+.1f}% from the prior quarter, "
-            f"from {format_money(prior_q.get('revenue'))} to {format_money(latest.get('revenue'))}."
+nue'))}."
         ))
 
     if m["yoy_growth"] is not None:
@@ -666,12 +822,123 @@ render_summary_cards([
     )
 ])
 
-peer_tab, company_tab, sec_tracker_tab, learn_tab = st.tabs([
-    "Peer Comparison",
-    "Company Research",
-    "SEC Filing Tracker",
-    "Learn the Basics"
+home_tab, company_tab, peer_tab, ask_tab, sec_tracker_tab, learn_tab = st.tabs([
+    "Home",
+    "Explore Companies",
+    "Compare",
+    "Ask EquityLens",
+    "Filings",
+    "Learn"
 ])
+
+
+with home_tab:
+    section("Start here", "Research a company in seconds")
+
+    home_company = st.selectbox(
+        "Search company or ticker",
+        list(company_data.keys()),
+        format_func=lambda name: (
+            f"{company_data[name].get('ticker', '')} · {name.split(' (')[0]}"
+        ),
+        key="home_company"
+    )
+
+    home_data = company_data[home_company]
+    home_analysis = company_analysis.get(home_company, {})
+    home_qdata = company_quarterly.get(home_company, {})
+    home_qm = quarterly_metrics(home_qdata)
+    home_latest = home_qdata.get("latest_quarter", {})
+    home_ticker = home_data.get("ticker", "")
+    home_name = home_company.split(" (")[0]
+
+    st.markdown(
+        f"""
+        <div class="el-company-hero">
+            <div class="el-kicker">{home_ticker} · {home_data.get('industry', 'Unclassified')}</div>
+            <div class="el-company-title">{home_name}</div>
+            <p class="el-subtitle">{home_analysis.get('business_model', 'Company research is being prepared.')}</p>
+            <div class="el-badges">
+                <span class="el-badge">{home_qdata.get('quarter_label', 'Latest quarter')}</span>
+                <span class="el-badge">{home_data.get('source', 'SEC filing')} sourced</span>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    home_metrics = st.columns(4)
+    home_metrics[0].metric("Quarter Revenue", format_money(home_latest.get("revenue")))
+    home_metrics[1].metric("YoY Growth", pct(home_qm.get("yoy_growth")))
+    home_metrics[2].metric("Operating Margin", pct(home_qm.get("operating_margin")))
+    home_metrics[3].metric(
+        "Cash + Investments",
+        format_money(home_data.get("capital_structure", {}).get("cash_and_investments"))
+    )
+
+    source_url = home_qdata.get("source_filing") or home_data.get("filing_url")
+    if source_url:
+        st.link_button("Open latest supporting SEC filing", source_url)
+
+    st.caption(
+        "Continue in Explore Companies for the full research view, including filing history, "
+        "financial trends, business-model analysis, risks, S-1 context, and source-linked calculations."
+    )
+
+    section("Research workflow", "From filing to something a human can actually use")
+    st.markdown(
+        """
+        <div class="el-feature-grid">
+            <div class="el-feature-card">
+                <div class="el-feature-num">01 · Source</div>
+                <div class="el-feature-title">Start with primary filings</div>
+                <div class="el-feature-copy">EquityLens organizes 10-K, 10-Q, 8-K, and S-1 filings instead of making you hunt through SEC pages manually.</div>
+            </div>
+            <div class="el-feature-card">
+                <div class="el-feature-num">02 · Standardize</div>
+                <div class="el-feature-title">Make companies comparable</div>
+                <div class="el-feature-copy">Reported figures are converted into consistent growth, margin, LTM, capital-structure, and trend views.</div>
+            </div>
+            <div class="el-feature-card">
+                <div class="el-feature-num">03 · Explain</div>
+                <div class="el-feature-title">Keep the context attached</div>
+                <div class="el-feature-copy">Business models, disclosed risks, and plain-language explanations sit beside the numbers with links back to the source.</div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    section("Coverage", "Featured companies")
+    featured_companies = list(company_data.keys())[:6]
+    featured_cols = st.columns(3)
+    for idx, featured_company in enumerate(featured_companies):
+        featured_data = company_data[featured_company]
+        featured_q = company_quarterly.get(featured_company, {})
+        featured_qm = quarterly_metrics(featured_q)
+        with featured_cols[idx % 3]:
+            st.markdown(
+                f"""
+                <div class="el-company-card">
+                    <div class="el-company-card-ticker">{featured_data.get('ticker', '')}</div>
+                    <div class="el-company-card-name">{featured_company.split(' (')[0]}</div>
+                    <div class="el-company-card-meta">
+                        {featured_data.get('industry', 'Unclassified')}<br>
+                        Latest revenue growth: {pct(featured_qm.get('yoy_growth'))}<br>
+                        Latest filing period: {featured_q.get('period_end', 'N/A')}
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+    section("What makes it different", "Research that shows its work")
+    st.info(
+        "EquityLens separates company-reported figures from calculations and summaries, "
+        "links material claims back to SEC filings, and avoids pretending a colorful dashboard "
+        "can predict the future. Revolutionary concept: receipts."
+    )
+
 
 with peer_tab:
     section("Peer Research", "Industry Comparison")
@@ -1665,6 +1932,122 @@ with company_tab:
             f"{format_money(capital.get('cash_and_investments'))} of cash and investments "
             f"and {format_money(capital.get('total_debt'))} of debt."
         )
+
+
+with ask_tab:
+    section("Grounded research assistant", "Ask EquityLens")
+
+    st.write(
+        "Ask a question about one covered company. This beta answers from the structured "
+        "financial data and filing-based company research already inside EquityLens."
+    )
+    st.caption(
+        "Try: “How fast is revenue growing?”, “What are the main risks?”, "
+        "“Is operating margin improving?”, or “How much cash and debt does it have?”"
+    )
+
+    ask_company = st.selectbox(
+        "Company",
+        list(company_data.keys()),
+        format_func=lambda name: (
+            f"{company_data[name].get('ticker', '')} · {name.split(' (')[0]}"
+        ),
+        key="ask_company"
+    )
+    ask_question = st.text_area(
+        "Question",
+        placeholder="What changed in the latest quarter?",
+        key="ask_question",
+        height=100
+    )
+
+    if st.button("Research this question", type="primary", key="ask_button"):
+        if not ask_question.strip():
+            st.warning("Enter a question first.")
+        else:
+            ask_data = company_data[ask_company]
+            ask_analysis = company_analysis.get(ask_company, {})
+            ask_qdata = company_quarterly.get(ask_company, {})
+            ask_latest = ask_qdata.get("latest_quarter", {})
+            ask_capital = ask_data.get("capital_structure", {})
+            ask_qm = quarterly_metrics(ask_qdata)
+            q = ask_question.lower()
+
+            if any(term in q for term in ["risk", "risks", "danger", "concern"]):
+                themes = ask_analysis.get("key_risk_themes", [])
+                theme_text = ", ".join(themes[:5]) if themes else "No structured risk themes are available."
+                answer = (
+                    f"The main filing-based risk themes currently captured for {ask_company.split(' (')[0]} are "
+                    f"{theme_text}. Competitive risk: {ask_analysis.get('competitive_risk', 'N/A')} "
+                    f"Operational risk: {ask_analysis.get('operational_risk', 'N/A')}"
+                )
+            elif any(term in q for term in ["cash", "debt", "balance sheet", "leverage"]):
+                answer = (
+                    f"{ask_company.split(' (')[0]} reports "
+                    f"{format_money(ask_capital.get('cash_and_investments'))} of cash and investments "
+                    f"and {format_money(ask_capital.get('total_debt'))} of debt in the latest structured balance-sheet data "
+                    f"dated {ask_capital.get('balance_sheet_as_of', 'N/A')}."
+                )
+            elif any(term in q for term in ["margin", "profit", "profitability", "operating"]):
+                prior_margin = ask_qm.get("prior_q_operating_margin")
+                current_margin = ask_qm.get("operating_margin")
+                margin_change = (
+                    current_margin - prior_margin
+                    if current_margin is not None and prior_margin is not None
+                    else None
+                )
+                margin_sentence = (
+                    f" Operating margin changed {margin_change:+.1f} percentage points sequentially."
+                    if margin_change is not None else ""
+                )
+                answer = (
+                    f"The latest quarter shows an operating margin of {pct(current_margin)} "
+                    f"and net income of {format_money(ask_latest.get('net_income'))}.{margin_sentence}"
+                )
+            elif any(term in q for term in ["revenue", "growth", "sales", "grow"]):
+                answer = (
+                    f"Latest-quarter revenue was {format_money(ask_qm.get('revenue'))}. "
+                    f"That is {pct(ask_qm.get('yoy_growth'))} year over year and "
+                    f"{pct(ask_qm.get('qoq_growth'))} versus the prior quarter."
+                )
+            elif any(term in q for term in ["sell", "business model", "make money", "customer", "customers"]):
+                answer = (
+                    f"{ask_analysis.get('business_model', 'Business-model information is not available.')} "
+                    f"Primary revenue source: {ask_analysis.get('primary_revenue_source', 'N/A')} "
+                    f"Customer base: {ask_analysis.get('customer_type', 'N/A')}"
+                )
+            else:
+                answer = (
+                    f"{ask_company.split(' (')[0]} reported latest-quarter revenue of "
+                    f"{format_money(ask_qm.get('revenue'))}, representing {pct(ask_qm.get('yoy_growth'))} "
+                    f"year-over-year growth, with an operating margin of {pct(ask_qm.get('operating_margin'))}. "
+                    f"{ask_analysis.get('business_model', '')} "
+                    f"Key disclosed themes include {', '.join(ask_analysis.get('key_risk_themes', [])[:3]) or 'N/A'}."
+                )
+
+            st.markdown(
+                f"""
+                <div class="el-answer-card">
+                    <div class="el-answer-kicker">EquityLens research brief · {ask_data.get('ticker', '')}</div>
+                    <p class="el-answer-copy">{answer}</p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+            ask_source = ask_qdata.get("source_filing") or ask_analysis.get("source_filing") or ask_data.get("filing_url")
+            if ask_source:
+                st.link_button(
+                    "Verify in supporting SEC filing",
+                    ask_source,
+                    key="ask_source_link"
+                )
+
+            st.caption(
+                "Answer generated from the structured EquityLens dataset and filing-based summaries. "
+                "It is research context, not an investment recommendation."
+            )
+
 
 with sec_tracker_tab:
     section("SEC Monitor", "Filing Tracker")
