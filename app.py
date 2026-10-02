@@ -1705,8 +1705,32 @@ with sec_tracker_tab:
     if tracker_df.empty:
         st.info("The filing tracker is waiting for the SEC monitor to populate data.")
     else:
+        accepted_dt = pd.to_datetime(
+            tracker_df["SEC Accepted"],
+            errors="coerce",
+            utc=True
+        )
+        first_seen_dt = pd.to_datetime(
+            tracker_df["First Seen by EquityLens (UTC)"],
+            errors="coerce",
+            utc=True
+        )
+
+        tracker_df["SEC Accepted (ET)"] = (
+            accepted_dt.dt.tz_convert("America/New_York")
+            .dt.strftime("%Y-%m-%d %I:%M:%S %p %Z")
+        )
+        tracker_df["First Seen by EquityLens (ET)"] = (
+            first_seen_dt.dt.tz_convert("America/New_York")
+            .dt.strftime("%Y-%m-%d %I:%M:%S %p %Z")
+        )
+
+        tracker_df = tracker_df.drop(
+            columns=["SEC Accepted", "First Seen by EquityLens (UTC)"]
+        )
+
         tracker_df = tracker_df.sort_values(
-            by=["SEC Filed Date", "SEC Accepted"],
+            by=["SEC Filed Date", "SEC Accepted (ET)"],
             ascending=False,
             na_position="last"
         )
