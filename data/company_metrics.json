@@ -11,7 +11,24 @@
     "operating_income": -136968000,
     "net_income": -71151000,
     "cash": 1083540000,
-    "assets": 3758848000
+    "assets": 3758848000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 1683011000,
+        "operating_income": -233732000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 2006443000,
+        "operating_income": -216064000
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 2463797000,
+        "operating_income": -136968000
+      }
+    ]
   },
   "Snowflake (SNOW)": {
     "ticker": "SNOW",
@@ -25,7 +42,24 @@
     "operating_income": -1435165000,
     "net_income": -1329035000,
     "cash": 2828163000,
-    "assets": 9132495000
+    "assets": 9132495000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 2806489000,
+        "operating_income": -1094773000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 3626396000,
+        "operating_income": -1456010000
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 4683946000,
+        "operating_income": -1435165000
+      }
+    ]
   },
   "Rubrik (RBRK)": {
     "ticker": "RBRK",
@@ -39,7 +73,24 @@
     "operating_income": -345416000,
     "net_income": -348828000,
     "cash": 380196000,
-    "assets": 2766536000
+    "assets": 2766536000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 627892000,
+        "operating_income": -306506000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 886544000,
+        "operating_income": -1134032000
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 1316191000,
+        "operating_income": -345416000
+      }
+    ]
   },
   "Datadog (DDOG)": {
     "ticker": "DDOG",
@@ -53,7 +104,24 @@
     "operating_income": -44373000,
     "net_income": 107741000,
     "cash": 401305000,
-    "assets": 6643844000
+    "assets": 6643844000,
+    "history": [
+      {
+        "fiscal_year": 2023,
+        "revenue": 2128359000,
+        "operating_income": -33464000
+      },
+      {
+        "fiscal_year": 2024,
+        "revenue": 2684275000,
+        "operating_income": 54284000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 3427158000,
+        "operating_income": -44373000
+      }
+    ]
   },
   "Cloudflare (NET)": {
     "ticker": "NET",
@@ -67,6 +135,23 @@
     "operating_income": -207205000,
     "net_income": -102267000,
     "cash": 943536000,
-    "assets": 6036256000
+    "assets": 6036256000,
+    "history": [
+      {
+        "fiscal_year": 2023,
+        "revenue": 1296745000,
+        "operating_income": -185485000
+      },
+      {
+        "fiscal_year": 2024,
+        "revenue": 1669626000,
+        "operating_income": -154761000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 2167937000,
+        "operating_income": -207205000
+      }
+    ]
   }
 }
