@@ -203,5 +203,150 @@
       "operating_income": -354384000,
       "net_income": -206275000
     }
+  },
+  "Elastic (ESTC)": {
+    "quarter_label": "Q1 FY2027",
+    "period_end": "2026-07-31",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1707753/000170775326000054/estc-20260731.htm",
+    "latest_quarter": {
+      "revenue": 478113000,
+      "gross_profit": 356188000,
+      "operating_income": -23574000,
+      "net_income": -16729000
+    },
+    "prior_quarter": {},
+    "prior_year_quarter": {
+      "revenue": 415288000,
+      "gross_profit": 318542000,
+      "operating_income": -9440000,
+      "net_income": -24603000
+    },
+    "current_ytd": {
+      "revenue": 478113000,
+      "gross_profit": 356188000,
+      "operating_income": -23574000,
+      "net_income": -16729000
+    },
+    "prior_year_ytd": {
+      "revenue": 415288000,
+      "gross_profit": 318542000,
+      "operating_income": -9440000,
+      "net_income": -24603000
+    },
+    "ltm": {
+      "revenue": 1802156000,
+      "gross_profit": 1360705000,
+      "operating_income": -47610000,
+      "net_income": 375640000
+    }
+  },
+  "Dynatrace (DT)": {
+    "quarter_label": "Q1 FY2027",
+    "period_end": "2026-06-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1773383/000177338326000050/dt-20260630.htm",
+    "latest_quarter": {
+      "revenue": 554548000,
+      "gross_profit": 451095000,
+      "operating_income": 71476000,
+      "net_income": 36651000
+    },
+    "prior_quarter": {},
+    "prior_year_quarter": {
+      "revenue": 477349000,
+      "gross_profit": 392140000,
+      "operating_income": 62338000,
+      "net_income": 47955000
+    },
+    "current_ytd": {
+      "revenue": 554548000,
+      "gross_profit": 451095000,
+      "operating_income": 71476000,
+      "net_income": 36651000
+    },
+    "prior_year_ytd": {
+      "revenue": 477349000,
+      "gross_profit": 392140000,
+      "operating_income": 62338000,
+      "net_income": 47955000
+    },
+    "ltm": {
+      "revenue": 2095586000,
+      "gross_profit": 1705138000,
+      "operating_income": 254525000,
+      "net_income": 151365000
+    }
+  },
+  "Akamai (AKAM)": {
+    "quarter_label": "Q2 2026",
+    "period_end": "2026-06-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1086222/000108622226000086/akam-20260630.htm",
+    "latest_quarter": {
+      "revenue": 1099682000,
+      "gross_profit": null,
+      "operating_income": 80284000,
+      "net_income": 79404000
+    },
+    "prior_quarter": {
+      "revenue": 1073610000,
+      "gross_profit": null,
+      "operating_income": 114494000,
+      "net_income": 106319000
+    },
+    "prior_year_quarter": {
+      "revenue": 1043494000,
+      "gross_profit": null,
+      "operating_income": 151461000,
+      "net_income": 103618000
+    },
+    "current_ytd": {
+      "revenue": 2173292000,
+      "gross_profit": null,
+      "operating_income": 194778000,
+      "net_income": 185723000
+    },
+    "prior_year_ytd": {
+      "revenue": 2058633000,
+      "gross_profit": null,
+      "operating_income": 306044000,
+      "net_income": 226789000
+    },
+    "ltm": {
+      "revenue": 4322834000,
+      "gross_profit": null,
+      "operating_income": 455678000,
+      "net_income": 410965000
+    }
+  },
+  "Palo Alto Networks (PANW)": {
+    "quarter_label": "Latest annual filing",
+    "period_end": "2026-07-31",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1327567/000132756726000023/panw-20260731.htm",
+    "latest_quarter": {},
+    "prior_quarter": {},
+    "prior_year_quarter": {},
+    "current_ytd": {},
+    "prior_year_ytd": {},
+    "ltm": {
+      "revenue": 11480000000,
+      "gross_profit": 8077000000,
+      "operating_income": 695000000,
+      "net_income": 307000000
+    }
+  },
+  "Zscaler (ZS)": {
+    "quarter_label": "Latest annual filing",
+    "period_end": "2026-07-31",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000157/zs-20260731.htm",
+    "latest_quarter": {},
+    "prior_quarter": {},
+    "prior_year_quarter": {},
+    "current_ytd": {},
+    "prior_year_ytd": {},
+    "ltm": {
+      "revenue": 3352523000,
+      "gross_profit": 2574894000,
+      "operating_income": -133267000,
+      "net_income": -63179000
+    }
   }
 }
