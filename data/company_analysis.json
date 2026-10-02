@@ -1,0 +1,74 @@
+{
+  "Rubrik (RBRK)": {
+    "business_model": "Subscription-based data security and cyber resilience software, centered on Rubrik Security Cloud (RSC).",
+    "primary_revenue_source": "Primarily subscription revenue, including SaaS subscriptions and subscription term-based licenses with support.",
+    "customer_type": "Enterprise and large organizations that need data security, backup, recovery, and ransomware resilience.",
+    "platform_dependency": "Depends on third-party cloud infrastructure providers and broader enterprise cloud environments; growth is also tied to continued customer migration to RSC.",
+    "competitive_risk": "Faces significant competition from established data protection, cybersecurity, and cloud infrastructure vendors, as well as customers building internal alternatives.",
+    "operational_risk": "Growth depends on customer renewals, expansion, successful transition of customers to RSC, and managing infrastructure and supply-chain related costs.",
+    "profitability_history": "Historically loss-making, with rapid revenue growth but continued GAAP operating losses.",
+    "customer_concentration": "No single customer concentration flagged as dominant in the current structured dataset; large-customer retention and renewal remain important risks.",
+    "international_exposure": "Operates internationally and is exposed to foreign market, regulatory, currency, and geopolitical risks.",
+    "key_risk_themes": [
+      "Customer renewal and expansion",
+      "Competition",
+      "Cloud infrastructure dependence",
+      "RSC transition execution",
+      "Macroeconomic and supply-chain uncertainty",
+      "Cybersecurity and product reliability"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1943896/000194389626000013/rbrk-20260131.htm"
+  },
+  "Snowflake (SNOW)": {
+    "business_model": "",
+    "primary_revenue_source": "",
+    "customer_type": "",
+    "platform_dependency": "",
+    "competitive_risk": "",
+    "operational_risk": "",
+    "profitability_history": "",
+    "customer_concentration": "",
+    "international_exposure": "",
+    "key_risk_themes": [],
+    "source_filing": ""
+  },
+  "MongoDB (MDB)": {
+    "business_model": "",
+    "primary_revenue_source": "",
+    "customer_type": "",
+    "platform_dependency": "",
+    "competitive_risk": "",
+    "operational_risk": "",
+    "profitability_history": "",
+    "customer_concentration": "",
+    "international_exposure": "",
+    "key_risk_themes": [],
+    "source_filing": ""
+  },
+  "Datadog (DDOG)": {
+    "business_model": "",
+    "primary_revenue_source": "",
+    "customer_type": "",
+    "platform_dependency": "",
+    "competitive_risk": "",
+    "operational_risk": "",
+    "profitability_history": "",
+    "customer_concentration": "",
+    "international_exposure": "",
+    "key_risk_themes": [],
+    "source_filing": ""
+  },
+  "Cloudflare (NET)": {
+    "business_model": "",
+    "primary_revenue_source": "",
+    "customer_type": "",
+    "platform_dependency": "",
+    "competitive_risk": "",
+    "operational_risk": "",
+    "profitability_history": "",
+    "customer_concentration": "",
+    "international_exposure": "",
+    "key_risk_themes": [],
+    "source_filing": ""
+  }
+}
