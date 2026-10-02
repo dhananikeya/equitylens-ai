@@ -1836,6 +1836,89 @@ with company_tab:
         section("Research Guide", "What to Look for in the S-1")
         st.write(explore_s1.get("what_to_learn", "No research guide is available yet."))
 
+        section("S-1 Detail Map", "What the Filing Covers")
+        detail_cols = st.columns(2)
+
+        with detail_cols[0]:
+            with st.expander("Business & Revenue Model", expanded=True):
+                st.markdown(
+                    """
+                    Focus on how the company describes its products or services, who pays for them,
+                    how revenue is generated, whether revenue is recurring or usage-based, and which
+                    products or customer relationships management considered most important at the time.
+                    """
+                )
+
+            with st.expander("Customers & Go-to-Market"):
+                st.markdown(
+                    """
+                    Review the customer base, target market, sales motion, distribution channels,
+                    customer concentration, expansion strategy, retention language, and any reliance
+                    on partners or resellers described in the filing.
+                    """
+                )
+
+            with st.expander("Growth Strategy & Market Opportunity"):
+                st.markdown(
+                    """
+                    Look for management's stated growth priorities, new-product plans, geographic
+                    expansion, market-size discussion, customer expansion strategy, and the assumptions
+                    behind the opportunity the company presented to public investors.
+                    """
+                )
+
+            with st.expander("Competition & Differentiation"):
+                st.markdown(
+                    """
+                    The S-1 usually explains the competitive landscape, alternative products or
+                    technologies, larger incumbent competitors, and the capabilities management believed
+                    differentiated the company at the time of the offering.
+                    """
+                )
+
+        with detail_cols[1]:
+            with st.expander("Risk Factors", expanded=True):
+                st.markdown(
+                    """
+                    Risk Factors can include dependence on growth, customer retention, large customers,
+                    suppliers or cloud providers, cybersecurity, regulation, international operations,
+                    competition, losses, stock-based compensation, and other company-specific exposures.
+                    EquityLens treats these as disclosed risks, not predictions.
+                    """
+                )
+
+            with st.expander("Financial Condition & Operating History"):
+                st.markdown(
+                    """
+                    Review historical revenue, gross profit, operating expenses, net income or loss,
+                    cash flow, accumulated deficit, and management's discussion of the factors that
+                    affected results before the IPO.
+                    """
+                )
+
+            with st.expander("IPO Structure, Capitalization & Dilution"):
+                st.markdown(
+                    """
+                    Registration filings can describe the shares being offered, existing capitalization,
+                    preferred-stock conversion, dilution, voting rights, and how ownership changes when
+                    the company becomes public. Final pricing may appear in later amendments rather than
+                    the first S-1.
+                    """
+                )
+
+            with st.expander("Use of Proceeds, Management & Ownership"):
+                st.markdown(
+                    """
+                    Look for how the company expected to use offering proceeds, executive and director
+                    information, compensation disclosures, related-party matters, and principal
+                    stockholders. These sections help explain governance and ownership around the IPO.
+                    """
+                )
+
+        st.caption(
+            "The exact level of detail varies by company and filing amendment. EquityLens uses the original SEC filing as the primary source."
+        )
+
         section("How to Read It", "Questions to Keep in Mind")
         st.markdown(
             """
@@ -1857,7 +1940,7 @@ with company_tab:
 
         st.info(
             "S-1 filings are historical documents. This tab explains the company's IPO-era story rather than its current financial condition. "
-            "Use Industry Comparison and Filings for later-period research."
+            "Use the original SEC filing for full detail, and use Industry Comparison and Filings for later-period research."
         )
     else:
         st.info("S-1 research has not been added for this company yet.")
