@@ -1721,3 +1721,25 @@ st.caption(
     SEC filings and company disclosures before making financial decisions.
     """
 )
+
+st.markdown("---")
+st.markdown(
+    """
+    **© 2026 Keya Dhanani. All rights reserved.**
+
+    EquityLens AI was independently designed and developed by Keya Dhanani. Original
+    application code, user-interface design, written explanations, project-specific
+    research structure, and documentation are proprietary unless otherwise stated.
+
+    Public SEC filings, company disclosures, trademarks, company names, and third-party
+    source materials remain the property of their respective owners. EquityLens cites
+    or links to original sources where applicable and does not claim ownership of those
+    underlying materials.
+
+    Unauthorized reproduction, redistribution, republishing, or creation of a
+    substantially similar copy of the original EquityLens AI application or its
+    original written content is not permitted except where allowed by applicable law
+    or platform terms.
+    """
+)
+
