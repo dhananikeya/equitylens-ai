@@ -118,9 +118,9 @@ def main() -> None:
         )
 
         previous_first_seen = {
-            filing.get("accession_number", ""): filing.get("first_seen_utc", "")
+            filing.get("accession_number", ""): filing.get("first_seen_utc")
             for filing in previous_output.get(company_name, {}).get("filings", [])
-            if filing.get("accession_number")
+            if filing.get("accession_number") and filing.get("first_seen_utc")
         }
 
         output[company_name] = {
