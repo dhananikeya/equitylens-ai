@@ -1,0 +1,207 @@
+{
+  "Rubrik (RBRK)": {
+    "quarter_label": "Q2 FY2027",
+    "period_end": "2026-07-31",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1943896/000194389626000060/rbrk-20260731.htm",
+    "latest_quarter": {
+      "revenue": 427260000,
+      "gross_profit": 335123000,
+      "operating_income": -71902000,
+      "net_income": -61777000
+    },
+    "prior_quarter": {
+      "revenue": 387068000,
+      "gross_profit": 311783000,
+      "operating_income": -52634000,
+      "net_income": -41853000
+    },
+    "prior_year_quarter": {
+      "revenue": 309860000,
+      "gross_profit": 246301000,
+      "operating_income": -94463000,
+      "net_income": -95929000
+    },
+    "current_ytd": {
+      "revenue": 814328000,
+      "gross_profit": 646906000,
+      "operating_income": -124536000,
+      "net_income": -103630000
+    },
+    "prior_year_ytd": {
+      "revenue": 588341000,
+      "gross_profit": 464299000,
+      "operating_income": -187554000,
+      "net_income": -198033000
+    },
+    "ltm": {
+      "revenue": 1542178000,
+      "gross_profit": 1236921000,
+      "operating_income": -282398000,
+      "net_income": -254425000
+    }
+  },
+  "Snowflake (SNOW)": {
+    "quarter_label": "Q2 FY2027",
+    "period_end": "2026-07-31",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1640147/000164014726000037/snow-20260731.htm",
+    "latest_quarter": {
+      "revenue": 1546793000,
+      "gross_profit": 1036718000,
+      "operating_income": -262967000,
+      "net_income": -191720000
+    },
+    "prior_quarter": {
+      "revenue": 1390951000,
+      "gross_profit": 926451000,
+      "operating_income": -326154000,
+      "net_income": -295571000
+    },
+    "prior_year_quarter": {
+      "revenue": 1144969000,
+      "gross_profit": 773154000,
+      "operating_income": -340276000,
+      "net_income": -297930000
+    },
+    "current_ytd": {
+      "revenue": 2937744000,
+      "gross_profit": 1963169000,
+      "operating_income": -589121000,
+      "net_income": -487291000
+    },
+    "prior_year_ytd": {
+      "revenue": 2187043000,
+      "gross_profit": 1466442000,
+      "operating_income": -787533000,
+      "net_income": -727882000
+    },
+    "ltm": {
+      "revenue": 5434647000,
+      "gross_profit": 3642868000,
+      "operating_income": -1236753000,
+      "net_income": -1088444000
+    }
+  },
+  "MongoDB (MDB)": {
+    "quarter_label": "Q2 FY2027",
+    "period_end": "2026-07-31",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026059830/mdb-20260731.htm",
+    "latest_quarter": {
+      "revenue": 771773000,
+      "gross_profit": 569765000,
+      "operating_income": 28400000,
+      "net_income": 40940000
+    },
+    "prior_quarter": {
+      "revenue": 687616000,
+      "gross_profit": 496175000,
+      "operating_income": -24804000,
+      "net_income": 4434000
+    },
+    "prior_year_quarter": {
+      "revenue": 591402000,
+      "gross_profit": 419974000,
+      "operating_income": -65294000,
+      "net_income": -47048000
+    },
+    "current_ytd": {
+      "revenue": 1459389000,
+      "gross_profit": 1065940000,
+      "operating_income": 3596000,
+      "net_income": 45374000
+    },
+    "prior_year_ytd": {
+      "revenue": 1140416000,
+      "gross_profit": 810947000,
+      "operating_income": -118848000,
+      "net_income": -84674000
+    },
+    "ltm": {
+      "revenue": 2782770000,
+      "gross_profit": 2022732000,
+      "operating_income": -14524000,
+      "net_income": 58897000
+    }
+  },
+  "Datadog (DDOG)": {
+    "quarter_label": "Q2 2026",
+    "period_end": "2026-06-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1561550/000162828026054458/ddog-20260630.htm",
+    "latest_quarter": {
+      "revenue": 1121454000,
+      "gross_profit": 881341000,
+      "operating_income": 5455000,
+      "net_income": 44558000
+    },
+    "prior_quarter": {
+      "revenue": 1006426000,
+      "gross_profit": 797198000,
+      "operating_income": 7327000,
+      "net_income": 52574000
+    },
+    "prior_year_quarter": {
+      "revenue": 826760000,
+      "gross_profit": 660782000,
+      "operating_income": -35500000,
+      "net_income": 2647000
+    },
+    "current_ytd": {
+      "revenue": 2127880000,
+      "gross_profit": 1678539000,
+      "operating_income": 12782000,
+      "net_income": 97132000
+    },
+    "prior_year_ytd": {
+      "revenue": 1588313000,
+      "gross_profit": 1264707000,
+      "operating_income": -47920000,
+      "net_income": 27289000
+    },
+    "ltm": {
+      "revenue": 3966725000,
+      "gross_profit": 3154033000,
+      "operating_income": 16329000,
+      "net_income": 177584000
+    }
+  },
+  "Cloudflare (NET)": {
+    "quarter_label": "Q2 2026",
+    "period_end": "2026-06-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm",
+    "latest_quarter": {
+      "revenue": 696061000,
+      "gross_profit": 499517000,
+      "operating_income": -205696000,
+      "net_income": -169981000
+    },
+    "prior_quarter": {
+      "revenue": 639755000,
+      "gross_profit": 455597000,
+      "operating_income": -61994000,
+      "net_income": -22927000
+    },
+    "prior_year_quarter": {
+      "revenue": 512316000,
+      "gross_profit": 383639000,
+      "operating_income": -67264000,
+      "net_income": -50446000
+    },
+    "current_ytd": {
+      "revenue": 1335816000,
+      "gross_profit": 955114000,
+      "operating_income": -267690000,
+      "net_income": -192908000
+    },
+    "prior_year_ytd": {
+      "revenue": 991403000,
+      "gross_profit": 747150000,
+      "operating_income": -120511000,
+      "net_income": -88900000
+    },
+    "ltm": {
+      "revenue": 2512350000,
+      "gross_profit": 1823376000,
+      "operating_income": -354384000,
+      "net_income": -206275000
+    }
+  }
+}
