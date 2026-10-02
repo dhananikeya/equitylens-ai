@@ -500,6 +500,28 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+st.info(
+    "How to read EquityLens: company-reported figures are shown separately from metrics calculated by EquityLens. "
+    "Educational explanations define the terms in plain language, and source links point back to the original filing or disclosure. "
+    "EquityLens does not provide buy, sell, or hold recommendations."
+)
+
+with st.expander("Source standard & information labels"):
+    st.markdown(
+        """
+        **Reported** — taken from a company filing or company-reported disclosure.
+
+        **Calculated by EquityLens** — derived from reported figures, such as revenue growth, margins, or LTM metrics.
+
+        **Educational explanation** — plain-language context that explains a financial concept without recommending an investment action.
+
+        **Source** — the original SEC filing, investor-relations disclosure, or appropriately licensed market-data source used for the underlying information.
+
+        **Source priority:** SEC EDGAR first, company investor-relations disclosures second, and appropriately licensed market-data providers where needed.
+        """
+    )
+
+
 latest_period = max(
     [q.get("period_end", "") for q in company_quarterly.values()] or [""]
 )
@@ -919,6 +941,25 @@ with company_tab:
         unsafe_allow_html=True
     )
 
+    source_cols = st.columns(2)
+    with source_cols[0]:
+        st.caption("Primary annual source")
+        if data.get("filing_url"):
+            st.link_button("Open latest 10-K / annual filing", data.get("filing_url"))
+        else:
+            st.write("Source not available")
+    with source_cols[1]:
+        st.caption("Primary quarterly source")
+        if qdata.get("source_filing"):
+            st.link_button("Open latest quarterly / source filing", qdata.get("source_filing"))
+        else:
+            st.write("Source not available")
+
+    st.caption(
+        "Reported figures come from the linked company filings. Growth rates, margins, and LTM values shown in EquityLens may be calculated from those reported figures."
+    )
+
+
     if public_market_data_enabled:
         try:
             market = get_live_market_data([ticker]).get(ticker, {})
@@ -1248,15 +1289,15 @@ with learn_tab:
 
 st.markdown("---")
 section("Methodology", "Data Sources")
-st.write(
+st.markdown(
     """
     **Source priority**
+
     1. SEC EDGAR filings, including Forms 10-K, 10-Q, 8-K, and S-1
     2. Company investor-relations materials and company-reported disclosures
     3. Market-data providers only where the relevant licensing and exchange permissions allow use
 
-    EquityLens aims to distinguish company-reported figures from metrics calculated inside the app. "
-    "Material figures should include a reporting period and a link to the original source whenever available.
+    EquityLens distinguishes company-reported figures from metrics calculated inside the app. Material figures should include a reporting period and a link to the original source whenever available.
     """
 )
 
