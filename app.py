@@ -24,52 +24,49 @@ def load_company_analysis():
 
 @st.cache_data(ttl=300)
 def get_live_market_data(symbols):
-    api_key = st.secrets["FINIMPULSE_API_KEY"]
+    # Prefer the correctly named secret. The fallback keeps the app working
+    # if the existing Twelve Data key was previously saved under the old name.
+    api_key = st.secrets.get(
+        "TWELVE_DATA_API_KEY",
+        st.secrets.get("FINIMPULSE_API_KEY")
+    )
 
-    url = "https://api.finimpulse.com/v1/search-lite"
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {api_key}"
+    if not api_key:
+        raise ValueError(
+            "Missing Twelve Data API key in Streamlit Secrets."
+        )
+
+    url = "https://api.twelvedata.com/quote"
+    params = {
+        "symbol": ",".join(symbols),
+        "apikey": api_key
     }
 
-    payload = {
-        "symbols": symbols,
-        "quote_types": ["stock"],
-        "select_identifiers": [
-            "display_name",
-            "current_price",
-            "current_price_update_time",
-            "regular_market_price_change_percent",
-            "regular_market_volume",
-            "amount_usd",
-            "fifty_two_week_low",
-            "fifty_two_week_high"
-        ],
-        "limit": len(symbols)
-    }
-
-    response = requests.post(
+    response = requests.get(
         url,
-        headers=headers,
-        json=payload,
+        params=params,
         timeout=20
     )
     response.raise_for_status()
 
     body = response.json()
-    result = body.get("result", [])
 
-    if isinstance(result, dict):
-        if "items" in result and isinstance(result["items"], list):
-            result = result["items"]
-        else:
-            result = [result]
+    # Twelve Data returns a single quote object for one symbol and a mapping
+    # keyed by ticker when several symbols are requested.
+    if isinstance(body, dict) and body.get("status") == "error":
+        raise ValueError(body.get("message", "Twelve Data API error"))
+
+    if len(symbols) == 1 and isinstance(body, dict) and body.get("symbol"):
+        body = {symbols[0]: body}
 
     market_data = {}
-    for item in result:
-        symbol = item.get("symbol")
-        if symbol:
-            market_data[symbol] = item
+    for symbol in symbols:
+        item = body.get(symbol, {}) if isinstance(body, dict) else {}
+
+        if isinstance(item, dict) and item.get("status") == "error":
+            continue
+
+        market_data[symbol] = item
 
     return market_data
 
@@ -146,45 +143,43 @@ if st.button("Run Comparison"):
             ticker = company_data[company]["ticker"]
             market = live_market.get(ticker, {})
 
-            market_cap = market.get("amount_usd")
-            cash = company_data[company].get("cash")
+            fifty_two_week = market.get("fifty_two_week", {})
+            if not isinstance(fifty_two_week, dict):
+                fifty_two_week = {}
 
-            enterprise_value = None
-            if market_cap is not None and cash is not None:
-                # Debt will be added to the model next. Until then, this is a
-                # simplified net-cash EV estimate rather than full enterprise value.
-                enterprise_value = market_cap - cash
+            close = market.get("close")
+            percent_change = market.get("percent_change")
+            volume = market.get("volume")
 
             market_rows.append({
                 "Company": company,
                 "Price": (
-                    f"${market.get('current_price'):,.2f}"
-                    if market.get("current_price") is not None
+                    f"$" + f"{float(close):,.2f}"
+                    if close not in (None, "")
                     else "N/A"
                 ),
                 "Daily Change": (
-                    pct(market.get("regular_market_price_change_percent"))
-                    if market.get("regular_market_price_change_percent") is not None
+                    f"{float(percent_change):.2f}%"
+                    if percent_change not in (None, "")
                     else "N/A"
                 ),
-                "Market Cap": format_money(market_cap),
                 "52W Low": (
-                    f"${market.get('fifty_two_week_low'):,.2f}"
-                    if market.get("fifty_two_week_low") is not None
+                    f"$" + f"{float(fifty_two_week.get('low')):,.2f}"
+                    if fifty_two_week.get("low") not in (None, "")
                     else "N/A"
                 ),
                 "52W High": (
-                    f"${market.get('fifty_two_week_high'):,.2f}"
-                    if market.get("fifty_two_week_high") is not None
+                    f"$" + f"{float(fifty_two_week.get('high')):,.2f}"
+                    if fifty_two_week.get("high") not in (None, "")
                     else "N/A"
                 ),
                 "Volume": (
-                    f"{market.get('regular_market_volume'):,}"
-                    if market.get("regular_market_volume") is not None
+                    f"{int(float(volume)):,}"
+                    if volume not in (None, "")
                     else "N/A"
                 ),
-                "Price Updated": market.get("current_price_update_time", "N/A"),
-                "Simplified EV": format_money(enterprise_value)
+                "Price Updated": market.get("datetime", "N/A"),
+                "Exchange": market.get("exchange", "N/A")
             })
 
         st.dataframe(
@@ -194,8 +189,8 @@ if st.button("Run Comparison"):
         )
 
         st.caption(
-            "FinImpulse market prices may be delayed. Simplified EV currently equals "
-            "market cap minus cash; debt will be incorporated in the next valuation upgrade."
+            "Market data is provided by Twelve Data. Availability and latency depend "
+            "on the Twelve Data plan and exchange entitlements."
         )
 
         rows = []
