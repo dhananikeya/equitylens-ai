@@ -98,6 +98,41 @@ st.markdown(
         font-weight: 600;
     }
 
+    .el-risk-card {
+        margin: 0.65rem 0 1rem 0;
+        padding: 1rem 1.1rem;
+        border: 1px solid var(--el-border);
+        border-radius: 16px;
+        background: rgba(17,35,56,0.58);
+    }
+
+    .el-risk-title {
+        color: var(--el-text);
+        font-size: 1.05rem;
+        font-weight: 800;
+        margin-bottom: 0.65rem;
+    }
+
+    .el-risk-list {
+        margin: 0;
+        padding-left: 1.15rem;
+        color: #D8E2EE;
+        line-height: 1.55;
+    }
+
+    .el-risk-list li {
+        margin: 0.28rem 0;
+    }
+
+    .el-risk-source {
+        display: inline-block;
+        margin-top: 0.8rem;
+        color: var(--el-blue);
+        font-size: 0.86rem;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
     .el-section {
         margin-top: 1.65rem;
         margin-bottom: 0.55rem;
@@ -193,19 +228,19 @@ st.markdown(
 )
 
 
-@st.cache_data
+@st.cache_data(ttl=60)
 def load_company_data():
     with open("data/company_metrics.json", "r") as file:
         return json.load(file)
 
 
-@st.cache_data
+@st.cache_data(ttl=60)
 def load_company_analysis():
     with open("data/company_analysis.json", "r") as file:
         return json.load(file)
 
 
-@st.cache_data
+@st.cache_data(ttl=60)
 def load_company_quarterly():
     with open("data/company_quarterly.json", "r") as file:
         return json.load(file)
@@ -899,16 +934,38 @@ with st.expander("View key risk themes"):
     for company in selected_companies:
         analysis = company_analysis.get(company, {})
         themes = analysis.get("key_risk_themes", [])
-        st.markdown(f"**{company}**")
-        if themes:
-            for theme in themes:
-                st.write(f"• {theme}")
-        else:
-            st.write("Qualitative analysis not added yet.")
+        source = analysis.get("source_filing", "")
 
-        source = analysis.get("source_filing")
-        if source:
-            st.markdown(f"[Open source filing]({source})")
+        if themes:
+            theme_items = "".join(
+                f"<li>{theme}</li>" for theme in themes
+            )
+            source_link = (
+                f'<a class="el-risk-source" href="{source}" target="_blank">'
+                'Open source filing ↗</a>'
+                if source else ""
+            )
+
+            st.markdown(
+                f"""
+                <div class="el-risk-card">
+                    <div class="el-risk-title">{company}</div>
+                    <ul class="el-risk-list">{theme_items}</ul>
+                    {source_link}
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+        else:
+            st.markdown(
+                f"""
+                <div class="el-risk-card">
+                    <div class="el-risk-title">{company}</div>
+                    <div style="color:#94A3B8;">Risk themes are not available for this company.</div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
 
 st.markdown("---")
