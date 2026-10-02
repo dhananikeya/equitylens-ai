@@ -875,31 +875,61 @@ with peer_tab:
                 )
 
             section("Qualitative Research", "Risk & Business Model")
-            risk_rows = []
+            st.caption(
+                "Compare how each company makes money, what its platform depends on, "
+                "and the main competitive and operational risks disclosed in company filings."
+            )
+
             for company in selected_companies:
                 analysis = company_analysis.get(company, {})
-                risk_rows.append({
-                    "Company": company,
-                    "Business Model": analysis.get("business_model", ""),
-                    "Revenue Source": analysis.get(
-                        "primary_revenue_source", ""
-                    ),
-                    "Platform Dependency": analysis.get(
-                        "platform_dependency", ""
-                    ),
-                    "Competitive Risk": analysis.get(
-                        "competitive_risk", ""
-                    ),
-                    "Operational Risk": analysis.get(
-                        "operational_risk", ""
-                    )
-                })
+                themes = analysis.get("key_risk_themes", [])
+                source_link = analysis.get(
+                    "source_filing",
+                    company_data.get(company, {}).get("filing_url", "")
+                )
 
-            st.dataframe(
-                pd.DataFrame(risk_rows),
-                use_container_width=True,
-                hide_index=True
-            )
+                with st.expander(company, expanded=False):
+                    left_col, right_col = st.columns(2)
+
+                    with left_col:
+                        st.markdown("**Business model**")
+                        st.write(analysis.get("business_model", "N/A"))
+
+                        st.markdown("**Primary revenue source**")
+                        st.write(
+                            analysis.get("primary_revenue_source", "N/A")
+                        )
+
+                        st.markdown("**Customer type**")
+                        st.write(analysis.get("customer_type", "N/A"))
+
+                    with right_col:
+                        st.markdown("**Platform dependency**")
+                        st.write(
+                            analysis.get("platform_dependency", "N/A")
+                        )
+
+                        st.markdown("**Competitive risk**")
+                        st.write(
+                            analysis.get("competitive_risk", "N/A")
+                        )
+
+                        st.markdown("**Operational risk**")
+                        st.write(
+                            analysis.get("operational_risk", "N/A")
+                        )
+
+                    if themes:
+                        st.markdown("**Key risk themes**")
+                        st.write(" • ".join(themes))
+
+                    if source_link:
+                        st.caption("Source: company SEC filing")
+                        st.link_button(
+                            f"Open {company_data.get(company, {}).get('source', 'source filing')}",
+                            source_link,
+                            key=f"risk_source_{company}"
+                        )
 
 with company_tab:
     section("Deep Dive", "Company Research View")
