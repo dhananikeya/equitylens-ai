@@ -1637,62 +1637,88 @@ with learn_tab:
     )
 
     learning_items = [
-        (
-            "Revenue",
-            "The money a company reports from selling its products or services before expenses are deducted.",
-            "Useful for understanding the size of the business and whether sales are expanding or shrinking."
-        ),
-        (
-            "Year-over-Year (YoY) Growth",
-            "The percentage change compared with the same reporting period one year earlier.",
-            "Useful for comparing growth while reducing seasonal distortions."
-        ),
-        (
-            "Gross Margin",
-            "Gross profit divided by revenue. It shows how much revenue remains after the direct costs of delivering the product or service.",
-            "Useful for understanding the economics of what the company sells."
-        ),
-        (
-            "Operating Margin",
-            "Operating income divided by revenue. It reflects profitability after core operating expenses.",
-            "A negative operating margin means reported operating expenses exceeded gross profit for that period."
-        ),
-        (
-            "Net Income",
-            "Profit or loss after operating expenses, interest, taxes, and other reported items.",
-            "Useful for seeing the company's bottom-line result, but it can also be affected by non-operating items."
-        ),
-        (
-            "LTM / Trailing Twelve Months",
-            "A rolling twelve-month view built from the latest available reporting periods.",
-            "Useful when the latest annual filing is older than the most recent quarter."
-        ),
-        (
-            "10-K",
-            "The annual report public U.S. companies file with the SEC.",
-            "It typically contains annual financial statements, business information, risk factors, and management discussion."
-        ),
-        (
-            "10-Q",
-            "A quarterly report public U.S. companies file with the SEC.",
-            "It provides more recent financial statements and updates between annual reports."
-        ),
-        (
-            "Cash + Investments",
-            "Cash and selected liquid investments reported on the balance sheet.",
-            "Useful for understanding available financial resources, especially when viewed alongside debt."
-        ),
-        (
-            "Debt",
-            "Borrowed capital reported by the company.",
-            "Debt is not automatically good or bad. Its importance depends on cash flow, repayment terms, interest costs, and the company's broader financial position."
-        )
+        {
+            "term": "Revenue",
+            "definition": "Revenue is the money a company earns from selling its products or services before expenses are deducted.",
+            "why": "Revenue helps show the size of the business and whether customer demand is expanding, slowing, or shrinking over time.",
+            "how": "For example, if a company reports $1.0B of revenue this year and $800M last year, sales increased by $200M. Revenue by itself does not tell you whether the company was profitable.",
+            "watch": "Look at revenue together with growth rates, margins, customer trends, and whether growth is coming from recurring business or one-time activity."
+        },
+        {
+            "term": "Year-over-Year (YoY) Growth",
+            "definition": "YoY growth measures how much a financial metric changed compared with the same period one year earlier.",
+            "why": "Comparing the same quarter across years helps reduce seasonal distortions. A retailer's fourth quarter, for example, may naturally be stronger than its third quarter.",
+            "how": "Formula: (current-period value - prior-year value) ÷ prior-year value × 100. If quarterly revenue rises from $100M to $120M, YoY growth is 20%.",
+            "watch": "A high growth rate can look impressive, but check whether it is accelerating or slowing and whether profitability is improving alongside it."
+        },
+        {
+            "term": "Gross Margin",
+            "definition": "Gross margin is the percentage of revenue left after subtracting the direct costs required to deliver a product or service.",
+            "why": "It gives a basic view of the economics of what a company sells. Higher gross margins generally mean more revenue remains to pay operating expenses such as research, sales, and administration.",
+            "how": "Formula: gross profit ÷ revenue × 100. If revenue is $100M and gross profit is $75M, gross margin is 75%.",
+            "watch": "Compare margins with the company's own history and similar businesses. Different industries naturally have very different gross-margin structures."
+        },
+        {
+            "term": "Operating Margin",
+            "definition": "Operating margin shows how much operating profit or loss a company produces after core operating expenses such as research and development, sales and marketing, and administration.",
+            "why": "It helps show whether the core business is becoming more or less efficient as it grows.",
+            "how": "Formula: operating income ÷ revenue × 100. If revenue is $100M and operating income is $10M, operating margin is 10%. If operating income is -$10M, the margin is -10%.",
+            "watch": "An improving operating margin may indicate better cost discipline or operating leverage, but one quarter should not be treated as a long-term trend."
+        },
+        {
+            "term": "Net Income",
+            "definition": "Net income is the company's final reported profit or loss after operating expenses, interest, taxes, and other reported gains or losses.",
+            "why": "It is commonly called the bottom line because it shows what remains after the major expenses and non-operating items recognized during the period.",
+            "how": "A company can have positive operating results but lower net income because of interest or taxes, or it can report positive net income because of a one-time gain.",
+            "watch": "Read net income alongside operating income and cash flow. Large one-time tax benefits, investment gains, restructuring charges, or other unusual items can make a single period less representative."
+        },
+        {
+            "term": "LTM / Trailing Twelve Months",
+            "definition": "LTM combines the most recent twelve months of financial results, usually using the latest four reported quarters.",
+            "why": "It gives a more current full-year view than an older annual report when one or more newer quarters have already been released.",
+            "how": "If a company's latest 10-K ended six months ago, LTM can combine the newer quarterly results with the remaining quarters needed to create a rolling twelve-month total.",
+            "watch": "LTM is calculated rather than a separate SEC reporting period. Always check which quarters are included, especially when comparing companies with different fiscal year-ends."
+        },
+        {
+            "term": "10-K",
+            "definition": "A 10-K is the detailed annual report that most U.S. public companies file with the SEC.",
+            "why": "It is one of the most important primary sources for understanding a company because it includes audited annual financial statements, the business description, risk factors, management discussion, and other disclosures.",
+            "how": "Useful sections include Business, Risk Factors, MD&A, Financial Statements and Notes, and information about debt, stock-based compensation, customers, and accounting policies.",
+            "watch": "A 10-K is comprehensive but backward-looking. Pair it with newer 10-Q and 8-K filings so you are not relying on an outdated picture."
+        },
+        {
+            "term": "10-Q",
+            "definition": "A 10-Q is the quarterly report that most U.S. public companies file with the SEC for the first three fiscal quarters of the year.",
+            "why": "It provides more recent financial statements and management commentary between annual 10-K filings.",
+            "how": "A 10-Q can help you compare the newest quarter with the prior quarter and the same quarter a year earlier, while also showing changes in the balance sheet and cash flow.",
+            "watch": "Quarterly figures can be seasonal or volatile. Compare them with prior periods and read the accompanying notes rather than judging a company from one number."
+        },
+        {
+            "term": "Cash + Investments",
+            "definition": "Cash and investments represent liquid financial resources reported on the balance sheet, although the exact categories included can vary by company.",
+            "why": "These resources can help fund operations, acquisitions, debt repayment, share repurchases, or investment during periods when cash generation is weak.",
+            "how": "EquityLens combines selected reported cash and investment balances when the underlying filing provides enough information to do so consistently.",
+            "watch": "Do not treat every investment as identical to cash. Some securities may have different maturities, restrictions, or liquidity characteristics."
+        },
+        {
+            "term": "Debt",
+            "definition": "Debt is borrowed capital that the company is obligated to repay under specified terms.",
+            "why": "Debt can finance growth or acquisitions, but it also creates repayment obligations and often interest expense.",
+            "how": "When reviewing debt, compare it with cash, operating cash generation, maturity dates, interest rates, and the company's ability to refinance or repay it.",
+            "watch": "Debt is not automatically negative, and zero debt is not automatically superior. Its significance depends on the company's business model, cash flow, cost of capital, and financial flexibility."
+        }
     ]
 
-    for term, definition, why_it_matters in learning_items:
-        with st.expander(term):
-            st.write(definition)
-            st.caption(f"Why it matters: {why_it_matters}")
+    for item in learning_items:
+        with st.expander(item["term"]):
+            st.markdown(f"**What it means**  
+{item['definition']}")
+            st.markdown(f"**Why it matters**  
+{item['why']}")
+            st.markdown(f"**How to think about it**  
+{item['how']}")
+            st.markdown(f"**What to watch for**  
+{item['watch']}")
 
     section("Source Guide", "How EquityLens Labels Information")
     st.markdown(
