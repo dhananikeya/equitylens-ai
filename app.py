@@ -605,6 +605,15 @@ def get_supabase_client():
     return create_client(url, anon_key)
 
 
+def get_public_app_url():
+    """Return the public URL users should land on after confirming their email."""
+    configured_url = st.secrets.get(
+        "PUBLIC_APP_URL",
+        "https://equitylens-ai-2h7rd8qluv3bc8sdqf5cu3.streamlit.app/"
+    )
+    return str(configured_url).rstrip("/") + "/"
+
+
 
 def get_openai_client():
     api_key = st.secrets.get("OPENAI_API_KEY")
@@ -805,13 +814,20 @@ def render_auth_sidebar():
                     try:
                         response = supabase.auth.sign_up({
                             "email": email,
-                            "password": password
+                            "password": password,
+                            "options": {
+                                "email_redirect_to": get_public_app_url()
+                            }
                         })
-                        if response.user:
+                        if response.session and response.user:
                             st.session_state.auth_user = response.user
-                        st.success(
-                            "Account created. If email confirmation is enabled, check your inbox before signing in."
-                        )
+                            st.success("Account created and signed in.")
+                            st.rerun()
+                        else:
+                            st.success(
+                                "Account created. Check your inbox and confirm your email. "
+                                "After confirmation, you will return to EquityLens and can sign in."
+                            )
                     except Exception as exc:
                         st.error("Unable to create the account.")
                         st.caption(str(exc))
