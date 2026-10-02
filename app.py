@@ -90,9 +90,13 @@ def pct(value):
     return f"{value:.1f}%" if value is not None else "N/A"
 
 
+def format_multiple(value):
+    return f"{value:.2f}x" if value is not None else "N/A"
+
+
 company_data = load_company_data()
 company_analysis = load_company_analysis()
-public_market_data_enabled = False
+public_market_data_enabled = bool(st.secrets.get("PUBLIC_MARKET_DATA_ENABLED", False))
 
 st.title("EquityLens AI")
 
@@ -119,6 +123,42 @@ selected_companies = st.multiselect(
         "Snowflake (SNOW)",
         "MongoDB (MDB)"
     ]
+)
+
+
+st.subheader("Capital Structure Snapshot")
+
+capital_rows = []
+for company in selected_companies:
+    capital = company_data[company].get("capital_structure", {})
+    capital_rows.append({
+        "Company": company,
+        "Shares Outstanding": (
+            f"{capital.get('shares_outstanding'):,}"
+            if capital.get("shares_outstanding") is not None
+            else "N/A"
+        ),
+        "Debt": format_money(capital.get("total_debt")),
+        "Cash + Investments": format_money(capital.get("cash_and_investments")),
+        "Balance Sheet Date": capital.get("balance_sheet_as_of", "N/A"),
+        "Capital Structure Source": capital.get("source_filing", "")
+    })
+
+st.dataframe(
+    pd.DataFrame(capital_rows),
+    use_container_width=True,
+    hide_index=True,
+    column_config={
+        "Capital Structure Source": st.column_config.LinkColumn(
+            "Source",
+            display_text="Open filing"
+        )
+    }
+)
+
+st.caption(
+    "Capital structure uses the latest available public filing for each company. "
+    "Share counts and balance-sheet dates can differ slightly."
 )
 
 if st.button("Run Comparison"):
@@ -194,10 +234,105 @@ if st.button("Run Comparison"):
                 "Market data is provided by Twelve Data. Availability and latency depend "
                 "on the Twelve Data plan and exchange entitlements."
             )
+
+
+            st.subheader("Trading Comps")
+
+            comps_rows = []
+            for company in selected_companies:
+                ticker = company_data[company]["ticker"]
+                market = live_market.get(ticker, {})
+                close = market.get("close")
+                capital = company_data[company].get("capital_structure", {})
+                shares = capital.get("shares_outstanding")
+                debt = capital.get("total_debt")
+                cash_and_investments = capital.get("cash_and_investments")
+                revenue = company_data[company].get("revenue")
+
+                price = float(close) if close not in (None, "") else None
+                market_cap = (
+                    price * shares
+                    if price is not None and shares is not None
+                    else None
+                )
+                enterprise_value = (
+                    market_cap + debt - cash_and_investments
+                    if market_cap is not None
+                    and debt is not None
+                    and cash_and_investments is not None
+                    else None
+                )
+                price_to_sales = (
+                    market_cap / revenue
+                    if market_cap is not None and revenue
+                    else None
+                )
+                ev_to_revenue = (
+                    enterprise_value / revenue
+                    if enterprise_value is not None and revenue
+                    else None
+                )
+
+                comps_rows.append({
+                    "Company": company,
+                    "Market Cap": market_cap,
+                    "Enterprise Value": enterprise_value,
+                    "Price / Sales": price_to_sales,
+                    "EV / Revenue": ev_to_revenue
+                })
+
+            comps_df = pd.DataFrame(comps_rows)
+
+            valid_ps = comps_df["Price / Sales"].dropna()
+            valid_ev_rev = comps_df["EV / Revenue"].dropna()
+
+            peer_median_ps = valid_ps.median() if not valid_ps.empty else None
+            peer_average_ps = valid_ps.mean() if not valid_ps.empty else None
+            peer_median_ev_rev = valid_ev_rev.median() if not valid_ev_rev.empty else None
+            peer_average_ev_rev = valid_ev_rev.mean() if not valid_ev_rev.empty else None
+
+            display_comps = []
+            for _, row in comps_df.iterrows():
+                ps = row["Price / Sales"]
+                ev_rev = row["EV / Revenue"]
+                premium_discount = (
+                    ((ev_rev / peer_median_ev_rev) - 1) * 100
+                    if ev_rev is not None
+                    and peer_median_ev_rev not in (None, 0)
+                    else None
+                )
+
+                display_comps.append({
+                    "Company": row["Company"],
+                    "Market Cap": format_money(row["Market Cap"]),
+                    "Enterprise Value": format_money(row["Enterprise Value"]),
+                    "Price / Sales": format_multiple(ps),
+                    "EV / Revenue": format_multiple(ev_rev),
+                    "EV/Revenue vs Peer Median": pct(premium_discount)
+                })
+
+            st.dataframe(
+                pd.DataFrame(display_comps),
+                use_container_width=True,
+                hide_index=True
+            )
+
+            col1, col2, col3, col4 = st.columns(4)
+            col1.metric("Peer Median P/S", format_multiple(peer_median_ps))
+            col2.metric("Peer Average P/S", format_multiple(peer_average_ps))
+            col3.metric("Peer Median EV/Revenue", format_multiple(peer_median_ev_rev))
+            col4.metric("Peer Average EV/Revenue", format_multiple(peer_average_ev_rev))
+
+            st.caption(
+                "Trading comps are descriptive, not investment recommendations. "
+                "Market cap uses current market price × latest reported shares outstanding. "
+                "Enterprise value uses market cap + reported debt - cash and investments. "
+                "Revenue uses the latest annual figure currently stored in EquityLens."
+            )
         else:
             st.info(
-                "Live market data is disabled in this public demo. "
-                "Financial analysis is based on publicly available SEC filings."
+                "Live market data and market-price-based valuation multiples are disabled in this public demo. "
+                "The capital structure and financial analysis below use publicly available SEC filings."
             )
 
         rows = []
