@@ -1841,79 +1841,69 @@ with company_tab:
 
         with detail_cols[0]:
             with st.expander("Business & Revenue Model", expanded=True):
-                st.markdown(
-                    """
-                    Focus on how the company describes its products or services, who pays for them,
-                    how revenue is generated, whether revenue is recurring or usage-based, and which
-                    products or customer relationships management considered most important at the time.
-                    """
-                )
+                st.markdown("Focus on how the company describes its products or services, who pays for them, how revenue is generated, whether revenue is recurring or usage-based, and which products or customer relationships management considered most important at the time.")
+                filing_points = explore_s1.get("filing_details", {}).get("business_revenue_model", [])
+                if filing_points:
+                    st.markdown("**From this company's S-1**")
+                    for point in filing_points:
+                        st.markdown(f"- {point}")
 
             with st.expander("Customers & Go-to-Market"):
-                st.markdown(
-                    """
-                    Review the customer base, target market, sales motion, distribution channels,
-                    customer concentration, expansion strategy, retention language, and any reliance
-                    on partners or resellers described in the filing.
-                    """
-                )
+                st.markdown("Review the customer base, target market, sales motion, distribution channels, customer concentration, expansion strategy, retention language, and any reliance on partners or resellers described in the filing.")
+                filing_points = explore_s1.get("filing_details", {}).get("customers_go_to_market", [])
+                if filing_points:
+                    st.markdown("**From this company's S-1**")
+                    for point in filing_points:
+                        st.markdown(f"- {point}")
 
             with st.expander("Growth Strategy & Market Opportunity"):
-                st.markdown(
-                    """
-                    Look for management's stated growth priorities, new-product plans, geographic
-                    expansion, market-size discussion, customer expansion strategy, and the assumptions
-                    behind the opportunity the company presented to public investors.
-                    """
-                )
+                st.markdown("Look for management's stated growth priorities, new-product plans, geographic expansion, market-size discussion, customer expansion strategy, and the assumptions behind the opportunity the company presented to public investors.")
+                filing_points = explore_s1.get("filing_details", {}).get("growth_market_opportunity", [])
+                if filing_points:
+                    st.markdown("**From this company's S-1**")
+                    for point in filing_points:
+                        st.markdown(f"- {point}")
 
             with st.expander("Competition & Differentiation"):
-                st.markdown(
-                    """
-                    The S-1 usually explains the competitive landscape, alternative products or
-                    technologies, larger incumbent competitors, and the capabilities management believed
-                    differentiated the company at the time of the offering.
-                    """
-                )
+                st.markdown("The S-1 usually explains the competitive landscape, alternative products or technologies, larger incumbent competitors, and the capabilities management believed differentiated the company at the time of the offering.")
+                filing_points = explore_s1.get("filing_details", {}).get("competition_differentiation", [])
+                if filing_points:
+                    st.markdown("**From this company's S-1**")
+                    for point in filing_points:
+                        st.markdown(f"- {point}")
 
         with detail_cols[1]:
             with st.expander("Risk Factors", expanded=True):
-                st.markdown(
-                    """
-                    Risk Factors can include dependence on growth, customer retention, large customers,
-                    suppliers or cloud providers, cybersecurity, regulation, international operations,
-                    competition, losses, stock-based compensation, and other company-specific exposures.
-                    EquityLens treats these as disclosed risks, not predictions.
-                    """
-                )
+                st.markdown("Risk Factors can include dependence on growth, customer retention, large customers, suppliers or cloud providers, cybersecurity, regulation, international operations, competition, losses, stock-based compensation, and other company-specific exposures. EquityLens treats these as disclosed risks, not predictions.")
+                filing_points = explore_s1.get("filing_details", {}).get("risk_factors", [])
+                if filing_points:
+                    st.markdown("**From this company's S-1**")
+                    for point in filing_points:
+                        st.markdown(f"- {point}")
 
             with st.expander("Financial Condition & Operating History"):
-                st.markdown(
-                    """
-                    Review historical revenue, gross profit, operating expenses, net income or loss,
-                    cash flow, accumulated deficit, and management's discussion of the factors that
-                    affected results before the IPO.
-                    """
-                )
+                st.markdown("Review historical revenue, gross profit, operating expenses, net income or loss, cash flow, accumulated deficit, and management's discussion of the factors that affected results before the IPO.")
+                filing_points = explore_s1.get("filing_details", {}).get("financial_history", [])
+                if filing_points:
+                    st.markdown("**From this company's S-1**")
+                    for point in filing_points:
+                        st.markdown(f"- {point}")
 
             with st.expander("IPO Structure, Capitalization & Dilution"):
-                st.markdown(
-                    """
-                    Registration filings can describe the shares being offered, existing capitalization,
-                    preferred-stock conversion, dilution, voting rights, and how ownership changes when
-                    the company becomes public. Final pricing may appear in later amendments rather than
-                    the first S-1.
-                    """
-                )
+                st.markdown("Registration filings can describe the shares being offered, existing capitalization, preferred-stock conversion, dilution, voting rights, and how ownership changes when the company becomes public. Final pricing may appear in later amendments rather than the first S-1.")
+                filing_points = explore_s1.get("filing_details", {}).get("ipo_capitalization_dilution", [])
+                if filing_points:
+                    st.markdown("**From this company's S-1**")
+                    for point in filing_points:
+                        st.markdown(f"- {point}")
 
             with st.expander("Use of Proceeds, Management & Ownership"):
-                st.markdown(
-                    """
-                    Look for how the company expected to use offering proceeds, executive and director
-                    information, compensation disclosures, related-party matters, and principal
-                    stockholders. These sections help explain governance and ownership around the IPO.
-                    """
-                )
+                st.markdown("Look for how the company expected to use offering proceeds, executive and director information, compensation disclosures, related-party matters, and principal stockholders. These sections help explain governance and ownership around the IPO.")
+                filing_points = explore_s1.get("filing_details", {}).get("proceeds_management_ownership", [])
+                if filing_points:
+                    st.markdown("**From this company's S-1**")
+                    for point in filing_points:
+                        st.markdown(f"- {point}")
 
         st.caption(
             "The exact level of detail varies by company and filing amendment. EquityLens uses the original SEC filing as the primary source."
