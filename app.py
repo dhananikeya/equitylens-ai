@@ -2137,11 +2137,23 @@ with st.expander("Methodology & source standards"):
     )
 
 
+sec_synced_companies = sum(
+    1
+    for _company_feed in sec_filings.values()
+    if _company_feed.get("cik")
+    and _company_feed.get("filings")
+)
+registration_covered_companies = sum(
+    1
+    for _company_feed in sec_filings.values()
+    if _company_feed.get("registration_filings")
+)
+
 render_summary_cards([
     ("Companies", f"{len(company_universe):,}"),
     ("Industries", f"{company_universe['Industry'].nunique():,}"),
     ("Primary Source", "SEC EDGAR"),
-    ("Monitoring", "Automatic SEC checks")
+    ("SEC Synced", f"{sec_synced_companies:,} / {len(company_universe):,}")
 ])
 
 home_tab, company_tab, peer_tab, research_tab, market_tab, sec_tracker_tab, learn_tab = st.tabs([
