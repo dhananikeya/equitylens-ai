@@ -1,0 +1,57 @@
+name: Build deep company research
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/30 * * * *"
+  push:
+    paths:
+      - "scripts/build_deep_research.py"
+      - "data/finviz_universe.csv"
+      - ".github/workflows/build-deep-research.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: equitylens-deep-research
+  cancel-in-progress: false
+
+jobs:
+  build-deep-research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_RESEARCH_MODEL: gpt-6-luna
+      RESEARCH_BATCH_SIZE: "40"
+      RESEARCH_MAX_ATTEMPTS: "3"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build deep research batch
+        run: python scripts/build_deep_research.py
+
+      - name: Commit generated research
+        run: |
+          if git diff --quiet --             data/generated_company_metrics.json             data/generated_company_quarterly.json             data/generated_company_analysis.json             data/generated_company_s1.json             data/research_pipeline_state.json; then
+            echo "No generated research changes."
+            exit 0
+          fi
+
+          git config user.name "EquityLens Research Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add             data/generated_company_metrics.json             data/generated_company_quarterly.json             data/generated_company_analysis.json             data/generated_company_s1.json             data/research_pipeline_state.json
+          git commit -m "Auto-build deep company research"
+          git push
