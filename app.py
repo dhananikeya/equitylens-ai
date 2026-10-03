@@ -659,6 +659,139 @@ hr {
 
 .el-evidence-note span { color:var(--el-teal); }
 
+/* User-first entry points and interpretation layer */
+.el-user-intro {
+    margin: 1.25rem 0 1.1rem;
+}
+
+.el-user-intro-kicker {
+    color: var(--el-teal);
+    font-family: var(--el-mono);
+    font-size: .72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .045em;
+    margin-bottom: .45rem;
+}
+
+.el-user-intro-title {
+    color: var(--el-text);
+    font-size: 1.55rem;
+    font-weight: 600;
+    letter-spacing: -.028em;
+}
+
+.el-user-intro-copy {
+    margin-top: .4rem;
+    max-width: 850px;
+    color: var(--el-muted);
+    font-size: .92rem;
+    line-height: 1.65;
+}
+
+.el-intent-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .75rem;
+    margin: 1rem 0 1.6rem;
+}
+
+.el-intent-card {
+    min-height: 132px;
+    padding: 1.15rem;
+    border: 1px solid var(--el-border);
+    border-radius: 9px;
+    background: #091217;
+    box-sizing: border-box;
+}
+
+.el-intent-card:hover {
+    border-color: rgba(22,199,178,.55);
+    background: rgba(22,199,178,.035);
+}
+
+.el-intent-label {
+    color: var(--el-teal);
+    font-family: var(--el-mono);
+    font-size: .69rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.el-intent-title {
+    margin-top: .6rem;
+    color: var(--el-text);
+    font-size: .98rem;
+    font-weight: 600;
+}
+
+.el-intent-copy {
+    margin-top: .42rem;
+    color: var(--el-muted);
+    font-size: .82rem;
+    line-height: 1.5;
+}
+
+.el-quick-read {
+    margin: 1.1rem 0 1.4rem;
+    padding: 1.25rem 1.35rem;
+    border: 1px solid var(--el-border);
+    border-left: 3px solid var(--el-teal);
+    border-radius: 9px;
+    background: #091217;
+}
+
+.el-quick-read-kicker {
+    color: var(--el-teal);
+    font-family: var(--el-mono);
+    font-size: .7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .045em;
+}
+
+.el-quick-read-title {
+    margin-top: .45rem;
+    color: var(--el-text);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.el-quick-read-copy {
+    margin-top: .55rem;
+    color: var(--el-muted);
+    line-height: 1.7;
+    font-size: .91rem;
+}
+
+.el-next-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .75rem;
+    margin: .9rem 0 1.4rem;
+}
+
+.el-next-card {
+    padding: 1rem 1.05rem;
+    border: 1px solid var(--el-border);
+    border-radius: 9px;
+    background: #091217;
+}
+
+.el-next-title {
+    color: var(--el-text);
+    font-size: .9rem;
+    font-weight: 600;
+}
+
+.el-next-copy {
+    margin-top: .35rem;
+    color: var(--el-muted);
+    font-size: .79rem;
+    line-height: 1.5;
+}
+
 @media (max-width:900px) {
     .block-container { padding:1rem .9rem 3rem !important; }
     .el-product-hero { padding:1.6rem 1.2rem; }
@@ -671,6 +804,8 @@ hr {
     .el-workflow-step:nth-child(2) { border-right:0; }
     .el-workflow-step:nth-child(1),.el-workflow-step:nth-child(2) { border-bottom:1px solid var(--el-border); }
     .el-feature-grid { grid-template-columns:1fr; }
+    .el-intent-grid { grid-template-columns:1fr 1fr; }
+    .el-next-grid { grid-template-columns:1fr; }
     .el-evidence-strip { flex-direction:column; align-items:flex-start; }
     .el-evidence-note { white-space:normal; }
 }
@@ -1179,9 +1314,40 @@ home_tab, company_tab, peer_tab, ask_tab, sec_tracker_tab, learn_tab = st.tabs([
 ])
 
 with home_tab:
-    st.info(
-        "New to financial statements? Start in Learn. Want to understand a company at IPO? Open Explore Companies. "
-        "Comparing competitors? Open Industry Comparison."
+    st.markdown(
+        """
+        <div class="el-user-intro">
+            <div class="el-user-intro-kicker">Start with what you want to know</div>
+            <div class="el-user-intro-title">What are you trying to understand?</div>
+            <div class="el-user-intro-copy">
+                EquityLens is organized around research questions, not a pile of financial data.
+                Pick the path that matches what you are actually trying to figure out.
+            </div>
+        </div>
+        <div class="el-intent-grid">
+            <div class="el-intent-card">
+                <div class="el-intent-label">Explore Companies</div>
+                <div class="el-intent-title">How does this company work?</div>
+                <div class="el-intent-copy">Understand the business model, customers, strategy, risks, and IPO-era story from its S-1.</div>
+            </div>
+            <div class="el-intent-card">
+                <div class="el-intent-label">Industry Comparison</div>
+                <div class="el-intent-title">How does it compare with peers?</div>
+                <div class="el-intent-copy">Compare growth, margins, capital structure, business models, and risk themes on the same page.</div>
+            </div>
+            <div class="el-intent-card">
+                <div class="el-intent-label">EquityLens AI</div>
+                <div class="el-intent-title">What does the filing actually say?</div>
+                <div class="el-intent-copy">Ask plain-English questions against structured filing research and keep the supporting sources close by.</div>
+            </div>
+            <div class="el-intent-card">
+                <div class="el-intent-label">Learn</div>
+                <div class="el-intent-title">What does this metric mean?</div>
+                <div class="el-intent-copy">Learn the financial concepts first, then return to the company with enough context to interpret the numbers.</div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
     )
 
     section("Interactive preview", "See the research, not just the promise.")
@@ -1260,6 +1426,52 @@ with home_tab:
         format_money(home_data.get("capital_structure", {}).get("cash_and_investments"))
     )
 
+    if home_latest.get("revenue") is not None:
+        quick_growth = home_qm.get("yoy_growth")
+        quick_margin = home_qm.get("operating_margin")
+        quick_period = home_qdata.get("quarter_label", "latest reported quarter")
+        quick_revenue_label = "quarterly revenue"
+    else:
+        home_history = home_data.get("history", [])
+        prior_revenue = (
+            home_history[-2].get("revenue")
+            if len(home_history) >= 2 else None
+        )
+        quick_growth = calc_growth(home_data.get("revenue"), prior_revenue)
+        quick_margin = calc_margin(home_data.get("operating_income"), home_data.get("revenue"))
+        quick_period = f"FY{home_data.get('fiscal_year', '')}"
+        quick_revenue_label = "annual revenue"
+
+    if quick_growth is None:
+        growth_read = "Revenue growth is not yet standardized for this reporting view."
+    elif quick_growth > 0:
+        growth_read = f"{quick_revenue_label.capitalize()} increased {quick_growth:.1f}% year over year."
+    elif quick_growth < 0:
+        growth_read = f"{quick_revenue_label.capitalize()} decreased {abs(quick_growth):.1f}% year over year."
+    else:
+        growth_read = f"{quick_revenue_label.capitalize()} was essentially unchanged year over year."
+
+    if quick_margin is None:
+        margin_read = "Operating margin is not yet available for this reporting view."
+    elif quick_margin >= 0:
+        margin_read = f"GAAP operating margin was {quick_margin:.1f}%."
+    else:
+        margin_read = f"GAAP operating margin was {quick_margin:.1f}%, meaning the company remained operating-loss making on a GAAP basis."
+
+    st.markdown(
+        f"""
+        <div class="el-quick-read">
+            <div class="el-quick-read-kicker">Quick read · {quick_period}</div>
+            <div class="el-quick-read-title">What the numbers are telling you</div>
+            <div class="el-quick-read-copy">
+                {home_analysis.get('business_model', 'Business-model context is being prepared.')}
+                {growth_read} {margin_read}
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
     source_url = home_qdata.get("source_filing") or home_data.get("filing_url")
     if source_url:
         st.link_button("Open latest supporting SEC filing", source_url)
@@ -1267,6 +1479,26 @@ with home_tab:
     st.caption(
         "Continue in Explore Companies for an S-1-focused view of how the company described its business, "
         "strategy, market opportunity, and risks when it prepared to go public."
+    )
+
+    st.markdown(
+        """
+        <div class="el-next-grid">
+            <div class="el-next-card">
+                <div class="el-next-title">Want the company story?</div>
+                <div class="el-next-copy">Open Explore Companies to read the business model, market opportunity, competition, and risks from the S-1.</div>
+            </div>
+            <div class="el-next-card">
+                <div class="el-next-title">Want context?</div>
+                <div class="el-next-copy">Open Industry Comparison to see whether the company's growth, margins, and capital structure differ from selected peers.</div>
+            </div>
+            <div class="el-next-card">
+                <div class="el-next-title">Have a specific question?</div>
+                <div class="el-next-copy">Open EquityLens AI and ask about a filing, trend, risk, or business-model detail in plain English.</div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
     )
 
     st.markdown(
