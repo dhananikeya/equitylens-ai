@@ -7,6 +7,7 @@
 # company names, and trademarks remain subject to their respective rights and terms.
 
 import json
+import io
 import requests
 import pandas as pd
 import plotly.graph_objects as go
@@ -1026,6 +1027,113 @@ def get_live_market_data(symbols):
     }
 
 
+@st.cache_data(ttl=60)
+def get_finviz_screener_data():
+    export_url = st.secrets.get("FINVIZ_EXPORT_URL")
+
+    if not export_url:
+        raise ValueError("FINVIZ_EXPORT_URL is not configured.")
+
+    response = requests.get(
+        str(export_url),
+        headers={"User-Agent": "EquityLens/1.0"},
+        timeout=30
+    )
+    response.raise_for_status()
+
+    payload = response.text.strip()
+    if not payload:
+        raise ValueError("Finviz returned an empty response.")
+
+    if payload[:200].lower().find("<html") >= 0 or payload[:200].lower().find("<!doctype") >= 0:
+        raise ValueError(
+            "Finviz did not return CSV data. Check the Elite export/API URL stored in Streamlit Secrets."
+        )
+
+    data = pd.read_csv(io.StringIO(payload))
+    if data.empty:
+        raise ValueError("Finviz returned no screener rows.")
+
+    return data
+
+
+def find_finviz_column(dataframe, candidates):
+    lookup = {
+        str(column).strip().lower(): column
+        for column in dataframe.columns
+    }
+    for candidate in candidates:
+        match = lookup.get(candidate.strip().lower())
+        if match is not None:
+            return match
+    return None
+
+
+def normalize_finviz_screener(dataframe):
+    if dataframe is None or dataframe.empty:
+        return pd.DataFrame()
+
+    field_map = {
+        "Ticker": ["Ticker", "Symbol"],
+        "Company": ["Company", "Company Name"],
+        "Sector": ["Sector"],
+        "Industry": ["Industry"],
+        "Market Cap": ["Market Cap", "Market Cap."],
+        "P/E": ["P/E", "PE"],
+        "Price": ["Price"],
+        "Change": ["Change", "Change %"],
+        "Volume": ["Volume", "Current Volume"],
+        "Relative Volume": ["Relative Volume", "Rel Volume", "Rel Volume 20D"],
+        "Perf Week": ["Perf Week", "Performance Week", "Performance 1 Week"],
+        "Perf Month": ["Perf Month", "Performance Month", "Performance 1 Month"],
+        "Earnings": ["Earnings", "Earnings Date"]
+    }
+
+    normalized = pd.DataFrame(index=dataframe.index)
+
+    for target, candidates in field_map.items():
+        source = find_finviz_column(dataframe, candidates)
+        if source is not None:
+            normalized[target] = dataframe[source]
+
+    if "Ticker" not in normalized.columns:
+        raise ValueError(
+            "The Finviz export does not include a Ticker/Symbol column."
+        )
+
+    normalized["Ticker"] = normalized["Ticker"].astype(str).str.upper().str.strip()
+    return normalized
+
+
+def finviz_numeric(value):
+    if value is None or pd.isna(value):
+        return None
+
+    text = str(value).strip().replace(",", "").replace("%", "")
+    if not text or text in {"-", "N/A", "nan"}:
+        return None
+
+    multiplier = 1.0
+    suffix = text[-1:].upper()
+    if suffix == "K":
+        multiplier = 1_000.0
+        text = text[:-1]
+    elif suffix == "M":
+        multiplier = 1_000_000.0
+        text = text[:-1]
+    elif suffix == "B":
+        multiplier = 1_000_000_000.0
+        text = text[:-1]
+    elif suffix == "T":
+        multiplier = 1_000_000_000_000.0
+        text = text[:-1]
+
+    try:
+        return float(text) * multiplier
+    except ValueError:
+        return None
+
+
 @st.cache_data(ttl=900)
 def get_market_history(symbol, interval="1day", outputsize=60):
     api_key = st.secrets.get(
@@ -1251,6 +1359,10 @@ sec_filings = load_json("data/sec_filings.json")
 
 public_market_data_enabled = bool(
     st.secrets.get("PUBLIC_MARKET_DATA_ENABLED", False)
+)
+
+public_finviz_data_enabled = bool(
+    st.secrets.get("PUBLIC_FINVIZ_DATA_ENABLED", False)
 )
 
 industries = sorted({
@@ -2617,12 +2729,12 @@ with market_tab:
             if st.session_state.get("market_monitor_loaded", False):
                 get_live_market_data.clear()
                 get_market_history.clear()
+                get_finviz_screener_data.clear()
             st.session_state.market_monitor_loaded = True
 
-    if not public_market_data_enabled:
+    if not public_market_data_enabled and not public_finviz_data_enabled:
         st.info(
-            "Market monitoring is built into EquityLens but market-price display is not currently enabled "
-            "for this public deployment."
+            "Market monitoring is built into EquityLens, but no public market-data source is currently enabled."
         )
     elif not st.session_state.get("market_monitor_loaded", False):
         st.caption(
@@ -2637,17 +2749,28 @@ with market_tab:
 
         industry_market = {}
         benchmark_market = {}
+        finviz_market = pd.DataFrame()
 
-        try:
-            industry_market = get_live_market_data(industry_symbols)
-        except Exception as exc:
-            st.warning("Covered-company market data is temporarily unavailable.")
-            st.caption(str(exc))
+        if public_market_data_enabled:
+            try:
+                industry_market = get_live_market_data(industry_symbols)
+            except Exception as exc:
+                st.warning("Historical-chart market data is temporarily unavailable.")
+                st.caption(str(exc))
 
-        try:
-            benchmark_market = get_live_market_data(["SPY", "QQQ"])
-        except Exception:
-            benchmark_market = {}
+            try:
+                benchmark_market = get_live_market_data(["SPY", "QQQ"])
+            except Exception:
+                benchmark_market = {}
+
+        if public_finviz_data_enabled:
+            try:
+                finviz_market = normalize_finviz_screener(
+                    get_finviz_screener_data()
+                )
+            except Exception as exc:
+                st.warning("Finviz screener data is temporarily unavailable.")
+                st.caption(str(exc))
 
         section("Pulse", "Market Snapshot")
 
@@ -2729,6 +2852,82 @@ with market_tab:
                 use_container_width=True,
                 hide_index=True
             )
+
+        if public_finviz_data_enabled:
+            section("Screener", "Finviz Market Intelligence")
+
+            if not finviz_market.empty:
+                covered_finviz = finviz_market[
+                    finviz_market["Ticker"].isin(industry_symbols)
+                ].copy()
+
+                finviz_controls = st.columns(2)
+                with finviz_controls[0]:
+                    min_relative_volume = st.number_input(
+                        "Minimum relative volume",
+                        min_value=0.0,
+                        value=0.0,
+                        step=0.1,
+                        key="finviz_min_relative_volume"
+                    )
+                with finviz_controls[1]:
+                    min_abs_change = st.number_input(
+                        "Minimum absolute daily move (%)",
+                        min_value=0.0,
+                        value=0.0,
+                        step=0.5,
+                        key="finviz_min_abs_change"
+                    )
+
+                if "Relative Volume" in covered_finviz.columns and min_relative_volume > 0:
+                    rel_values = covered_finviz["Relative Volume"].apply(finviz_numeric)
+                    covered_finviz = covered_finviz[
+                        rel_values.fillna(-1) >= min_relative_volume
+                    ]
+
+                if "Change" in covered_finviz.columns and min_abs_change > 0:
+                    change_values = covered_finviz["Change"].apply(finviz_numeric)
+                    covered_finviz = covered_finviz[
+                        change_values.abs().fillna(-1) >= min_abs_change
+                    ]
+
+                preferred_columns = [
+                    "Ticker",
+                    "Company",
+                    "Price",
+                    "Change",
+                    "Volume",
+                    "Relative Volume",
+                    "Market Cap",
+                    "P/E",
+                    "Perf Week",
+                    "Perf Month",
+                    "Earnings"
+                ]
+                visible_columns = [
+                    column for column in preferred_columns
+                    if column in covered_finviz.columns
+                ]
+
+                if not covered_finviz.empty:
+                    st.dataframe(
+                        covered_finviz[visible_columns],
+                        use_container_width=True,
+                        hide_index=True
+                    )
+                else:
+                    st.caption(
+                        "No covered companies match the current Finviz screener filters."
+                    )
+
+                st.caption(
+                    "Finviz supplies the screener snapshot. EquityLens keeps SEC-reported fundamentals "
+                    "and filing research separate from market-screening fields."
+                )
+            else:
+                st.caption(
+                    "Finviz is enabled, but the current export did not return usable screener rows."
+                )
 
         notable_rows = [
             row for row in market_rows
@@ -3004,7 +3203,8 @@ with market_tab:
 
         st.markdown(
             '<div class="el-market-source">Market data: connected market-data provider · '
-            'Company disclosures: SEC EDGAR · Prices and filings may update on different schedules.</div>',
+            'Finviz screener: configured when enabled · Company disclosures: SEC EDGAR · '
+            'Prices, screener fields, historical charts, and filings may update on different schedules.</div>',
             unsafe_allow_html=True
         )
 
