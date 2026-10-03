@@ -435,26 +435,26 @@ st.markdown(
     }
 
     .el-trust-item {
-        min-height: 64px;
+        min-height: 68px;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: .9rem 1rem;
+        padding: .95rem 1.05rem;
         text-align: center;
-        font-size: .84rem;
+        font-size: .86rem;
         font-weight: 600;
-        color: color-mix(in srgb, var(--el-text) 84%, transparent);
-        border: 1px solid color-mix(in srgb, var(--el-teal) 30%, var(--el-border));
+        color: var(--el-text);
+        border: 1.5px solid color-mix(in srgb, var(--el-teal) 62%, var(--el-border));
         border-radius: 12px;
         background:
             linear-gradient(
                 180deg,
-                color-mix(in srgb, var(--el-surface) 96%, transparent),
-                color-mix(in srgb, var(--el-surface-2) 92%, transparent)
+                color-mix(in srgb, var(--el-surface) 98%, transparent),
+                color-mix(in srgb, var(--el-teal) 5%, var(--el-surface-2))
             );
         box-shadow:
-            inset 0 1px 0 color-mix(in srgb, var(--el-text) 6%, transparent),
-            0 8px 22px rgba(0, 0, 0, .07);
+            inset 0 1px 0 color-mix(in srgb, var(--el-text) 8%, transparent),
+            0 10px 24px rgba(0, 0, 0, .10);
     }
 
     .el-feature-grid {
