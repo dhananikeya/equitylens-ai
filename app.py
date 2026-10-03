@@ -1203,7 +1203,7 @@ st.markdown(
             <span class="el-badge">SEC EDGAR sourced</span>
             <span class="el-badge">Calculations shown</span>
             <span class="el-badge">Direct filing links</span>
-            <span class="el-badge">No investment recommendations</span>
+            <span class="el-badge">Period-aware research</span>
         </div>
     </div>
     """,
@@ -2192,8 +2192,8 @@ with company_tab:
 
         section("EquityLens AI", "Generate an S-1 Research Brief")
         st.caption(
-            "This AI brief is grounded only in the S-1 research currently stored for this company. "
-            "It is historical filing analysis, not an investment recommendation."
+            "This AI brief is grounded only in the S-1 research currently stored for this company "
+            "and reflects historical IPO-era filing context."
         )
 
         if get_openai_client() is None:
@@ -2465,8 +2465,8 @@ with research_tab:
         )
 
     st.caption(
-        "EquityLens separates reported figures from calculated metrics and research summaries. "
-        "This page is designed to organize public information, not to rank securities or make investment recommendations."
+        "EquityLens separates reported figures from calculated metrics and research summaries, "
+        "with direct links back to the underlying SEC sources."
     )
 
 
@@ -2707,7 +2707,7 @@ with learn_tab:
         "These external videos are included as supplemental education from established investors, "
         "finance educators, and primary creators. EquityLens links to the original uploader and does "
         "not reproduce or claim ownership of their content. Inclusion is not an endorsement of every "
-        "view expressed in a video, and the videos should not be treated as personalized investment advice."
+        "view expressed in a video; they are included as supplemental educational resources."
     )
 
     video_resources = [
@@ -2781,7 +2781,6 @@ st.markdown(
             <div class="el-evidence-title">Evidence first. Judgment stays with you.</div>
             <div class="el-evidence-copy">Source it. Show the math. Show the date. Show the uncertainty.</div>
         </div>
-        <div class="el-evidence-note"><span>◇</span> Research assistance, never investment advice</div>
     </div>
     """,
     unsafe_allow_html=True
