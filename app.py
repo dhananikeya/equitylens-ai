@@ -1210,6 +1210,169 @@ def load_json(path):
         return json.load(file)
 
 
+SEC_REQUEST_HEADERS = {
+    "User-Agent": "EquityLens AI research app dhananikeya@gmail.com",
+    "From": "dhananikeya@gmail.com",
+    "Accept": "application/json",
+}
+
+
+@st.cache_data(ttl=86400)
+def get_sec_ticker_directory():
+    response = requests.get(
+        "https://www.sec.gov/files/company_tickers.json",
+        headers=SEC_REQUEST_HEADERS,
+        timeout=30
+    )
+    response.raise_for_status()
+    payload = response.json()
+
+    directory = {}
+    for row in payload.values():
+        ticker = str(row.get("ticker", "")).upper().strip()
+        if ticker:
+            directory[ticker] = {
+                "cik": str(row.get("cik_str", "")).zfill(10),
+                "title": row.get("title", "")
+            }
+    return directory
+
+
+def sec_filing_url(cik, accession, primary_document):
+    if not cik or not accession or not primary_document:
+        return ""
+    return (
+        "https://www.sec.gov/Archives/edgar/data/"
+        + str(int(cik))
+        + "/"
+        + str(accession).replace("-", "")
+        + "/"
+        + str(primary_document)
+    )
+
+
+def sec_rows_from_recent(recent, cik):
+    forms = recent.get("form", []) if isinstance(recent, dict) else []
+    rows = []
+
+    def value(field, index, default=""):
+        values = recent.get(field, []) if isinstance(recent, dict) else []
+        return values[index] if index < len(values) else default
+
+    for index, form in enumerate(forms):
+        accession = value("accessionNumber", index)
+        primary_document = value("primaryDocument", index)
+        rows.append({
+            "form": form,
+            "filing_date": value("filingDate", index),
+            "report_date": value("reportDate", index),
+            "accession_number": accession,
+            "primary_document": primary_document,
+            "description": value("primaryDocDescription", index),
+            "items": value("items", index),
+            "url": sec_filing_url(cik, accession, primary_document)
+        })
+
+    return rows
+
+
+@st.cache_data(ttl=900)
+def get_sec_company_research(ticker):
+    ticker = str(ticker).upper().strip()
+    directory = get_sec_ticker_directory()
+    ticker_record = directory.get(ticker)
+
+    if not ticker_record:
+        return {
+            "ticker": ticker,
+            "cik": "",
+            "entity_name": "",
+            "filings": [],
+            "registration_filings": [],
+            "sec_company_url": "",
+            "status": "Ticker not resolved in SEC directory"
+        }
+
+    cik = ticker_record["cik"]
+    response = requests.get(
+        f"https://data.sec.gov/submissions/CIK{cik}.json",
+        headers=SEC_REQUEST_HEADERS,
+        timeout=30
+    )
+    response.raise_for_status()
+    submissions = response.json()
+
+    recent = submissions.get("filings", {}).get("recent", {})
+    recent_rows = sec_rows_from_recent(recent, cik)
+
+    registration_forms = {
+        "S-1", "S-1/A",
+        "F-1", "F-1/A",
+        "S-11", "S-11/A"
+    }
+    registration_rows = [
+        row for row in recent_rows
+        if row.get("form") in registration_forms
+    ]
+
+    if not registration_rows:
+        history_files = submissions.get("filings", {}).get("files", []) or []
+        for history_file in history_files[:3]:
+            history_name = history_file.get("name")
+            if not history_name:
+                continue
+            history_response = requests.get(
+                "https://data.sec.gov/submissions/" + history_name,
+                headers=SEC_REQUEST_HEADERS,
+                timeout=30
+            )
+            history_response.raise_for_status()
+            historical_rows = sec_rows_from_recent(
+                history_response.json(),
+                cik
+            )
+            registration_rows.extend(
+                row for row in historical_rows
+                if row.get("form") in registration_forms
+            )
+            if registration_rows:
+                break
+
+    seen_accessions = set()
+    registration_unique = []
+    for row in registration_rows:
+        accession = row.get("accession_number")
+        if accession and accession in seen_accessions:
+            continue
+        if accession:
+            seen_accessions.add(accession)
+        registration_unique.append(row)
+
+    return {
+        "ticker": ticker,
+        "cik": cik,
+        "entity_name": submissions.get(
+            "name",
+            ticker_record.get("title", "")
+        ),
+        "filings": recent_rows[:40],
+        "registration_filings": registration_unique,
+        "sec_company_url": (
+            "https://www.sec.gov/edgar/browse/"
+            + f"?CIK={int(cik)}&owner=exclude&action=getcompany"
+        ),
+        "status": "available"
+    }
+
+
+def latest_filing_by_forms(filings, forms):
+    wanted_forms = set(forms)
+    for filing in filings:
+        if filing.get("form") in wanted_forms:
+            return filing
+    return {}
+
+
 @st.cache_data(ttl=300)
 def get_live_market_data(symbols):
     """Fetch current-ish quote data from Yahoo Finance via yfinance."""
@@ -2271,133 +2434,319 @@ with home_tab:
 
     section("Interactive preview", "See the research, not just the promise.")
 
+    preview_industries = sorted(
+        [
+            value for value in company_universe["Industry"].dropna().unique().tolist()
+            if value
+        ]
+    )
+
     home_industry = st.selectbox(
         "Choose industry",
-        industries,
+        preview_industries,
         key="home_industry"
     )
 
-    home_industry_companies = [
-        name for name, company in company_data.items()
-        if company.get("industry", "Unclassified") == home_industry
-    ]
+    home_company_df = company_universe[
+        company_universe["Industry"] == home_industry
+    ].copy()
 
     st.caption(
-        f"{len(home_industry_companies)} covered compan"
-        f"{'y' if len(home_industry_companies) == 1 else 'ies'} in {home_industry}."
+        f"{len(home_company_df):,} companies in {home_industry} · "
+        f"{len(company_universe):,} companies available across EquityLens."
     )
 
     home_company = st.selectbox(
         "Choose company",
-        home_industry_companies,
-        format_func=lambda name: (
-            f"{company_data[name].get('ticker', '')} · {name.split(' (')[0]}"
+        home_company_df["Coverage Key"].tolist(),
+        format_func=lambda key: (
+            key.split(" (")[-1].rstrip(")")
+            + " · "
+            + key.rsplit(" (", 1)[0]
         ),
         key="home_company"
     )
 
-    home_data = company_data[home_company]
-    home_analysis = company_analysis.get(home_company, {})
-    home_qdata = company_quarterly.get(home_company, {})
-    home_qm = quarterly_metrics(home_qdata)
-    home_latest = home_qdata.get("latest_quarter", {})
-    home_ticker = home_data.get("ticker", "")
-    home_name = home_company.split(" (")[0]
+    home_row = home_company_df[
+        home_company_df["Coverage Key"] == home_company
+    ].iloc[0]
+
+    home_ticker = str(home_row.get("Ticker", ""))
+    home_name = str(home_row.get("Company", ""))
+    home_sector = str(home_row.get("Sector", ""))
+    home_country = str(home_row.get("Country", ""))
+
+    deep_company = next(
+        (
+            company_name
+            for company_name, company in company_data.items()
+            if str(company.get("ticker", "")).upper() == home_ticker
+        ),
+        None
+    )
+
+    deep_data = company_data.get(deep_company, {}) if deep_company else {}
+    deep_analysis = company_analysis.get(deep_company, {}) if deep_company else {}
+    deep_qdata = company_quarterly.get(deep_company, {}) if deep_company else {}
+    deep_qm = quarterly_metrics(deep_qdata) if deep_company else {}
+    deep_latest = deep_qdata.get("latest_quarter", {}) if deep_company else {}
+
+    if deep_company:
+        preview_description = deep_analysis.get(
+            "business_model",
+            "Structured company research is available from EquityLens."
+        )
+        coverage_badge = "Deep research + SEC"
+    else:
+        preview_description = (
+            f"{home_name} is covered in the {home_industry} industry within "
+            f"{home_sector}. EquityLens combines market context with primary-source "
+            "SEC filing access for this broader coverage universe."
+        )
+        coverage_badge = "Market + SEC coverage"
 
     st.markdown(
         f"""
         <div class="el-company-hero">
-            <div class="el-kicker">{home_ticker} · {home_data.get('industry', 'Unclassified')}</div>
+            <div class="el-kicker">{home_ticker} · {home_industry}</div>
             <div class="el-company-title">{home_name}</div>
-            <p class="el-subtitle">{home_analysis.get('business_model', 'Company research is being prepared.')}</p>
+            <p class="el-subtitle">{preview_description}</p>
             <div class="el-badges">
-                <span class="el-badge">{home_qdata.get('quarter_label', 'Latest quarter')}</span>
-                <span class="el-badge">{home_data.get('source', 'SEC filing')} sourced</span>
+                <span class="el-badge">{home_sector}</span>
+                <span class="el-badge">{home_country}</span>
+                <span class="el-badge">{coverage_badge}</span>
             </div>
         </div>
         """,
         unsafe_allow_html=True
     )
 
-    home_metrics = st.columns(4)
-    if home_latest.get("revenue") is not None:
-        home_metrics[0].metric("Quarter Revenue", format_money(home_latest.get("revenue")))
-        home_metrics[1].metric("YoY Growth", pct(home_qm.get("yoy_growth")))
-        home_metrics[2].metric("Operating Margin", pct(home_qm.get("operating_margin")))
+    if deep_company:
+        home_metrics = st.columns(4)
+        if deep_latest.get("revenue") is not None:
+            home_metrics[0].metric(
+                "Quarter Revenue",
+                format_money(deep_latest.get("revenue"))
+            )
+            home_metrics[1].metric(
+                "YoY Growth",
+                pct(deep_qm.get("yoy_growth"))
+            )
+            home_metrics[2].metric(
+                "Operating Margin",
+                pct(deep_qm.get("operating_margin"))
+            )
+        else:
+            home_metrics[0].metric(
+                "Fiscal Year Revenue",
+                format_money(deep_data.get("revenue"))
+            )
+            deep_history = deep_data.get("history", [])
+            deep_prior_revenue = (
+                deep_history[-2].get("revenue")
+                if len(deep_history) >= 2 else None
+            )
+            home_metrics[1].metric(
+                "Revenue Growth",
+                pct(
+                    calc_growth(
+                        deep_data.get("revenue"),
+                        deep_prior_revenue
+                    )
+                )
+            )
+            home_metrics[2].metric(
+                "Operating Margin",
+                pct(
+                    calc_margin(
+                        deep_data.get("operating_income"),
+                        deep_data.get("revenue")
+                    )
+                )
+            )
+        home_metrics[3].metric(
+            "Cash + Investments",
+            format_money(
+                deep_data.get(
+                    "capital_structure",
+                    {}
+                ).get("cash_and_investments")
+            )
+        )
     else:
-        home_metrics[0].metric("Fiscal Year Revenue", format_money(home_data.get("revenue")))
-        home_metrics[1].metric(
-            "Revenue Growth",
-            pct(
-                calc_growth(
-                    home_data.get("revenue"),
-                    home_data.get("history", [{}])[-2].get("revenue")
-                    if len(home_data.get("history", [])) >= 2 else None
+        preview_metrics = st.columns(4)
+        csv_price = finviz_numeric(home_row.get("Price"))
+        csv_change = finviz_numeric(home_row.get("Change"))
+        csv_pe = finviz_numeric(home_row.get("P/E"))
+        csv_market_cap = finviz_numeric(home_row.get("Market Cap"))
+
+        preview_metrics[0].metric(
+            "Market Price",
+            ("$" + f"{csv_price:,.2f}") if csv_price is not None else "N/A",
+            f"{csv_change:+.2f}%" if csv_change is not None else None
+        )
+        preview_metrics[1].metric(
+            "P/E",
+            f"{csv_pe:.1f}x" if csv_pe is not None else "N/A"
+        )
+        preview_metrics[2].metric(
+            "Market Cap",
+            (
+                "$" + f"{csv_market_cap / 1_000_000:.2f}T"
+                if csv_market_cap is not None and csv_market_cap >= 1_000_000
+                else (
+                    "$" + f"{csv_market_cap / 1_000:.1f}B"
+                    if csv_market_cap is not None
+                    else "N/A"
                 )
             )
         )
-        home_metrics[2].metric(
-            "Operating Margin",
-            pct(calc_margin(home_data.get("operating_income"), home_data.get("revenue")))
+        preview_metrics[3].metric("Coverage", "SEC + Market")
+
+    section("Primary Research", f"{home_ticker} SEC Filing Research")
+
+    sec_research = {}
+    sec_error = None
+    try:
+        sec_research = get_sec_company_research(home_ticker)
+    except Exception:
+        sec_error = (
+            "SEC data is temporarily unavailable for this company. "
+            "The market-coverage record is still available."
         )
-    home_metrics[3].metric(
-        "Cash + Investments",
-        format_money(home_data.get("capital_structure", {}).get("cash_and_investments"))
-    )
 
-    if home_latest.get("revenue") is not None:
-        quick_growth = home_qm.get("yoy_growth")
-        quick_margin = home_qm.get("operating_margin")
-        quick_period = home_qdata.get("quarter_label", "latest reported quarter")
-        quick_revenue_label = "quarterly revenue"
+    if sec_error:
+        st.warning(sec_error)
     else:
-        home_history = home_data.get("history", [])
-        prior_revenue = (
-            home_history[-2].get("revenue")
-            if len(home_history) >= 2 else None
+        sec_filings_live = sec_research.get("filings", [])
+        annual_filing = latest_filing_by_forms(
+            sec_filings_live,
+            {"10-K", "10-K/A", "20-F", "20-F/A", "40-F", "40-F/A"}
         )
-        quick_growth = calc_growth(home_data.get("revenue"), prior_revenue)
-        quick_margin = calc_margin(home_data.get("operating_income"), home_data.get("revenue"))
-        quick_period = f"FY{home_data.get('fiscal_year', '')}"
-        quick_revenue_label = "annual revenue"
+        quarter_filing = latest_filing_by_forms(
+            sec_filings_live,
+            {"10-Q", "10-Q/A"}
+        )
+        current_filing = latest_filing_by_forms(
+            sec_filings_live,
+            {"8-K", "8-K/A", "6-K", "6-K/A"}
+        )
+        registration_filings = sec_research.get(
+            "registration_filings",
+            []
+        )
+        registration_filing = (
+            registration_filings[0]
+            if registration_filings
+            else {}
+        )
 
-    if quick_growth is None:
-        growth_read = "Revenue growth is not yet standardized for this reporting view."
-    elif quick_growth > 0:
-        growth_read = f"{quick_revenue_label.capitalize()} increased {quick_growth:.1f}% year over year."
-    elif quick_growth < 0:
-        growth_read = f"{quick_revenue_label.capitalize()} decreased {abs(quick_growth):.1f}% year over year."
-    else:
-        growth_read = f"{quick_revenue_label.capitalize()} was essentially unchanged year over year."
+        filing_metrics = st.columns(4)
+        filing_metrics[0].metric(
+            "Latest Annual",
+            annual_filing.get("form", "N/A"),
+            annual_filing.get("filing_date") or None
+        )
+        filing_metrics[1].metric(
+            "Latest Quarterly",
+            quarter_filing.get("form", "N/A"),
+            quarter_filing.get("filing_date") or None
+        )
+        filing_metrics[2].metric(
+            "Latest Current Report",
+            current_filing.get("form", "N/A"),
+            current_filing.get("filing_date") or None
+        )
+        filing_metrics[3].metric(
+            "IPO / Registration",
+            registration_filing.get("form", "Not found"),
+            registration_filing.get("filing_date") or None
+        )
 
-    if quick_margin is None:
-        margin_read = "Operating margin is not yet available for this reporting view."
-    elif quick_margin >= 0:
-        margin_read = f"GAAP operating margin was {quick_margin:.1f}%."
-    else:
-        margin_read = f"GAAP operating margin was {quick_margin:.1f}%, meaning the company remained operating-loss making on a GAAP basis."
+        if registration_filing:
+            st.markdown(
+                f"""
+                <div class="el-quick-read">
+                    <div class="el-quick-read-kicker">IPO-era source · {registration_filing.get('form', '')}</div>
+                    <div class="el-quick-read-title">Registration filing available</div>
+                    <div class="el-quick-read-copy">
+                        EquityLens found a registration filing for {home_name}. This primary source
+                        is where users can inspect the company's IPO-era business description,
+                        risk factors, financial history, ownership structure, use of proceeds,
+                        competition, and market opportunity as disclosed at the time.
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
-    st.markdown(
-        f"""
-        <div class="el-quick-read">
-            <div class="el-quick-read-kicker">Quick read · {quick_period}</div>
-            <div class="el-quick-read-title">What the numbers are telling you</div>
-            <div class="el-quick-read-copy">
-                {home_analysis.get('business_model', 'Business-model context is being prepared.')}
-                {growth_read} {margin_read}
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+            if registration_filing.get("url"):
+                st.link_button(
+                    f"Open {registration_filing.get('form')} on SEC EDGAR",
+                    registration_filing.get("url"),
+                    key="home_registration_link"
+                )
+        else:
+            st.caption(
+                "No S-1, F-1, or S-11 registration statement was found in the "
+                "SEC history scanned for this issuer. Older issuers may predate modern "
+                "EDGAR coverage or may have used a different registration path."
+            )
 
-    source_url = home_qdata.get("source_filing") or home_data.get("filing_url")
-    if source_url:
-        st.link_button("Open latest supporting SEC filing", source_url)
+        recent_research_rows = []
+        for filing in sec_filings_live[:12]:
+            recent_research_rows.append({
+                "Filed": filing.get("filing_date", ""),
+                "Form": filing.get("form", ""),
+                "Period": filing.get("report_date", ""),
+                "Description": (
+                    filing.get("description", "")
+                    or filing.get("primary_document", "")
+                ),
+                "SEC Filing": filing.get("url", "")
+            })
+
+        if recent_research_rows:
+            st.dataframe(
+                pd.DataFrame(recent_research_rows),
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "SEC Filing": st.column_config.LinkColumn(
+                        "SEC Filing",
+                        display_text="Open filing"
+                    )
+                }
+            )
+
+        sec_company_url = sec_research.get("sec_company_url", "")
+        if sec_company_url:
+            st.link_button(
+                "Open complete SEC company filing history",
+                sec_company_url,
+                key="home_sec_company_history"
+            )
+
+    if deep_company:
+        static_s1 = company_s1.get(deep_company, {})
+        if static_s1:
+            st.markdown(
+                f"""
+                <div class="el-quick-read">
+                    <div class="el-quick-read-kicker">EquityLens deep research</div>
+                    <div class="el-quick-read-title">What the IPO filing helps explain</div>
+                    <div class="el-quick-read-copy">
+                        {static_s1.get('what_to_learn', static_s1.get('historical_context', ''))}
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
     st.caption(
-        "Continue in Explore Companies for an S-1-focused view of how the company described its business, "
-        "strategy, market opportunity, and risks when it prepared to go public."
+        "The selector above uses the full 517-company coverage universe. SEC filing "
+        "research is resolved on demand from EDGAR, while the original deep-research "
+        "companies retain additional structured financial and narrative analysis."
     )
 
     st.markdown(
@@ -2405,7 +2754,7 @@ with home_tab:
         <div class="el-next-grid">
             <div class="el-next-card">
                 <div class="el-next-title">Want the company story?</div>
-                <div class="el-next-copy">Open Explore Companies to read the business model, market opportunity, competition, and risks from the S-1.</div>
+                <div class="el-next-copy">Use the SEC filing research above for primary-source documents. Deep-research companies also include structured business-model, market-opportunity, competition, and risk analysis.</div>
             </div>
             <div class="el-next-card">
                 <div class="el-next-title">Want context?</div>
