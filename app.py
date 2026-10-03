@@ -327,14 +327,130 @@ st.markdown(
         position: relative;
         overflow: hidden;
         padding: clamp(2rem, 5vw, 4.3rem);
+        padding-right: clamp(2rem, 34vw, 31rem);
         border: 1px solid var(--el-border);
         border-radius: 18px;
         background:
-            radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--el-blue) 20%, transparent), transparent 30%),
-            radial-gradient(circle at 12% 90%, color-mix(in srgb, var(--el-teal) 18%, transparent), transparent 32%),
-            linear-gradient(135deg, var(--el-surface), var(--el-surface-2));
-        box-shadow: 0 28px 80px rgba(0,0,0,0.18);
+            linear-gradient(90deg,
+                color-mix(in srgb, var(--el-surface) 98%, transparent) 0%,
+                color-mix(in srgb, var(--el-surface) 95%, transparent) 55%,
+                color-mix(in srgb, var(--el-surface-2) 90%, transparent) 100%);
+        box-shadow: 0 22px 65px rgba(0,0,0,0.15);
         margin-bottom: 1.2rem;
+        isolation: isolate;
+    }
+
+    .el-product-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 0 auto;
+        width: 42%;
+        z-index: -2;
+        opacity: .38;
+        background-image:
+            linear-gradient(color-mix(in srgb, var(--el-text) 7%, transparent) 1px, transparent 1px),
+            linear-gradient(90deg, color-mix(in srgb, var(--el-text) 7%, transparent) 1px, transparent 1px);
+        background-size: 30px 30px;
+        mask-image: linear-gradient(90deg, transparent 0%, black 38%, black 100%);
+        -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 38%, black 100%);
+    }
+
+    .el-product-hero::after {
+        content: "";
+        position: absolute;
+        width: 380px;
+        height: 380px;
+        right: -120px;
+        top: -150px;
+        z-index: -1;
+        border-radius: 50%;
+        background: radial-gradient(
+            circle,
+            color-mix(in srgb, var(--el-blue) 18%, transparent) 0%,
+            color-mix(in srgb, var(--el-teal) 8%, transparent) 38%,
+            transparent 72%
+        );
+        filter: blur(12px);
+    }
+
+    .el-hero-copy {
+        position: relative;
+        z-index: 2;
+    }
+
+    .el-hero-research {
+        position: absolute;
+        top: 50%;
+        right: clamp(1.4rem, 4vw, 4rem);
+        width: min(27vw, 360px);
+        transform: translateY(-50%);
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .el-research-label {
+        color: var(--el-muted);
+        font-size: .68rem;
+        font-weight: 600;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        margin-bottom: .65rem;
+    }
+
+    .el-research-panel {
+        border-left: 1px solid color-mix(in srgb, var(--el-teal) 38%, var(--el-border));
+        padding-left: 1rem;
+    }
+
+    .el-research-row {
+        display: grid;
+        grid-template-columns: 42px 1fr 54px;
+        align-items: center;
+        gap: .65rem;
+        padding: .68rem 0;
+        border-bottom: 1px solid color-mix(in srgb, var(--el-text) 10%, transparent);
+    }
+
+    .el-research-row:last-child {
+        border-bottom: 0;
+    }
+
+    .el-research-form {
+        color: var(--el-teal);
+        font-size: .76rem;
+        font-weight: 700;
+        letter-spacing: .04em;
+    }
+
+    .el-research-lines {
+        display: flex;
+        flex-direction: column;
+        gap: .28rem;
+    }
+
+    .el-research-lines span {
+        display: block;
+        height: 2px;
+        border-radius: 2px;
+        background: color-mix(in srgb, var(--el-text) 21%, transparent);
+    }
+
+    .el-research-lines span:nth-child(2) { width: 76%; }
+    .el-research-lines span:nth-child(3) { width: 54%; }
+
+    .el-research-state {
+        color: var(--el-muted);
+        font-size: .68rem;
+        text-align: right;
+    }
+
+    .el-research-foot {
+        display: flex;
+        justify-content: space-between;
+        gap: .75rem;
+        margin-top: .8rem;
+        color: color-mix(in srgb, var(--el-text) 52%, transparent);
+        font-size: .68rem;
     }
 
     .el-eyebrow {
@@ -501,6 +617,10 @@ st.markdown(
         .el-product-hero {
             padding: 1.4rem 1.15rem;
             border-radius: 12px;
+        }
+
+        .el-hero-research {
+            display: none;
         }
 
         .el-product-title {
@@ -971,18 +1091,45 @@ SUBGROUPS = {
 st.markdown(
     """
     <div class="el-product-hero">
-        <div class="el-eyebrow">EquityLens AI · Public-company research</div>
-        <h1 class="el-product-title">Understand public companies.<br><span>Without digging through hundreds of pages.</span></h1>
-        <p class="el-product-subtitle">
-            Explore financial performance, business models, risks, and SEC filings in one place.
-            EquityLens turns dense company disclosures into structured research while keeping the
-            underlying source visible. EquityLens informs. You decide.
-        </p>
-        <div class="el-badges">
-            <span class="el-badge">SEC EDGAR sourced</span>
-            <span class="el-badge">Calculations shown</span>
-            <span class="el-badge">Direct filing links</span>
-            <span class="el-badge">No investment recommendations</span>
+        <div class="el-hero-copy">
+            <div class="el-eyebrow">EquityLens AI · Public-company research</div>
+            <h1 class="el-product-title">Understand public companies.<br><span>Without digging through hundreds of pages.</span></h1>
+            <p class="el-product-subtitle">
+                Explore financial performance, business models, risks, and SEC filings in one place.
+                EquityLens turns dense company disclosures into structured research while keeping the
+                underlying source visible. EquityLens informs. You decide.
+            </p>
+            <div class="el-badges">
+                <span class="el-badge">SEC EDGAR sourced</span>
+                <span class="el-badge">Calculations shown</span>
+                <span class="el-badge">Direct filing links</span>
+                <span class="el-badge">No investment recommendations</span>
+            </div>
+        </div>
+
+        <div class="el-hero-research" aria-hidden="true">
+            <div class="el-research-label">Source-to-insight workflow</div>
+            <div class="el-research-panel">
+                <div class="el-research-row">
+                    <div class="el-research-form">S-1</div>
+                    <div class="el-research-lines"><span></span><span></span><span></span></div>
+                    <div class="el-research-state">Business</div>
+                </div>
+                <div class="el-research-row">
+                    <div class="el-research-form">10-K</div>
+                    <div class="el-research-lines"><span></span><span></span><span></span></div>
+                    <div class="el-research-state">Annual</div>
+                </div>
+                <div class="el-research-row">
+                    <div class="el-research-form">10-Q</div>
+                    <div class="el-research-lines"><span></span><span></span><span></span></div>
+                    <div class="el-research-state">Quarterly</div>
+                </div>
+            </div>
+            <div class="el-research-foot">
+                <span>SEC EDGAR</span>
+                <span>Structured research</span>
+            </div>
         </div>
     </div>
     """,
