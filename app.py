@@ -9,6 +9,7 @@
 import json
 import requests
 import pandas as pd
+import plotly.graph_objects as go
 import streamlit as st
 from supabase import create_client
 
@@ -591,6 +592,99 @@ p,li,label,input,textarea,button,
     font-size: .68rem;
 }
 
+/* Market Monitor */
+.el-market-hero {
+    margin: .9rem 0 1.25rem;
+    padding: 1.45rem 1.55rem;
+    border: 1px solid var(--el-border);
+    border-radius: 9px;
+    background:
+        radial-gradient(circle at 92% 12%, rgba(22,199,178,.07), transparent 32%),
+        #091217;
+}
+
+.el-market-hero-label {
+    color: var(--el-teal);
+    font-family: var(--el-mono);
+    font-size: .72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .045em;
+}
+
+.el-market-hero-title {
+    margin-top: .5rem;
+    color: var(--el-text);
+    font-size: 1.55rem;
+    font-weight: 600;
+    letter-spacing: -.028em;
+}
+
+.el-market-hero-copy {
+    margin-top: .55rem;
+    max-width: 900px;
+    color: var(--el-muted);
+    font-size: .9rem;
+    line-height: 1.65;
+}
+
+.el-move-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .75rem;
+    margin: .85rem 0 1.25rem;
+}
+
+.el-move-card {
+    padding: 1rem 1.05rem;
+    border: 1px solid var(--el-border);
+    border-radius: 9px;
+    background: #091217;
+}
+
+.el-move-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+}
+
+.el-move-ticker {
+    color: var(--el-text);
+    font-family: var(--el-mono);
+    font-weight: 600;
+}
+
+.el-move-change {
+    font-family: var(--el-mono);
+    font-weight: 600;
+}
+
+.el-move-change.positive { color: var(--el-teal); }
+.el-move-change.negative { color: var(--el-red); }
+
+.el-move-name {
+    margin-top: .45rem;
+    color: var(--el-muted);
+    font-size: .82rem;
+}
+
+.el-move-filing {
+    margin-top: .75rem;
+    padding-top: .7rem;
+    border-top: 1px solid var(--el-border);
+    color: var(--el-muted);
+    font-size: .76rem;
+    line-height: 1.5;
+}
+
+.el-market-source {
+    margin-top: .65rem;
+    color: var(--el-muted-2);
+    font-family: var(--el-mono);
+    font-size: .7rem;
+}
+
 /* Native Streamlit surfaces */
 div[data-testid="stMetric"] {
     background:#091217 !important;
@@ -750,7 +844,7 @@ hr {
 
 .el-intent-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: .75rem;
     margin: 1rem 0 1.6rem;
 }
@@ -867,6 +961,7 @@ hr {
     .el-next-grid { grid-template-columns:1fr; }
     .el-research-grid { grid-template-columns:1fr; }
     .el-research-panel.wide { grid-column:auto; }
+    .el-move-grid { grid-template-columns:1fr; }
     .el-evidence-strip { flex-direction:column; align-items:flex-start; }
     .el-evidence-note { white-space:normal; }
 }
@@ -929,6 +1024,86 @@ def get_live_market_data(symbols):
         for symbol in symbols
         if isinstance(body, dict)
     }
+
+
+@st.cache_data(ttl=900)
+def get_market_history(symbol, interval="1day", outputsize=60):
+    api_key = st.secrets.get(
+        "TWELVE_DATA_API_KEY",
+        st.secrets.get("FINIMPULSE_API_KEY")
+    )
+
+    if not api_key:
+        raise ValueError("Missing market-data API key.")
+
+    response = requests.get(
+        "https://api.twelvedata.com/time_series",
+        params={
+            "symbol": symbol,
+            "interval": interval,
+            "outputsize": outputsize,
+            "order": "ASC",
+            "apikey": api_key
+        },
+        timeout=20
+    )
+    response.raise_for_status()
+    body = response.json()
+
+    if isinstance(body, dict) and body.get("status") == "error":
+        raise ValueError(body.get("message", "Market-data API error"))
+
+    values = body.get("values", []) if isinstance(body, dict) else []
+    if not values:
+        return pd.DataFrame()
+
+    history = pd.DataFrame(values)
+    history["datetime"] = pd.to_datetime(history["datetime"], errors="coerce")
+    for column in ["open", "high", "low", "close", "volume"]:
+        if column in history.columns:
+            history[column] = pd.to_numeric(history[column], errors="coerce")
+
+    return history.dropna(subset=["datetime", "close"]).sort_values("datetime")
+
+
+def safe_float(value):
+    try:
+        if value in (None, ""):
+            return None
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def market_return(history, sessions):
+    if history is None or history.empty or len(history) <= sessions:
+        return None
+
+    latest = safe_float(history.iloc[-1].get("close"))
+    prior = safe_float(history.iloc[-(sessions + 1)].get("close"))
+
+    if latest is None or prior in (None, 0):
+        return None
+
+    return ((latest - prior) / prior) * 100
+
+
+def format_market_price(value):
+    number = safe_float(value)
+    return "$" + f"{number:,.2f}" if number is not None else "N/A"
+
+
+def format_market_volume(value):
+    number = safe_float(value)
+    if number is None:
+        return "N/A"
+    if number >= 1_000_000_000:
+        return f"{number / 1_000_000_000:.2f}B"
+    if number >= 1_000_000:
+        return f"{number / 1_000_000:.2f}M"
+    if number >= 1_000:
+        return f"{number / 1_000:.1f}K"
+    return f"{number:,.0f}"
 
 
 def format_money(value):
@@ -1188,11 +1363,12 @@ render_summary_cards([
     ("Monitoring", "Automatic SEC checks")
 ])
 
-home_tab, company_tab, peer_tab, research_tab, sec_tracker_tab, learn_tab = st.tabs([
+home_tab, company_tab, peer_tab, research_tab, market_tab, sec_tracker_tab, learn_tab = st.tabs([
     "Home",
     "Explore Companies",
     "Industry Comparison",
     "EquityLens",
+    "Market Monitor",
     "Filings",
     "Learn"
 ])
@@ -1223,6 +1399,11 @@ with home_tab:
                 <div class="el-intent-label">EquityLens</div>
                 <div class="el-intent-title">What should I understand first?</div>
                 <div class="el-intent-copy">Get a structured company brief covering performance, business model, risk themes, recent changes, and source links without using a chatbot.</div>
+            </div>
+            <div class="el-intent-card">
+                <div class="el-intent-label">Market Monitor</div>
+                <div class="el-intent-title">What is moving now?</div>
+                <div class="el-intent-copy">See prices, daily changes, volume, notable movement, and recent SEC filing context for covered companies.</div>
             </div>
             <div class="el-intent-card">
                 <div class="el-intent-label">Learn</div>
@@ -2379,6 +2560,453 @@ with research_tab:
         "EquityLens separates reported figures from calculated metrics and research summaries, "
         "with direct links back to the underlying SEC sources."
     )
+
+
+with market_tab:
+    section("Market", "Market Monitor")
+
+    st.markdown(
+        """
+        <div class="el-market-hero">
+            <div class="el-market-hero-label">Covered-company market context</div>
+            <div class="el-market-hero-title">See what is moving, then inspect the company behind it.</div>
+            <div class="el-market-hero-copy">
+                Monitor price changes and volume for EquityLens-covered companies, then place that movement
+                beside company fundamentals and recent SEC filings. Market movement and filing activity are
+                displayed together without assuming one caused the other.
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    market_industry = st.selectbox(
+        "Industry",
+        industries,
+        key="market_monitor_industry"
+    )
+
+    market_companies = [
+        name for name, data in company_data.items()
+        if data.get("industry", "Unclassified") == market_industry
+    ]
+
+    market_controls = st.columns([2, 1])
+    with market_controls[0]:
+        movement_threshold = st.slider(
+            "Notable movement threshold",
+            min_value=1.0,
+            max_value=10.0,
+            value=3.0,
+            step=0.5,
+            key="market_movement_threshold"
+        )
+
+    with market_controls[1]:
+        load_label = (
+            "Refresh market data"
+            if st.session_state.get("market_monitor_loaded", False)
+            else "Load market data"
+        )
+        if st.button(
+            load_label,
+            key="load_market_monitor",
+            type="primary",
+            use_container_width=True
+        ):
+            if st.session_state.get("market_monitor_loaded", False):
+                get_live_market_data.clear()
+                get_market_history.clear()
+            st.session_state.market_monitor_loaded = True
+
+    if not public_market_data_enabled:
+        st.info(
+            "Market monitoring is built into EquityLens but market-price display is not currently enabled "
+            "for this public deployment."
+        )
+    elif not st.session_state.get("market_monitor_loaded", False):
+        st.caption(
+            "Load market data to view current prices, movement, volume, selected-company charts, and filing context."
+        )
+    else:
+        industry_symbols = [
+            company_data[company].get("ticker")
+            for company in market_companies
+            if company_data[company].get("ticker")
+        ]
+
+        industry_market = {}
+        benchmark_market = {}
+
+        try:
+            industry_market = get_live_market_data(industry_symbols)
+        except Exception as exc:
+            st.warning("Covered-company market data is temporarily unavailable.")
+            st.caption(str(exc))
+
+        try:
+            benchmark_market = get_live_market_data(["SPY", "QQQ"])
+        except Exception:
+            benchmark_market = {}
+
+        section("Pulse", "Market Snapshot")
+
+        pulse_cols = st.columns(4)
+
+        spy = benchmark_market.get("SPY", {})
+        qqq = benchmark_market.get("QQQ", {})
+
+        spy_change = safe_float(spy.get("percent_change"))
+        qqq_change = safe_float(qqq.get("percent_change"))
+
+        pulse_cols[0].metric(
+            "S&P 500 proxy · SPY",
+            format_market_price(spy.get("close")),
+            f"{spy_change:+.2f}%" if spy_change is not None else None
+        )
+        pulse_cols[1].metric(
+            "Nasdaq-100 proxy · QQQ",
+            format_market_price(qqq.get("close")),
+            f"{qqq_change:+.2f}%" if qqq_change is not None else None
+        )
+
+        industry_changes = [
+            safe_float(industry_market.get(symbol, {}).get("percent_change"))
+            for symbol in industry_symbols
+        ]
+        industry_changes = [value for value in industry_changes if value is not None]
+
+        positive_count = sum(1 for value in industry_changes if value > 0)
+        median_change = (
+            float(pd.Series(industry_changes).median())
+            if industry_changes else None
+        )
+
+        pulse_cols[2].metric(
+            "Covered names positive",
+            f"{positive_count} / {len(industry_changes)}" if industry_changes else "N/A"
+        )
+        pulse_cols[3].metric(
+            "Industry median move",
+            f"{median_change:+.2f}%" if median_change is not None else "N/A"
+        )
+
+        st.caption(
+            "SPY and QQQ are shown as broad-market proxies. Market-data timing depends on the connected provider and plan."
+        )
+
+        section("Coverage", f"{market_industry} Market Board")
+
+        market_rows = []
+        for company in market_companies:
+            data = company_data[company]
+            ticker = data.get("ticker", "")
+            quote = industry_market.get(ticker, {})
+            price = safe_float(quote.get("close"))
+            change = safe_float(quote.get("percent_change"))
+            volume = safe_float(quote.get("volume"))
+            open_price = safe_float(quote.get("open"))
+            previous_close = safe_float(quote.get("previous_close"))
+
+            market_rows.append({
+                "Ticker": ticker,
+                "Company": company.split(" (")[0],
+                "Price": "$" + f"{price:,.2f}" if price is not None else "N/A",
+                "Today": f"{change:+.2f}%" if change is not None else "N/A",
+                "Volume": format_market_volume(volume),
+                "Open": "$" + f"{open_price:,.2f}" if open_price is not None else "N/A",
+                "Previous Close": (
+                    "$" + f"{previous_close:,.2f}"
+                    if previous_close is not None else "N/A"
+                ),
+                "_change": change
+            })
+
+        board_df = pd.DataFrame(market_rows)
+        if not board_df.empty:
+            st.dataframe(
+                board_df.drop(columns=["_change"]),
+                use_container_width=True,
+                hide_index=True
+            )
+
+        notable_rows = [
+            row for row in market_rows
+            if row["_change"] is not None
+            and abs(row["_change"]) >= movement_threshold
+        ]
+        notable_rows = sorted(
+            notable_rows,
+            key=lambda row: abs(row["_change"]),
+            reverse=True
+        )[:6]
+
+        section("Movement", f"Moves Beyond ±{movement_threshold:.1f}%")
+
+        if notable_rows:
+            movement_cards = []
+            for row in notable_rows:
+                company_key = next(
+                    (
+                        company for company in market_companies
+                        if company_data[company].get("ticker") == row["Ticker"]
+                    ),
+                    None
+                )
+
+                latest_filing = {}
+                if company_key:
+                    filings = sec_filings.get(company_key, {}).get("filings", [])
+                    if filings:
+                        latest_filing = filings[0]
+
+                filing_label = "No recent filing loaded"
+                if latest_filing:
+                    filing_label = (
+                        f"{latest_filing.get('form', 'SEC filing')} · "
+                        f"{latest_filing.get('filing_date', 'date unavailable')}"
+                    )
+
+                direction_class = "positive" if row["_change"] >= 0 else "negative"
+
+                movement_cards.append(
+                    f"""
+                    <div class="el-move-card">
+                        <div class="el-move-top">
+                            <div class="el-move-ticker">{row['Ticker']}</div>
+                            <div class="el-move-change {direction_class}">{row['_change']:+.2f}%</div>
+                        </div>
+                        <div class="el-move-name">{row['Company']}</div>
+                        <div class="el-move-filing">
+                            Recent SEC context: {filing_label}<br>
+                            Market movement shown without attributing a cause.
+                        </div>
+                    </div>
+                    """
+                )
+
+            st.markdown(
+                '<div class="el-move-grid">' + "".join(movement_cards) + "</div>",
+                unsafe_allow_html=True
+            )
+        else:
+            st.caption(
+                f"No covered {market_industry} company currently exceeds the selected "
+                f"±{movement_threshold:.1f}% movement threshold in the loaded snapshot."
+            )
+
+        section("Company View", "Market Context + Fundamentals")
+
+        selected_market_company = st.selectbox(
+            "Company",
+            market_companies,
+            format_func=lambda name: (
+                f"{company_data[name].get('ticker', '')} · {name.split(' (')[0]}"
+            ),
+            key="market_monitor_company"
+        )
+
+        selected_data = company_data[selected_market_company]
+        selected_qdata = company_quarterly.get(selected_market_company, {})
+        selected_qm = quarterly_metrics(selected_qdata)
+        selected_quote = industry_market.get(selected_data.get("ticker", ""), {})
+        selected_analysis = company_analysis.get(selected_market_company, {})
+        selected_ticker = selected_data.get("ticker", "")
+        selected_name = selected_market_company.split(" (")[0]
+
+        selected_price = safe_float(selected_quote.get("close"))
+        selected_change = safe_float(selected_quote.get("percent_change"))
+        selected_volume = safe_float(selected_quote.get("volume"))
+        selected_52 = selected_quote.get("fifty_two_week", {})
+        if not isinstance(selected_52, dict):
+            selected_52 = {}
+
+        selected_52_low = safe_float(selected_52.get("low"))
+        selected_52_high = safe_float(selected_52.get("high"))
+
+        market_detail_cols = st.columns(4)
+        market_detail_cols[0].metric(
+            f"{selected_ticker} Price",
+            "$" + f"{selected_price:,.2f}" if selected_price is not None else "N/A",
+            f"{selected_change:+.2f}%" if selected_change is not None else None
+        )
+        market_detail_cols[1].metric(
+            "Volume",
+            format_market_volume(selected_volume)
+        )
+        market_detail_cols[2].metric(
+            "52-week low",
+            "$" + f"{selected_52_low:,.2f}" if selected_52_low is not None else "N/A"
+        )
+        market_detail_cols[3].metric(
+            "52-week high",
+            "$" + f"{selected_52_high:,.2f}" if selected_52_high is not None else "N/A"
+        )
+
+        range_label = st.radio(
+            "Chart range",
+            ["1D", "5D", "1M", "6M", "1Y"],
+            index=2,
+            horizontal=True,
+            key="market_chart_range"
+        )
+
+        range_config = {
+            "1D": ("15min", 32),
+            "5D": ("1h", 40),
+            "1M": ("1day", 30),
+            "6M": ("1day", 126),
+            "1Y": ("1day", 252)
+        }
+        interval, outputsize = range_config[range_label]
+
+        selected_history = pd.DataFrame()
+        try:
+            selected_history = get_market_history(
+                selected_ticker,
+                interval=interval,
+                outputsize=outputsize
+            )
+        except Exception as exc:
+            st.caption(f"Historical price series unavailable for this range: {exc}")
+
+        if not selected_history.empty:
+            fig = go.Figure()
+            fig.add_trace(
+                go.Scatter(
+                    x=selected_history["datetime"],
+                    y=selected_history["close"],
+                    mode="lines",
+                    name=selected_ticker,
+                    line={"color": "#16C7B2", "width": 2}
+                )
+            )
+            fig.update_layout(
+                height=390,
+                margin={"l": 8, "r": 8, "t": 22, "b": 8},
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(0,0,0,0)",
+                font={"color": "#8F9CA6", "family": "IBM Plex Sans"},
+                hovermode="x unified",
+                showlegend=False,
+                xaxis={
+                    "showgrid": False,
+                    "zeroline": False,
+                    "title": None
+                },
+                yaxis={
+                    "gridcolor": "rgba(143,156,166,.12)",
+                    "zeroline": False,
+                    "title": None,
+                    "tickprefix": "$"
+                }
+            )
+            st.plotly_chart(
+                fig,
+                use_container_width=True,
+                config={"displayModeBar": False}
+            )
+
+        five_day_return = None
+        one_month_return = None
+        try:
+            daily_history = get_market_history(
+                selected_ticker,
+                interval="1day",
+                outputsize=35
+            )
+            five_day_return = market_return(daily_history, 5)
+            one_month_return = market_return(daily_history, 21)
+        except Exception:
+            daily_history = pd.DataFrame()
+
+        period_cols = st.columns(2)
+        period_cols[0].metric(
+            "5-session change",
+            f"{five_day_return:+.2f}%" if five_day_return is not None else "N/A"
+        )
+        period_cols[1].metric(
+            "Approx. 1-month change",
+            f"{one_month_return:+.2f}%" if one_month_return is not None else "N/A"
+        )
+
+        section("Fundamentals", "What Sits Behind the Price")
+
+        selected_latest = selected_qdata.get("latest_quarter", {})
+        if selected_latest.get("revenue") is not None:
+            fundamental_revenue = selected_latest.get("revenue")
+            fundamental_growth = selected_qm.get("yoy_growth")
+            fundamental_margin = selected_qm.get("operating_margin")
+            fundamental_period = selected_qdata.get("quarter_label", "Latest quarter")
+        else:
+            selected_history_fin = selected_data.get("history", [])
+            selected_prior_revenue = (
+                selected_history_fin[-2].get("revenue")
+                if len(selected_history_fin) >= 2 else None
+            )
+            fundamental_revenue = selected_data.get("revenue")
+            fundamental_growth = calc_growth(
+                selected_data.get("revenue"),
+                selected_prior_revenue
+            )
+            fundamental_margin = calc_margin(
+                selected_data.get("operating_income"),
+                selected_data.get("revenue")
+            )
+            fundamental_period = f"FY{selected_data.get('fiscal_year', '')}"
+
+        fundamentals_cols = st.columns(4)
+        fundamentals_cols[0].metric("Reported Revenue", format_money(fundamental_revenue))
+        fundamentals_cols[1].metric("Revenue Growth", pct(fundamental_growth))
+        fundamentals_cols[2].metric("Operating Margin", pct(fundamental_margin))
+        fundamentals_cols[3].metric("Reporting Period", fundamental_period)
+
+        st.markdown(
+            f"""
+            <div class="el-quick-read">
+                <div class="el-quick-read-kicker">Company context</div>
+                <div class="el-quick-read-title">{selected_name}</div>
+                <div class="el-quick-read-copy">
+                    {selected_analysis.get('business_model', 'Business-model context is being prepared.')}
+                    Market data above reflects a different clock from company financial reporting, so the
+                    reporting period remains visible beside the fundamentals.
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        section("Events", "Recent SEC Filing Context")
+
+        filing_rows = []
+        for filing in sec_filings.get(selected_market_company, {}).get("filings", [])[:6]:
+            filing_rows.append({
+                "Filed": filing.get("filing_date", ""),
+                "Form": filing.get("form", ""),
+                "Description": filing.get("description", "") or filing.get("primary_document", ""),
+                "SEC Filing": filing.get("url", "")
+            })
+
+        if filing_rows:
+            st.dataframe(
+                pd.DataFrame(filing_rows),
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "SEC Filing": st.column_config.LinkColumn(
+                        "SEC Filing",
+                        display_text="Open filing"
+                    )
+                }
+            )
+        else:
+            st.caption("Recent SEC filing context is not available for this company yet.")
+
+        st.markdown(
+            '<div class="el-market-source">Market data: connected market-data provider · '
+            'Company disclosures: SEC EDGAR · Prices and filings may update on different schedules.</div>',
+            unsafe_allow_html=True
+        )
 
 
 with sec_tracker_tab:
