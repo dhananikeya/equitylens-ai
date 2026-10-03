@@ -583,5 +583,278 @@
       "balance_sheet_as_of": "2025-12-31",
       "source_filing": "https://www.sec.gov/Archives/edgar/data/1660280/000166028026000005/tenb-20251231.htm"
     }
+  },
+  "Coinbase (COIN)": {
+    "ticker": "COIN",
+    "industry": "Fintech & Digital Finance",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1679788/000167978826000015/coin-20251231.htm",
+    "revenue": 7181325000,
+    "gross_profit": null,
+    "operating_income": 1435441000,
+    "net_income": 1260327000,
+    "cash": null,
+    "assets": 29671832000,
+    "history": [
+      {
+        "fiscal_year": 2023,
+        "revenue": 3108383000,
+        "operating_income": -161662000
+      },
+      {
+        "fiscal_year": 2024,
+        "revenue": 6564028000,
+        "operating_income": 2307160000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 7181325000,
+        "operating_income": 1435441000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": null,
+      "shares_as_of": "2025-12-31",
+      "total_debt": null,
+      "cash_and_investments": null,
+      "balance_sheet_as_of": "2025-12-31",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1679788/000167978826000015/coin-20251231.htm"
+    }
+  },
+  "Robinhood (HOOD)": {
+    "ticker": "HOOD",
+    "industry": "Fintech & Digital Finance",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000023/hood-20251231.htm",
+    "revenue": 4473000000,
+    "gross_profit": null,
+    "operating_income": null,
+    "net_income": 1883000000,
+    "cash": null,
+    "assets": null,
+    "history": [
+      {
+        "fiscal_year": 2023,
+        "revenue": 1865000000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2024,
+        "revenue": 2951000000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 4473000000,
+        "operating_income": null
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": null,
+      "shares_as_of": "2025-12-31",
+      "total_debt": null,
+      "cash_and_investments": null,
+      "balance_sheet_as_of": "2025-12-31",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000023/hood-20251231.htm"
+    }
+  },
+  "Affirm (AFRM)": {
+    "ticker": "AFRM",
+    "industry": "Fintech & Digital Finance",
+    "fiscal_year": 2026,
+    "fiscal_year_end": "2026-06-30",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1820953/000162828026059279/afrm-20260630.htm",
+    "revenue": 4261082000,
+    "gross_profit": null,
+    "operating_income": 416977000,
+    "net_income": 1929793000,
+    "cash": null,
+    "assets": null,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 2322999000,
+        "operating_income": -615847000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 3224412000,
+        "operating_income": -87273000
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 4261082000,
+        "operating_income": 416977000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": null,
+      "shares_as_of": "2026-06-30",
+      "total_debt": null,
+      "cash_and_investments": null,
+      "balance_sheet_as_of": "2026-06-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1820953/000162828026059279/afrm-20260630.htm"
+    }
+  },
+  "Block (XYZ)": {
+    "ticker": "XYZ",
+    "industry": "Fintech & Digital Finance",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1512673/000162828026012254/xyz-20251231.htm",
+    "revenue": 24193683000,
+    "gross_profit": 10359929000,
+    "operating_income": 1708406000,
+    "net_income": 1304210000,
+    "cash": null,
+    "assets": 39549887000,
+    "history": [
+      {
+        "fiscal_year": 2023,
+        "revenue": 21915623000,
+        "operating_income": -278839000
+      },
+      {
+        "fiscal_year": 2024,
+        "revenue": 24121053000,
+        "operating_income": 892327000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 24193683000,
+        "operating_income": 1708406000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": null,
+      "shares_as_of": "2025-12-31",
+      "total_debt": null,
+      "cash_and_investments": null,
+      "balance_sheet_as_of": "2025-12-31",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1512673/000162828026012254/xyz-20251231.htm"
+    }
+  },
+  "Toast (TOST)": {
+    "ticker": "TOST",
+    "industry": "Fintech & Digital Finance",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1650164/000165016426000057/tost-20251231.htm",
+    "revenue": 6153000000,
+    "gross_profit": 1593000000,
+    "operating_income": 292000000,
+    "net_income": 342000000,
+    "cash": null,
+    "assets": null,
+    "history": [
+      {
+        "fiscal_year": 2023,
+        "revenue": 3865000000,
+        "operating_income": -287000000
+      },
+      {
+        "fiscal_year": 2024,
+        "revenue": 4960000000,
+        "operating_income": 16000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 6153000000,
+        "operating_income": 292000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": null,
+      "shares_as_of": "2025-12-31",
+      "total_debt": null,
+      "cash_and_investments": null,
+      "balance_sheet_as_of": "2025-12-31",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1650164/000165016426000057/tost-20251231.htm"
+    }
+  },
+  "BILL Holdings (BILL)": {
+    "ticker": "BILL",
+    "industry": "Fintech & Digital Finance",
+    "fiscal_year": 2026,
+    "fiscal_year_end": "2026-06-30",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1786352/000162828026058238/bill-20260630.htm",
+    "revenue": 1653160000,
+    "gross_profit": 1337865000,
+    "operating_income": -73447000,
+    "net_income": -11241000,
+    "cash": 1031053000,
+    "assets": 10218139000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 1290172000,
+        "operating_income": -174164000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 1462570000,
+        "operating_income": -80602000
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 1653160000,
+        "operating_income": -73447000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": null,
+      "shares_as_of": "2026-06-30",
+      "total_debt": null,
+      "cash_and_investments": 1031053000,
+      "balance_sheet_as_of": "2026-06-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1786352/000162828026058238/bill-20260630.htm"
+    }
+  },
+  "Marqeta (MQ)": {
+    "ticker": "MQ",
+    "industry": "Fintech & Digital Finance",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1522540/000152254026000017/mq-20251231.htm",
+    "revenue": 624884000,
+    "gross_profit": 437272000,
+    "operating_income": null,
+    "net_income": -13925000,
+    "cash": null,
+    "assets": 1525033000,
+    "history": [
+      {
+        "fiscal_year": 2023,
+        "revenue": 676171000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2024,
+        "revenue": 506995000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 624884000,
+        "operating_income": null
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": null,
+      "shares_as_of": "2025-12-31",
+      "total_debt": null,
+      "cash_and_investments": null,
+      "balance_sheet_as_of": "2025-12-31",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1522540/000152254026000017/mq-20251231.htm"
+    }
   }
 }
