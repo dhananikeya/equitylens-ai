@@ -11,6 +11,7 @@ import io
 import html
 import requests
 import pandas as pd
+import yfinance as yf
 import plotly.graph_objects as go
 import streamlit as st
 from supabase import create_client
@@ -1211,33 +1212,53 @@ def load_json(path):
 
 @st.cache_data(ttl=300)
 def get_live_market_data(symbols):
-    api_key = st.secrets.get(
-        "TWELVE_DATA_API_KEY",
-        st.secrets.get("FINIMPULSE_API_KEY")
-    )
+    """Fetch current-ish quote data from Yahoo Finance via yfinance."""
+    symbols = [str(symbol).strip().upper() for symbol in symbols if symbol]
+    if not symbols:
+        return {}
 
-    if not api_key:
-        raise ValueError("Missing Twelve Data API key in Streamlit Secrets.")
+    quotes = {}
+    for symbol in symbols:
+        try:
+            history = yf.Ticker(symbol).history(
+                period="5d",
+                interval="1d",
+                auto_adjust=False
+            )
+        except Exception:
+            continue
 
-    response = requests.get(
-        "https://api.twelvedata.com/quote",
-        params={"symbol": ",".join(symbols), "apikey": api_key},
-        timeout=20
-    )
-    response.raise_for_status()
-    body = response.json()
+        if history is None or history.empty:
+            continue
 
-    if isinstance(body, dict) and body.get("status") == "error":
-        raise ValueError(body.get("message", "Twelve Data API error"))
+        history = history.dropna(subset=["Close"])
+        if history.empty:
+            continue
 
-    if len(symbols) == 1 and isinstance(body, dict) and body.get("symbol"):
-        body = {symbols[0]: body}
+        latest = history.iloc[-1]
+        previous_close = (
+            float(history.iloc[-2]["Close"])
+            if len(history) >= 2 and pd.notna(history.iloc[-2]["Close"])
+            else None
+        )
+        close = float(latest["Close"]) if pd.notna(latest.get("Close")) else None
+        open_price = float(latest["Open"]) if pd.notna(latest.get("Open")) else None
+        volume = float(latest["Volume"]) if pd.notna(latest.get("Volume")) else None
 
-    return {
-        symbol: body.get(symbol, {})
-        for symbol in symbols
-        if isinstance(body, dict)
-    }
+        percent_change = None
+        if close is not None and previous_close not in (None, 0):
+            percent_change = ((close - previous_close) / previous_close) * 100
+
+        quotes[symbol] = {
+            "symbol": symbol,
+            "close": close,
+            "open": open_price,
+            "previous_close": previous_close,
+            "percent_change": percent_change,
+            "volume": volume
+        }
+
+    return quotes
 
 
 @st.cache_data(ttl=120)
@@ -1383,42 +1404,64 @@ def finviz_numeric(value):
 
 @st.cache_data(ttl=900)
 def get_market_history(symbol, interval="1day", outputsize=60):
-    api_key = st.secrets.get(
-        "TWELVE_DATA_API_KEY",
-        st.secrets.get("FINIMPULSE_API_KEY")
+    """Fetch chart history from Yahoo Finance via yfinance."""
+    interval_map = {
+        "15min": "15m",
+        "1h": "1h",
+        "1day": "1d"
+    }
+    yf_interval = interval_map.get(interval, "1d")
+
+    if yf_interval == "15m":
+        period = "5d"
+    elif yf_interval == "1h":
+        period = "1mo"
+    elif outputsize <= 35:
+        period = "3mo"
+    elif outputsize <= 140:
+        period = "1y"
+    else:
+        period = "2y"
+
+    history = yf.Ticker(symbol).history(
+        period=period,
+        interval=yf_interval,
+        auto_adjust=False
     )
 
-    if not api_key:
-        raise ValueError("Missing market-data API key.")
-
-    response = requests.get(
-        "https://api.twelvedata.com/time_series",
-        params={
-            "symbol": symbol,
-            "interval": interval,
-            "outputsize": outputsize,
-            "order": "ASC",
-            "apikey": api_key
-        },
-        timeout=20
-    )
-    response.raise_for_status()
-    body = response.json()
-
-    if isinstance(body, dict) and body.get("status") == "error":
-        raise ValueError(body.get("message", "Market-data API error"))
-
-    values = body.get("values", []) if isinstance(body, dict) else []
-    if not values:
+    if history is None or history.empty:
         return pd.DataFrame()
 
-    history = pd.DataFrame(values)
-    history["datetime"] = pd.to_datetime(history["datetime"], errors="coerce")
+    history = history.reset_index()
+    datetime_column = "Datetime" if "Datetime" in history.columns else "Date"
+    history = history.rename(columns={
+        datetime_column: "datetime",
+        "Open": "open",
+        "High": "high",
+        "Low": "low",
+        "Close": "close",
+        "Volume": "volume"
+    })
+
+    wanted = [
+        column for column in
+        ["datetime", "open", "high", "low", "close", "volume"]
+        if column in history.columns
+    ]
+    history = history[wanted].copy()
+
+    if "datetime" in history.columns:
+        history["datetime"] = pd.to_datetime(history["datetime"], errors="coerce")
+
     for column in ["open", "high", "low", "close", "volume"]:
         if column in history.columns:
             history[column] = pd.to_numeric(history[column], errors="coerce")
 
-    return history.dropna(subset=["datetime", "close"]).sort_values("datetime")
+    history = history.dropna(subset=["datetime", "close"]).sort_values("datetime")
+    if outputsize and len(history) > outputsize:
+        history = history.tail(outputsize)
+
+    return history
 
 
 def market_provider_error(provider, exc):
@@ -1620,11 +1663,7 @@ company_quarterly = load_json("data/company_quarterly.json")
 company_s1 = load_json("data/company_s1.json")
 sec_filings = load_json("data/sec_filings.json")
 
-public_market_data_enabled = bool(
-    st.secrets.get("PUBLIC_MARKET_DATA_ENABLED", False)
-    or st.secrets.get("TWELVE_DATA_API_KEY")
-    or st.secrets.get("FINIMPULSE_API_KEY")
-)
+public_market_data_enabled = True
 
 public_finviz_data_enabled = bool(
     st.secrets.get("PUBLIC_FINVIZ_DATA_ENABLED", False)
@@ -3018,11 +3057,6 @@ with market_tab:
             if company_data[company].get("ticker")
         ]
 
-        # Twelve Data's Basic plan allows 8 API credits/minute.
-        # Reserve two quote credits for SPY/QQQ and cap the automatic
-        # covered-company quote batch at six symbols.
-        twelve_quote_symbols = industry_symbols[:6]
-
         industry_market = {}
         benchmark_market = {}
         finviz_market = pd.DataFrame()
@@ -3030,9 +3064,9 @@ with market_tab:
 
         if public_market_data_enabled:
             try:
-                industry_market = get_live_market_data(twelve_quote_symbols)
+                industry_market = get_live_market_data(industry_symbols)
             except Exception as exc:
-                st.warning(market_provider_error("Twelve Data", exc))
+                st.warning(market_provider_error("Yahoo Finance", exc))
 
             try:
                 benchmark_market = get_live_market_data(["SPY", "QQQ"])
@@ -3097,7 +3131,7 @@ with market_tab:
         )
 
         st.caption(
-            "SPY and QQQ are shown as broad-market proxies. Market-data timing depends on the connected provider and plan."
+            "SPY and QQQ are shown as broad-market proxies. Quote and chart data are provided through Yahoo Finance; NYSE ticker and heat-map data come from Finviz Elite."
         )
 
         if public_finviz_data_enabled:
@@ -3584,7 +3618,7 @@ with market_tab:
                 outputsize=outputsize
             )
         except Exception as exc:
-            st.caption(f"Historical price series unavailable for this range: {exc}")
+            st.caption("Historical price series is temporarily unavailable for this range.")
 
         if not selected_history.empty:
             fig = go.Figure()
