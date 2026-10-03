@@ -3,7 +3,7 @@
     "ticker": "MDB",
     "cik": "0001441816",
     "entity_name": "MongoDB, Inc.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "8-K",
@@ -361,12 +361,26 @@
     "ticker": "SNOW",
     "cik": "0001640147",
     "entity_name": "Snowflake Inc.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "4",
         "filing_date": "2026-10-02",
-        "acceptance_datetime": "2026-10-02T23:59:08.000Z",
+        "acceptance_datetime": "2026-10-03T04:00:09.000Z",
+        "report_date": "2026-10-02",
+        "accession_number": "0001433644-26-000017",
+        "primary_document": "xslF345X06/wk-form4_1790985606.xml",
+        "description": "FORM 4",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-03T00:05:24+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1640147/000143364426000017/xslF345X06/wk-form4_1790985606.xml"
+      },
+      {
+        "form": "4",
+        "filing_date": "2026-10-02",
+        "acceptance_datetime": "2026-10-03T03:59:08.000Z",
         "report_date": "2026-10-01",
         "accession_number": "0001979088-26-000022",
         "primary_document": "xslF345X06/wk-form4_1790985545.xml",
@@ -380,7 +394,7 @@
       {
         "form": "144",
         "filing_date": "2026-10-02",
-        "acceptance_datetime": "2026-10-02T20:40:06.000Z",
+        "acceptance_datetime": "2026-10-03T00:40:06.000Z",
         "report_date": "",
         "accession_number": "0001973251-26-000039",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -394,7 +408,7 @@
       {
         "form": "8-K",
         "filing_date": "2026-10-02",
-        "acceptance_datetime": "2026-10-02T20:06:31.000Z",
+        "acceptance_datetime": "2026-10-03T00:06:31.000Z",
         "report_date": "2026-09-28",
         "accession_number": "0001640147-26-000043",
         "primary_document": "snow-20260928.htm",
@@ -404,20 +418,6 @@
         "is_inline_xbrl": 1,
         "first_seen_utc": "2026-10-02T20:24:18+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000164014726000043/snow-20260928.htm"
-      },
-      {
-        "form": "4",
-        "filing_date": "2026-10-02",
-        "acceptance_datetime": "2026-10-03T00:00:09.000Z",
-        "report_date": "2026-10-02",
-        "accession_number": "0001433644-26-000017",
-        "primary_document": "xslF345X06/wk-form4_1790985606.xml",
-        "description": "FORM 4",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T00:05:24+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1640147/000143364426000017/xslF345X06/wk-form4_1790985606.xml"
       },
       {
         "form": "144",
@@ -719,12 +719,12 @@
     "ticker": "RBRK",
     "cik": "0001943896",
     "entity_name": "Rubrik, Inc.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "4",
         "filing_date": "2026-10-02",
-        "acceptance_datetime": "2026-10-02T21:50:01.000Z",
+        "acceptance_datetime": "2026-10-03T01:50:01.000Z",
         "report_date": "2026-10-01",
         "accession_number": "0001207433-26-000022",
         "primary_document": "xslF345X06/form4-10022026_091056.xml",
@@ -738,7 +738,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-25",
-        "acceptance_datetime": "2026-09-26T00:41:33.000Z",
+        "acceptance_datetime": "2026-09-26T04:41:33.000Z",
         "report_date": "2026-09-24",
         "accession_number": "0001685768-26-000003",
         "primary_document": "xslF345X06/form4-09262026_120929.xml",
@@ -752,7 +752,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-25",
-        "acceptance_datetime": "2026-09-25T23:19:45.000Z",
+        "acceptance_datetime": "2026-09-26T03:19:45.000Z",
         "report_date": "",
         "accession_number": "0001958244-26-000624",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -766,7 +766,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-17",
-        "acceptance_datetime": "2026-09-18T01:15:42.000Z",
+        "acceptance_datetime": "2026-09-18T05:15:42.000Z",
         "report_date": "2026-09-15",
         "accession_number": "0002019143-26-000021",
         "primary_document": "xslF345X06/form4-09182026_010938.xml",
@@ -780,7 +780,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-17",
-        "acceptance_datetime": "2026-09-18T01:14:17.000Z",
+        "acceptance_datetime": "2026-09-18T05:14:17.000Z",
         "report_date": "2026-09-15",
         "accession_number": "0002020220-26-000022",
         "primary_document": "xslF345X06/form4-09182026_010913.xml",
@@ -794,7 +794,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-10",
-        "acceptance_datetime": "2026-09-11T00:46:56.000Z",
+        "acceptance_datetime": "2026-09-11T04:46:56.000Z",
         "report_date": "2026-09-08",
         "accession_number": "0002019143-26-000019",
         "primary_document": "xslF345X06/form4-09112026_120951.xml",
@@ -808,7 +808,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-08",
-        "acceptance_datetime": "2026-09-08T23:21:26.000Z",
+        "acceptance_datetime": "2026-09-09T03:21:26.000Z",
         "report_date": "",
         "accession_number": "0001958244-26-000583",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -822,7 +822,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-03",
-        "acceptance_datetime": "2026-09-04T01:05:45.000Z",
+        "acceptance_datetime": "2026-09-04T05:05:45.000Z",
         "report_date": "2026-09-03",
         "accession_number": "0001707744-26-000021",
         "primary_document": "xslF345X06/form4-09042026_010941.xml",
@@ -836,7 +836,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-03",
-        "acceptance_datetime": "2026-09-04T00:22:27.000Z",
+        "acceptance_datetime": "2026-09-04T04:22:27.000Z",
         "report_date": "2026-09-01",
         "accession_number": "0001207433-26-000020",
         "primary_document": "xslF345X06/form4-09042026_120923.xml",
@@ -850,7 +850,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-03",
-        "acceptance_datetime": "2026-09-03T20:39:26.000Z",
+        "acceptance_datetime": "2026-09-04T00:39:26.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-009087",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -864,7 +864,7 @@
       {
         "form": "10-Q",
         "filing_date": "2026-09-01",
-        "acceptance_datetime": "2026-08-31T23:06:47.000Z",
+        "acceptance_datetime": "2026-09-01T03:06:47.000Z",
         "report_date": "2026-07-31",
         "accession_number": "0001943896-26-000060",
         "primary_document": "rbrk-20260731.htm",
@@ -878,7 +878,7 @@
       {
         "form": "4",
         "filing_date": "2026-08-28",
-        "acceptance_datetime": "2026-08-28T23:01:25.000Z",
+        "acceptance_datetime": "2026-08-29T03:01:25.000Z",
         "report_date": "2026-08-26",
         "accession_number": "0001820447-26-000004",
         "primary_document": "xslF345X06/form4-08282026_110821.xml",
@@ -892,7 +892,7 @@
       {
         "form": "3",
         "filing_date": "2026-08-28",
-        "acceptance_datetime": "2026-08-28T23:00:46.000Z",
+        "acceptance_datetime": "2026-08-29T03:00:46.000Z",
         "report_date": "2026-08-26",
         "accession_number": "0001820447-26-000003",
         "primary_document": "xslF345X06/form3-08282026_110838.xml",
@@ -906,7 +906,7 @@
       {
         "form": "8-K",
         "filing_date": "2026-08-27",
-        "acceptance_datetime": "2026-08-27T20:06:19.000Z",
+        "acceptance_datetime": "2026-08-28T00:06:19.000Z",
         "report_date": "2026-08-26",
         "accession_number": "0001943896-26-000055",
         "primary_document": "rbrk-20260826.htm",
@@ -920,7 +920,7 @@
       {
         "form": "4",
         "filing_date": "2026-08-25",
-        "acceptance_datetime": "2026-08-25T20:15:06.000Z",
+        "acceptance_datetime": "2026-08-26T00:15:06.000Z",
         "report_date": "2026-08-24",
         "accession_number": "0002020220-26-000020",
         "primary_document": "xslF345X06/form4-08252026_040801.xml",
@@ -934,7 +934,7 @@
       {
         "form": "SCHEDULE 13G/A",
         "filing_date": "2026-08-14",
-        "acceptance_datetime": "2026-08-14T20:36:35.000Z",
+        "acceptance_datetime": "2026-08-15T00:36:35.000Z",
         "report_date": "",
         "accession_number": "0001539061-26-000013",
         "primary_document": "xslSCHEDULE_13G_X02/primary_doc.xml",
@@ -948,7 +948,7 @@
       {
         "form": "SCHEDULE 13G",
         "filing_date": "2026-08-13",
-        "acceptance_datetime": "2026-08-13T15:17:25.000Z",
+        "acceptance_datetime": "2026-08-13T19:17:25.000Z",
         "report_date": "",
         "accession_number": "0001167557-26-000192",
         "primary_document": "xslSCHEDULE_13G_X02/primary_doc.xml",
@@ -962,7 +962,7 @@
       {
         "form": "4",
         "filing_date": "2026-08-05",
-        "acceptance_datetime": "2026-08-05T23:01:38.000Z",
+        "acceptance_datetime": "2026-08-06T03:01:38.000Z",
         "report_date": "2026-08-03",
         "accession_number": "0002019143-26-000017",
         "primary_document": "xslF345X06/form4-08052026_110833.xml",
@@ -976,7 +976,7 @@
       {
         "form": "4",
         "filing_date": "2026-08-04",
-        "acceptance_datetime": "2026-08-04T23:00:09.000Z",
+        "acceptance_datetime": "2026-08-05T03:00:09.000Z",
         "report_date": "2026-08-03",
         "accession_number": "0001207433-26-000018",
         "primary_document": "xslF345X06/form4-08042026_070803.xml",
@@ -990,7 +990,7 @@
       {
         "form": "4",
         "filing_date": "2026-08-04",
-        "acceptance_datetime": "2026-08-04T23:00:08.000Z",
+        "acceptance_datetime": "2026-08-05T03:00:08.000Z",
         "report_date": "2026-08-03",
         "accession_number": "0001707744-26-000019",
         "primary_document": "xslF345X06/form4-08042026_070801.xml",
@@ -1004,7 +1004,7 @@
       {
         "form": "144",
         "filing_date": "2026-08-03",
-        "acceptance_datetime": "2026-08-03T20:47:33.000Z",
+        "acceptance_datetime": "2026-08-04T00:47:33.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-007563",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1018,7 +1018,7 @@
       {
         "form": "144",
         "filing_date": "2026-08-03",
-        "acceptance_datetime": "2026-08-03T20:46:11.000Z",
+        "acceptance_datetime": "2026-08-04T00:46:11.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-007559",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1032,7 +1032,7 @@
       {
         "form": "SCHEDULE 13G",
         "filing_date": "2026-07-31",
-        "acceptance_datetime": "2026-07-31T14:43:32.000Z",
+        "acceptance_datetime": "2026-07-31T18:43:32.000Z",
         "report_date": "",
         "accession_number": "0002100119-26-001455",
         "primary_document": "xslSCHEDULE_13G_X02/primary_doc.xml",
@@ -1046,7 +1046,7 @@
       {
         "form": "4",
         "filing_date": "2026-07-16",
-        "acceptance_datetime": "2026-07-16T21:13:54.000Z",
+        "acceptance_datetime": "2026-07-17T01:13:54.000Z",
         "report_date": "2026-07-15",
         "accession_number": "0002020220-26-000018",
         "primary_document": "xslF345X06/form4-07162026_090750.xml",
@@ -1060,7 +1060,7 @@
       {
         "form": "144",
         "filing_date": "2026-07-15",
-        "acceptance_datetime": "2026-07-15T20:37:06.000Z",
+        "acceptance_datetime": "2026-07-16T00:37:06.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-007128",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1077,12 +1077,12 @@
     "ticker": "DDOG",
     "cik": "0001561550",
     "entity_name": "Datadog, Inc.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "4",
         "filing_date": "2026-10-02",
-        "acceptance_datetime": "2026-10-02T21:13:36.000Z",
+        "acceptance_datetime": "2026-10-03T01:13:36.000Z",
         "report_date": "2026-10-01",
         "accession_number": "0001561550-26-000322",
         "primary_document": "xslF345X06/wk-form4_1790975613.xml",
@@ -1096,7 +1096,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-25",
-        "acceptance_datetime": "2026-09-25T20:43:27.000Z",
+        "acceptance_datetime": "2026-09-26T00:43:27.000Z",
         "report_date": "2026-09-23",
         "accession_number": "0001561550-26-000320",
         "primary_document": "xslF345X06/wk-form4_1790369004.xml",
@@ -1110,7 +1110,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-23",
-        "acceptance_datetime": "2026-09-23T20:50:04.000Z",
+        "acceptance_datetime": "2026-09-24T00:50:04.000Z",
         "report_date": "2026-09-21",
         "accession_number": "0001561550-26-000318",
         "primary_document": "xslF345X06/wk-form4_1790196601.xml",
@@ -1124,7 +1124,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-23",
-        "acceptance_datetime": "2026-09-23T20:19:27.000Z",
+        "acceptance_datetime": "2026-09-24T00:19:27.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-009766",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1138,7 +1138,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-21",
-        "acceptance_datetime": "2026-09-21T20:35:43.000Z",
+        "acceptance_datetime": "2026-09-22T00:35:43.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-009721",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1152,7 +1152,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-21",
-        "acceptance_datetime": "2026-09-21T20:35:30.000Z",
+        "acceptance_datetime": "2026-09-22T00:35:30.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-009720",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1166,7 +1166,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-21",
-        "acceptance_datetime": "2026-09-21T20:35:03.000Z",
+        "acceptance_datetime": "2026-09-22T00:35:03.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-009719",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1180,7 +1180,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-16",
-        "acceptance_datetime": "2026-09-16T20:38:57.000Z",
+        "acceptance_datetime": "2026-09-17T00:38:57.000Z",
         "report_date": "2026-09-14",
         "accession_number": "0001561550-26-000316",
         "primary_document": "xslF345X06/wk-form4_1789591134.xml",
@@ -1194,7 +1194,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-16",
-        "acceptance_datetime": "2026-09-16T20:38:49.000Z",
+        "acceptance_datetime": "2026-09-17T00:38:49.000Z",
         "report_date": "2026-09-14",
         "accession_number": "0001561550-26-000315",
         "primary_document": "xslF345X06/wk-form4_1789591125.xml",
@@ -1208,7 +1208,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-16",
-        "acceptance_datetime": "2026-09-16T20:38:42.000Z",
+        "acceptance_datetime": "2026-09-17T00:38:42.000Z",
         "report_date": "2026-09-14",
         "accession_number": "0001561550-26-000314",
         "primary_document": "xslF345X06/wk-form4_1789591119.xml",
@@ -1222,7 +1222,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-15",
-        "acceptance_datetime": "2026-09-15T20:38:26.000Z",
+        "acceptance_datetime": "2026-09-16T00:38:26.000Z",
         "report_date": "2026-09-11",
         "accession_number": "0001561550-26-000310",
         "primary_document": "xslF345X06/wk-form4_1789504703.xml",
@@ -1236,7 +1236,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-15",
-        "acceptance_datetime": "2026-09-15T20:38:18.000Z",
+        "acceptance_datetime": "2026-09-16T00:38:18.000Z",
         "report_date": "2026-09-11",
         "accession_number": "0001561550-26-000309",
         "primary_document": "xslF345X06/wk-form4_1789504696.xml",
@@ -1250,7 +1250,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-14",
-        "acceptance_datetime": "2026-09-14T20:46:07.000Z",
+        "acceptance_datetime": "2026-09-15T00:46:07.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-009428",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1264,7 +1264,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-14",
-        "acceptance_datetime": "2026-09-14T20:45:56.000Z",
+        "acceptance_datetime": "2026-09-15T00:45:56.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-009427",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1278,7 +1278,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-14",
-        "acceptance_datetime": "2026-09-14T20:45:43.000Z",
+        "acceptance_datetime": "2026-09-15T00:45:43.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-009426",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1292,7 +1292,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-14",
-        "acceptance_datetime": "2026-09-14T20:40:24.000Z",
+        "acceptance_datetime": "2026-09-15T00:40:24.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-009416",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1306,7 +1306,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-11",
-        "acceptance_datetime": "2026-09-11T20:32:49.000Z",
+        "acceptance_datetime": "2026-09-12T00:32:49.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-009359",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1320,7 +1320,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-11",
-        "acceptance_datetime": "2026-09-11T20:31:29.000Z",
+        "acceptance_datetime": "2026-09-12T00:31:29.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-009352",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1334,7 +1334,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-10",
-        "acceptance_datetime": "2026-09-10T20:34:24.000Z",
+        "acceptance_datetime": "2026-09-11T00:34:24.000Z",
         "report_date": "2026-09-08",
         "accession_number": "0001561550-26-000306",
         "primary_document": "xslF345X06/wk-form4_1789072462.xml",
@@ -1348,7 +1348,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-09",
-        "acceptance_datetime": "2026-09-09T20:32:15.000Z",
+        "acceptance_datetime": "2026-09-10T00:32:15.000Z",
         "report_date": "2026-09-04",
         "accession_number": "0001466857-26-000012",
         "primary_document": "xslF345X06/wk-form4_1788985931.xml",
@@ -1362,7 +1362,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-08",
-        "acceptance_datetime": "2026-09-08T20:45:37.000Z",
+        "acceptance_datetime": "2026-09-09T00:45:37.000Z",
         "report_date": "2026-09-03",
         "accession_number": "0001561550-26-000304",
         "primary_document": "xslF345X06/wk-form4_1788900334.xml",
@@ -1376,7 +1376,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-08",
-        "acceptance_datetime": "2026-09-08T20:45:31.000Z",
+        "acceptance_datetime": "2026-09-09T00:45:31.000Z",
         "report_date": "2026-09-03",
         "accession_number": "0001561550-26-000303",
         "primary_document": "xslF345X06/wk-form4_1788900329.xml",
@@ -1390,7 +1390,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-08",
-        "acceptance_datetime": "2026-09-08T20:29:30.000Z",
+        "acceptance_datetime": "2026-09-09T00:29:30.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-009208",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1404,7 +1404,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-04",
-        "acceptance_datetime": "2026-09-04T20:37:41.000Z",
+        "acceptance_datetime": "2026-09-05T00:37:41.000Z",
         "report_date": "2026-09-02",
         "accession_number": "0001561550-26-000300",
         "primary_document": "xslF345X06/wk-form4_1788554259.xml",
@@ -1418,7 +1418,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-04",
-        "acceptance_datetime": "2026-09-04T20:37:36.000Z",
+        "acceptance_datetime": "2026-09-05T00:37:36.000Z",
         "report_date": "2026-09-02",
         "accession_number": "0001561550-26-000299",
         "primary_document": "xslF345X06/wk-form4_1788554253.xml",
@@ -1435,7 +1435,7 @@
     "ticker": "NET",
     "cik": "0001477333",
     "entity_name": "Cloudflare, Inc.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "4",
@@ -1793,12 +1793,12 @@
     "ticker": "ESTC",
     "cik": "0001707753",
     "entity_name": "Elastic N.V.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "144",
         "filing_date": "2026-10-02",
-        "acceptance_datetime": "2026-10-03T00:21:19.000Z",
+        "acceptance_datetime": "2026-10-03T04:21:19.000Z",
         "report_date": "",
         "accession_number": "0001958244-26-000637",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1812,7 +1812,7 @@
       {
         "form": "144",
         "filing_date": "2026-10-02",
-        "acceptance_datetime": "2026-10-02T20:23:43.000Z",
+        "acceptance_datetime": "2026-10-03T00:23:43.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-010009",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -2151,7 +2151,7 @@
     "ticker": "DT",
     "cik": "0001773383",
     "entity_name": "Dynatrace, Inc.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "8-K",
@@ -2509,7 +2509,7 @@
     "ticker": "PANW",
     "cik": "0001327567",
     "entity_name": "Palo Alto Networks Inc",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "4",
@@ -2867,7 +2867,7 @@
     "ticker": "ZS",
     "cik": "0001713683",
     "entity_name": "Zscaler, Inc.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "4",
@@ -3225,7 +3225,7 @@
     "ticker": "AKAM",
     "cik": "0001086222",
     "entity_name": "AKAMAI TECHNOLOGIES INC",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "4",
@@ -3583,7 +3583,7 @@
     "ticker": "CRWD",
     "cik": "0001535527",
     "entity_name": "CrowdStrike Holdings, Inc.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "4",
@@ -3941,7 +3941,7 @@
     "ticker": "OKTA",
     "cik": "0001660134",
     "entity_name": "Okta, Inc.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "144",
@@ -4299,7 +4299,7 @@
     "ticker": "FTNT",
     "cik": "0001262039",
     "entity_name": "Fortinet, Inc.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "4",
@@ -4657,7 +4657,7 @@
     "ticker": "S",
     "cik": "0001583708",
     "entity_name": "SentinelOne, Inc.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "4",
@@ -5015,7 +5015,7 @@
     "ticker": "TENB",
     "cik": "0001660280",
     "entity_name": "Tenable Holdings, Inc.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "8-K",
@@ -5373,12 +5373,12 @@
     "ticker": "COIN",
     "cik": "0001679788",
     "entity_name": "Coinbase Global, Inc.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "144",
         "filing_date": "2026-10-02",
-        "acceptance_datetime": "2026-10-02T20:10:05.000Z",
+        "acceptance_datetime": "2026-10-03T00:10:05.000Z",
         "report_date": "",
         "accession_number": "0001974078-26-000375",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -5392,7 +5392,7 @@
       {
         "form": "8-K",
         "filing_date": "2026-10-02",
-        "acceptance_datetime": "2026-10-02T20:04:24.000Z",
+        "acceptance_datetime": "2026-10-03T00:04:24.000Z",
         "report_date": "2026-09-29",
         "accession_number": "0001679788-26-000113",
         "primary_document": "coin-20260929.htm",
@@ -5731,7 +5731,7 @@
     "ticker": "HOOD",
     "cik": "0001783879",
     "entity_name": "Robinhood Markets, Inc.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "4",
@@ -6089,7 +6089,7 @@
     "ticker": "AFRM",
     "cik": "0001820953",
     "entity_name": "Affirm Holdings, Inc.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "4",
@@ -6447,12 +6447,12 @@
     "ticker": "XYZ",
     "cik": "0001512673",
     "entity_name": "Block, Inc.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "144",
         "filing_date": "2026-10-02",
-        "acceptance_datetime": "2026-10-02T20:04:04.000Z",
+        "acceptance_datetime": "2026-10-03T00:04:04.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-009995",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -6805,12 +6805,12 @@
     "ticker": "TOST",
     "cik": "0001650164",
     "entity_name": "Toast, Inc.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "144",
         "filing_date": "2026-10-02",
-        "acceptance_datetime": "2026-10-02T20:45:08.000Z",
+        "acceptance_datetime": "2026-10-03T00:45:08.000Z",
         "report_date": "",
         "accession_number": "0001959173-26-007245",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -6824,7 +6824,7 @@
       {
         "form": "144",
         "filing_date": "2026-10-02",
-        "acceptance_datetime": "2026-10-02T20:26:01.000Z",
+        "acceptance_datetime": "2026-10-03T00:26:01.000Z",
         "report_date": "",
         "accession_number": "0001959173-26-007238",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -6838,7 +6838,7 @@
       {
         "form": "144",
         "filing_date": "2026-10-02",
-        "acceptance_datetime": "2026-10-02T20:06:30.000Z",
+        "acceptance_datetime": "2026-10-03T00:06:30.000Z",
         "report_date": "",
         "accession_number": "0001959173-26-007230",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -6852,7 +6852,7 @@
       {
         "form": "144",
         "filing_date": "2026-10-02",
-        "acceptance_datetime": "2026-10-02T20:04:28.000Z",
+        "acceptance_datetime": "2026-10-03T00:04:28.000Z",
         "report_date": "",
         "accession_number": "0001959173-26-007227",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -6866,7 +6866,7 @@
       {
         "form": "144",
         "filing_date": "2026-10-02",
-        "acceptance_datetime": "2026-10-02T20:00:23.000Z",
+        "acceptance_datetime": "2026-10-03T00:00:23.000Z",
         "report_date": "",
         "accession_number": "0001959173-26-007225",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -6880,7 +6880,7 @@
       {
         "form": "144",
         "filing_date": "2026-10-02",
-        "acceptance_datetime": "2026-10-02T19:48:22.000Z",
+        "acceptance_datetime": "2026-10-02T23:48:22.000Z",
         "report_date": "",
         "accession_number": "0001959173-26-007218",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -7163,12 +7163,12 @@
     "ticker": "BILL",
     "cik": "0001786352",
     "entity_name": "BILL Holdings, Inc.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "3",
         "filing_date": "2026-10-02",
-        "acceptance_datetime": "2026-10-02T20:02:03.000Z",
+        "acceptance_datetime": "2026-10-03T00:02:03.000Z",
         "report_date": "2026-09-24",
         "accession_number": "0002157824-26-000001",
         "primary_document": "xslF345X06/form3-10022026_081059.xml",
@@ -7182,7 +7182,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-17",
-        "acceptance_datetime": "2026-09-17T20:05:26.000Z",
+        "acceptance_datetime": "2026-09-18T00:05:26.000Z",
         "report_date": "2026-09-15",
         "accession_number": "0002067425-26-000004",
         "primary_document": "xslF345X06/form4-09172026_040909.xml",
@@ -7196,7 +7196,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-17",
-        "acceptance_datetime": "2026-09-17T20:05:23.000Z",
+        "acceptance_datetime": "2026-09-18T00:05:23.000Z",
         "report_date": "2026-09-15",
         "accession_number": "0002073970-26-000003",
         "primary_document": "xslF345X06/form4-09172026_040907.xml",
@@ -7210,7 +7210,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-17",
-        "acceptance_datetime": "2026-09-17T20:05:21.000Z",
+        "acceptance_datetime": "2026-09-18T00:05:21.000Z",
         "report_date": "2026-09-15",
         "accession_number": "0001795497-26-000006",
         "primary_document": "xslF345X06/form4-09172026_040905.xml",
@@ -7224,7 +7224,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-09",
-        "acceptance_datetime": "2026-09-09T20:21:10.000Z",
+        "acceptance_datetime": "2026-09-10T00:21:10.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-009244",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -7238,7 +7238,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-04",
-        "acceptance_datetime": "2026-09-04T21:01:09.000Z",
+        "acceptance_datetime": "2026-09-05T01:01:09.000Z",
         "report_date": "2026-09-02",
         "accession_number": "0001795497-26-000005",
         "primary_document": "xslF345X06/form4-09042026_090904.xml",
@@ -7252,7 +7252,7 @@
       {
         "form": "SCHEDULE 13G/A",
         "filing_date": "2026-09-04",
-        "acceptance_datetime": "2026-09-04T16:15:26.000Z",
+        "acceptance_datetime": "2026-09-04T20:15:26.000Z",
         "report_date": "",
         "accession_number": "0002012383-26-003265",
         "primary_document": "xslSCHEDULE_13G_X02/primary_doc.xml",
@@ -7266,7 +7266,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-03",
-        "acceptance_datetime": "2026-09-03T20:32:21.000Z",
+        "acceptance_datetime": "2026-09-04T00:32:21.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-009069",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -7280,7 +7280,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-03",
-        "acceptance_datetime": "2026-09-03T20:32:07.000Z",
+        "acceptance_datetime": "2026-09-04T00:32:07.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-009068",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -7294,7 +7294,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-02",
-        "acceptance_datetime": "2026-09-02T21:05:38.000Z",
+        "acceptance_datetime": "2026-09-03T01:05:38.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-009037",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -7308,7 +7308,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-02",
-        "acceptance_datetime": "2026-09-02T20:55:04.000Z",
+        "acceptance_datetime": "2026-09-03T00:55:04.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-009033",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -7322,7 +7322,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-02",
-        "acceptance_datetime": "2026-09-02T20:28:52.000Z",
+        "acceptance_datetime": "2026-09-03T00:28:52.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-009008",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -7336,7 +7336,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-01",
-        "acceptance_datetime": "2026-09-01T21:26:34.000Z",
+        "acceptance_datetime": "2026-09-02T01:26:34.000Z",
         "report_date": "2026-08-28",
         "accession_number": "0001795497-26-000004",
         "primary_document": "xslF345X06/form4-09012026_090929.xml",
@@ -7350,7 +7350,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-01",
-        "acceptance_datetime": "2026-09-01T21:26:01.000Z",
+        "acceptance_datetime": "2026-09-02T01:26:01.000Z",
         "report_date": "2026-08-28",
         "accession_number": "0002067425-26-000003",
         "primary_document": "xslF345X06/form4-09012026_090957.xml",
@@ -7364,7 +7364,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-01",
-        "acceptance_datetime": "2026-09-01T21:25:32.000Z",
+        "acceptance_datetime": "2026-09-02T01:25:32.000Z",
         "report_date": "2026-08-28",
         "accession_number": "0002073970-26-000002",
         "primary_document": "xslF345X06/form4-09012026_090928.xml",
@@ -7378,7 +7378,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-01",
-        "acceptance_datetime": "2026-09-01T20:36:12.000Z",
+        "acceptance_datetime": "2026-09-02T00:36:12.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-008924",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -7392,7 +7392,7 @@
       {
         "form": "3",
         "filing_date": "2026-08-31",
-        "acceptance_datetime": "2026-08-31T21:02:38.000Z",
+        "acceptance_datetime": "2026-09-01T01:02:38.000Z",
         "report_date": "2026-08-20",
         "accession_number": "0000921895-26-002438",
         "primary_document": "xslF345X06/form306297001b_08312026.xml",
@@ -7406,7 +7406,7 @@
       {
         "form": "3",
         "filing_date": "2026-08-31",
-        "acceptance_datetime": "2026-08-31T21:00:23.000Z",
+        "acceptance_datetime": "2026-09-01T01:00:23.000Z",
         "report_date": "2026-08-20",
         "accession_number": "0000921895-26-002437",
         "primary_document": "xslF345X06/form306297001a_08312026.xml",
@@ -7420,7 +7420,7 @@
       {
         "form": "144",
         "filing_date": "2026-08-31",
-        "acceptance_datetime": "2026-08-31T20:32:17.000Z",
+        "acceptance_datetime": "2026-09-01T00:32:17.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-008868",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -7434,7 +7434,7 @@
       {
         "form": "SCHEDULE 13D/A",
         "filing_date": "2026-08-24",
-        "acceptance_datetime": "2026-08-24T21:00:19.000Z",
+        "acceptance_datetime": "2026-08-25T01:00:19.000Z",
         "report_date": "",
         "accession_number": "0000921895-26-002296",
         "primary_document": "xslSCHEDULE_13D_X02/primary_doc.xml",
@@ -7448,7 +7448,7 @@
       {
         "form": "S-8",
         "filing_date": "2026-08-20",
-        "acceptance_datetime": "2026-08-20T20:08:39.000Z",
+        "acceptance_datetime": "2026-08-21T00:08:39.000Z",
         "report_date": "",
         "accession_number": "0001628280-26-058243",
         "primary_document": "bill-20260630xs8.htm",
@@ -7462,7 +7462,7 @@
       {
         "form": "10-K",
         "filing_date": "2026-08-20",
-        "acceptance_datetime": "2026-08-20T20:04:06.000Z",
+        "acceptance_datetime": "2026-08-21T00:04:06.000Z",
         "report_date": "2026-06-30",
         "accession_number": "0001628280-26-058238",
         "primary_document": "bill-20260630.htm",
@@ -7476,7 +7476,7 @@
       {
         "form": "4",
         "filing_date": "2026-08-19",
-        "acceptance_datetime": "2026-08-20T01:00:11.000Z",
+        "acceptance_datetime": "2026-08-20T05:00:11.000Z",
         "report_date": "2026-08-17",
         "accession_number": "0002073970-26-000001",
         "primary_document": "xslF345X06/form4-08192026_090805.xml",
@@ -7490,7 +7490,7 @@
       {
         "form": "4",
         "filing_date": "2026-08-19",
-        "acceptance_datetime": "2026-08-20T01:00:07.000Z",
+        "acceptance_datetime": "2026-08-20T05:00:07.000Z",
         "report_date": "2026-08-17",
         "accession_number": "0002067425-26-000002",
         "primary_document": "xslF345X06/form4-08192026_090803.xml",
@@ -7504,7 +7504,7 @@
       {
         "form": "4",
         "filing_date": "2026-08-19",
-        "acceptance_datetime": "2026-08-20T01:00:05.000Z",
+        "acceptance_datetime": "2026-08-20T05:00:05.000Z",
         "report_date": "2026-08-17",
         "accession_number": "0001795497-26-000003",
         "primary_document": "xslF345X06/form4-08192026_090801.xml",
@@ -7521,7 +7521,7 @@
     "ticker": "MQ",
     "cik": "0001522540",
     "entity_name": "Marqeta, Inc.",
-    "last_checked_utc": "2026-10-03T04:25:38+00:00",
+    "last_checked_utc": "2026-10-03T04:39:48+00:00",
     "filings": [
       {
         "form": "4",
