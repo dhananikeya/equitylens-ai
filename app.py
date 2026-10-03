@@ -740,100 +740,11 @@ def equitylens_source_links(company_name):
 
 
 def render_auth_sidebar():
-    supabase = get_supabase_client()
-
     with st.sidebar:
-        st.markdown("## EquityLens Account")
-
-        if supabase is None:
-            st.caption(
-                "Account sign-in is being prepared. Public research remains available without an account."
-            )
-            return
-
-        if "auth_user" not in st.session_state:
-            st.session_state.auth_user = None
-
-        if st.session_state.auth_user:
-            user = st.session_state.auth_user
-            email = getattr(user, "email", "Signed-in user")
-            st.success(f"Signed in as {email}")
-            st.caption(
-                "Accounts are optional. EquityLens does not use account information to provide personalized investment recommendations."
-            )
-            if st.button("Sign out", use_container_width=True):
-                try:
-                    supabase.auth.sign_out()
-                except Exception:
-                    pass
-                st.session_state.auth_user = None
-                st.rerun()
-            return
-
-        auth_mode = st.radio(
-            "Account",
-            ["Sign in", "Create account"],
-            horizontal=True,
-            key="auth_mode"
-        )
-
-        email = st.text_input(
-            "Email",
-            key="auth_email",
-            placeholder="you@example.com"
-        )
-        password = st.text_input(
-            "Password",
-            type="password",
-            key="auth_password"
-        )
-
-        if auth_mode == "Sign in":
-            if st.button("Sign in", use_container_width=True, key="sign_in_button"):
-                if not email or not password:
-                    st.warning("Enter both an email and password.")
-                else:
-                    try:
-                        response = supabase.auth.sign_in_with_password({
-                            "email": email,
-                            "password": password
-                        })
-                        st.session_state.auth_user = response.user
-                        st.success("Signed in.")
-                        st.rerun()
-                    except Exception as exc:
-                        st.error("Unable to sign in. Check your email and password.")
-                        st.caption(str(exc))
-        else:
-            if st.button("Create account", use_container_width=True, key="create_account_button"):
-                if not email or not password:
-                    st.warning("Enter both an email and password.")
-                elif len(password) < 8:
-                    st.warning("Use a password with at least 8 characters.")
-                else:
-                    try:
-                        response = supabase.auth.sign_up({
-                            "email": email,
-                            "password": password,
-                            "options": {
-                                "email_redirect_to": get_public_app_url()
-                            }
-                        })
-                        if response.session and response.user:
-                            st.session_state.auth_user = response.user
-                            st.success("Account created and signed in.")
-                            st.rerun()
-                        else:
-                            st.success(
-                                "Account created. Check your inbox and confirm your email. "
-                                "After confirmation, you will return to EquityLens and can sign in."
-                            )
-                    except Exception as exc:
-                        st.error("Unable to create the account.")
-                        st.caption(str(exc))
-
+        st.markdown("## EquityLens")
         st.caption(
-            "Account creation is optional and is intended for future features such as saved companies, research notes, and preferences."
+            "Account sign-in and account creation are temporarily disabled while the authentication experience is being finalized. "
+            "All public research features remain available without an account."
         )
 
 
