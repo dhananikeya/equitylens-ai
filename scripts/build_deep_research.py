@@ -6,8 +6,8 @@ This worker:
 3. Pulls current SEC submissions and company facts.
 4. Finds annual, quarterly, current-report, and registration filings.
 5. Extracts structured financial metrics from SEC XBRL facts.
-6. Uses OpenAI Structured Outputs to turn primary-source filing text into the
-   same research schema already used by EquityLens' hand-curated companies.
+6. Uses the user's local LLM to turn primary-source filing text into the same
+   research schema already used by EquityLens' hand-curated companies.
 7. Writes incremental generated JSON files so the website can merge generated
    coverage with the hand-curated research set.
 
