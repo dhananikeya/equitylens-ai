@@ -739,16 +739,7 @@ def equitylens_source_links(company_name):
     return links[:5]
 
 
-def render_auth_sidebar():
-    with st.sidebar:
-        st.markdown("## EquityLens")
-        st.caption(
-            "Account sign-in and account creation are temporarily disabled while the authentication experience is being finalized. "
-            "All public research features remain available without an account."
-        )
 
-
-render_auth_sidebar()
 
 
 @st.cache_data(ttl=60)
