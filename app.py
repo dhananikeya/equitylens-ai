@@ -3277,6 +3277,15 @@ with market_tab:
         key="market_monitor_industry"
     )
 
+    movement_threshold = st.slider(
+        "Notable movement threshold",
+        min_value=1.0,
+        max_value=10.0,
+        value=3.0,
+        step=0.5,
+        key="market_movement_threshold"
+    )
+
     market_companies = [
         name for name, data in company_data.items()
         if data.get("industry", "Unclassified") == market_industry
@@ -3741,8 +3750,8 @@ with market_tab:
         st.caption("Recent SEC filing context is not available for this company yet.")
 
     st.markdown(
-        '<div class="el-market-source">Market data: connected market-data provider · '
-        'Finviz screener: configured when enabled · Company disclosures: SEC EDGAR · '
+        '<div class="el-market-source">Quotes and charts: Yahoo Finance via yfinance · '
+        'NYSE ticker, heat map, and screener: Finviz Elite · Company disclosures: SEC EDGAR · '
         'Prices, screener fields, historical charts, and filings may update on different schedules.</div>',
         unsafe_allow_html=True
     )
