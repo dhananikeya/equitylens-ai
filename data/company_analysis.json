@@ -298,5 +298,145 @@
       "International exposure"
     ],
     "source_filing": "https://www.sec.gov/Archives/edgar/data/1660280/000166028026000005/tenb-20251231.htm"
+  },
+  "Coinbase (COIN)": {
+    "business_model": "Crypto financial infrastructure and trading platform serving retail users, institutions, developers, and businesses across trading, custody, staking, stablecoins, payments, and related services.",
+    "primary_revenue_source": "Transaction revenue from crypto activity plus subscription and services revenue, including stablecoin-related revenue, blockchain rewards, custody, and other services.",
+    "customer_type": "Retail consumers, institutional investors, asset managers, businesses, and developers participating in the crypto economy.",
+    "platform_dependency": "Depends on public blockchain networks, market liquidity, banking and payment partners, custody infrastructure, and regulatory access across jurisdictions.",
+    "competitive_risk": "Competes with crypto exchanges, brokerages, fintech platforms, decentralized protocols, custodians, payment providers, and traditional financial institutions.",
+    "operational_risk": "Results can be sensitive to crypto trading activity, asset prices, regulatory developments, cybersecurity, custody operations, and the reliability of blockchain and payment infrastructure.",
+    "profitability_history": "Profitability has varied materially with crypto-market activity and changes in transaction and subscription/services revenue.",
+    "customer_concentration": "Revenue is concentrated in several crypto-related activities, including meaningful exposure to Bitcoin and Ethereum trading and stablecoin-related revenue.",
+    "international_exposure": "Operates internationally and faces differing digital-asset, payments, securities, tax, privacy, and financial-services rules.",
+    "key_risk_themes": [
+      "Crypto-market activity and volatility",
+      "Digital-asset regulation",
+      "Cybersecurity and custody",
+      "Revenue concentration",
+      "Banking and payment relationships",
+      "Competition and product innovation"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1679788/000167978826000015/coin-20251231.htm"
+  },
+  "Robinhood (HOOD)": {
+    "business_model": "Consumer financial-services platform offering brokerage, options, crypto, cash-management, retirement, credit-card, and related investing products through mobile and web experiences.",
+    "primary_revenue_source": "Transaction-based revenue, net interest revenue, and other revenue from financial products and services.",
+    "customer_type": "Primarily self-directed retail investors and consumers using brokerage and financial-services products.",
+    "platform_dependency": "Depends on market infrastructure, clearing and custody relationships, banks, payment rails, crypto infrastructure, and technology systems that support trading and account services.",
+    "competitive_risk": "Competes with traditional brokerages, digital brokers, crypto platforms, banks, and consumer fintech companies.",
+    "operational_risk": "Sensitive to trading activity, interest rates, credit performance, regulatory requirements, system availability, cybersecurity, and expansion into newer financial products.",
+    "profitability_history": "Moved from substantial losses in 2023 to significant net income in 2024 and 2025 as revenue expanded.",
+    "customer_concentration": "Business performance is tied more to activity across a large retail customer base than to a single disclosed enterprise customer.",
+    "international_exposure": "Has expanded beyond its original U.S. brokerage footprint and faces jurisdiction-specific financial and crypto regulation.",
+    "key_risk_themes": [
+      "Retail trading activity",
+      "Broker-dealer and crypto regulation",
+      "Interest-rate sensitivity",
+      "Credit risk",
+      "Technology reliability",
+      "Cybersecurity and fraud"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000023/hood-20251231.htm"
+  },
+  "Affirm (AFRM)": {
+    "business_model": "Digital payments and consumer-credit platform that enables eligible consumers to pay over time while helping merchants offer installment-payment options.",
+    "primary_revenue_source": "Merchant and card network revenue, interest income, gains on sales of loans, and servicing income.",
+    "customer_type": "Consumers using installment products and merchants integrating Affirm at checkout or through card-based experiences.",
+    "platform_dependency": "Depends on merchant integrations, funding partners, capital markets, payment networks, underwriting models, servicing infrastructure, and consumer-credit performance.",
+    "competitive_risk": "Competes with credit cards, banks, other buy-now-pay-later providers, digital wallets, and merchant payment platforms.",
+    "operational_risk": "Performance depends on underwriting accuracy, credit losses, access to funding, merchant adoption, consumer demand, regulatory compliance, and capital-markets conditions.",
+    "profitability_history": "Revenue has grown rapidly, and fiscal 2026 included positive GAAP operating income after losses in earlier periods.",
+    "customer_concentration": "Merchant concentration can change over time, but the fiscal 2026 filing states no merchant exceeded 10% of total revenue.",
+    "international_exposure": "Operates across multiple markets and faces consumer-credit, payments, privacy, and financial-services requirements.",
+    "key_risk_themes": [
+      "Consumer credit performance",
+      "Funding and capital markets",
+      "Merchant relationships",
+      "Consumer-finance regulation",
+      "Underwriting model performance",
+      "Competition"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1820953/000162828026059279/afrm-20260630.htm"
+  },
+  "Block (XYZ)": {
+    "business_model": "Financial and commerce technology company built around the Square seller ecosystem and Cash App consumer ecosystem, with additional bitcoin-focused products and services.",
+    "primary_revenue_source": "Commerce enablement, financial solutions, and bitcoin ecosystem revenue; management also emphasizes gross profit as a key performance measure.",
+    "customer_type": "Small and mid-sized sellers, larger merchants, consumers using Cash App, and participants in Block's bitcoin-related ecosystem.",
+    "platform_dependency": "Depends on payment networks, banking partners, lending infrastructure, app-store and mobile ecosystems, bitcoin infrastructure, and proprietary hardware/software.",
+    "competitive_risk": "Competes with merchant acquirers, banks, digital wallets, consumer fintech apps, lending providers, commerce software companies, and crypto products.",
+    "operational_risk": "Exposed to payment fraud, consumer and merchant credit losses, regulation, bitcoin volatility, cybersecurity, hardware execution, and ecosystem engagement.",
+    "profitability_history": "Operating income improved materially from a loss in 2023 to positive operating income in 2024 and 2025.",
+    "customer_concentration": "Business is diversified across seller and consumer ecosystems rather than centered on one disclosed enterprise customer.",
+    "international_exposure": "Operates across multiple countries and is exposed to payments, banking, lending, privacy, consumer-protection, and digital-asset rules.",
+    "key_risk_themes": [
+      "Payments and financial regulation",
+      "Credit losses",
+      "Cash App engagement",
+      "Seller ecosystem competition",
+      "Bitcoin exposure",
+      "Cybersecurity and fraud"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1512673/000162828026012254/xyz-20251231.htm"
+  },
+  "Toast (TOST)": {
+    "business_model": "Vertical technology platform for restaurants combining point-of-sale software, payments, payroll, digital ordering, marketing, lending, and other restaurant-management tools.",
+    "primary_revenue_source": "Payments and financial technology revenue, subscription services, and hardware and professional-services related revenue.",
+    "customer_type": "Restaurants ranging from independent operators to multi-location and enterprise restaurant groups.",
+    "platform_dependency": "Depends on payment processing, restaurant integrations, hardware, cloud services, financial partners, and reliable in-restaurant and online transaction infrastructure.",
+    "competitive_risk": "Competes with restaurant point-of-sale providers, payment processors, vertical software vendors, delivery platforms, and general commerce technology companies.",
+    "operational_risk": "Sensitive to restaurant-industry conditions, payment volume, hardware deployment, merchant retention, credit products, cybersecurity, and continued product expansion.",
+    "profitability_history": "Revenue grew substantially from 2023 through 2025, with operating results improving from a 2023 loss to positive operating income in 2024 and 2025.",
+    "customer_concentration": "Serves a broad restaurant customer base; customer retention and payment volume are important to recurring economics.",
+    "international_exposure": "Has expanded beyond the United States and faces local payments, labor, privacy, tax, and commerce requirements.",
+    "key_risk_themes": [
+      "Restaurant-industry conditions",
+      "Payment processing",
+      "Merchant retention",
+      "Competition",
+      "Hardware and platform reliability",
+      "Cybersecurity"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1650164/000165016426000057/tost-20251231.htm"
+  },
+  "BILL Holdings (BILL)": {
+    "business_model": "Financial operations platform for small and midsize businesses, offering accounts-payable, accounts-receivable, spend-and-expense, and payment automation.",
+    "primary_revenue_source": "Subscription and transaction fees plus interest earned on funds held for customers.",
+    "customer_type": "Small and midsize businesses, accounting firms, and finance teams managing business payments and spend workflows.",
+    "platform_dependency": "Depends on banking partners, card networks, payment rails, cloud infrastructure, customer-funds management, and integrations with accounting software.",
+    "competitive_risk": "Competes with banks, card and expense platforms, accounting-software vendors, payment processors, and other SMB financial-operations platforms.",
+    "operational_risk": "Exposed to payment fraud, credit losses, interest-rate changes, SMB spending trends, partner-bank relationships, regulation, and service reliability.",
+    "profitability_history": "Revenue has grown across fiscal 2024 through fiscal 2026, while GAAP operating losses narrowed over that period.",
+    "customer_concentration": "Focuses on a diversified SMB customer base and accounting ecosystem rather than a small set of large enterprise buyers.",
+    "international_exposure": "Primarily centered on business financial operations with growing cross-border capabilities and related payments and regulatory exposure.",
+    "key_risk_themes": [
+      "SMB economic conditions",
+      "Payment fraud and credit losses",
+      "Bank and network dependencies",
+      "Interest-rate exposure",
+      "Competition",
+      "Regulatory compliance"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1786352/000162828026058238/bill-20260630.htm"
+  },
+  "Marqeta (MQ)": {
+    "business_model": "Modern card-issuing and payment-processing platform that provides APIs and infrastructure for companies to build and operate card programs.",
+    "primary_revenue_source": "Net revenue generated from card-program processing and related platform services, with economics tied to transaction activity and program structure.",
+    "customer_type": "Fintech companies, digital banks, commerce platforms, financial institutions, and other businesses launching card-based payment products.",
+    "platform_dependency": "Depends on card networks, issuing-bank partners, payment infrastructure, cloud systems, and customer card-program volume.",
+    "competitive_risk": "Competes with legacy issuing processors, payment platforms, banks, and newer embedded-finance infrastructure providers.",
+    "operational_risk": "Sensitive to customer concentration, transaction volumes, partner-bank and card-network relationships, regulatory obligations, platform reliability, and fraud.",
+    "profitability_history": "Revenue and gross profit improved in 2025, while the company reported a small GAAP net loss for the year.",
+    "customer_concentration": "Historically has had meaningful concentration in large platform customers, making customer mix and program activity important risk factors.",
+    "international_exposure": "Operates across multiple markets and faces payments, data, consumer-protection, and financial-services requirements.",
+    "key_risk_themes": [
+      "Customer concentration",
+      "Card-network and bank dependencies",
+      "Transaction-volume variability",
+      "Competition",
+      "Payments regulation",
+      "Fraud and cybersecurity"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1522540/000152254026000017/mq-20251231.htm"
   }
 }
