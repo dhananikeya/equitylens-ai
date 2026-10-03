@@ -1317,7 +1317,7 @@ def get_sec_company_research(ticker):
 
     if not registration_rows:
         history_files = submissions.get("filings", {}).get("files", []) or []
-        for history_file in history_files[:3]:
+        for history_file in history_files:
             history_name = history_file.get("name")
             if not history_name:
                 continue
@@ -2865,22 +2865,51 @@ with home_tab:
         st.caption("Recent SEC filing activity will appear here as the automated filing monitor populates.")
 
     section("Coverage", f"{home_industry} companies")
-    featured_companies = home_industry_companies[:6]
+
+    featured_rows = home_company_df.head(6)
     featured_cols = st.columns(3)
-    for idx, featured_company in enumerate(featured_companies):
-        featured_data = company_data[featured_company]
-        featured_q = company_quarterly.get(featured_company, {})
-        featured_qm = quarterly_metrics(featured_q)
+
+    for idx, (_, featured_row) in enumerate(featured_rows.iterrows()):
+        featured_ticker = str(featured_row.get("Ticker", ""))
+        featured_name = str(featured_row.get("Company", ""))
+        featured_sector = str(featured_row.get("Sector", ""))
+        featured_country = str(featured_row.get("Country", ""))
+
+        deep_match = next(
+            (
+                company_name
+                for company_name, company in company_data.items()
+                if str(company.get("ticker", "")).upper() == featured_ticker
+            ),
+            None
+        )
+
+        if deep_match:
+            featured_q = company_quarterly.get(deep_match, {})
+            featured_qm = quarterly_metrics(featured_q)
+            featured_detail = (
+                "Latest revenue growth: "
+                + pct(featured_qm.get("yoy_growth"))
+                + "<br>Latest filing period: "
+                + str(featured_q.get("period_end", "N/A"))
+            )
+        else:
+            featured_detail = (
+                "SEC + market coverage"
+                + "<br>"
+                + featured_sector
+                + (" · " + featured_country if featured_country else "")
+            )
+
         with featured_cols[idx % 3]:
             st.markdown(
                 f"""
                 <div class="el-company-card">
-                    <div class="el-company-card-ticker">{featured_data.get('ticker', '')}</div>
-                    <div class="el-company-card-name">{featured_company.split(' (')[0]}</div>
+                    <div class="el-company-card-ticker">{featured_ticker}</div>
+                    <div class="el-company-card-name">{featured_name}</div>
                     <div class="el-company-card-meta">
-                        {featured_data.get('industry', 'Unclassified')}<br>
-                        Latest revenue growth: {pct(featured_qm.get('yoy_growth'))}<br>
-                        Latest filing period: {featured_q.get('period_end', 'N/A')}
+                        {home_industry}<br>
+                        {featured_detail}
                     </div>
                 </div>
                 """,
@@ -3366,169 +3395,348 @@ with peer_tab:
             )
 
 with company_tab:
-    section("Explore Companies", "Read the Company Through Its S-1")
+    section("Explore Companies", "Research the Company Through SEC Filings")
 
     st.caption(
-        "This view is intentionally focused on the company's S-1 or IPO registration materials. "
-        "It does not mix in later 10-K or 10-Q results, so the historical IPO story stays separate from current performance."
+        "Explore all companies in the EquityLens coverage universe. The app resolves current "
+        "SEC filing history on demand and searches historical registration filings for S-1, "
+        "F-1, S-11, and related amendments when they are available."
     )
 
-    explore_industry = st.selectbox(
-        "Industry",
-        industries,
-        key="explore_s1_industry"
+    explore_filters = st.columns(3)
+
+    with explore_filters[0]:
+        explore_sector = st.selectbox(
+            "Sector",
+            coverage_sectors,
+            key="explore_sector"
+        )
+
+    explore_sector_df = company_universe[
+        company_universe["Sector"] == explore_sector
+    ].copy()
+
+    explore_industries = sorted(
+        [
+            value
+            for value in explore_sector_df["Industry"].dropna().unique().tolist()
+            if value
+        ]
     )
 
-    explore_companies = [
-        name for name, company in company_data.items()
-        if company.get("industry", "Unclassified") == explore_industry
-    ]
+    with explore_filters[1]:
+        explore_industry = st.selectbox(
+            "Industry",
+            ["All industries"] + explore_industries,
+            key="explore_s1_industry"
+        )
 
-    explore_company = st.selectbox(
-        "Company",
-        explore_companies,
-        format_func=lambda name: (
-            f"{company_data[name].get('ticker', '')} · {name.split(' (')[0]}"
+    explore_df = explore_sector_df.copy()
+    if explore_industry != "All industries":
+        explore_df = explore_df[
+            explore_df["Industry"] == explore_industry
+        ]
+
+    with explore_filters[2]:
+        explore_company = st.selectbox(
+            "Company",
+            explore_df["Coverage Key"].tolist(),
+            format_func=lambda key: (
+                key.split(" (")[-1].rstrip(")")
+                + " · "
+                + key.rsplit(" (", 1)[0]
+            ),
+            key="explore_s1_company"
+        )
+
+    explore_row = explore_df[
+        explore_df["Coverage Key"] == explore_company
+    ].iloc[0]
+
+    explore_ticker = str(explore_row.get("Ticker", ""))
+    explore_name = str(explore_row.get("Company", ""))
+    explore_industry_name = str(explore_row.get("Industry", ""))
+    explore_country = str(explore_row.get("Country", ""))
+
+    deep_explore_company = next(
+        (
+            company_name
+            for company_name, company in company_data.items()
+            if str(company.get("ticker", "")).upper() == explore_ticker
         ),
-        key="explore_s1_company"
+        None
+    )
+    deep_explore_s1 = (
+        company_s1.get(deep_explore_company, {})
+        if deep_explore_company
+        else {}
     )
 
-    explore_data = company_data.get(explore_company, {})
-    explore_s1 = company_s1.get(explore_company, {})
-    explore_ticker = explore_data.get("ticker", "")
-    explore_name = explore_company.split(" (")[0]
+    try:
+        explore_sec = get_sec_company_research(explore_ticker)
+        explore_sec_error = None
+    except Exception:
+        explore_sec = {}
+        explore_sec_error = (
+            "SEC EDGAR is temporarily unavailable for this company. "
+            "Try again shortly."
+        )
+
+    explore_filings = explore_sec.get("filings", [])
+    explore_registrations = explore_sec.get("registration_filings", [])
+
+    latest_annual = latest_filing_by_forms(
+        explore_filings,
+        {"10-K", "10-K/A", "20-F", "20-F/A", "40-F", "40-F/A"}
+    )
+    latest_quarter = latest_filing_by_forms(
+        explore_filings,
+        {"10-Q", "10-Q/A"}
+    )
+    latest_current = latest_filing_by_forms(
+        explore_filings,
+        {"8-K", "8-K/A", "6-K", "6-K/A"}
+    )
+    primary_registration = (
+        explore_registrations[0]
+        if explore_registrations
+        else {}
+    )
+
+    registration_label = (
+        primary_registration.get("form", "")
+        if primary_registration
+        else "No registration filing found"
+    )
 
     st.markdown(
         f"""
         <div class="el-company-hero">
-            <div class="el-kicker">{explore_ticker} · {explore_data.get('industry', '')}</div>
+            <div class="el-kicker">{explore_ticker} · {explore_industry_name}</div>
             <div class="el-company-title">{explore_name}</div>
             <p class="el-subtitle">
-                Historical IPO research based on the company's S-1 registration materials.
+                Primary-source research from SEC EDGAR, including current public-company
+                filings and IPO-era registration materials when available.
             </p>
             <div class="el-badges">
-                <span class="el-badge">{explore_s1.get('form', 'S-1')}</span>
-                <span class="el-badge">SEC EDGAR source</span>
-                <span class="el-badge">Historical filing context</span>
+                <span class="el-badge">{explore_sector}</span>
+                <span class="el-badge">{explore_country}</span>
+                <span class="el-badge">{registration_label}</span>
+                <span class="el-badge">SEC EDGAR</span>
             </div>
         </div>
         """,
         unsafe_allow_html=True
     )
 
-    if explore_s1:
-        meta_left, meta_right = st.columns(2)
-        with meta_left:
-            st.markdown("**Registration form**")
-            st.write(explore_s1.get("form", "S-1"))
-        with meta_right:
-            st.markdown("**Filed**")
-            st.write(explore_s1.get("filed_date", "N/A"))
-
-        section("Company Story", "How the Company Described Itself")
-        st.write(explore_s1.get("historical_context", "No S-1 summary is available yet."))
-
-        section("Research Guide", "What to Look for in the S-1")
-        st.write(explore_s1.get("what_to_learn", "No research guide is available yet."))
-
-        section("S-1 Detail Map", "What the Filing Covers")
-        detail_cols = st.columns(2)
-
-        with detail_cols[0]:
-            with st.expander("Business & Revenue Model", expanded=True):
-                st.markdown("Focus on how the company describes its products or services, who pays for them, how revenue is generated, whether revenue is recurring or usage-based, and which products or customer relationships management considered most important at the time.")
-                filing_points = explore_s1.get("filing_details", {}).get("business_revenue_model", [])
-                if filing_points:
-                    st.markdown("**From this company's S-1**")
-                    for point in filing_points:
-                        st.markdown(f"- {point}")
-
-            with st.expander("Customers & Go-to-Market"):
-                st.markdown("Review the customer base, target market, sales motion, distribution channels, customer concentration, expansion strategy, retention language, and any reliance on partners or resellers described in the filing.")
-                filing_points = explore_s1.get("filing_details", {}).get("customers_go_to_market", [])
-                if filing_points:
-                    st.markdown("**From this company's S-1**")
-                    for point in filing_points:
-                        st.markdown(f"- {point}")
-
-            with st.expander("Growth Strategy & Market Opportunity"):
-                st.markdown("Look for management's stated growth priorities, new-product plans, geographic expansion, market-size discussion, customer expansion strategy, and the assumptions behind the opportunity the company presented to public investors.")
-                filing_points = explore_s1.get("filing_details", {}).get("growth_market_opportunity", [])
-                if filing_points:
-                    st.markdown("**From this company's S-1**")
-                    for point in filing_points:
-                        st.markdown(f"- {point}")
-
-            with st.expander("Competition & Differentiation"):
-                st.markdown("The S-1 usually explains the competitive landscape, alternative products or technologies, larger incumbent competitors, and the capabilities management believed differentiated the company at the time of the offering.")
-                filing_points = explore_s1.get("filing_details", {}).get("competition_differentiation", [])
-                if filing_points:
-                    st.markdown("**From this company's S-1**")
-                    for point in filing_points:
-                        st.markdown(f"- {point}")
-
-        with detail_cols[1]:
-            with st.expander("Risk Factors", expanded=True):
-                st.markdown("Risk Factors can include dependence on growth, customer retention, large customers, suppliers or cloud providers, cybersecurity, regulation, international operations, competition, losses, stock-based compensation, and other company-specific exposures. EquityLens treats these as disclosed risks, not predictions.")
-                filing_points = explore_s1.get("filing_details", {}).get("risk_factors", [])
-                if filing_points:
-                    st.markdown("**From this company's S-1**")
-                    for point in filing_points:
-                        st.markdown(f"- {point}")
-
-            with st.expander("Financial Condition & Operating History"):
-                st.markdown("Review historical revenue, gross profit, operating expenses, net income or loss, cash flow, accumulated deficit, and management's discussion of the factors that affected results before the IPO.")
-                filing_points = explore_s1.get("filing_details", {}).get("financial_history", [])
-                if filing_points:
-                    st.markdown("**From this company's S-1**")
-                    for point in filing_points:
-                        st.markdown(f"- {point}")
-
-            with st.expander("IPO Structure, Capitalization & Dilution"):
-                st.markdown("Registration filings can describe the shares being offered, existing capitalization, preferred-stock conversion, dilution, voting rights, and how ownership changes when the company becomes public. Final pricing may appear in later amendments rather than the first S-1.")
-                filing_points = explore_s1.get("filing_details", {}).get("ipo_capitalization_dilution", [])
-                if filing_points:
-                    st.markdown("**From this company's S-1**")
-                    for point in filing_points:
-                        st.markdown(f"- {point}")
-
-            with st.expander("Use of Proceeds, Management & Ownership"):
-                st.markdown("Look for how the company expected to use offering proceeds, executive and director information, compensation disclosures, related-party matters, and principal stockholders. These sections help explain governance and ownership around the IPO.")
-                filing_points = explore_s1.get("filing_details", {}).get("proceeds_management_ownership", [])
-                if filing_points:
-                    st.markdown("**From this company's S-1**")
-                    for point in filing_points:
-                        st.markdown(f"- {point}")
-
-        st.caption(
-            "The exact level of detail varies by company and filing amendment. EquityLens uses the original SEC filing as the primary source."
+    if explore_sec_error:
+        st.warning(explore_sec_error)
+    else:
+        source_metrics = st.columns(4)
+        source_metrics[0].metric(
+            "Annual filing",
+            latest_annual.get("form", "N/A"),
+            latest_annual.get("filing_date") or None
+        )
+        source_metrics[1].metric(
+            "Quarterly filing",
+            latest_quarter.get("form", "N/A"),
+            latest_quarter.get("filing_date") or None
+        )
+        source_metrics[2].metric(
+            "Current report",
+            latest_current.get("form", "N/A"),
+            latest_current.get("filing_date") or None
+        )
+        source_metrics[3].metric(
+            "Registration",
+            primary_registration.get("form", "Not found"),
+            primary_registration.get("filing_date") or None
         )
 
-        section("How to Read It", "Questions to Keep in Mind")
-        st.markdown(
-            """
-            - **Business model:** What product or service did the company say it sells, and how does it make money?
-            - **Growth strategy:** How did management describe the path to adding customers, products, or markets?
-            - **Market opportunity:** What market did the company believe it was addressing at the time of the IPO?
-            - **Competitive position:** Which alternatives, technologies, or competitors did the filing identify?
-            - **Risk factors:** What could materially affect the business, operations, or ability to grow?
-            - **Economics:** What did the filing reveal about revenue mix, costs, profitability, and capital needs?
-            """
-        )
+        section("Registration", "IPO / Registration Filing History")
 
-        if explore_s1.get("source_url"):
-            st.link_button(
-                "Open original S-1 on SEC EDGAR",
-                explore_s1.get("source_url"),
-                key=f"explore_s1_source_{explore_ticker}"
+        if explore_registrations:
+            registration_table = pd.DataFrame(
+                [
+                    {
+                        "Filed": filing.get("filing_date", ""),
+                        "Form": filing.get("form", ""),
+                        "Description": (
+                            filing.get("description", "")
+                            or filing.get("primary_document", "")
+                        ),
+                        "SEC Filing": filing.get("url", "")
+                    }
+                    for filing in explore_registrations
+                ]
             )
 
-        st.info(
-            "S-1 filings are historical documents. This tab explains the company's IPO-era story rather than its current financial condition. "
-            "Use the original SEC filing for full detail, and use Industry Comparison and Filings for later-period research."
+            st.dataframe(
+                registration_table,
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "SEC Filing": st.column_config.LinkColumn(
+                        "SEC Filing",
+                        display_text="Open filing"
+                    )
+                }
+            )
+
+            if primary_registration.get("url"):
+                st.link_button(
+                    "Open primary registration filing on SEC EDGAR",
+                    primary_registration.get("url"),
+                    key="explore_primary_registration"
+                )
+        else:
+            st.info(
+                "No S-1, S-1/A, F-1, F-1/A, S-11, or S-11/A was found in the "
+                "issuer's available SEC submission history. That does not mean the company "
+                "never registered securities: older issuers may predate modern EDGAR coverage, "
+                "and some companies used a different registration path."
+            )
+
+        if deep_explore_s1:
+            section("EquityLens Deep Research", "Structured IPO Filing Analysis")
+
+            st.write(
+                deep_explore_s1.get(
+                    "historical_context",
+                    "Historical IPO context is available for this company."
+                )
+            )
+
+            st.markdown("**What to learn from the filing**")
+            st.write(
+                deep_explore_s1.get(
+                    "what_to_learn",
+                    "Review the original registration filing for business-model, risk, "
+                    "ownership, and financial-history context."
+                )
+            )
+
+            detail_cols = st.columns(2)
+            detail_map = deep_explore_s1.get("filing_details", {})
+
+            detail_sections = [
+                (
+                    "Business & Revenue Model",
+                    "business_revenue_model",
+                    "How the company described what it sells, who pays, and how revenue is generated."
+                ),
+                (
+                    "Customers & Go-to-Market",
+                    "customers_go_to_market",
+                    "Customer mix, sales motion, distribution, retention, and expansion strategy."
+                ),
+                (
+                    "Growth Strategy & Market Opportunity",
+                    "growth_market_opportunity",
+                    "Management's growth priorities, market opportunity, products, and expansion plans."
+                ),
+                (
+                    "Competition & Differentiation",
+                    "competition_differentiation",
+                    "Competitors, alternatives, and the capabilities management said differentiated the business."
+                ),
+                (
+                    "Risk Factors",
+                    "risk_factors",
+                    "Company-disclosed risks and operating dependencies."
+                ),
+                (
+                    "Financial Condition & Operating History",
+                    "financial_history",
+                    "Historical revenue, profitability, cash flow, and capital needs around the IPO."
+                ),
+                (
+                    "IPO Structure, Capitalization & Dilution",
+                    "ipo_capitalization_dilution",
+                    "Share structure, voting rights, capitalization, dilution, and offering mechanics."
+                ),
+                (
+                    "Use of Proceeds, Management & Ownership",
+                    "proceeds_management_ownership",
+                    "Use of proceeds, governance, executives, principal stockholders, and ownership."
+                )
+            ]
+
+            for idx, (label, field, explainer) in enumerate(detail_sections):
+                with detail_cols[idx % 2]:
+                    with st.expander(label, expanded=(idx < 2)):
+                        st.write(explainer)
+                        filing_points = detail_map.get(field, [])
+                        for point in filing_points:
+                            st.markdown(f"- {point}")
+
+            if deep_explore_s1.get("source_url"):
+                st.link_button(
+                    "Open EquityLens source registration filing",
+                    deep_explore_s1.get("source_url"),
+                    key="explore_deep_s1_source"
+                )
+        else:
+            section("Research Guide", "How to Read the Registration Filing")
+            st.markdown(
+                """
+                Use the original registration filing to examine:
+
+                - **Business model:** what the company sold and how it generated revenue.
+                - **Customers and go-to-market:** who bought the product and how the company reached them.
+                - **Growth strategy:** the opportunities management presented to prospective public investors.
+                - **Competition:** alternatives, competitors, and stated differentiation.
+                - **Risk factors:** material risks disclosed before or around the public listing.
+                - **Financial history:** revenue, costs, profitability, cash flow, and capital requirements.
+                - **Capitalization and dilution:** share classes, voting rights, preferred-stock conversion, and offering mechanics.
+                - **Use of proceeds and ownership:** how proceeds were expected to be used and who controlled the company.
+                """
+            )
+
+        section("Recent SEC Activity", "Current Company Filings")
+
+        if explore_filings:
+            recent_table = pd.DataFrame(
+                [
+                    {
+                        "Filed": filing.get("filing_date", ""),
+                        "Form": filing.get("form", ""),
+                        "Report Period": filing.get("report_date", ""),
+                        "Description": (
+                            filing.get("description", "")
+                            or filing.get("primary_document", "")
+                        ),
+                        "SEC Filing": filing.get("url", "")
+                    }
+                    for filing in explore_filings[:20]
+                ]
+            )
+
+            st.dataframe(
+                recent_table,
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "SEC Filing": st.column_config.LinkColumn(
+                        "SEC Filing",
+                        display_text="Open filing"
+                    )
+                }
+            )
+
+        if explore_sec.get("sec_company_url"):
+            st.link_button(
+                "Open complete SEC company filing history",
+                explore_sec.get("sec_company_url"),
+                key="explore_complete_sec_history"
+            )
+
+        st.caption(
+            "SEC filing metadata is resolved on demand and cached briefly for performance. "
+            "Registration filings are searched through both the current SEC submission feed "
+            "and the issuer's historical submission files."
         )
-    else:
-        st.info("S-1 research has not been added for this company yet.")
 
 
 with research_tab:
@@ -4589,54 +4797,75 @@ with sec_tracker_tab:
     registration_company = st.selectbox(
         "Company registration history",
         company_universe["Coverage Key"].tolist(),
+        format_func=lambda key: (
+            key.split(" (")[-1].rstrip(")")
+            + " · "
+            + key.rsplit(" (", 1)[0]
+        ),
         key="sec_registration_company"
     )
 
-    registration_feed = sec_filings.get(registration_company, {})
-    registration_rows = registration_feed.get("registration_filings", [])
+    registration_row = company_universe[
+        company_universe["Coverage Key"] == registration_company
+    ].iloc[0]
+    registration_ticker = str(registration_row.get("Ticker", ""))
 
-    if registration_rows:
-        registration_table = pd.DataFrame(
-            [
-                {
-                    "Filed": filing.get("filing_date", ""),
-                    "Form": filing.get("form", ""),
-                    "Description": (
-                        filing.get("description", "")
-                        or filing.get("primary_document", "")
-                    ),
-                    "SEC Filing": filing.get("url", "")
-                }
-                for filing in registration_rows
-            ]
-        )
+    try:
+        registration_feed = get_sec_company_research(registration_ticker)
+        registration_error = None
+    except Exception:
+        registration_feed = {}
+        registration_error = "SEC EDGAR is temporarily unavailable for this company."
 
-        st.dataframe(
-            registration_table,
-            use_container_width=True,
-            hide_index=True,
-            column_config={
-                "SEC Filing": st.column_config.LinkColumn(
-                    "SEC Filing",
-                    display_text="Open filing"
-                )
-            }
-        )
+    if registration_error:
+        st.warning(registration_error)
     else:
-        st.caption(
-            "No S-1, S-1/A, F-1, F-1/A, S-11, or S-11/A has been found in "
-            "the SEC submission history scanned for this company. Older issuers may "
-            "have gone public before modern EDGAR coverage or used another registration form."
+        registration_rows = registration_feed.get(
+            "registration_filings",
+            []
         )
 
-    registration_sec_url = registration_feed.get("sec_company_url", "")
-    if registration_sec_url:
-        st.link_button(
-            "Open complete SEC filing history",
-            registration_sec_url,
-            key="registration_sec_history",
-            use_container_width=True
-        )
+        if registration_rows:
+            registration_table = pd.DataFrame(
+                [
+                    {
+                        "Filed": filing.get("filing_date", ""),
+                        "Form": filing.get("form", ""),
+                        "Description": (
+                            filing.get("description", "")
+                            or filing.get("primary_document", "")
+                        ),
+                        "SEC Filing": filing.get("url", "")
+                    }
+                    for filing in registration_rows
+                ]
+            )
+
+            st.dataframe(
+                registration_table,
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "SEC Filing": st.column_config.LinkColumn(
+                        "SEC Filing",
+                        display_text="Open filing"
+                    )
+                }
+            )
+        else:
+            st.caption(
+                "No S-1, S-1/A, F-1, F-1/A, S-11, or S-11/A was found in "
+                "the SEC history available for this issuer."
+            )
+
+        registration_sec_url = registration_feed.get("sec_company_url", "")
+        if registration_sec_url:
+            st.link_button(
+                "Open complete SEC filing history",
+                registration_sec_url,
+                key="registration_sec_history",
+                use_container_width=True
+            )
 
 
 with learn_tab:
