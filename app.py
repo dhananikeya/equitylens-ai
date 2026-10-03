@@ -1989,12 +1989,32 @@ company_quarterly = load_json("data/company_quarterly.json")
 company_s1 = load_json("data/company_s1.json")
 sec_filings = load_json("data/sec_filings.json")
 
-company_universe = pd.read_csv("data/finviz_universe.csv")
+try:
+    company_universe = pd.read_csv("data/finviz_universe.csv")
+except pd.errors.ParserError:
+    company_universe = pd.read_csv(
+        "data/finviz_universe.csv",
+        engine="python",
+        on_bad_lines="skip"
+    )
+
+required_universe_columns = {
+    "Ticker", "Company", "Sector", "Industry", "Country"
+}
+if not required_universe_columns.issubset(company_universe.columns):
+    missing_columns = sorted(
+        required_universe_columns - set(company_universe.columns)
+    )
+    st.error(
+        "The expanded company-universe file is missing required columns: "
+        + ", ".join(missing_columns)
+    )
+    st.stop()
+
 for _column in ["Ticker", "Company", "Sector", "Industry", "Country"]:
-    if _column in company_universe.columns:
-        company_universe[_column] = (
-            company_universe[_column].fillna("").astype(str).str.strip()
-        )
+    company_universe[_column] = (
+        company_universe[_column].fillna("").astype(str).str.strip()
+    )
 company_universe["Ticker"] = company_universe["Ticker"].str.upper()
 company_universe["Coverage Key"] = (
     company_universe["Company"]
