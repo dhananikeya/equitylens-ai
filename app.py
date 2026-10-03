@@ -1240,13 +1240,17 @@ def get_live_market_data(symbols):
     }
 
 
-@st.cache_data(ttl=60)
+@st.cache_data(ttl=120)
 def get_finviz_screener_data(symbols=None, filters=None):
     export_url = st.secrets.get("FINVIZ_EXPORT_URL")
     api_key = st.secrets.get("FINVIZ_API_KEY")
-    api_url = st.secrets.get(
-        "FINVIZ_API_URL",
-        "https://elite.finviz.com/export.ashx"
+    configured_api_url = str(
+        st.secrets.get("FINVIZ_API_URL", "")
+    ).strip()
+    api_url = (
+        configured_api_url
+        if configured_api_url.startswith(("https://", "http://"))
+        else "https://elite.finviz.com/export.ashx"
     )
 
     headers = {"User-Agent": "EquityLens/1.0"}
@@ -1415,6 +1419,22 @@ def get_market_history(symbol, interval="1day", outputsize=60):
             history[column] = pd.to_numeric(history[column], errors="coerce")
 
     return history.dropna(subset=["datetime", "close"]).sort_values("datetime")
+
+
+def market_provider_error(provider, exc):
+    """Return a safe, user-facing provider error without exposing credentials."""
+    status_code = getattr(getattr(exc, "response", None), "status_code", None)
+
+    if status_code == 429:
+        return (
+            f"{provider} rate limit reached. EquityLens will keep the last cached data "
+            "and try again after the provider quota resets."
+        )
+
+    return (
+        f"{provider} is temporarily unavailable. Check the provider configuration "
+        "or try again shortly."
+    )
 
 
 def safe_float(value):
@@ -2998,6 +3018,11 @@ with market_tab:
             if company_data[company].get("ticker")
         ]
 
+        # Twelve Data's Basic plan allows 8 API credits/minute.
+        # Reserve two quote credits for SPY/QQQ and cap the automatic
+        # covered-company quote batch at six symbols.
+        twelve_quote_symbols = industry_symbols[:6]
+
         industry_market = {}
         benchmark_market = {}
         finviz_market = pd.DataFrame()
@@ -3005,10 +3030,9 @@ with market_tab:
 
         if public_market_data_enabled:
             try:
-                industry_market = get_live_market_data(industry_symbols)
+                industry_market = get_live_market_data(twelve_quote_symbols)
             except Exception as exc:
-                st.warning("Historical-chart market data is temporarily unavailable.")
-                st.caption(str(exc))
+                st.warning(market_provider_error("Twelve Data", exc))
 
             try:
                 benchmark_market = get_live_market_data(["SPY", "QQQ"])
@@ -3021,16 +3045,14 @@ with market_tab:
                     get_finviz_screener_data(industry_symbols)
                 )
             except Exception as exc:
-                st.warning("Finviz screener data is temporarily unavailable.")
-                st.caption(str(exc))
+                st.warning(market_provider_error("Finviz screener data", exc))
 
             try:
                 nyse_finviz = normalize_finviz_screener(
                     get_finviz_screener_data(filters="exch_nyse")
                 )
             except Exception as exc:
-                st.warning("NYSE Finviz data is temporarily unavailable.")
-                st.caption(str(exc))
+                st.warning(market_provider_error("NYSE Finviz data", exc))
 
         section("Pulse", "Market Snapshot")
 
