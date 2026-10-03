@@ -428,5 +428,117 @@
       "operating_income": -9168000,
       "net_income": -36118000
     }
+  },
+  "Coinbase (COIN)": {
+    "quarter_label": "FY2025 annual coverage",
+    "period_end": "2025-12-31",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1679788/000167978826000015/coin-20251231.htm",
+    "latest_quarter": {},
+    "prior_quarter": {},
+    "prior_year_quarter": {},
+    "current_ytd": {},
+    "prior_year_ytd": {},
+    "ltm": {
+      "revenue": 7181325000,
+      "gross_profit": null,
+      "operating_income": 1435441000,
+      "net_income": 1260327000
+    }
+  },
+  "Robinhood (HOOD)": {
+    "quarter_label": "FY2025 annual coverage",
+    "period_end": "2025-12-31",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000023/hood-20251231.htm",
+    "latest_quarter": {},
+    "prior_quarter": {},
+    "prior_year_quarter": {},
+    "current_ytd": {},
+    "prior_year_ytd": {},
+    "ltm": {
+      "revenue": 4473000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 1883000000
+    }
+  },
+  "Affirm (AFRM)": {
+    "quarter_label": "FY2026 annual coverage",
+    "period_end": "2026-06-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1820953/000162828026059279/afrm-20260630.htm",
+    "latest_quarter": {},
+    "prior_quarter": {},
+    "prior_year_quarter": {},
+    "current_ytd": {},
+    "prior_year_ytd": {},
+    "ltm": {
+      "revenue": 4261082000,
+      "gross_profit": null,
+      "operating_income": 416977000,
+      "net_income": 1929793000
+    }
+  },
+  "Block (XYZ)": {
+    "quarter_label": "FY2025 annual coverage",
+    "period_end": "2025-12-31",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1512673/000162828026012254/xyz-20251231.htm",
+    "latest_quarter": {},
+    "prior_quarter": {},
+    "prior_year_quarter": {},
+    "current_ytd": {},
+    "prior_year_ytd": {},
+    "ltm": {
+      "revenue": 24193683000,
+      "gross_profit": 10359929000,
+      "operating_income": 1708406000,
+      "net_income": 1304210000
+    }
+  },
+  "Toast (TOST)": {
+    "quarter_label": "FY2025 annual coverage",
+    "period_end": "2025-12-31",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1650164/000165016426000057/tost-20251231.htm",
+    "latest_quarter": {},
+    "prior_quarter": {},
+    "prior_year_quarter": {},
+    "current_ytd": {},
+    "prior_year_ytd": {},
+    "ltm": {
+      "revenue": 6153000000,
+      "gross_profit": 1593000000,
+      "operating_income": 292000000,
+      "net_income": 342000000
+    }
+  },
+  "BILL Holdings (BILL)": {
+    "quarter_label": "FY2026 annual coverage",
+    "period_end": "2026-06-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1786352/000162828026058238/bill-20260630.htm",
+    "latest_quarter": {},
+    "prior_quarter": {},
+    "prior_year_quarter": {},
+    "current_ytd": {},
+    "prior_year_ytd": {},
+    "ltm": {
+      "revenue": 1653160000,
+      "gross_profit": 1337865000,
+      "operating_income": -73447000,
+      "net_income": -11241000
+    }
+  },
+  "Marqeta (MQ)": {
+    "quarter_label": "FY2025 annual coverage",
+    "period_end": "2025-12-31",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1522540/000152254026000017/mq-20251231.htm",
+    "latest_quarter": {},
+    "prior_quarter": {},
+    "prior_year_quarter": {},
+    "current_ytd": {},
+    "prior_year_ytd": {},
+    "ltm": {
+      "revenue": 624884000,
+      "gross_profit": 437272000,
+      "operating_income": null,
+      "net_income": -13925000
+    }
   }
 }
