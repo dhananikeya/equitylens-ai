@@ -532,6 +532,66 @@ p,li,label,input,textarea,button,
     font-size:.68rem;
 }
 
+/* EquityLens structured research workspace */
+.el-research-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .85rem;
+    margin: .9rem 0 1.2rem;
+}
+
+.el-research-panel {
+    min-height: 170px;
+    padding: 1.25rem 1.3rem;
+    border: 1px solid var(--el-border);
+    border-radius: 9px;
+    background: #091217;
+}
+
+.el-research-panel.wide {
+    grid-column: 1 / -1;
+    min-height: 0;
+}
+
+.el-research-panel-kicker {
+    color: var(--el-teal);
+    font-family: var(--el-mono);
+    font-size: .7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.el-research-panel-title {
+    margin-top: .45rem;
+    color: var(--el-text);
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.el-research-panel-copy {
+    margin-top: .6rem;
+    color: var(--el-muted);
+    font-size: .88rem;
+    line-height: 1.65;
+}
+
+.el-risk-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+    margin-top: .75rem;
+}
+
+.el-risk-chip {
+    padding: .34rem .55rem;
+    border: 1px solid var(--el-border);
+    border-radius: 999px;
+    color: var(--el-muted);
+    font-family: var(--el-mono);
+    font-size: .68rem;
+}
+
 /* Native Streamlit surfaces */
 div[data-testid="stMetric"] {
     background:#091217 !important;
@@ -806,6 +866,8 @@ hr {
     .el-feature-grid { grid-template-columns:1fr; }
     .el-intent-grid { grid-template-columns:1fr 1fr; }
     .el-next-grid { grid-template-columns:1fr; }
+    .el-research-grid { grid-template-columns:1fr; }
+    .el-research-panel.wide { grid-column:auto; }
     .el-evidence-strip { flex-direction:column; align-items:flex-start; }
     .el-evidence-note { white-space:normal; }
 }
@@ -1184,10 +1246,11 @@ render_summary_cards([
     ("Monitoring", "Automatic SEC checks")
 ])
 
-home_tab, company_tab, peer_tab, sec_tracker_tab, learn_tab = st.tabs([
+home_tab, company_tab, peer_tab, research_tab, sec_tracker_tab, learn_tab = st.tabs([
     "Home",
     "Explore Companies",
     "Industry Comparison",
+    "EquityLens",
     "Filings",
     "Learn"
 ])
@@ -1215,9 +1278,9 @@ with home_tab:
                 <div class="el-intent-copy">Compare growth, margins, capital structure, business models, and risk themes on the same page.</div>
             </div>
             <div class="el-intent-card">
-                <div class="el-intent-label">Filings</div>
-                <div class="el-intent-title">What changed recently?</div>
-                <div class="el-intent-copy">Review newly detected SEC filings, reporting dates, form types, and direct links to the original disclosures.</div>
+                <div class="el-intent-label">EquityLens</div>
+                <div class="el-intent-title">What should I understand first?</div>
+                <div class="el-intent-copy">Get a structured company brief covering performance, business model, risk themes, recent changes, and source links without using a chatbot.</div>
             </div>
             <div class="el-intent-card">
                 <div class="el-intent-label">Learn</div>
@@ -1372,8 +1435,8 @@ with home_tab:
                 <div class="el-next-copy">Open Industry Comparison to see whether the company's growth, margins, and capital structure differ from selected peers.</div>
             </div>
             <div class="el-next-card">
-                <div class="el-next-title">Want the newest disclosures?</div>
-                <div class="el-next-copy">Open Filings to see recently detected SEC submissions and jump directly to the original source.</div>
+                <div class="el-next-title">Want the full research brief?</div>
+                <div class="el-next-copy">Open EquityLens for a structured view of the company's latest performance, business model, risk themes, and supporting filings.</div>
             </div>
         </div>
         """,
@@ -2171,6 +2234,240 @@ with company_tab:
         )
     else:
         st.info("S-1 research has not been added for this company yet.")
+
+
+with research_tab:
+    section("EquityLens", "Company Research Brief")
+
+    st.write(
+        "A structured company view for users who want the important context in one place without using a chatbot. "
+        "This page combines reported financials, calculated metrics, business-model context, disclosed risk themes, "
+        "and direct SEC source links."
+    )
+
+    research_industry = st.selectbox(
+        "Industry",
+        industries,
+        key="equitylens_research_industry"
+    )
+
+    research_companies = [
+        name for name, company in company_data.items()
+        if company.get("industry", "Unclassified") == research_industry
+    ]
+
+    research_company = st.selectbox(
+        "Company",
+        research_companies,
+        format_func=lambda name: (
+            f"{company_data[name].get('ticker', '')} · {name.split(' (')[0]}"
+        ),
+        key="equitylens_research_company"
+    )
+
+    research_data = company_data.get(research_company, {})
+    research_analysis = company_analysis.get(research_company, {})
+    research_qdata = company_quarterly.get(research_company, {})
+    research_qm = quarterly_metrics(research_qdata)
+    research_latest = research_qdata.get("latest_quarter", {})
+    research_ticker = research_data.get("ticker", "")
+    research_name = research_company.split(" (")[0]
+
+    st.markdown(
+        f"""
+        <div class="el-company-hero">
+            <div class="el-kicker">{research_ticker} · {research_data.get('industry', 'Unclassified')}</div>
+            <div class="el-company-title">{research_name}</div>
+            <p class="el-subtitle">{research_analysis.get('business_model', 'Company research is being prepared.')}</p>
+            <div class="el-badges">
+                <span class="el-badge">{research_qdata.get('quarter_label', f"FY{research_data.get('fiscal_year', '')}")}</span>
+                <span class="el-badge">SEC filing sourced</span>
+                <span class="el-badge">No chatbot</span>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    research_metrics = st.columns(4)
+
+    if research_latest.get("revenue") is not None:
+        research_revenue = research_latest.get("revenue")
+        research_growth = research_qm.get("yoy_growth")
+        research_margin = research_qm.get("operating_margin")
+        research_period = research_qdata.get("quarter_label", "Latest quarter")
+    else:
+        research_history = research_data.get("history", [])
+        prior_revenue = (
+            research_history[-2].get("revenue")
+            if len(research_history) >= 2 else None
+        )
+        research_revenue = research_data.get("revenue")
+        research_growth = calc_growth(research_data.get("revenue"), prior_revenue)
+        research_margin = calc_margin(
+            research_data.get("operating_income"),
+            research_data.get("revenue")
+        )
+        research_period = f"FY{research_data.get('fiscal_year', '')}"
+
+    research_metrics[0].metric("Revenue", format_money(research_revenue))
+    research_metrics[1].metric("YoY Growth", pct(research_growth))
+    research_metrics[2].metric("Operating Margin", pct(research_margin))
+    research_metrics[3].metric(
+        "Cash + Investments",
+        format_money(
+            research_data.get("capital_structure", {}).get("cash_and_investments")
+        )
+    )
+
+    section("Research Summary", "What to Understand First")
+
+    change_notes = build_change_notes(research_qdata)
+    if not change_notes:
+        annual_history = research_data.get("history", [])
+        if len(annual_history) >= 2:
+            latest_year = annual_history[-1]
+            prior_year = annual_history[-2]
+            annual_growth = calc_growth(
+                latest_year.get("revenue"),
+                prior_year.get("revenue")
+            )
+            if annual_growth is not None:
+                change_notes = [(
+                    "Annual revenue",
+                    f"Revenue changed {annual_growth:+.1f}% from FY{prior_year.get('fiscal_year')} "
+                    f"to FY{latest_year.get('fiscal_year')}."
+                )]
+
+    risk_themes = research_analysis.get("key_risk_themes", [])
+    risk_chips = "".join(
+        f'<span class="el-risk-chip">{risk}</span>'
+        for risk in risk_themes[:8]
+    )
+
+    change_copy = (
+        " ".join(note[1] for note in change_notes[:3])
+        if change_notes
+        else "Recent period-over-period changes are not yet fully standardized for this company."
+    )
+
+    st.markdown(
+        f"""
+        <div class="el-research-grid">
+            <div class="el-research-panel">
+                <div class="el-research-panel-kicker">Business model</div>
+                <div class="el-research-panel-title">How the company makes money</div>
+                <div class="el-research-panel-copy">
+                    {research_analysis.get('business_model', 'Business-model context is being prepared.')}
+                    <br><br>
+                    <strong style="color:#EEF3F5;">Primary revenue source:</strong>
+                    {research_analysis.get('primary_revenue_source', 'Not yet standardized.')}
+                </div>
+            </div>
+            <div class="el-research-panel">
+                <div class="el-research-panel-kicker">Customers</div>
+                <div class="el-research-panel-title">Who the business serves</div>
+                <div class="el-research-panel-copy">
+                    {research_analysis.get('customer_type', 'Customer context is being prepared.')}
+                </div>
+            </div>
+            <div class="el-research-panel">
+                <div class="el-research-panel-kicker">Recent performance</div>
+                <div class="el-research-panel-title">What changed in {research_period}</div>
+                <div class="el-research-panel-copy">{change_copy}</div>
+            </div>
+            <div class="el-research-panel">
+                <div class="el-research-panel-kicker">Operating context</div>
+                <div class="el-research-panel-title">What the business depends on</div>
+                <div class="el-research-panel-copy">
+                    {research_analysis.get('platform_dependency', 'Platform and operating dependencies are being prepared.')}
+                </div>
+            </div>
+            <div class="el-research-panel wide">
+                <div class="el-research-panel-kicker">Disclosed risk themes</div>
+                <div class="el-research-panel-title">What can materially affect the business</div>
+                <div class="el-research-panel-copy">
+                    {research_analysis.get('competitive_risk', '')}
+                    {(' ' + research_analysis.get('operational_risk', '')) if research_analysis.get('operational_risk') else ''}
+                </div>
+                <div class="el-risk-chip-row">{risk_chips}</div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    section("Context", "Profitability, Concentration & Exposure")
+    context_cols = st.columns(3)
+    with context_cols[0]:
+        st.markdown("**Profitability history**")
+        st.write(
+            research_analysis.get(
+                "profitability_history",
+                "Profitability history is being prepared."
+            )
+        )
+    with context_cols[1]:
+        st.markdown("**Customer concentration**")
+        st.write(
+            research_analysis.get(
+                "customer_concentration",
+                "Customer-concentration context is being prepared."
+            )
+        )
+    with context_cols[2]:
+        st.markdown("**International exposure**")
+        st.write(
+            research_analysis.get(
+                "international_exposure",
+                "International exposure context is being prepared."
+            )
+        )
+
+    section("Sources", "Verify the Research")
+    source_rows = []
+
+    annual_source = research_data.get("filing_url")
+    if annual_source:
+        source_rows.append({
+            "Source": research_data.get("source", "Annual filing"),
+            "Period": research_data.get("fiscal_year_end", "N/A"),
+            "SEC Filing": annual_source
+        })
+
+    quarterly_source = research_qdata.get("source_filing")
+    if quarterly_source and quarterly_source != annual_source:
+        source_rows.append({
+            "Source": research_qdata.get("quarter_label", "Latest quarterly filing"),
+            "Period": research_qdata.get("period_end", "N/A"),
+            "SEC Filing": quarterly_source
+        })
+
+    analysis_source = research_analysis.get("source_filing")
+    if analysis_source and analysis_source not in [row["SEC Filing"] for row in source_rows]:
+        source_rows.append({
+            "Source": "Business & risk source",
+            "Period": "See filing",
+            "SEC Filing": analysis_source
+        })
+
+    if source_rows:
+        st.dataframe(
+            pd.DataFrame(source_rows),
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "SEC Filing": st.column_config.LinkColumn(
+                    "SEC Filing",
+                    display_text="Open filing"
+                )
+            }
+        )
+
+    st.caption(
+        "EquityLens separates reported figures from calculated metrics and research summaries. "
+        "This page is designed to organize public information, not to rank securities or make investment recommendations."
+    )
 
 
 with sec_tracker_tab:
