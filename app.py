@@ -1605,14 +1605,62 @@ def render_nyse_market_monitor(nyse_finviz):
         subset=["_market_cap_num", "_change_num", "Sector"]
     )
     heatmap_df = heatmap_df[heatmap_df["_market_cap_num"] > 0]
+
+    available_sectors = sorted(
+        [
+            str(sector)
+            for sector in heatmap_df["Sector"].dropna().unique().tolist()
+            if str(sector).strip()
+        ]
+    )
+
+    heat_controls = st.columns([1.35, 1, 1.15])
+    with heat_controls[0]:
+        selected_heat_sector = st.selectbox(
+            "Heat map sector",
+            ["All sectors"] + available_sectors,
+            key="nyse_heatmap_sector"
+        )
+    with heat_controls[1]:
+        heatmap_limit = st.select_slider(
+            "Companies shown",
+            options=[40, 60, 80, 100, 120],
+            value=120,
+            key="nyse_heatmap_limit"
+        )
+    with heat_controls[2]:
+        heatmap_search = st.text_input(
+            "Find ticker",
+            placeholder="e.g. JPM",
+            key="nyse_heatmap_search"
+        ).strip().upper()
+
+    if selected_heat_sector != "All sectors":
+        heatmap_df = heatmap_df[
+            heatmap_df["Sector"].astype(str) == selected_heat_sector
+        ]
+
     heatmap_df = heatmap_df.sort_values(
         "_market_cap_num",
         ascending=False
-    ).head(120)
+    ).head(heatmap_limit)
 
     if heatmap_df.empty:
-        st.caption("Finviz did not return enough NYSE data to draw the heat map.")
+        st.caption("No NYSE companies match the current heat-map filters.")
         return
+
+    matching_tickers = set()
+    if heatmap_search:
+        matching_tickers = set(
+            heatmap_df.loc[
+                heatmap_df["Ticker"].astype(str).str.upper().str.contains(
+                    heatmap_search,
+                    regex=False,
+                    na=False
+                ),
+                "Ticker"
+            ].astype(str).tolist()
+        )
 
     sector_rows = (
         heatmap_df.groupby("Sector", dropna=False)
@@ -1646,7 +1694,9 @@ def render_nyse_market_monitor(nyse_finviz):
             sector_name,
             "",
             "",
-            float(sector_row["_sector_change"])
+            float(sector_row["_sector_change"]),
+            float(sector_row["_sector_cap"]),
+            ""
         ])
 
     for _, stock_row in heatmap_df.iterrows():
@@ -1665,7 +1715,9 @@ def render_nyse_market_monitor(nyse_finviz):
             company_name,
             sector_name,
             ("$" + f"{price_value:,.2f}") if price_value is not None else "N/A",
-            change_value
+            change_value,
+            float(stock_row["_market_cap_num"]),
+            "Match" if ticker_symbol in matching_tickers else ""
         ])
 
     heat_fig = go.Figure(
@@ -1675,6 +1727,20 @@ def render_nyse_market_monitor(nyse_finviz):
             parents=heat_parents,
             values=heat_values,
             branchvalues="total",
+            maxdepth=2,
+            pathbar={
+                "visible": True,
+                "textfont": {
+                    "family": "IBM Plex Mono",
+                    "size": 12,
+                    "color": "#C6D0D5"
+                },
+                "thickness": 28
+            },
+            tiling={
+                "packing": "squarify",
+                "pad": 2
+            },
             marker={
                 "colors": heat_colors,
                 "colorscale": [
@@ -1685,7 +1751,7 @@ def render_nyse_market_monitor(nyse_finviz):
                     [1.0, "#16C7B2"]
                 ],
                 "cmid": 0,
-                "line": {"color": "#050B0E", "width": 1}
+                "line": {"color": "#050B0E", "width": 1.4}
             },
             customdata=heat_custom,
             hovertemplate=(
@@ -1693,11 +1759,22 @@ def render_nyse_market_monitor(nyse_finviz):
                 "%{customdata[0]}<br>"
                 "Sector: %{customdata[1]}<br>"
                 "Price: %{customdata[2]}<br>"
-                "Daily change: %{customdata[3]:+.2f}%"
+                "Daily change: %{customdata[3]:+.2f}%<br>"
+                "Market cap: $%{customdata[4]:,.0f}<br>"
+                "%{customdata[5]}"
                 "<extra></extra>"
             ),
             texttemplate="<b>%{label}</b><br>%{customdata[3]:+.1f}%",
-            textfont={"family": "IBM Plex Mono", "size": 13}
+            textfont={"family": "IBM Plex Mono", "size": 13},
+            hoverlabel={
+                "bgcolor": "#091217",
+                "bordercolor": "#263640",
+                "font": {
+                    "family": "IBM Plex Sans",
+                    "color": "#EEF3F5"
+                }
+            },
+            root={"color": "#071014"}
         )
     )
     heat_fig.update_layout(
@@ -1714,9 +1791,19 @@ def render_nyse_market_monitor(nyse_finviz):
         config={"displayModeBar": False}
     )
     st.caption(
-        "Tile size represents market capitalization. Color represents daily price change. "
-        "The map shows the 120 largest NYSE companies returned by the current Finviz screen."
+        "Click a sector to drill into it, then use the breadcrumb above the map to return. "
+        "Tile size represents market capitalization and color represents daily price change."
     )
+
+    if heatmap_search:
+        if matching_tickers:
+            st.caption(
+                "Ticker search match: " + ", ".join(sorted(matching_tickers))
+            )
+        else:
+            st.caption(
+                f'No displayed ticker matches "{heatmap_search}". Try a broader search or show more companies.'
+            )
 
 
 def safe_float(value):
