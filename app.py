@@ -22,287 +22,53 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
 
     :root {
-        --el-font: "IBM Plex Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-        /* Follow Streamlit's active System / Light / Dark theme automatically. */
-        --el-bg: var(--background-color);
-        --el-surface: var(--secondary-background-color);
-        --el-surface-2: color-mix(
-            in srgb,
-            var(--secondary-background-color) 82%,
-            var(--background-color)
-        );
-        --el-border: color-mix(in srgb, var(--text-color) 16%, transparent);
-        --el-text: var(--text-color);
-        --el-muted: color-mix(in srgb, var(--text-color) 62%, transparent);
-        --el-teal: #14B8A6;
-        --el-blue: #3B82F6;
-        --el-gold: #D99A13;
-        --el-green: #16A34A;
-        --el-red: #DC2626;
+        --el-bg: #050b0e;
+        --el-panel: #0a1318;
+        --el-panel-2: #0d171d;
+        --el-panel-3: #111c24;
+        --el-border: #263640;
+        --el-border-soft: rgba(130, 154, 166, .18);
+        --el-text: #eef3f5;
+        --el-muted: #8f9ca6;
+        --el-muted-2: #63727d;
+        --el-teal: #16c7b2;
+        --el-teal-soft: rgba(22, 199, 178, .12);
+        --el-blue: #7dd3fc;
+        --el-red: #ff6b72;
+        --el-font: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+        --el-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
     }
 
     html, body, .stApp {
-        font-family: var(--el-font);
+        font-family: var(--el-font) !important;
+        background: var(--el-bg) !important;
+        color: var(--el-text) !important;
     }
 
-    /* Preserve Streamlit's icon font. Applying the app font to every descendant
-       turns Material Symbol ligatures into literal text such as "double_arrow_right". */
-    .material-symbols-rounded,
-    [data-testid="stIconMaterial"] {
-        font-family: "Material Symbols Rounded" !important;
-        font-weight: normal !important;
-        font-style: normal !important;
-        letter-spacing: normal !important;
-        text-transform: none !important;
-        white-space: nowrap !important;
-        word-wrap: normal !important;
-        direction: ltr !important;
-        font-feature-settings: "liga" !important;
-        -webkit-font-feature-settings: "liga" !important;
-        -webkit-font-smoothing: antialiased !important;
-    }
-
-    .stApp {
-        font-size: 0.98rem;
-        line-height: 1.55;
-        background:
-            radial-gradient(
-                circle at 10% 0%,
-                color-mix(in srgb, var(--el-teal) 8%, transparent),
-                transparent 28%
-            ),
-            radial-gradient(
-                circle at 90% 10%,
-                color-mix(in srgb, var(--el-blue) 8%, transparent),
-                transparent 30%
-            ),
-            var(--el-bg);
-        color: var(--el-text);
+    [data-testid="stHeader"],
+    [data-testid="stToolbar"],
+    [data-testid="stDecoration"],
+    footer,
+    #MainMenu {
+        display: none !important;
+        visibility: hidden !important;
     }
 
     .block-container {
-        max-width: 1450px;
-        padding-top: 1.8rem;
-        padding-bottom: 4rem;
+        max-width: 100% !important;
+        padding: 88px 0 0 0 !important;
     }
 
-    .el-hero {
-        padding: 2rem 2.2rem;
-        border: 1px solid var(--el-border);
-        border-radius: 10px;
-        background: linear-gradient(135deg, var(--el-surface), var(--el-surface-2));
-        box-shadow: 0 20px 60px rgba(0,0,0,0.22);
-        margin-bottom: 1.4rem;
+    .stApp {
+        background:
+            radial-gradient(circle at 76% 19%, rgba(22,199,178,.035), transparent 25%),
+            var(--el-bg) !important;
     }
-
-    .el-company-hero {
-        padding: 1.6rem 1.8rem;
-        border: 1px solid var(--el-border);
-        border-radius: 10px;
-        background: linear-gradient(135deg, var(--el-surface-2), var(--el-surface));
-        margin: 0.8rem 0 1.3rem 0;
-    }
-
-    .el-kicker {
-        color: var(--el-teal);
-        font-size: 0.78rem;
-        font-weight: 600;
-        letter-spacing: 0.10em;
-        text-transform: uppercase;
-        margin-bottom: 0.45rem;
-    }
-
-    .el-title {
-        font-size: clamp(2.2rem, 5vw, 4.2rem);
-        line-height: 0.98;
-        font-weight: 700;
-        letter-spacing: -0.025em;
-        color: var(--el-text);
-        margin: 0 0 0.8rem 0;
-    }
-
-    .el-title span { color: var(--el-teal); }
-
-    .el-company-title {
-        font-size: clamp(1.8rem, 4vw, 3rem);
-        line-height: 1.05;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        color: var(--el-text);
-        margin-bottom: 0.5rem;
-    }
-
-    .el-subtitle {
-        max-width: 900px;
-        font-size: 1.02rem;
-        line-height: 1.65;
-        color: color-mix(in srgb, var(--el-text) 82%, transparent);
-        margin: 0;
-    }
-
-    .el-badges {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.55rem;
-        margin-top: 1.1rem;
-    }
-
-    .el-badge {
-        padding: 0.42rem 0.7rem;
-        border-radius: 8px;
-        border: 1px solid var(--el-border);
-        background: color-mix(in srgb, var(--el-text) 5%, transparent);
-        color: color-mix(in srgb, var(--el-text) 78%, transparent);
-        font-size: 0.78rem;
-        font-weight: 600;
-    }
-
-    .el-section {
-        margin-top: 1.65rem;
-        margin-bottom: 0.55rem;
-    }
-
-    .el-section-label {
-        color: var(--el-teal);
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        font-size: 0.74rem;
-        font-weight: 800;
-        margin-bottom: 0.2rem;
-    }
-
-    .el-section-title {
-        font-size: 1.65rem;
-        font-weight: 700;
-        color: var(--el-text);
-        letter-spacing: -0.02em;
-        margin: 0;
-    }
-
-    .el-summary-card, .el-change-card, .el-risk-card {
-        border: 1px solid var(--el-border);
-        border-radius: 12px;
-        background: linear-gradient(180deg, var(--el-surface-2), var(--el-surface));
-        box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-    }
-
-    .el-summary-card {
-        min-height: 145px;
-        padding: 1.2rem 1.3rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .el-summary-label {
-        color: var(--el-muted);
-        font-size: 0.88rem;
-        font-weight: 600;
-        margin-bottom: 0.55rem;
-    }
-
-    .el-summary-value {
-        color: var(--el-text);
-        font-size: 1.7rem;
-        line-height: 1.2;
-        font-weight: 700;
-        letter-spacing: -0.015em;
-        overflow-wrap: anywhere;
-    }
-
-    .el-change-card, .el-risk-card {
-        padding: 1rem 1.1rem;
-        margin: 0.6rem 0;
-    }
-
-    .el-change-title, .el-risk-title {
-        color: var(--el-text);
-        font-size: 1rem;
-        font-weight: 700;
-        margin-bottom: 0.35rem;
-    }
-
-    .el-change-copy {
-        color: color-mix(in srgb, var(--el-text) 88%, transparent);
-        line-height: 1.55;
-        margin: 0;
-    }
-
-    .el-risk-list {
-        margin: 0;
-        padding-left: 1.1rem;
-        color: color-mix(in srgb, var(--el-text) 88%, transparent);
-        line-height: 1.5;
-    }
-
-    .el-risk-list li { margin: 0.25rem 0; }
-
-    div[data-testid="stMetric"] {
-        background: linear-gradient(180deg, var(--el-surface-2), var(--el-surface));
-        border: 1px solid var(--el-border);
-        border-radius: 12px;
-        padding: 1rem 1.1rem;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.14);
-    }
-
-    div[data-testid="stMetricLabel"] { color: var(--el-muted); }
-    div[data-testid="stMetricValue"] { color: var(--el-text); font-weight: 750; }
-
-    .stButton > button {
-        min-height: 3rem;
-        border-radius: 8px;
-        border: 1px solid rgba(45, 212, 191, 0.35);
-        background: linear-gradient(135deg, #13B8A6, #2F7FEA);
-        color: white;
-        font-weight: 700;
-        padding: 0.7rem 1.35rem;
-        box-shadow: 0 10px 28px rgba(47,127,234,0.18);
-    }
-
-    .stButton > button:hover {
-        border-color: rgba(45, 212, 191, 0.75);
-        filter: brightness(1.05);
-        color: white;
-    }
-
-    div[data-baseweb="select"] > div {
-        background: var(--el-surface);
-        border-color: var(--el-border);
-        border-radius: 8px;
-    }
-
-    div[data-testid="stDataFrame"] {
-        border: 1px solid var(--el-border);
-        border-radius: 10px;
-        overflow: hidden;
-        background: color-mix(in srgb, var(--el-surface) 88%, transparent);
-    }
-
-    div[data-testid="stExpander"] {
-        border: 1px solid var(--el-border);
-        border-radius: 10px;
-        background: color-mix(in srgb, var(--el-surface) 82%, transparent);
-    }
-
-    div[data-testid="stAlert"] { border-radius: 14px; }
-
-    hr {
-        border-color: color-mix(in srgb, var(--el-text) 12%, transparent) !important;
-        margin: 1.8rem 0 !important;
-    }
-
-    .stCaption, small { color: var(--el-muted) !important; }
 
     h1, h2, h3, h4, h5, h6,
-    [data-testid="stHeadingWithActionElements"] {
-        font-family: var(--el-font) !important;
-        font-weight: 700 !important;
-        letter-spacing: -0.018em;
-    }
-
     p, li, label, input, textarea, button,
     [data-testid="stMarkdownContainer"],
     [data-testid="stMetricLabel"],
@@ -311,563 +77,903 @@ st.markdown(
         font-family: var(--el-font) !important;
     }
 
-    [data-baseweb="tab"] {
-        font-weight: 600 !important;
-        letter-spacing: 0.005em;
+    .material-symbols-rounded,
+    [data-testid="stIconMaterial"] {
+        font-family: "Material Symbols Rounded" !important;
+        font-weight: normal !important;
+        font-style: normal !important;
+        letter-spacing: normal !important;
+        text-transform: none !important;
+        white-space: nowrap !important;
+        font-feature-settings: "liga" !important;
+        -webkit-font-feature-settings: "liga" !important;
     }
 
-    .stButton > button,
-    .stLinkButton > a {
-        font-weight: 600 !important;
-        letter-spacing: 0.005em;
-    }
-
-
-    .el-product-hero {
-        position: relative;
-        overflow: hidden;
-        padding: clamp(2rem, 5vw, 4.3rem);
-        border: 1px solid var(--el-border);
-        border-radius: 18px;
-        background:
-            linear-gradient(135deg,
-                color-mix(in srgb, var(--el-surface) 98%, transparent),
-                color-mix(in srgb, var(--el-surface-2) 94%, transparent));
-        box-shadow: 0 22px 65px rgba(0,0,0,0.15);
-        margin-bottom: 1.2rem;
-        isolation: isolate;
-    }
-
-    .el-product-hero::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: -2;
-        pointer-events: none;
-        background:
-            linear-gradient(
-                90deg,
-                transparent 0%,
-                transparent 58%,
-                color-mix(in srgb, var(--el-teal) 4%, transparent) 58%,
-                transparent 100%
-            ),
-            repeating-linear-gradient(
-                0deg,
-                transparent 0 27px,
-                color-mix(in srgb, var(--el-text) 5%, transparent) 27px 28px
-            );
-        mask-image: linear-gradient(90deg, transparent 0%, transparent 48%, black 76%, black 100%);
-        -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 48%, black 76%, black 100%);
-        opacity: .75;
-    }
-
-    .el-product-hero::after {
-        content: "";
-        position: absolute;
-        right: -6%;
-        top: -30%;
-        width: 46%;
-        height: 150%;
-        z-index: -1;
-        pointer-events: none;
-        background:
-            radial-gradient(
-                circle at 42% 40%,
-                color-mix(in srgb, var(--el-blue) 12%, transparent) 0%,
-                transparent 48%
-            ),
-            radial-gradient(
-                circle at 72% 66%,
-                color-mix(in srgb, var(--el-teal) 10%, transparent) 0%,
-                transparent 44%
-            );
-        filter: blur(8px);
-        opacity: .85;
-    }
-
-    .el-eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: .45rem;
-        padding: .38rem .68rem;
-        border-radius: 7px;
-        border: 1px solid color-mix(in srgb, var(--el-teal) 38%, transparent);
-        background: color-mix(in srgb, var(--el-teal) 9%, transparent);
-        color: var(--el-teal);
-        font-size: .76rem;
-        font-weight: 600;
-        letter-spacing: .07em;
-        text-transform: uppercase;
-        margin-bottom: 1rem;
-    }
-
-    .el-product-title {
-        max-width: 980px;
-        margin: 0;
-        font-size: clamp(2.6rem, 6vw, 4.7rem);
-        line-height: 1.0;
-        letter-spacing: -.035em;
-        font-weight: 700;
-        color: var(--el-text);
-    }
-
-    .el-product-title span {
-        background: linear-gradient(90deg, var(--el-teal), var(--el-blue));
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-    }
-
-    .el-product-subtitle {
-        max-width: 800px;
-        margin: 1.2rem 0 0 0;
-        font-size: clamp(1rem, 2vw, 1.18rem);
-        line-height: 1.65;
-        color: color-mix(in srgb, var(--el-text) 76%, transparent);
-    }
-
-    .el-trust-strip {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: .85rem;
-        margin: 1.05rem 0 1.5rem 0;
-    }
-
-    .el-trust-item {
-        min-height: 72px;
-        box-sizing: border-box;
+    /* ---------- fixed product header ---------- */
+    .el-topbar {
+        position: fixed;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 88px;
         display: flex;
         align-items: center;
-        justify-content: center;
-        padding: 1rem 1.1rem;
-        text-align: center;
-        font-size: .86rem;
-        font-weight: 600;
+        justify-content: space-between;
+        padding: 0 26px;
+        box-sizing: border-box;
+        background: rgba(5, 11, 14, .97);
+        border-bottom: 1px solid var(--el-border);
+        backdrop-filter: blur(12px);
+    }
+
+    .el-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 15px;
         color: var(--el-text) !important;
-        border: 1px solid rgba(71, 163, 155, .72) !important;
-        border-radius: 12px !important;
-        background: rgba(18, 27, 33, .72) !important;
-        box-shadow:
-            inset 0 1px 0 rgba(255,255,255,.025),
-            0 10px 28px rgba(0,0,0,.12) !important;
-        transition: transform .18s ease, border-color .18s ease, background .18s ease;
-    }
-
-    .el-trust-item:hover {
-        transform: translateY(-2px);
-        border-color: rgba(45, 212, 191, .95) !important;
-        background: rgba(20, 184, 166, .08) !important;
-    }
-
-    .el-feature-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: .9rem;
-        margin: .8rem 0 1.2rem 0;
-    }
-
-    .el-feature-card {
-        min-height: 188px;
-        padding: 1.5rem;
-        border: 1px solid rgba(148, 163, 184, .18);
-        border-radius: 14px;
-        background:
-            linear-gradient(180deg,
-                rgba(255,255,255,.025),
-                rgba(255,255,255,.008));
-        box-shadow: 0 16px 42px rgba(0,0,0,.08);
-        transition: transform .2s ease, border-color .2s ease;
-    }
-
-    .el-feature-card:hover {
-        transform: translateY(-3px);
-        border-color: rgba(45, 212, 191, .48);
-    }
-
-    .el-feature-num {
-        color: var(--el-teal);
-        font-size: .76rem;
-        font-weight: 600;
-        letter-spacing: .08em;
-        text-transform: uppercase;
-    }
-
-    .el-feature-title {
-        margin-top: .5rem;
-        color: var(--el-text);
-        font-size: 1.12rem;
+        text-decoration: none !important;
         font-weight: 700;
+        font-size: 1.28rem;
+        letter-spacing: -.02em;
     }
 
-    .el-feature-copy {
-        margin-top: .45rem;
-        color: color-mix(in srgb, var(--el-text) 72%, transparent);
-        line-height: 1.55;
+    .el-brand strong { color: var(--el-teal); font-weight: 700; }
+
+    .el-logo-mark {
+        width: 35px;
+        height: 35px;
+        border: 1px solid var(--el-border);
+        border-radius: 6px;
+        background: #0c151a;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 4px;
+        padding: 7px 7px 8px;
+        box-sizing: border-box;
+    }
+
+    .el-logo-mark i {
+        display: block;
+        width: 4px;
+        border-radius: 1px;
+        background: var(--el-teal);
+    }
+    .el-logo-mark i:nth-child(1) { height: 8px; opacity: .55; }
+    .el-logo-mark i:nth-child(2) { height: 15px; opacity: .8; }
+    .el-logo-mark i:nth-child(3) { height: 22px; }
+
+    .el-top-actions {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .el-search-link,
+    .el-workspace-link {
+        color: var(--el-text) !important;
+        text-decoration: none !important;
+    }
+
+    .el-search-link {
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+    }
+
+    .el-search-link svg {
+        width: 21px;
+        height: 21px;
+        stroke: var(--el-text);
+    }
+
+    .el-workspace-link {
+        border: 1px solid var(--el-border);
+        border-radius: 8px;
+        padding: 12px 18px;
+        font-weight: 600;
+        background: rgba(255,255,255,.01);
+    }
+
+    .el-workspace-link:hover {
+        border-color: rgba(22,199,178,.55);
+        background: rgba(22,199,178,.045);
+    }
+
+    .el-menu {
+        position: relative;
+    }
+
+    .el-menu summary {
+        list-style: none;
+        cursor: pointer;
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        color: var(--el-text);
+        font-size: 1.6rem;
+        line-height: 1;
+        user-select: none;
+    }
+
+    .el-menu summary::-webkit-details-marker { display: none; }
+
+    .el-menu-panel {
+        position: absolute;
+        top: 48px;
+        right: 0;
+        width: 250px;
+        padding: 8px;
+        border: 1px solid var(--el-border);
+        border-radius: 10px;
+        background: #091116;
+        box-shadow: 0 24px 70px rgba(0,0,0,.45);
+    }
+
+    .el-menu-panel a {
+        display: block;
+        padding: 11px 12px;
+        color: var(--el-muted) !important;
+        text-decoration: none !important;
+        border-radius: 6px;
         font-size: .92rem;
     }
 
-    .el-company-card {
-        min-height: 150px;
-        padding: 1.15rem;
-        border: 1px solid var(--el-border);
-        border-radius: 12px;
-        background: color-mix(in srgb, var(--el-surface) 92%, transparent);
-        box-shadow: 0 10px 30px rgba(0,0,0,.08);
+    .el-menu-panel a:hover {
+        color: var(--el-text) !important;
+        background: rgba(22,199,178,.07);
     }
 
-    .el-company-card-ticker {
-        color: var(--el-teal);
-        font-size: .78rem;
+    /* ---------- full-bleed sections ---------- */
+    .el-page-section {
+        padding: 96px max(24px, calc((100vw - 1390px) / 2));
+        box-sizing: border-box;
+        border-bottom: 1px solid var(--el-border);
+    }
+
+    .el-grid-bg {
+        background-color: var(--el-bg);
+        background-image:
+            linear-gradient(rgba(52, 73, 83, .26) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(52, 73, 83, .26) 1px, transparent 1px),
+            radial-gradient(circle at 71% 37%, rgba(22,199,178,.07), transparent 29%);
+        background-size: 73px 73px, 73px 73px, auto;
+    }
+
+    .el-hero {
+        min-height: 775px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 86px;
+        padding-bottom: 76px;
+    }
+
+    .el-hero-kicker {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 46px;
+        color: var(--el-muted);
+        font-size: 1.02rem;
+    }
+
+    .el-hero-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--el-teal);
+        box-shadow: 0 0 0 4px rgba(22,199,178,.05);
+    }
+
+    .el-hero-title {
+        max-width: 980px;
+        margin: 0;
+        font-size: clamp(4.3rem, 7.25vw, 7rem);
+        line-height: .98;
+        letter-spacing: -.055em;
         font-weight: 600;
-        letter-spacing: .08em;
-    }
-
-    .el-company-card-name {
-        margin-top: .25rem;
         color: var(--el-text);
-        font-size: 1.08rem;
-        font-weight: 700;
     }
 
-    .el-company-card-meta {
-        margin-top: .55rem;
-        color: var(--el-muted);
-        font-size: .84rem;
-        line-height: 1.45;
+    .el-hero-title .muted-line {
+        color: #7f8b94;
     }
 
-    .el-ai-panel {
-        position: relative;
-        overflow: hidden;
-        margin: 1.1rem 0 1.8rem 0;
-        padding: 1.5rem 1.55rem;
-        border: 1px solid rgba(59, 130, 246, .28);
-        border-radius: 14px;
-        background:
-            radial-gradient(circle at 92% 14%, rgba(59, 130, 246, .10), transparent 28%),
-            radial-gradient(circle at 78% 90%, rgba(20, 184, 166, .08), transparent 26%),
-            linear-gradient(180deg, rgba(255,255,255,.018), rgba(255,255,255,.004));
-        box-shadow: 0 18px 44px rgba(0,0,0,.10);
+    .el-hero-copy {
+        max-width: 930px;
+        margin: 42px 0 0 0;
+        color: #8f9ca6;
+        font-size: clamp(1.05rem, 1.65vw, 1.38rem);
+        line-height: 1.75;
     }
 
-    .el-ai-panel::after {
-        content: "AI";
-        position: absolute;
-        right: 1.35rem;
-        top: .8rem;
-        color: rgba(148, 163, 184, .08);
-        font-size: 5rem;
-        font-weight: 700;
-        letter-spacing: -.08em;
-        pointer-events: none;
-    }
-
-    .el-ai-kicker {
-        position: relative;
-        z-index: 1;
-        color: var(--el-teal);
-        font-size: .72rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: .11em;
-        margin-bottom: .4rem;
-    }
-
-    .el-ai-title {
-        position: relative;
-        z-index: 1;
-        color: var(--el-text);
-        font-size: 1.35rem;
-        font-weight: 700;
-        letter-spacing: -.018em;
-        margin-bottom: .45rem;
-    }
-
-    .el-ai-copy {
-        position: relative;
-        z-index: 1;
-        max-width: 760px;
-        color: var(--el-muted);
-        font-size: .91rem;
-        line-height: 1.55;
-    }
-
-    .el-ai-chips {
-        position: relative;
-        z-index: 1;
+    .el-hero-actions {
         display: flex;
         flex-wrap: wrap;
-        gap: .45rem;
-        margin-top: .85rem;
+        gap: 16px;
+        margin-top: 44px;
     }
 
-    .el-ai-chip {
-        padding: .34rem .55rem;
-        border: 1px solid rgba(148, 163, 184, .18);
+    .el-hero-btn {
+        min-width: 250px;
+        padding: 15px 21px;
         border-radius: 7px;
-        color: color-mix(in srgb, var(--el-text) 78%, transparent);
-        font-size: .72rem;
-        background: rgba(255,255,255,.015);
+        border: 1px solid var(--el-border);
+        text-decoration: none !important;
+        color: var(--el-text) !important;
+        font-weight: 600;
+        text-align: center;
+        box-sizing: border-box;
     }
 
-    .el-answer-card {
-        padding: 1.2rem 1.3rem;
-        border: 1px solid color-mix(in srgb, var(--el-teal) 28%, var(--el-border));
-        border-radius: 12px;
-        background:
-            linear-gradient(135deg,
-                color-mix(in srgb, var(--el-teal) 7%, var(--el-surface)),
-                color-mix(in srgb, var(--el-blue) 5%, var(--el-surface)));
-        margin: .8rem 0;
+    .el-hero-btn.primary {
+        color: #03110f !important;
+        border-color: var(--el-teal);
+        background: var(--el-teal);
     }
 
-    .el-answer-kicker {
+    .el-hero-btn:hover { border-color: var(--el-teal); }
+
+    .el-motto {
+        margin-top: 44px;
+        font-family: var(--el-mono);
         color: var(--el-teal);
+        font-size: 1rem;
+        letter-spacing: .01em;
+    }
+
+    .el-trust-row {
+        min-height: 105px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 56px;
+        padding: 0 24px;
+        border-bottom: 1px solid var(--el-border);
+        background: #071014;
+        box-sizing: border-box;
+    }
+
+    .el-trust-point {
+        display: inline-flex;
+        align-items: center;
+        gap: 11px;
+        color: var(--el-muted);
+        font-size: .93rem;
+        white-space: nowrap;
+    }
+
+    .el-trust-check {
+        width: 16px;
+        height: 16px;
+        border: 1px solid var(--el-teal);
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        color: var(--el-teal);
+        font-size: .65rem;
+        line-height: 1;
+    }
+
+    .el-eyebrow {
+        font-family: var(--el-mono);
+        color: var(--el-teal);
+        text-transform: uppercase;
+        font-size: .82rem;
+        font-weight: 600;
+        letter-spacing: .035em;
+        margin-bottom: 22px;
+    }
+
+    .el-section-heading {
+        margin: 0;
+        max-width: 1050px;
+        color: var(--el-text);
+        font-size: clamp(2.35rem, 4vw, 3.55rem);
+        line-height: 1.08;
+        letter-spacing: -.035em;
+        font-weight: 600;
+    }
+
+    .el-section-copy {
+        margin-top: 24px;
+        max-width: 920px;
+        color: var(--el-muted);
+        font-size: 1.15rem;
+        line-height: 1.7;
+    }
+
+    /* ---------- research record ---------- */
+    .el-record-wrap { padding-top: 78px; padding-bottom: 78px; }
+
+    .el-research-record {
+        border: 1px solid var(--el-border);
+        border-radius: 11px;
+        overflow: hidden;
+        background: rgba(10, 19, 24, .95);
+    }
+
+    .el-record-head {
+        min-height: 80px;
+        padding: 0 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--el-border);
+        color: var(--el-text);
+        font-weight: 600;
+    }
+
+    .el-source-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 8px 14px;
+        border: 1px solid var(--el-border);
+        border-radius: 999px;
+        color: var(--el-muted);
+        font-family: var(--el-mono);
+        font-size: .77rem;
+        font-weight: 500;
+    }
+
+    .el-source-pill::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--el-teal);
+    }
+
+    .el-record-body { padding: 38px 34px 30px; }
+
+    .el-record-title-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 24px;
+        margin-bottom: 32px;
+    }
+
+    .el-record-title {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 600;
+        letter-spacing: -.025em;
+    }
+
+    .el-record-subtitle {
+        margin-top: 8px;
+        color: var(--el-muted);
+        font-size: 1rem;
+    }
+
+    .el-period-badge {
+        padding: 7px 12px;
+        border-radius: 6px;
+        color: var(--el-teal);
+        background: rgba(22,199,178,.10);
+        font-family: var(--el-mono);
+        font-size: .86rem;
+    }
+
+    .el-metric-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        border: 1px solid var(--el-border);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .el-metric-cell {
+        min-height: 126px;
+        padding: 27px 25px;
+        box-sizing: border-box;
+        background: rgba(6,14,18,.20);
+    }
+
+    .el-metric-cell:nth-child(1),
+    .el-metric-cell:nth-child(3) { border-right: 1px solid var(--el-border); }
+    .el-metric-cell:nth-child(1),
+    .el-metric-cell:nth-child(2) { border-bottom: 1px solid var(--el-border); }
+
+    .el-metric-label {
+        font-family: var(--el-mono);
+        color: var(--el-muted);
+        text-transform: uppercase;
         font-size: .76rem;
         font-weight: 600;
-        letter-spacing: .09em;
-        text-transform: uppercase;
-        margin-bottom: .4rem;
+        letter-spacing: .02em;
     }
 
-    .el-answer-copy {
-        color: color-mix(in srgb, var(--el-text) 88%, transparent);
-        line-height: 1.65;
-        margin: 0;
+    .el-metric-value {
+        margin-top: 13px;
+        color: var(--el-text);
+        font-family: var(--el-mono);
+        font-size: 1.82rem;
+        line-height: 1.1;
+        font-weight: 500;
     }
 
-    /* Editorial-style navigation, inspired by modern institutional research products. */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: .35rem;
-        border-bottom: 1px solid rgba(148, 163, 184, .14);
-        padding-bottom: .15rem;
+    .el-metric-value.teal { color: var(--el-teal); }
+
+    .el-record-source {
+        margin-top: 34px;
+        padding-top: 24px;
+        border-top: 1px solid var(--el-border);
     }
 
-    .stTabs [data-baseweb="tab"] {
-        min-height: 2.9rem;
-        padding: 0 1rem;
-        border-radius: 9px 9px 0 0;
+    .el-record-source-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
         color: var(--el-muted);
+        font-size: .9rem;
     }
 
-    .stTabs [aria-selected="true"] {
-        color: var(--el-text) !important;
-        background: rgba(20, 184, 166, .055);
+    .el-record-source-row .reported { color: #82d7ff; }
+
+    .el-validation-line {
+        height: 3px;
+        margin: 14px 0 11px;
+        border-radius: 2px;
+        background: linear-gradient(90deg, var(--el-teal) 0 82%, #162129 82% 100%);
     }
 
-    .el-workflow-shell {
-        position: relative;
+    .el-validation-note {
+        color: var(--el-muted);
+        font-size: .82rem;
+    }
+
+    .el-record-link {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 24px;
+        padding-top: 22px;
+        border-top: 1px solid var(--el-border);
+        color: var(--el-teal) !important;
+        text-decoration: none !important;
+        font-size: .95rem;
+    }
+
+    /* ---------- workflow ---------- */
+    .el-workflow-grid {
+        margin-top: 68px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border: 1px solid var(--el-border);
+        border-radius: 9px;
         overflow: hidden;
-        margin: .9rem 0 1.8rem 0;
-        padding: 1.65rem;
-        border: 1px solid rgba(148, 163, 184, .16);
-        border-radius: 16px;
-        background:
-            radial-gradient(circle at 86% 18%, rgba(59,130,246,.09), transparent 28%),
-            linear-gradient(180deg, rgba(255,255,255,.018), rgba(255,255,255,.004));
     }
 
-    .el-workflow-shell::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        background-image:
-            linear-gradient(rgba(148,163,184,.045) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(148,163,184,.045) 1px, transparent 1px);
-        background-size: 34px 34px;
-        mask-image: linear-gradient(90deg, transparent 0%, black 45%, black 100%);
-        -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 45%, black 100%);
+    .el-workflow-card {
+        min-height: 264px;
+        padding: 36px 32px;
+        border-right: 1px solid var(--el-border);
+        background: rgba(10, 19, 24, .64);
+        box-sizing: border-box;
     }
+    .el-workflow-card:last-child { border-right: none; }
 
-    .el-workflow-kicker {
-        position: relative;
-        z-index: 1;
+    .el-workflow-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-family: var(--el-mono);
         color: var(--el-teal);
-        text-transform: uppercase;
-        letter-spacing: .11em;
-        font-size: .72rem;
-        font-weight: 700;
-        margin-bottom: .45rem;
+        font-size: .82rem;
+    }
+
+    .el-workflow-icon {
+        color: var(--el-muted);
+        font-family: var(--el-mono);
+        font-size: 1rem;
     }
 
     .el-workflow-title {
-        position: relative;
-        z-index: 1;
+        margin-top: 58px;
         color: var(--el-text);
-        font-size: 1.45rem;
-        font-weight: 700;
-        letter-spacing: -.018em;
-        margin-bottom: 1.15rem;
-    }
-
-    .el-workflow-grid {
-        position: relative;
-        z-index: 1;
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: .8rem;
-    }
-
-    .el-workflow-step {
-        position: relative;
-        min-height: 132px;
-        padding: 1.1rem;
-        border: 1px solid rgba(148, 163, 184, .17);
-        border-radius: 12px;
-        background: rgba(10, 15, 20, .34);
-    }
-
-    .el-workflow-step + .el-workflow-step::before {
-        content: "→";
-        position: absolute;
-        left: -.72rem;
-        top: 50%;
-        transform: translateY(-50%);
-        color: rgba(45,212,191,.8);
-        font-size: 1.05rem;
-        font-weight: 700;
-    }
-
-    .el-workflow-num {
-        color: var(--el-teal);
-        font-size: .7rem;
-        font-weight: 700;
-        letter-spacing: .08em;
-        text-transform: uppercase;
-        margin-bottom: .5rem;
-    }
-
-    .el-workflow-step-title {
-        color: var(--el-text);
-        font-size: 1rem;
-        font-weight: 700;
-        margin-bottom: .35rem;
+        font-size: 1.32rem;
+        font-weight: 600;
     }
 
     .el-workflow-copy {
+        margin-top: 20px;
+        color: var(--el-muted);
+        font-size: .98rem;
+        line-height: 1.75;
+    }
+
+    /* ---------- AI showcase ---------- */
+    .el-ai-intro {
+        max-width: 730px;
+    }
+
+    .el-ai-question-card {
+        margin-top: 66px;
+        border: 1px solid var(--el-border);
+        border-radius: 10px;
+        padding: 36px 38px;
+        background: rgba(10, 19, 24, .82);
+    }
+
+    .el-ai-q-head {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .el-mini-logo {
+        width: 34px;
+        height: 34px;
+        border: 1px solid var(--el-border);
+        border-radius: 6px;
+        display: grid;
+        place-items: center;
+        color: var(--el-teal);
+        font-family: var(--el-mono);
+        font-size: .75rem;
+        background: #0c151a;
+    }
+
+    .el-ai-q-title {
+        font-size: 1rem;
+        color: var(--el-text);
+        font-weight: 600;
+    }
+
+    .el-ai-q-meta {
+        margin-top: 5px;
+        color: var(--el-muted);
+        font-size: .82rem;
+    }
+
+    .el-ai-answer {
+        margin: 34px 0 0 0;
+        padding: 7px 0 7px 30px;
+        border-left: 2px solid var(--el-teal);
+        color: var(--el-text);
+        font-size: 1.05rem;
+        line-height: 1.85;
+    }
+
+    .el-source-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 22px;
+    }
+
+    .el-source-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 12px;
+        border: 1px solid var(--el-border);
+        border-radius: 999px;
+        color: var(--el-muted);
+        font-family: var(--el-mono);
+        font-size: .76rem;
+    }
+
+    .el-source-tag::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--el-teal);
+    }
+
+    .el-ai-trust-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-top: 36px;
+    }
+
+    .el-ai-trust {
+        padding: 13px 15px;
+        text-align: center;
+        border-radius: 6px;
+        background: #111c24;
+        color: var(--el-muted);
+        font-size: .86rem;
+    }
+
+    /* ---------- Streamlit controls ---------- */
+    .el-control-shell {
+        margin-top: 50px;
+        margin-bottom: 20px;
+    }
+
+    div[data-baseweb="select"] > div,
+    div[data-baseweb="base-input"],
+    textarea,
+    input {
+        background: #091217 !important;
+        border-color: var(--el-border) !important;
+        color: var(--el-text) !important;
+        border-radius: 7px !important;
+    }
+
+    .stSelectbox label,
+    .stMultiSelect label,
+    .stTextInput label {
+        color: var(--el-muted) !important;
+        font-size: .82rem !important;
+    }
+
+    .stButton > button,
+    .stLinkButton > a,
+    .stDownloadButton > button {
+        min-height: 46px !important;
+        border-radius: 7px !important;
+        border: 1px solid var(--el-border) !important;
+        background: #081116 !important;
+        color: var(--el-text) !important;
+        font-weight: 600 !important;
+        box-shadow: none !important;
+    }
+
+    .stButton > button:hover,
+    .stLinkButton > a:hover,
+    .stDownloadButton > button:hover {
+        border-color: rgba(22,199,178,.65) !important;
+        color: var(--el-text) !important;
+    }
+
+    .stButton > button[kind="primary"] {
+        border-color: var(--el-teal) !important;
+        background: var(--el-teal) !important;
+        color: #03110f !important;
+    }
+
+    div[data-testid="stMetric"] {
+        padding: 22px !important;
+        border: 1px solid var(--el-border) !important;
+        border-radius: 8px !important;
+        background: #091217 !important;
+        box-shadow: none !important;
+    }
+
+    div[data-testid="stMetricLabel"] { color: var(--el-muted) !important; }
+    div[data-testid="stMetricValue"] {
+        color: var(--el-text) !important;
+        font-family: var(--el-mono) !important;
+        font-weight: 500 !important;
+    }
+
+    div[data-testid="stDataFrame"] {
+        border: 1px solid var(--el-border) !important;
+        border-radius: 8px !important;
+        overflow: hidden !important;
+        background: #091217 !important;
+    }
+
+    div[data-testid="stExpander"] {
+        border: 1px solid var(--el-border) !important;
+        border-radius: 8px !important;
+        background: #091217 !important;
+    }
+
+    div[data-testid="stAlert"] {
+        border-radius: 8px !important;
+        border-color: var(--el-border) !important;
+        background: #0b151b !important;
+        color: var(--el-text) !important;
+    }
+
+    [data-testid="stChatMessage"] {
+        background: #091217 !important;
+        border: 1px solid var(--el-border) !important;
+        border-radius: 9px !important;
+        padding: 14px !important;
+        margin-bottom: 12px !important;
+    }
+
+    /* ---------- existing research pages ---------- */
+    .el-section {
+        max-width: 1390px;
+        margin: 0 auto;
+        padding: 38px 24px 12px;
+        box-sizing: border-box;
+    }
+
+    .el-section-label {
+        color: var(--el-teal);
+        text-transform: uppercase;
+        letter-spacing: .045em;
+        font-family: var(--el-mono);
+        font-size: .78rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+
+    .el-section-title {
+        color: var(--el-text);
+        font-size: clamp(2rem, 3.4vw, 3.05rem);
+        line-height: 1.1;
+        letter-spacing: -.035em;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .el-company-hero,
+    .el-summary-card,
+    .el-change-card,
+    .el-risk-card,
+    .el-feature-card,
+    .el-ai-panel,
+    .el-answer-card {
+        border: 1px solid var(--el-border) !important;
+        border-radius: 9px !important;
+        background: #091217 !important;
+        box-shadow: none !important;
+    }
+
+    .el-company-hero { padding: 28px 30px; margin: 18px 0 28px; }
+    .el-kicker { color: var(--el-teal); font-family: var(--el-mono); font-size: .78rem; text-transform: uppercase; }
+    .el-company-title { margin-top: 8px; color: var(--el-text); font-size: 2rem; font-weight: 600; }
+    .el-subtitle { color: var(--el-muted); line-height: 1.7; }
+    .el-badges { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+    .el-badge { border:1px solid var(--el-border); border-radius:999px; padding:6px 10px; color:var(--el-muted); font-size:.75rem; }
+
+    .el-summary-card { min-height: 124px; padding: 22px; }
+    .el-summary-label { color: var(--el-muted); font-size: .8rem; text-transform: uppercase; font-family: var(--el-mono); }
+    .el-summary-value { margin-top: 12px; color: var(--el-text); font-family: var(--el-mono); font-size: 1.55rem; }
+
+    .el-change-card, .el-risk-card, .el-feature-card, .el-ai-panel, .el-answer-card { padding: 22px; margin: 12px 0; }
+    .el-change-title, .el-risk-title, .el-feature-title, .el-ai-title { color: var(--el-text); font-weight: 600; }
+    .el-change-copy, .el-feature-copy, .el-ai-copy, .el-answer-copy { color: var(--el-muted); line-height: 1.65; }
+    .el-feature-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    .el-feature-num, .el-ai-kicker, .el-answer-kicker { color:var(--el-teal); font-family:var(--el-mono); font-size:.74rem; text-transform:uppercase; }
+    .el-risk-list { color: var(--el-muted); }
+
+    /* keep all non-home page widgets centered */
+    .stSelectbox, .stMultiSelect, .stButton, .stDownloadButton, .stLinkButton,
+    [data-testid="stDataFrame"], [data-testid="stAlert"], [data-testid="stChatMessage"],
+    .stCaption, div[data-testid="stVerticalBlock"] > div:has(> div[data-testid="stMetric"]) {
+        max-width: 1390px;
+    }
+
+    /* ---------- footer ---------- */
+    .el-evidence {
+        min-height: 225px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 36px;
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .el-evidence-title {
+        color: var(--el-text);
+        font-size: 1.9rem;
+        font-weight: 600;
+        letter-spacing: -.025em;
+    }
+
+    .el-evidence-copy {
+        margin-top: 10px;
+        color: var(--el-muted);
+        font-size: 1rem;
+    }
+
+    .el-evidence-note {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--el-muted);
+        font-size: .9rem;
+    }
+
+    .el-evidence-shield {
+        color: var(--el-teal);
+        font-size: 1.15rem;
+    }
+
+    .el-footer {
+        padding-top: 54px;
+        padding-bottom: 48px;
+        background: #071014;
+    }
+
+    .el-footer-grid {
+        display: grid;
+        grid-template-columns: .8fr 1.2fr;
+        gap: 88px;
+    }
+
+    .el-footer-brandline {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--el-text);
+        font-size: 1.18rem;
+        font-weight: 700;
+    }
+
+    .el-footer-brandline strong { color: var(--el-teal); }
+    .el-footer-motto { margin-top: 22px; color: var(--el-muted); }
+    .el-footer-copy { color: var(--el-muted); line-height: 1.8; font-size: .9rem; }
+
+    .el-footer-links {
+        display: flex;
+        gap: 28px;
+        margin-top: 26px;
+    }
+
+    .el-footer-links a {
+        color: var(--el-muted) !important;
+        text-decoration: none !important;
+        font-size: .86rem;
+    }
+
+    .el-footer-bottom {
+        margin-top: 42px;
+        padding-top: 28px;
+        border-top: 1px solid var(--el-border);
         color: var(--el-muted);
         font-size: .84rem;
-        line-height: 1.5;
     }
 
+    .el-footer-details {
+        margin-top: 26px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .el-footer-details details {
+        border: 1px solid var(--el-border);
+        border-radius: 7px;
+        padding: 13px 15px;
+        color: var(--el-muted);
+        font-size: .84rem;
+        line-height: 1.6;
+    }
+
+    .el-footer-details summary {
+        cursor: pointer;
+        color: var(--el-text);
+        font-weight: 600;
+    }
+
+    /* ---------- responsive ---------- */
     @media (max-width: 900px) {
-        .block-container {
-            padding-top: 1rem;
-            padding-left: 1rem;
-            padding-right: 1rem;
-            padding-bottom: 2.5rem;
-        }
-
-        .el-product-hero {
-            padding: 1.4rem 1.15rem;
-            border-radius: 12px;
-        }
-.el-product-title {
-            font-size: clamp(2rem, 10vw, 3rem);
-            line-height: 1.04;
-            letter-spacing: -0.025em;
-        }
-
-        .el-product-subtitle {
-            font-size: 0.96rem;
-            line-height: 1.55;
-        }
-
-        .el-badges {
-            gap: .4rem;
-        }
-
-        .el-badge {
-            font-size: .72rem;
-            padding: .34rem .5rem;
-        }
-
-        .el-trust-strip {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: .45rem;
-            margin: .75rem 0 1rem 0;
-        }
-
-        .el-trust-item {
-            padding: .65rem .55rem;
-            font-size: .76rem;
-            line-height: 1.35;
-        }
-
-        .el-feature-grid {
-            grid-template-columns: 1fr;
-            gap: .6rem;
-        }
-
-        .el-workflow-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .el-workflow-step + .el-workflow-step::before {
-            content: "↓";
-            left: 50%;
-            top: -.75rem;
-            transform: translateX(-50%);
-        }
-
-        .el-workflow-shell {
-            padding: 1.15rem;
-        }
-
-        .el-feature-card {
-            min-height: 0;
-            padding: 1rem;
-        }
-
-        .el-summary-card {
-            min-height: 88px;
-            padding: .85rem 1rem;
-        }
-
-        .el-summary-label {
-            margin-bottom: .25rem;
-            font-size: .78rem;
-        }
-
-        .el-summary-value {
-            font-size: 1.35rem;
-        }
-
-        .el-company-hero {
-            padding: 1.15rem;
-            margin: .6rem 0 1rem 0;
-        }
-
-        .el-company-title {
-            font-size: 1.7rem;
-        }
-
-        .el-company-card {
-            min-height: 0;
-            padding: 1rem;
-        }
-
-        .el-section {
-            margin-top: 1.2rem;
-        }
-
-        .el-section-title {
-            font-size: 1.35rem;
-        }
-
-        div[data-testid="stExpander"] summary {
-            min-height: 3rem;
-        }
-
-        div[data-testid="stMetric"] {
-            padding: .8rem .9rem;
-        }
+        .block-container { padding-top: 74px !important; }
+        .el-topbar { height: 74px; padding: 0 15px; }
+        .el-workspace-link { display: none; }
+        .el-brand { font-size: 1.05rem; gap: 10px; }
+        .el-logo-mark { width: 31px; height: 31px; }
+        .el-page-section { padding: 66px 18px; }
+        .el-hero { min-height: 680px; padding-top: 70px; }
+        .el-hero-kicker { margin-bottom: 32px; font-size: .92rem; }
+        .el-hero-title { font-size: clamp(3rem, 15vw, 4.7rem); }
+        .el-hero-copy { margin-top: 30px; font-size: 1rem; }
+        .el-hero-btn { width: 100%; min-width: 0; }
+        .el-trust-row { align-items:flex-start; flex-direction:column; gap:14px; padding:24px 18px; }
+        .el-metric-grid { grid-template-columns: 1fr; }
+        .el-metric-cell { border-right: none !important; border-bottom: 1px solid var(--el-border) !important; }
+        .el-metric-cell:last-child { border-bottom: none !important; }
+        .el-record-title-row { flex-direction: column; }
+        .el-workflow-grid { grid-template-columns:1fr; }
+        .el-workflow-card { border-right:none; border-bottom:1px solid var(--el-border); min-height:210px; }
+        .el-workflow-card:last-child { border-bottom:none; }
+        .el-workflow-title { margin-top:32px; }
+        .el-ai-trust-grid { grid-template-columns:1fr 1fr; }
+        .el-feature-grid { grid-template-columns:1fr; }
+        .el-evidence { align-items:flex-start; flex-direction:column; }
+        .el-footer-grid { grid-template-columns:1fr; gap:34px; }
+        .el-footer-details { grid-template-columns:1fr; }
     }
-
-    footer { visibility: hidden; }
-    </style>
+</style>
     """,
     unsafe_allow_html=True
 )
@@ -1305,306 +1411,353 @@ SUBGROUPS = {
     ]
 }
 
+current_view = st.query_params.get("view", "home")
+if current_view not in {"home", "explore", "compare", "ai", "filings", "learn"}:
+    current_view = "home"
+
 st.markdown(
     """
-    <div class="el-product-hero">
-        <div class="el-eyebrow">EquityLens AI · Public-company research</div>
-        <h1 class="el-product-title">Understand public companies.<br><span>Without digging through hundreds of pages.</span></h1>
-        <p class="el-product-subtitle">
-            Explore financial performance, business models, risks, and SEC filings in one place.
-            EquityLens turns dense company disclosures into structured research while keeping the
-            underlying source visible. EquityLens informs. You decide.
-        </p>
-        <div class="el-badges">
-            <span class="el-badge">SEC EDGAR sourced</span>
-            <span class="el-badge">Calculations shown</span>
-            <span class="el-badge">Direct filing links</span>
-            <span class="el-badge">No investment recommendations</span>
+    <div class="el-topbar">
+        <a class="el-brand" href="?view=home" target="_self">
+            <span class="el-logo-mark"><i></i><i></i><i></i></span>
+            <span>EquityLens <strong>AI</strong></span>
+        </a>
+        <div class="el-top-actions">
+            <a class="el-search-link" href="?view=explore" target="_self" aria-label="Explore companies">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <path d="M20 20l-4-4"></path>
+                </svg>
+            </a>
+            <a class="el-workspace-link" href="?view=explore" target="_self">Research workspace</a>
+            <details class="el-menu">
+                <summary aria-label="Open navigation">☰</summary>
+                <div class="el-menu-panel">
+                    <a href="?view=home" target="_self">Home</a>
+                    <a href="?view=explore" target="_self">Explore Companies</a>
+                    <a href="?view=compare" target="_self">Industry Comparison</a>
+                    <a href="?view=ai" target="_self">EquityLens AI</a>
+                    <a href="?view=filings" target="_self">SEC Filings</a>
+                    <a href="?view=learn" target="_self">Learn</a>
+                </div>
+            </details>
         </div>
     </div>
     """,
     unsafe_allow_html=True
 )
 
-st.markdown(
-    """
-    <div class="el-trust-strip">
-        <div class="el-trust-item">Primary SEC sources</div>
-        <div class="el-trust-item">Reported vs. calculated</div>
-        <div class="el-trust-item">Plain-language explanations</div>
-        <div class="el-trust-item">Source-linked research</div>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+if current_view == "home":
+    featured_key = "Snowflake (SNOW)" if "Snowflake (SNOW)" in company_data else next(iter(company_data))
+    featured_data = company_data[featured_key]
+    featured_name = featured_key.split(" (")[0]
+    featured_ticker = featured_data.get("ticker", "")
+    featured_history = featured_data.get("history", [])
+    featured_prior_revenue = (
+        featured_history[-2].get("revenue")
+        if len(featured_history) >= 2
+        else None
+    )
+    featured_growth = calc_growth(featured_data.get("revenue"), featured_prior_revenue)
+    featured_margin = calc_margin(
+        featured_data.get("operating_income"),
+        featured_data.get("revenue")
+    )
+    featured_cash = featured_data.get("capital_structure", {}).get("cash_and_investments")
+    featured_source = featured_data.get("filing_url", "")
+    featured_form = featured_data.get("source", "SEC filing")
+    featured_fy = featured_data.get("fiscal_year", "")
+    featured_analysis = company_analysis.get(featured_key, {})
+    featured_industry_label = (
+        "Cloud data platform"
+        if featured_ticker == "SNOW"
+        else featured_data.get("industry", "Public company")
+    )
 
-with st.expander("Methodology & source standards"):
     st.markdown(
         """
-        **Reported** — taken from a company filing or company-reported disclosure.
+        <section class="el-page-section el-grid-bg el-hero">
+            <div class="el-hero-kicker"><span class="el-hero-dot"></span>Public-markets research, made legible</div>
+            <h1 class="el-hero-title">
+                Understand public<br>companies.<br>
+                <span class="muted-line">Without digging<br>through hundreds of<br>pages.</span>
+            </h1>
+            <p class="el-hero-copy">
+                EquityLens organizes financial performance, company strategy, risk disclosures,
+                business models, and SEC filings into structured research while keeping the
+                original sources visible.
+            </p>
+            <div class="el-hero-actions">
+                <a class="el-hero-btn primary" href="?view=explore" target="_self">Explore companies &nbsp; →</a>
+                <a class="el-hero-btn" href="?view=compare" target="_self">Compare an industry</a>
+            </div>
+            <div class="el-motto">EquityLens informs. You decide.</div>
+        </section>
+        <div class="el-trust-row">
+            <div class="el-trust-point"><span class="el-trust-check">✓</span>SEC EDGAR sourced</div>
+            <div class="el-trust-point"><span class="el-trust-check">✓</span>Calculations shown</div>
+            <div class="el-trust-point"><span class="el-trust-check">✓</span>Direct filing links</div>
+            <div class="el-trust-point"><span class="el-trust-check">✓</span>No investment recommendations</div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-        **Calculated by EquityLens** — derived from reported figures, such as growth rates,
-        margins, and trailing-twelve-month metrics.
+    st.markdown(
+        f"""
+        <section class="el-page-section el-grid-bg el-record-wrap" id="research-record">
+            <div class="el-research-record">
+                <div class="el-record-head">
+                    <span>Research record · {featured_ticker}</span>
+                    <span class="el-source-pill">SEC EDGAR</span>
+                </div>
+                <div class="el-record-body">
+                    <div class="el-record-title-row">
+                        <div>
+                            <h2 class="el-record-title">{featured_name} Inc.</h2>
+                            <div class="el-record-subtitle">{featured_industry_label}</div>
+                        </div>
+                        <span class="el-period-badge">FY{featured_fy}</span>
+                    </div>
+                    <div class="el-metric-grid">
+                        <div class="el-metric-cell">
+                            <div class="el-metric-label">Revenue</div>
+                            <div class="el-metric-value">{format_money(featured_data.get("revenue"))}</div>
+                        </div>
+                        <div class="el-metric-cell">
+                            <div class="el-metric-label">YoY Growth</div>
+                            <div class="el-metric-value teal">{pct(featured_growth)}</div>
+                        </div>
+                        <div class="el-metric-cell">
+                            <div class="el-metric-label">Operating Margin</div>
+                            <div class="el-metric-value">{pct(featured_margin)}</div>
+                        </div>
+                        <div class="el-metric-cell">
+                            <div class="el-metric-label">Cash + Investments</div>
+                            <div class="el-metric-value">{format_money(featured_cash)}</div>
+                        </div>
+                    </div>
+                    <div class="el-record-source">
+                        <div class="el-record-source-row">
+                            <span class="reported">Reported information</span>
+                            <span>Company {featured_form}</span>
+                        </div>
+                        <div class="el-validation-line"></div>
+                        <div class="el-validation-note">Validated against the structured EquityLens filing record · reporting period FY{featured_fy}</div>
+                        <a class="el-record-link" href="{featured_source}" target="_blank">
+                            <span>Latest supporting SEC filing · {featured_form}</span><span>→</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        """,
+        unsafe_allow_html=True
+    )
 
-        **Research summary** — plain-language context built from structured company information
-        and filing disclosures. It is not a recommendation.
-
-        **Source priority:** SEC EDGAR first, company investor-relations disclosures second,
-        and appropriately licensed market-data providers where needed.
+    st.markdown(
         """
+        <section class="el-page-section">
+            <div class="el-eyebrow">The research workflow</div>
+            <h2 class="el-section-heading">From primary source to useful context.</h2>
+            <p class="el-section-copy">A structured path through company disclosures, not a black-box investment score.</p>
+            <div class="el-workflow-grid">
+                <div class="el-workflow-card">
+                    <div class="el-workflow-top"><span>01</span><span class="el-workflow-icon">▧</span></div>
+                    <div class="el-workflow-title">Source</div>
+                    <div class="el-workflow-copy">Original SEC filings and company disclosures.</div>
+                </div>
+                <div class="el-workflow-card">
+                    <div class="el-workflow-top"><span>02</span><span class="el-workflow-icon">▱</span></div>
+                    <div class="el-workflow-title">Structure</div>
+                    <div class="el-workflow-copy">Reported facts organized into consistent research categories.</div>
+                </div>
+                <div class="el-workflow-card">
+                    <div class="el-workflow-top"><span>03</span><span class="el-workflow-icon">◉</span></div>
+                    <div class="el-workflow-title">Understand</div>
+                    <div class="el-workflow-copy">Trends, economics, risks, and business context.</div>
+                </div>
+                <div class="el-workflow-card">
+                    <div class="el-workflow-top"><span>04</span><span class="el-workflow-icon">⚖</span></div>
+                    <div class="el-workflow-title">Compare</div>
+                    <div class="el-workflow-copy">Period-aware views across relevant peers.</div>
+                </div>
+            </div>
+        </section>
+        """,
+        unsafe_allow_html=True
     )
 
+    prior_margin = None
+    if len(featured_history) >= 2:
+        prior_margin = calc_margin(
+            featured_history[-2].get("operating_income"),
+            featured_history[-2].get("revenue")
+        )
 
-render_summary_cards([
-    ("Companies", str(len(company_data))),
-    ("Industries", str(len(industries))),
-    ("Primary Source", "SEC EDGAR"),
-    ("Monitoring", "Automatic SEC checks")
-])
+    if featured_growth is not None and featured_margin is not None and prior_margin is not None:
+        margin_direction = "improved" if featured_margin > prior_margin else "declined"
+        ai_example_answer = (
+            f"Revenue changed {featured_growth:+.1f}% from the prior fiscal year, while the "
+            f"GAAP operating margin {margin_direction} from {prior_margin:.1f}% to "
+            f"{featured_margin:.1f}%. The company remained "
+            + ("unprofitable" if featured_margin < 0 else "profitable")
+            + " on a GAAP operating basis for the period."
+        )
+    else:
+        ai_example_answer = (
+            "EquityLens can explain changes in reported performance using the structured "
+            "financial and filing context available for the selected company."
+        )
 
-home_tab, company_tab, peer_tab, ask_tab, sec_tracker_tab, learn_tab = st.tabs([
-    "Home",
-    "Explore Companies",
-    "Industry Comparison",
-    "EquityLens AI",
-    "Filings",
-    "Learn"
-])
-
-with home_tab:
-    st.info(
-        "New to financial statements? Start in Learn. Want to understand a company at IPO? Open Explore Companies. "
-        "Comparing competitors? Open Industry Comparison."
+    st.markdown(
+        f"""
+        <section class="el-page-section">
+            <div class="el-ai-intro">
+                <div class="el-eyebrow">EquityLens AI</div>
+                <h2 class="el-section-heading">Ask the filing,<br>not the internet.</h2>
+                <p class="el-section-copy">
+                    Ask questions against structured company and filing research. Explore performance,
+                    disclosed risks, business models, and changes across reporting periods with the
+                    sources close at hand.
+                </p>
+                <div class="el-hero-actions">
+                    <a class="el-hero-btn" href="?view=ai" target="_self">Open research assistant &nbsp; →</a>
+                </div>
+            </div>
+            <div class="el-ai-question-card">
+                <div class="el-ai-q-head">
+                    <div class="el-mini-logo">EL</div>
+                    <div>
+                        <div class="el-ai-q-title">Why did operating margin change?</div>
+                        <div class="el-ai-q-meta">{featured_name} · FY{featured_fy}</div>
+                    </div>
+                </div>
+                <div class="el-ai-answer">{ai_example_answer}</div>
+                <div class="el-source-tags">
+                    <span class="el-source-tag">{featured_form}</span>
+                    <span class="el-source-tag">Income statements</span>
+                </div>
+                <div class="el-ai-trust-grid">
+                    <div class="el-ai-trust">Filing-grounded</div>
+                    <div class="el-ai-trust">Source-linked</div>
+                    <div class="el-ai-trust">Follow-up questions</div>
+                    <div class="el-ai-trust">No stock rankings</div>
+                </div>
+            </div>
+        </section>
+        """,
+        unsafe_allow_html=True
     )
 
-    section("Start here", "Research a company in seconds")
-
-    home_industry = st.selectbox(
-        "Choose industry",
-        industries,
-        key="home_industry"
+    st.markdown(
+        """
+        <section class="el-page-section">
+            <div class="el-eyebrow">Interactive preview</div>
+            <h2 class="el-section-heading">See the research, not just the promise.</h2>
+            <p class="el-section-copy">Choose a covered company to preview its latest standardized snapshot.</p>
+        </section>
+        """,
+        unsafe_allow_html=True
     )
 
-    home_industry_companies = [
-        name for name, company in company_data.items()
-        if company.get("industry", "Unclassified") == home_industry
-    ]
+    preview_control = st.container()
+    with preview_control:
+        control_cols = st.columns(2)
+        with control_cols[0]:
+            home_industry = st.selectbox(
+                "Industry",
+                industries,
+                index=(industries.index("Cloud & Data Infrastructure Software")
+                       if "Cloud & Data Infrastructure Software" in industries else 0),
+                key="home_industry"
+            )
 
-    st.caption(
-        f"{len(home_industry_companies)} covered compan"
-        f"{'y' if len(home_industry_companies) == 1 else 'ies'} in {home_industry}."
-    )
+        home_industry_companies = [
+            name for name, company in company_data.items()
+            if company.get("industry", "Unclassified") == home_industry
+        ]
 
-    home_company = st.selectbox(
-        "Choose company",
-        home_industry_companies,
-        format_func=lambda name: (
-            f"{company_data[name].get('ticker', '')} · {name.split(' (')[0]}"
-        ),
-        key="home_company"
-    )
+        default_company_index = (
+            home_industry_companies.index("Snowflake (SNOW)")
+            if "Snowflake (SNOW)" in home_industry_companies
+            else 0
+        )
+
+        with control_cols[1]:
+            home_company = st.selectbox(
+                "Company",
+                home_industry_companies,
+                index=default_company_index,
+                format_func=lambda name: f"{company_data[name].get('ticker', '')} · {name.split(' (')[0]}",
+                key="home_company"
+            )
 
     home_data = company_data[home_company]
-    home_analysis = company_analysis.get(home_company, {})
     home_qdata = company_quarterly.get(home_company, {})
     home_qm = quarterly_metrics(home_qdata)
     home_latest = home_qdata.get("latest_quarter", {})
     home_ticker = home_data.get("ticker", "")
     home_name = home_company.split(" (")[0]
+    home_history = home_data.get("history", [])
+    home_prior_revenue = home_history[-2].get("revenue") if len(home_history) >= 2 else None
+    home_growth = (
+        home_qm.get("yoy_growth")
+        if home_latest.get("revenue") is not None
+        else calc_growth(home_data.get("revenue"), home_prior_revenue)
+    )
+    home_revenue = (
+        home_latest.get("revenue")
+        if home_latest.get("revenue") is not None
+        else home_data.get("revenue")
+    )
+    home_margin = (
+        home_qm.get("operating_margin")
+        if home_latest.get("revenue") is not None
+        else calc_margin(home_data.get("operating_income"), home_data.get("revenue"))
+    )
+    home_cash = home_data.get("capital_structure", {}).get("cash_and_investments")
+    home_source = home_qdata.get("source_filing") or home_data.get("filing_url", "")
+    home_period = (
+        home_qdata.get("quarter_label")
+        if home_latest.get("revenue") is not None
+        else f"FY{home_data.get('fiscal_year', '')}"
+    )
+    home_form = home_data.get("source", "SEC filing")
 
     st.markdown(
         f"""
-        <div class="el-company-hero">
-            <div class="el-kicker">{home_ticker} · {home_data.get('industry', 'Unclassified')}</div>
-            <div class="el-company-title">{home_name}</div>
-            <p class="el-subtitle">{home_analysis.get('business_model', 'Company research is being prepared.')}</p>
-            <div class="el-badges">
-                <span class="el-badge">{home_qdata.get('quarter_label', 'Latest quarter')}</span>
-                <span class="el-badge">{home_data.get('source', 'SEC filing')} sourced</span>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    home_metrics = st.columns(4)
-    if home_latest.get("revenue") is not None:
-        home_metrics[0].metric("Quarter Revenue", format_money(home_latest.get("revenue")))
-        home_metrics[1].metric("YoY Growth", pct(home_qm.get("yoy_growth")))
-        home_metrics[2].metric("Operating Margin", pct(home_qm.get("operating_margin")))
-    else:
-        home_metrics[0].metric("Fiscal Year Revenue", format_money(home_data.get("revenue")))
-        home_metrics[1].metric(
-            "Revenue Growth",
-            pct(
-                calc_growth(
-                    home_data.get("revenue"),
-                    home_data.get("history", [{}])[-2].get("revenue")
-                    if len(home_data.get("history", [])) >= 2 else None
-                )
-            )
-        )
-        home_metrics[2].metric(
-            "Operating Margin",
-            pct(calc_margin(home_data.get("operating_income"), home_data.get("revenue")))
-        )
-    home_metrics[3].metric(
-        "Cash + Investments",
-        format_money(home_data.get("capital_structure", {}).get("cash_and_investments"))
-    )
-
-    source_url = home_qdata.get("source_filing") or home_data.get("filing_url")
-    if source_url:
-        st.link_button("Open latest supporting SEC filing", source_url)
-
-    st.caption(
-        "Continue in Explore Companies for an S-1-focused view of how the company described its business, "
-        "strategy, market opportunity, and risks when it prepared to go public."
-    )
-
-    st.markdown(
-        """
-        <div class="el-workflow-shell">
-            <div class="el-workflow-kicker">Research workflow</div>
-            <div class="el-workflow-title">From filing to understanding</div>
-            <div class="el-workflow-grid">
-                <div class="el-workflow-step">
-                    <div class="el-workflow-num">01 · Source</div>
-                    <div class="el-workflow-step-title">Start with primary filings</div>
-                    <div class="el-workflow-copy">EquityLens anchors company research to SEC EDGAR filings and direct source links.</div>
+        <section class="el-page-section" style="padding-top:28px;">
+            <div class="el-research-record">
+                <div class="el-record-head">
+                    <span>Research record · {home_ticker}</span>
+                    <span class="el-source-pill">SEC EDGAR</span>
                 </div>
-                <div class="el-workflow-step">
-                    <div class="el-workflow-num">02 · Structure</div>
-                    <div class="el-workflow-step-title">Turn disclosure into usable research</div>
-                    <div class="el-workflow-copy">Reported figures, calculated metrics, business-model context, and risk disclosures are organized consistently.</div>
-                </div>
-                <div class="el-workflow-step">
-                    <div class="el-workflow-num">03 · Compare</div>
-                    <div class="el-workflow-step-title">Understand the company in context</div>
-                    <div class="el-workflow-copy">Review trends and peers without rankings, recommendations, or hidden scoring.</div>
-                </div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    st.markdown(
-        """
-        <div class="el-ai-panel">
-            <div class="el-ai-kicker">EquityLens AI</div>
-            <div class="el-ai-title">Ask questions against structured filing research</div>
-            <div class="el-ai-copy">
-                The research assistant is grounded in EquityLens company data, filing-derived context,
-                and SEC source links. Use it to explain financial trends, summarize disclosed risks,
-                understand business models, and work through S-1 context without turning the answer
-                into an investment recommendation.
-            </div>
-            <div class="el-ai-chips">
-                <span class="el-ai-chip">Filing-grounded</span>
-                <span class="el-ai-chip">Source-linked</span>
-                <span class="el-ai-chip">Follow-up questions</span>
-                <span class="el-ai-chip">No stock rankings</span>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    section("Why EquityLens", "Research built to be understandable and verifiable")
-    st.markdown(
-        """
-        <div class="el-feature-grid">
-            <div class="el-feature-card">
-                <div class="el-feature-num">01 · Understand</div>
-                <div class="el-feature-title">Make finance easier to read</div>
-                <div class="el-feature-copy">Plain-language explanations sit beside reported numbers so users can understand what a metric means before interpreting it.</div>
-            </div>
-            <div class="el-feature-card">
-                <div class="el-feature-num">02 · Compare</div>
-                <div class="el-feature-title">Put peers on the same page</div>
-                <div class="el-feature-copy">Standardized growth, margins, LTM results, capital structure, business models, and risks make peer research easier to follow.</div>
-            </div>
-            <div class="el-feature-card">
-                <div class="el-feature-num">03 · Verify</div>
-                <div class="el-feature-title">Show the source</div>
-                <div class="el-feature-copy">Material figures and filing-based research stay connected to original SEC sources so users can inspect the underlying disclosure themselves.</div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    section("Recently updated", "Latest SEC filings detected")
-    recent_filing_rows = []
-    for company_name, feed in sec_filings.items():
-        ticker = company_data.get(company_name, {}).get("ticker", feed.get("ticker", ""))
-        for filing in feed.get("filings", [])[:3]:
-            filing_date = filing.get("filing_date", "")
-            if filing_date:
-                recent_filing_rows.append({
-                    "Company": f"{ticker} · {company_name.split(' (')[0]}",
-                    "Filed": filing_date,
-                    "Form": filing.get("form", ""),
-                    "Description": filing.get("description", "") or filing.get("primary_document", ""),
-                    "SEC Filing": filing.get("url", "")
-                })
-
-    if recent_filing_rows:
-        recent_filing_rows = sorted(
-            recent_filing_rows,
-            key=lambda row: row["Filed"],
-            reverse=True
-        )[:5]
-        st.dataframe(
-            pd.DataFrame(recent_filing_rows),
-            use_container_width=True,
-            hide_index=True,
-            column_config={
-                "SEC Filing": st.column_config.LinkColumn(
-                    "SEC Filing",
-                    display_text="Open filing"
-                )
-            }
-        )
-        st.caption(
-            "The filing monitor checks covered companies automatically. Newly detected filings may appear "
-            "before EquityLens has standardized every financial or qualitative field from that filing."
-        )
-    else:
-        st.caption("Recent SEC filing activity will appear here as the automated filing monitor populates.")
-
-    section("Coverage", f"{home_industry} companies")
-    featured_companies = home_industry_companies[:6]
-    featured_cols = st.columns(3)
-    for idx, featured_company in enumerate(featured_companies):
-        featured_data = company_data[featured_company]
-        featured_q = company_quarterly.get(featured_company, {})
-        featured_qm = quarterly_metrics(featured_q)
-        with featured_cols[idx % 3]:
-            st.markdown(
-                f"""
-                <div class="el-company-card">
-                    <div class="el-company-card-ticker">{featured_data.get('ticker', '')}</div>
-                    <div class="el-company-card-name">{featured_company.split(' (')[0]}</div>
-                    <div class="el-company-card-meta">
-                        {featured_data.get('industry', 'Unclassified')}<br>
-                        Latest revenue growth: {pct(featured_qm.get('yoy_growth'))}<br>
-                        Latest filing period: {featured_q.get('period_end', 'N/A')}
+                <div class="el-record-body">
+                    <div class="el-record-title-row">
+                        <div>
+                            <h2 class="el-record-title">{home_name}</h2>
+                            <div class="el-record-subtitle">{home_data.get('industry', '')}</div>
+                        </div>
+                        <span class="el-period-badge">{home_period}</span>
                     </div>
+                    <div class="el-metric-grid">
+                        <div class="el-metric-cell"><div class="el-metric-label">Revenue</div><div class="el-metric-value">{format_money(home_revenue)}</div></div>
+                        <div class="el-metric-cell"><div class="el-metric-label">YoY Growth</div><div class="el-metric-value teal">{pct(home_growth)}</div></div>
+                        <div class="el-metric-cell"><div class="el-metric-label">Operating Margin</div><div class="el-metric-value">{pct(home_margin)}</div></div>
+                        <div class="el-metric-cell"><div class="el-metric-label">Cash + Investments</div><div class="el-metric-value">{format_money(home_cash)}</div></div>
+                    </div>
+                    <a class="el-record-link" href="{home_source}" target="_blank">
+                        <span>Latest supporting SEC filing · {home_form}</span><span>→</span>
+                    </a>
                 </div>
-                """,
-                unsafe_allow_html=True
-            )
-
-    section("What makes it different", "Research that shows its work")
-    st.info(
-        "EquityLens separates company-reported figures from calculations and summaries, "
-        "links material claims back to SEC filings, and keeps interpretation separate from the source data."
+            </div>
+        </section>
+        """,
+        unsafe_allow_html=True
     )
 
-
-with peer_tab:
+if current_view == "compare":
     section("Peer Research", "Industry Comparison")
 
     selected_industry = st.selectbox(
@@ -2075,7 +2228,7 @@ with peer_tab:
                 "It does not rate the company or recommend buying, selling, or holding its securities."
             )
 
-with company_tab:
+if current_view == "explore":
     section("Explore Companies", "Read the Company Through Its S-1")
 
     st.caption(
@@ -2272,7 +2425,7 @@ with company_tab:
         st.info("S-1 research has not been added for this company yet.")
 
 
-with ask_tab:
+if current_view == "ai":
     section("Grounded AI research assistant", "Ask EquityLens AI")
 
     st.write(
@@ -2412,7 +2565,7 @@ with ask_tab:
         "Users should verify material information using the linked SEC filings."
     )
 
-with sec_tracker_tab:
+if current_view == "filings":
     section("SEC Monitor", "Filing Tracker")
 
     st.write(
@@ -2535,7 +2688,7 @@ with sec_tracker_tab:
         )
 
 
-with learn_tab:
+if current_view == "learn":
     section("Learning", "Understand the Numbers")
     st.write(
         "EquityLens is designed for users who are still learning how to read public-company information. "
@@ -2716,55 +2869,54 @@ with learn_tab:
         "may change at the creator's discretion."
     )
 
-st.markdown("---")
-section("Methodology", "Data Sources")
 st.markdown(
     """
-    **Source priority**
-
-    1. SEC EDGAR filings, including Forms 10-K, 10-Q, 8-K, and S-1
-    2. Company investor-relations materials and company-reported disclosures
-    3. Market-data providers only where the relevant licensing and exchange permissions allow use
-
-    EquityLens distinguishes company-reported figures from metrics calculated inside the app. Material figures should include a reporting period and a link to the original source whenever available.
-    """
+    <section class="el-page-section el-evidence">
+        <div>
+            <div class="el-evidence-title">Evidence first. Judgment stays with you.</div>
+            <div class="el-evidence-copy">Source it. Show the math. Show the date. Show the uncertainty.</div>
+        </div>
+        <div class="el-evidence-note"><span class="el-evidence-shield">♢</span>Research assistance, never investment advice</div>
+    </section>
+    <footer class="el-page-section el-footer">
+        <div class="el-footer-grid">
+            <div>
+                <div class="el-footer-brandline">
+                    <span class="el-logo-mark"><i></i><i></i><i></i></span>
+                    <span>EquityLens <strong>AI</strong></span>
+                </div>
+                <div class="el-footer-motto">EquityLens informs. You decide.</div>
+                <div class="el-footer-links">
+                    <a href="?view=learn" target="_self">Methodology</a>
+                    <a href="#equitylens-disclosures">Disclosures</a>
+                </div>
+            </div>
+            <div class="el-footer-copy" id="equitylens-disclosures">
+                EquityLens AI is an educational and research tool that analyzes publicly available
+                financial information. It does not provide personalized investment advice,
+                investment recommendations, rankings, or guarantees of future performance.
+                EquityLens is an independent project and is not affiliated with or endorsed by
+                covered public companies, exchanges, brokers, or similarly named organizations.
+                Financial information may be delayed, incomplete, or affected by later SEC filings
+                or restatements. Verify material information using the original linked disclosures.
+            </div>
+        </div>
+        <div class="el-footer-details">
+            <details>
+                <summary>Methodology</summary>
+                <p>Source priority: SEC EDGAR filings first, company investor-relations disclosures second,
+                and appropriately licensed market-data providers where needed. EquityLens distinguishes
+                reported figures from calculations and keeps reporting periods visible.</p>
+            </details>
+            <details>
+                <summary>Source labels</summary>
+                <p><strong>Reported</strong> means taken from a filing or company disclosure.
+                <strong>Calculated by EquityLens</strong> means derived from reported figures.
+                <strong>Research summary</strong> is explanatory context and is not an investment recommendation.</p>
+            </details>
+        </div>
+        <div class="el-footer-bottom">© 2026 Keya Dhanani. All rights reserved.</div>
+    </footer>
+    """,
+    unsafe_allow_html=True
 )
-
-section("Disclosure", "Important Disclosures")
-st.caption(
-    """
-    EquityLens AI is an educational and research tool that analyzes publicly
-    available financial information. It does not provide personalized investment
-    advice, investment recommendations, rankings, or guarantees of future performance.
-
-    EquityLens AI is an independent personal research project and is not affiliated
-    with, sponsored by, or endorsed by any similarly named company, product, service,
-    financial institution, broker, exchange, or data provider.
-
-    Financial information may be delayed, incomplete, or affected by later filings
-    and restatements. Users should verify material information against the original
-    SEC filings and company disclosures before making financial decisions.
-    """
-)
-
-st.markdown("---")
-st.markdown(
-    """
-    **© 2026 Keya Dhanani. All rights reserved.**
-
-    EquityLens AI was independently designed and developed by Keya Dhanani. Original
-    application code, user-interface design, written explanations, project-specific
-    research structure, and documentation are proprietary unless otherwise stated.
-
-    Public SEC filings, company disclosures, trademarks, company names, and third-party
-    source materials remain the property of their respective owners. EquityLens cites
-    or links to original sources where applicable and does not claim ownership of those
-    underlying materials.
-
-    Unauthorized reproduction, redistribution, republishing, or creation of a
-    substantially similar copy of the original EquityLens AI application or its
-    original written content is not permitted except where allowed by applicable law
-    or platform terms.
-    """
-)
-
