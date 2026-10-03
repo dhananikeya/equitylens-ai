@@ -3,7 +3,7 @@
     "ticker": "MDB",
     "cik": "0001441816",
     "entity_name": "MongoDB, Inc.",
-    "last_checked_utc": "2026-10-03T00:05:24+00:00",
+    "last_checked_utc": "2026-10-03T00:31:08+00:00",
     "filings": [
       {
         "form": "8-K",
@@ -361,7 +361,7 @@
     "ticker": "SNOW",
     "cik": "0001640147",
     "entity_name": "Snowflake Inc.",
-    "last_checked_utc": "2026-10-03T00:05:24+00:00",
+    "last_checked_utc": "2026-10-03T00:31:08+00:00",
     "filings": [
       {
         "form": "4",
@@ -719,7 +719,7 @@
     "ticker": "RBRK",
     "cik": "0001943896",
     "entity_name": "Rubrik, Inc.",
-    "last_checked_utc": "2026-10-03T00:05:24+00:00",
+    "last_checked_utc": "2026-10-03T00:31:08+00:00",
     "filings": [
       {
         "form": "4",
@@ -1077,7 +1077,7 @@
     "ticker": "DDOG",
     "cik": "0001561550",
     "entity_name": "Datadog, Inc.",
-    "last_checked_utc": "2026-10-03T00:05:24+00:00",
+    "last_checked_utc": "2026-10-03T00:31:08+00:00",
     "filings": [
       {
         "form": "4",
@@ -1435,7 +1435,7 @@
     "ticker": "NET",
     "cik": "0001477333",
     "entity_name": "Cloudflare, Inc.",
-    "last_checked_utc": "2026-10-03T00:05:24+00:00",
+    "last_checked_utc": "2026-10-03T00:31:08+00:00",
     "filings": [
       {
         "form": "4",
@@ -1793,8 +1793,22 @@
     "ticker": "ESTC",
     "cik": "0001707753",
     "entity_name": "Elastic N.V.",
-    "last_checked_utc": "2026-10-03T00:05:24+00:00",
+    "last_checked_utc": "2026-10-03T00:31:08+00:00",
     "filings": [
+      {
+        "form": "144",
+        "filing_date": "2026-10-02",
+        "acceptance_datetime": "2026-10-03T00:21:19.000Z",
+        "report_date": "",
+        "accession_number": "0001958244-26-000637",
+        "primary_document": "xsl144X01/primary_doc.xml",
+        "description": "",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-03T00:31:08+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1707753/000195824426000637/xsl144X01/primary_doc.xml"
+      },
       {
         "form": "144",
         "filing_date": "2026-10-02",
@@ -2130,20 +2144,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-02T11:53:17+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001219/xslF345X06/form4.xml"
-      },
-      {
-        "form": "4",
-        "filing_date": "2026-09-02",
-        "acceptance_datetime": "2026-09-03T02:34:32.000Z",
-        "report_date": "2026-09-01",
-        "accession_number": "0001123292-26-001218",
-        "primary_document": "xslF345X06/form4.xml",
-        "description": "STATEMENT OF CHANGES IN BENEFICIAL OWNERSHIP OF SECURITIES",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-02T11:53:17+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001218/xslF345X06/form4.xml"
       }
     ]
   },
@@ -2151,7 +2151,7 @@
     "ticker": "DT",
     "cik": "0001773383",
     "entity_name": "Dynatrace, Inc.",
-    "last_checked_utc": "2026-10-03T00:05:24+00:00",
+    "last_checked_utc": "2026-10-03T00:31:08+00:00",
     "filings": [
       {
         "form": "8-K",
@@ -2509,7 +2509,7 @@
     "ticker": "PANW",
     "cik": "0001327567",
     "entity_name": "Palo Alto Networks Inc",
-    "last_checked_utc": "2026-10-03T00:05:24+00:00",
+    "last_checked_utc": "2026-10-03T00:31:08+00:00",
     "filings": [
       {
         "form": "4",
@@ -2867,7 +2867,7 @@
     "ticker": "ZS",
     "cik": "0001713683",
     "entity_name": "Zscaler, Inc.",
-    "last_checked_utc": "2026-10-03T00:05:24+00:00",
+    "last_checked_utc": "2026-10-03T00:31:08+00:00",
     "filings": [
       {
         "form": "4",
@@ -3225,7 +3225,7 @@
     "ticker": "AKAM",
     "cik": "0001086222",
     "entity_name": "AKAMAI TECHNOLOGIES INC",
-    "last_checked_utc": "2026-10-03T00:05:24+00:00",
+    "last_checked_utc": "2026-10-03T00:31:08+00:00",
     "filings": [
       {
         "form": "4",
@@ -3583,7 +3583,7 @@
     "ticker": "CRWD",
     "cik": "0001535527",
     "entity_name": "CrowdStrike Holdings, Inc.",
-    "last_checked_utc": "2026-10-03T00:05:24+00:00",
+    "last_checked_utc": "2026-10-03T00:31:08+00:00",
     "filings": [
       {
         "form": "4",
@@ -3941,7 +3941,7 @@
     "ticker": "OKTA",
     "cik": "0001660134",
     "entity_name": "Okta, Inc.",
-    "last_checked_utc": "2026-10-03T00:05:24+00:00",
+    "last_checked_utc": "2026-10-03T00:31:08+00:00",
     "filings": [
       {
         "form": "144",
@@ -4299,7 +4299,7 @@
     "ticker": "FTNT",
     "cik": "0001262039",
     "entity_name": "Fortinet, Inc.",
-    "last_checked_utc": "2026-10-03T00:05:24+00:00",
+    "last_checked_utc": "2026-10-03T00:31:08+00:00",
     "filings": [
       {
         "form": "4",
@@ -4657,7 +4657,7 @@
     "ticker": "S",
     "cik": "0001583708",
     "entity_name": "SentinelOne, Inc.",
-    "last_checked_utc": "2026-10-03T00:05:24+00:00",
+    "last_checked_utc": "2026-10-03T00:31:08+00:00",
     "filings": [
       {
         "form": "4",
@@ -5015,7 +5015,7 @@
     "ticker": "TENB",
     "cik": "0001660280",
     "entity_name": "Tenable Holdings, Inc.",
-    "last_checked_utc": "2026-10-03T00:05:24+00:00",
+    "last_checked_utc": "2026-10-03T00:31:08+00:00",
     "filings": [
       {
         "form": "8-K",
