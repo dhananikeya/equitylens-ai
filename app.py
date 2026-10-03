@@ -1989,6 +1989,23 @@ company_quarterly = load_json("data/company_quarterly.json")
 company_s1 = load_json("data/company_s1.json")
 sec_filings = load_json("data/sec_filings.json")
 
+company_universe = pd.read_csv("data/finviz_universe.csv")
+for _column in ["Ticker", "Company", "Sector", "Industry", "Country"]:
+    if _column in company_universe.columns:
+        company_universe[_column] = (
+            company_universe[_column].fillna("").astype(str).str.strip()
+        )
+company_universe["Ticker"] = company_universe["Ticker"].str.upper()
+company_universe["Coverage Key"] = (
+    company_universe["Company"]
+    + " ("
+    + company_universe["Ticker"]
+    + ")"
+)
+coverage_sectors = sorted(
+    [value for value in company_universe["Sector"].dropna().unique().tolist() if value]
+)
+
 public_market_data_enabled = True
 
 public_finviz_data_enabled = bool(
@@ -3357,6 +3374,165 @@ with market_tab:
         )
 
     render_nyse_market_monitor(nyse_finviz)
+
+    section("Expanded Coverage", "EquityLens Company Universe")
+
+    coverage_filter_cols = st.columns(3)
+    with coverage_filter_cols[0]:
+        coverage_sector = st.selectbox(
+            "Sector",
+            coverage_sectors,
+            key="coverage_sector"
+        )
+
+    sector_universe = company_universe[
+        company_universe["Sector"] == coverage_sector
+    ].copy()
+
+    sector_industries = sorted(
+        [
+            value for value in sector_universe["Industry"].dropna().unique().tolist()
+            if value
+        ]
+    )
+
+    with coverage_filter_cols[1]:
+        coverage_industry = st.selectbox(
+            "Industry",
+            ["All industries"] + sector_industries,
+            key="coverage_industry"
+        )
+
+    filtered_universe = sector_universe.copy()
+    if coverage_industry != "All industries":
+        filtered_universe = filtered_universe[
+            filtered_universe["Industry"] == coverage_industry
+        ]
+
+    coverage_keys = filtered_universe["Coverage Key"].tolist()
+
+    with coverage_filter_cols[2]:
+        selected_coverage_company = st.selectbox(
+            "Company",
+            coverage_keys,
+            key="coverage_company"
+        )
+
+    st.caption(
+        f"{len(filtered_universe):,} companies shown · "
+        f"{len(company_universe):,} total companies · "
+        f"{len(coverage_sectors):,} sectors in the expanded EquityLens universe."
+    )
+
+    coverage_columns = [
+        column for column in [
+            "Ticker", "Company", "Industry", "Country",
+            "Market Cap", "P/E", "Price", "Change", "Volume"
+        ]
+        if column in filtered_universe.columns
+    ]
+    st.dataframe(
+        filtered_universe[coverage_columns],
+        use_container_width=True,
+        hide_index=True
+    )
+
+    selected_coverage_row = filtered_universe[
+        filtered_universe["Coverage Key"] == selected_coverage_company
+    ].iloc[0]
+    selected_coverage_ticker = selected_coverage_row["Ticker"]
+
+    section("SEC", f"{selected_coverage_ticker} Filing Access")
+
+    selected_sec_feed = sec_filings.get(selected_coverage_company, {})
+    selected_recent_filings = selected_sec_feed.get("filings", [])
+    selected_registration_filings = selected_sec_feed.get(
+        "registration_filings", []
+    )
+
+    sec_summary_cols = st.columns(3)
+    sec_summary_cols[0].metric(
+        "Recent filings loaded",
+        len(selected_recent_filings)
+    )
+    sec_summary_cols[1].metric(
+        "Registration filings found",
+        len(selected_registration_filings)
+    )
+    sec_summary_cols[2].metric(
+        "SEC CIK",
+        selected_sec_feed.get("cik") or "Pending"
+    )
+
+    if selected_recent_filings:
+        recent_rows = []
+        for filing in selected_recent_filings[:10]:
+            recent_rows.append({
+                "Filed": filing.get("filing_date", ""),
+                "Form": filing.get("form", ""),
+                "Description": (
+                    filing.get("description", "")
+                    or filing.get("primary_document", "")
+                ),
+                "SEC Filing": filing.get("url", "")
+            })
+
+        st.dataframe(
+            pd.DataFrame(recent_rows),
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "SEC Filing": st.column_config.LinkColumn(
+                    "SEC Filing",
+                    display_text="Open filing"
+                )
+            }
+        )
+    else:
+        st.caption(
+            "The SEC monitor has not populated recent filings for this company yet."
+        )
+
+    st.markdown("**IPO / registration filings**")
+    if selected_registration_filings:
+        registration_rows = []
+        for filing in selected_registration_filings:
+            registration_rows.append({
+                "Filed": filing.get("filing_date", ""),
+                "Form": filing.get("form", ""),
+                "Description": (
+                    filing.get("description", "")
+                    or filing.get("primary_document", "")
+                ),
+                "SEC Filing": filing.get("url", "")
+            })
+
+        st.dataframe(
+            pd.DataFrame(registration_rows),
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "SEC Filing": st.column_config.LinkColumn(
+                    "SEC Filing",
+                    display_text="Open filing"
+                )
+            }
+        )
+    else:
+        st.caption(
+            "No S-1, S-1/A, F-1, F-1/A, S-11, or S-11/A has been found "
+            "in the scanned SEC submission history for this company yet."
+        )
+
+    sec_company_url = selected_sec_feed.get("sec_company_url", "")
+    if sec_company_url:
+        st.link_button(
+            "Open complete SEC company filing history",
+            sec_company_url,
+            use_container_width=True
+        )
+
+    section("Deep Research", "Structured EquityLens Coverage")
 
     market_industry = st.selectbox(
         "Industry",
