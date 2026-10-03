@@ -537,6 +537,80 @@ st.markdown(
         line-height: 1.45;
     }
 
+    .el-ai-panel {
+        position: relative;
+        overflow: hidden;
+        margin: 1.1rem 0 1.8rem 0;
+        padding: 1.5rem 1.55rem;
+        border: 1px solid rgba(59, 130, 246, .28);
+        border-radius: 14px;
+        background:
+            radial-gradient(circle at 92% 14%, rgba(59, 130, 246, .10), transparent 28%),
+            radial-gradient(circle at 78% 90%, rgba(20, 184, 166, .08), transparent 26%),
+            linear-gradient(180deg, rgba(255,255,255,.018), rgba(255,255,255,.004));
+        box-shadow: 0 18px 44px rgba(0,0,0,.10);
+    }
+
+    .el-ai-panel::after {
+        content: "AI";
+        position: absolute;
+        right: 1.35rem;
+        top: .8rem;
+        color: rgba(148, 163, 184, .08);
+        font-size: 5rem;
+        font-weight: 700;
+        letter-spacing: -.08em;
+        pointer-events: none;
+    }
+
+    .el-ai-kicker {
+        position: relative;
+        z-index: 1;
+        color: var(--el-teal);
+        font-size: .72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .11em;
+        margin-bottom: .4rem;
+    }
+
+    .el-ai-title {
+        position: relative;
+        z-index: 1;
+        color: var(--el-text);
+        font-size: 1.35rem;
+        font-weight: 700;
+        letter-spacing: -.018em;
+        margin-bottom: .45rem;
+    }
+
+    .el-ai-copy {
+        position: relative;
+        z-index: 1;
+        max-width: 760px;
+        color: var(--el-muted);
+        font-size: .91rem;
+        line-height: 1.55;
+    }
+
+    .el-ai-chips {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: .45rem;
+        margin-top: .85rem;
+    }
+
+    .el-ai-chip {
+        padding: .34rem .55rem;
+        border: 1px solid rgba(148, 163, 184, .18);
+        border-radius: 7px;
+        color: color-mix(in srgb, var(--el-text) 78%, transparent);
+        font-size: .72rem;
+        background: rgba(255,255,255,.015);
+    }
+
     .el-answer-card {
         padding: 1.2rem 1.3rem;
         border: 1px solid color-mix(in srgb, var(--el-teal) 28%, var(--el-border));
@@ -912,6 +986,56 @@ Rules:
     return response.output_text
 
 
+def equitylens_s1_ai_brief(company_name):
+    client = get_openai_client()
+    if client is None:
+        raise RuntimeError("OPENAI_API_KEY is not configured.")
+
+    s1_context = company_s1.get(company_name, {})
+    company = company_name.split(" (")[0]
+
+    instructions = """
+You are EquityLens AI, a source-grounded public-company research assistant.
+
+Create a concise S-1 research brief using ONLY the S-1 context supplied with the request.
+Do not use outside knowledge, memory, web search, or unsupported assumptions.
+
+Structure the brief with these headings:
+- Business model
+- Customers and go-to-market
+- Growth strategy
+- Competition and differentiation
+- Key disclosed risks
+- Financial and operating history
+- IPO structure and ownership
+- What matters most to understand
+
+Rules:
+1. Treat the filing as historical IPO-era context, not current company information.
+2. Never invent figures or claims.
+3. If a section is not supported by the supplied context, say so briefly.
+4. Do not rank the company, recommend the security, or use buy/sell/hold language.
+5. Keep the tone analytical, neutral, and accessible.
+6. End with: "Source basis: company S-1 / registration filing context in EquityLens."
+"""
+
+    response = client.responses.create(
+        model="gpt-6-luna",
+        instructions=instructions,
+        input=[
+            {
+                "role": "user",
+                "content": (
+                    f"COMPANY: {company}\n\n"
+                    "EQUITYLENS S-1 CONTEXT:\n"
+                    f"{json.dumps(s1_context, indent=2)}"
+                )
+            }
+        ]
+    )
+    return response.output_text
+
+
 def equitylens_source_links(company_name):
     data = company_data.get(company_name, {})
     analysis = company_analysis.get(company_name, {})
@@ -1231,7 +1355,7 @@ home_tab, company_tab, peer_tab, ask_tab, sec_tracker_tab, learn_tab = st.tabs([
     "Home",
     "Explore Companies",
     "Industry Comparison",
-    "Ask EquityLens",
+    "EquityLens AI",
     "Filings",
     "Learn"
 ])
@@ -1331,6 +1455,28 @@ with home_tab:
                     <div class="el-workflow-step-title">Understand the company in context</div>
                     <div class="el-workflow-copy">Review trends and peers without rankings, recommendations, or hidden scoring.</div>
                 </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        """
+        <div class="el-ai-panel">
+            <div class="el-ai-kicker">EquityLens AI</div>
+            <div class="el-ai-title">Ask questions against structured filing research</div>
+            <div class="el-ai-copy">
+                The research assistant is grounded in EquityLens company data, filing-derived context,
+                and SEC source links. Use it to explain financial trends, summarize disclosed risks,
+                understand business models, and work through S-1 context without turning the answer
+                into an investment recommendation.
+            </div>
+            <div class="el-ai-chips">
+                <span class="el-ai-chip">Filing-grounded</span>
+                <span class="el-ai-chip">Source-linked</span>
+                <span class="el-ai-chip">Follow-up questions</span>
+                <span class="el-ai-chip">No stock rankings</span>
             </div>
         </div>
         """,
@@ -2051,6 +2197,37 @@ with company_tab:
             - **Economics:** What did the filing reveal about revenue mix, costs, profitability, and capital needs?
             """
         )
+
+        section("EquityLens AI", "Generate an S-1 Research Brief")
+        st.caption(
+            "This AI brief is grounded only in the S-1 research currently stored for this company. "
+            "It is historical filing analysis, not an investment recommendation."
+        )
+
+        if get_openai_client() is None:
+            st.info(
+                "The AI feature is built into EquityLens but is not active until OPENAI_API_KEY is added to Streamlit Secrets."
+            )
+        else:
+            if st.button(
+                "Generate AI S-1 brief",
+                key=f"generate_s1_ai_{explore_ticker}",
+                use_container_width=True
+            ):
+                with st.spinner("Reviewing the S-1 research context..."):
+                    try:
+                        st.session_state[f"s1_ai_brief_{explore_ticker}"] = equitylens_s1_ai_brief(explore_company)
+                    except Exception as exc:
+                        st.error("EquityLens AI could not generate the S-1 brief.")
+                        st.caption(str(exc))
+
+            generated_brief = st.session_state.get(f"s1_ai_brief_{explore_ticker}")
+            if generated_brief:
+                st.markdown(
+                    '<div class="el-ai-panel"><div class="el-ai-kicker">Generated research brief</div></div>',
+                    unsafe_allow_html=True
+                )
+                st.markdown(generated_brief)
 
         if explore_s1.get("source_url"):
             st.link_button(
