@@ -686,6 +686,64 @@ p,li,label,input,textarea,button,
     font-size: .7rem;
 }
 
+/* Market ticker + heat map */
+.el-ticker-shell {
+    width: 100%;
+    overflow: hidden;
+    margin: .8rem 0 1.15rem;
+    border: 1px solid var(--el-border);
+    border-radius: 9px;
+    background: #091217;
+}
+
+.el-ticker-track {
+    display: flex;
+    width: max-content;
+    animation: elTickerScroll 34s linear infinite;
+}
+
+.el-ticker-shell:hover .el-ticker-track {
+    animation-play-state: paused;
+}
+
+.el-ticker-item {
+    display: flex;
+    align-items: baseline;
+    gap: .48rem;
+    padding: .85rem 1rem;
+    border-right: 1px solid var(--el-border-soft);
+    white-space: nowrap;
+    font-family: var(--el-mono);
+}
+
+.el-ticker-symbol {
+    color: var(--el-text);
+    font-weight: 600;
+}
+
+.el-ticker-price {
+    color: var(--el-muted);
+    font-size: .8rem;
+}
+
+.el-ticker-change {
+    font-size: .8rem;
+    font-weight: 600;
+}
+
+.el-ticker-change.positive { color: var(--el-teal); }
+.el-ticker-change.negative { color: var(--el-red); }
+.el-ticker-change.flat { color: var(--el-muted); }
+
+@keyframes elTickerScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .el-ticker-track { animation: none; }
+}
+
 /* Native Streamlit surfaces */
 div[data-testid="stMetric"] {
     background:#091217 !important;
@@ -1028,7 +1086,7 @@ def get_live_market_data(symbols):
 
 
 @st.cache_data(ttl=60)
-def get_finviz_screener_data(symbols=None):
+def get_finviz_screener_data(symbols=None, filters=None):
     export_url = st.secrets.get("FINVIZ_EXPORT_URL")
     api_key = st.secrets.get("FINVIZ_API_KEY")
     api_url = st.secrets.get(
@@ -1047,6 +1105,9 @@ def get_finviz_screener_data(symbols=None):
 
         if symbols:
             params["t"] = ",".join(symbols)
+
+        if filters:
+            params["f"] = str(filters)
 
         response = requests.get(
             str(api_url),
@@ -2777,6 +2838,7 @@ with market_tab:
         industry_market = {}
         benchmark_market = {}
         finviz_market = pd.DataFrame()
+        nyse_finviz = pd.DataFrame()
 
         if public_market_data_enabled:
             try:
@@ -2797,6 +2859,14 @@ with market_tab:
                 )
             except Exception as exc:
                 st.warning("Finviz screener data is temporarily unavailable.")
+                st.caption(str(exc))
+
+            try:
+                nyse_finviz = normalize_finviz_screener(
+                    get_finviz_screener_data(filters="exch_nyse")
+                )
+            except Exception as exc:
+                st.warning("NYSE Finviz data is temporarily unavailable.")
                 st.caption(str(exc))
 
         section("Pulse", "Market Snapshot")
@@ -2844,6 +2914,201 @@ with market_tab:
         st.caption(
             "SPY and QQQ are shown as broad-market proxies. Market-data timing depends on the connected provider and plan."
         )
+
+        if public_finviz_data_enabled:
+            section("NYSE", "NYSE Market Ticker")
+
+            if not nyse_finviz.empty:
+                ticker_source = nyse_finviz.copy()
+
+                if "Volume" in ticker_source.columns:
+                    ticker_source["_volume_num"] = ticker_source["Volume"].apply(finviz_numeric)
+                    ticker_source = ticker_source.sort_values(
+                        "_volume_num",
+                        ascending=False,
+                        na_position="last"
+                    )
+
+                ticker_source = ticker_source.head(16)
+
+                tape_items = []
+                for _, ticker_row in ticker_source.iterrows():
+                    ticker_symbol = str(ticker_row.get("Ticker", "")).strip()
+                    ticker_price = finviz_numeric(ticker_row.get("Price"))
+                    ticker_change = finviz_numeric(ticker_row.get("Change"))
+
+                    if not ticker_symbol:
+                        continue
+
+                    if ticker_change is None:
+                        change_class = "flat"
+                        change_text = "N/A"
+                    elif ticker_change > 0:
+                        change_class = "positive"
+                        change_text = f"+{ticker_change:.2f}%"
+                    elif ticker_change < 0:
+                        change_class = "negative"
+                        change_text = f"{ticker_change:.2f}%"
+                    else:
+                        change_class = "flat"
+                        change_text = "0.00%"
+
+                    price_text = (
+                        f"${ticker_price:,.2f}"
+                        if ticker_price is not None
+                        else "N/A"
+                    )
+
+                    tape_items.append(
+                        f'<div class="el-ticker-item">'
+                        f'<span class="el-ticker-symbol">{ticker_symbol}</span>'
+                        f'<span class="el-ticker-price">{price_text}</span>'
+                        f'<span class="el-ticker-change {change_class}">{change_text}</span>'
+                        f'</div>'
+                    )
+
+                if tape_items:
+                    tape_html = "".join(tape_items + tape_items)
+                    st.markdown(
+                        f'<div class="el-ticker-shell"><div class="el-ticker-track">{tape_html}</div></div>',
+                        unsafe_allow_html=True
+                    )
+                    st.caption(
+                        "NYSE tape uses the most active names returned by the live Finviz NYSE screen. Hover to pause."
+                    )
+                else:
+                    st.caption("NYSE ticker data is not available in the current Finviz response.")
+
+                section("Market Map", "NYSE Heat Map")
+
+                heatmap_required = {"Ticker", "Sector", "Market Cap", "Change"}
+                if heatmap_required.issubset(set(nyse_finviz.columns)):
+                    heatmap_df = nyse_finviz.copy()
+                    heatmap_df["_market_cap_num"] = heatmap_df["Market Cap"].apply(finviz_numeric)
+                    heatmap_df["_change_num"] = heatmap_df["Change"].apply(finviz_numeric)
+                    heatmap_df = heatmap_df.dropna(
+                        subset=["_market_cap_num", "_change_num", "Sector"]
+                    )
+                    heatmap_df = heatmap_df[heatmap_df["_market_cap_num"] > 0]
+                    heatmap_df = heatmap_df.sort_values(
+                        "_market_cap_num",
+                        ascending=False
+                    ).head(120)
+
+                    if not heatmap_df.empty:
+                        sector_rows = (
+                            heatmap_df.groupby("Sector", dropna=False)
+                            .apply(
+                                lambda group: pd.Series({
+                                    "_sector_cap": group["_market_cap_num"].sum(),
+                                    "_sector_change": (
+                                        (group["_change_num"] * group["_market_cap_num"]).sum()
+                                        / group["_market_cap_num"].sum()
+                                    )
+                                })
+                            )
+                            .reset_index()
+                        )
+
+                        heat_ids = []
+                        heat_labels = []
+                        heat_parents = []
+                        heat_values = []
+                        heat_colors = []
+                        heat_custom = []
+
+                        for _, sector_row in sector_rows.iterrows():
+                            sector_name = str(sector_row["Sector"])
+                            heat_ids.append(f"sector::{sector_name}")
+                            heat_labels.append(sector_name)
+                            heat_parents.append("")
+                            heat_values.append(float(sector_row["_sector_cap"]))
+                            heat_colors.append(float(sector_row["_sector_change"]))
+                            heat_custom.append([
+                                sector_name,
+                                "",
+                                "",
+                                float(sector_row["_sector_change"])
+                            ])
+
+                        for _, stock_row in heatmap_df.iterrows():
+                            ticker_symbol = str(stock_row.get("Ticker", ""))
+                            company_name = str(stock_row.get("Company", ""))
+                            sector_name = str(stock_row.get("Sector", ""))
+                            price_value = finviz_numeric(stock_row.get("Price"))
+                            change_value = float(stock_row["_change_num"])
+
+                            heat_ids.append(f"stock::{ticker_symbol}")
+                            heat_labels.append(ticker_symbol)
+                            heat_parents.append(f"sector::{sector_name}")
+                            heat_values.append(float(stock_row["_market_cap_num"]))
+                            heat_colors.append(change_value)
+                            heat_custom.append([
+                                company_name,
+                                sector_name,
+                                (
+                                    f"${price_value:,.2f}"
+                                    if price_value is not None else "N/A"
+                                ),
+                                change_value
+                            ])
+
+                        heat_fig = go.Figure(
+                            go.Treemap(
+                                ids=heat_ids,
+                                labels=heat_labels,
+                                parents=heat_parents,
+                                values=heat_values,
+                                branchvalues="total",
+                                marker={
+                                    "colors": heat_colors,
+                                    "colorscale": [
+                                        [0.0, "#7F1D1D"],
+                                        [0.35, "#B94A50"],
+                                        [0.5, "#24333A"],
+                                        [0.65, "#137F72"],
+                                        [1.0, "#16C7B2"]
+                                    ],
+                                    "cmid": 0,
+                                    "line": {"color": "#050B0E", "width": 1}
+                                },
+                                customdata=heat_custom,
+                                hovertemplate=(
+                                    "<b>%{label}</b><br>"
+                                    "%{customdata[0]}<br>"
+                                    "Sector: %{customdata[1]}<br>"
+                                    "Price: %{customdata[2]}<br>"
+                                    "Daily change: %{customdata[3]:+.2f}%"
+                                    "<extra></extra>"
+                                ),
+                                texttemplate="<b>%{label}</b>",
+                                textfont={"family": "IBM Plex Mono"}
+                            )
+                        )
+                        heat_fig.update_layout(
+                            height=650,
+                            margin={"l": 0, "r": 0, "t": 8, "b": 0},
+                            paper_bgcolor="rgba(0,0,0,0)",
+                            font={"color": "#EEF3F5", "family": "IBM Plex Sans"}
+                        )
+
+                        st.plotly_chart(
+                            heat_fig,
+                            use_container_width=True,
+                            config={"displayModeBar": False}
+                        )
+                        st.caption(
+                            "Tile size represents market capitalization. Color represents daily price change. "
+                            "The map shows the 120 largest NYSE companies returned by the current Finviz screen."
+                        )
+                    else:
+                        st.caption("Finviz did not return enough NYSE data to draw the heat map.")
+                else:
+                    st.caption(
+                        "The current Finviz response is missing one or more fields needed for the NYSE heat map."
+                    )
+            else:
+                st.caption("NYSE data is not available from Finviz right now.")
 
         section("Coverage", f"{market_industry} Market Board")
 
