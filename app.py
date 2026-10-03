@@ -11,7 +11,6 @@ import requests
 import pandas as pd
 import streamlit as st
 from supabase import create_client
-from openai import OpenAI
 
 st.set_page_config(
     page_title="EquityLens AI",
@@ -893,63 +892,6 @@ def get_public_app_url():
     )
     return str(configured_url).rstrip("/") + "/"
 
-
-
-def get_openai_client():
-    api_key = st.secrets.get("OPENAI_API_KEY")
-    if not api_key:
-        return None
-    return OpenAI(api_key=api_key)
-
-
-def equitylens_s1_ai_brief(company_name):
-    client = get_openai_client()
-    if client is None:
-        raise RuntimeError("OPENAI_API_KEY is not configured.")
-
-    s1_context = company_s1.get(company_name, {})
-    company = company_name.split(" (")[0]
-
-    instructions = """
-You are EquityLens AI, a source-grounded public-company research assistant.
-
-Create a concise S-1 research brief using ONLY the S-1 context supplied with the request.
-Do not use outside knowledge, memory, web search, or unsupported assumptions.
-
-Structure the brief with these headings:
-- Business model
-- Customers and go-to-market
-- Growth strategy
-- Competition and differentiation
-- Key disclosed risks
-- Financial and operating history
-- IPO structure and ownership
-- What matters most to understand
-
-Rules:
-1. Treat the filing as historical IPO-era context, not current company information.
-2. Never invent figures or claims.
-3. If a section is not supported by the supplied context, say so briefly.
-4. Do not rank the company, recommend the security, or use buy/sell/hold language.
-5. Keep the tone analytical, neutral, and accessible.
-6. End with: "Source basis: company S-1 / registration filing context in EquityLens."
-"""
-
-    response = client.responses.create(
-        model="gpt-6-luna",
-        instructions=instructions,
-        input=[
-            {
-                "role": "user",
-                "content": (
-                    f"COMPANY: {company}\n\n"
-                    "EQUITYLENS S-1 CONTEXT:\n"
-                    f"{json.dumps(s1_context, indent=2)}"
-                )
-            }
-        ]
-    )
-    return response.output_text
 
 
 @st.cache_data(ttl=60)
@@ -2189,37 +2131,6 @@ with company_tab:
             - **Economics:** What did the filing reveal about revenue mix, costs, profitability, and capital needs?
             """
         )
-
-        section("EquityLens AI", "Generate an S-1 Research Brief")
-        st.caption(
-            "This AI brief is grounded only in the S-1 research currently stored for this company "
-            "and reflects historical IPO-era filing context."
-        )
-
-        if get_openai_client() is None:
-            st.info(
-                "The AI feature is built into EquityLens but is not active until OPENAI_API_KEY is added to Streamlit Secrets."
-            )
-        else:
-            if st.button(
-                "Generate AI S-1 brief",
-                key=f"generate_s1_ai_{explore_ticker}",
-                use_container_width=True
-            ):
-                with st.spinner("Reviewing the S-1 research context..."):
-                    try:
-                        st.session_state[f"s1_ai_brief_{explore_ticker}"] = equitylens_s1_ai_brief(explore_company)
-                    except Exception as exc:
-                        st.error("EquityLens AI could not generate the S-1 brief.")
-                        st.caption(str(exc))
-
-            generated_brief = st.session_state.get(f"s1_ai_brief_{explore_ticker}")
-            if generated_brief:
-                st.markdown(
-                    '<div class="el-ai-panel"><div class="el-ai-kicker">Generated research brief</div></div>',
-                    unsafe_allow_html=True
-                )
-                st.markdown(generated_brief)
 
         if explore_s1.get("source_url"):
             st.link_button(
