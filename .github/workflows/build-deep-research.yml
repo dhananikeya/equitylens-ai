@@ -1,70 +1,49 @@
-name: Build deep company research
+name: Validate local deep research data
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "*/30 * * * *"
   push:
     paths:
-      - "scripts/build_deep_research.py"
-      - "data/finviz_universe.csv"
+      - "data/generated_company_metrics.json"
+      - "data/generated_company_quarterly.json"
+      - "data/generated_company_analysis.json"
+      - "data/generated_company_s1.json"
+      - "data/research_pipeline_state.json"
       - ".github/workflows/build-deep-research.yml"
 
 permissions:
-  contents: write
-
-concurrency:
-  group: equitylens-deep-research
-  cancel-in-progress: false
+  contents: read
 
 jobs:
-  build-deep-research:
+  validate-generated-research:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
-
-    env:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      OPENAI_RESEARCH_MODEL: gpt-6-luna
-      RESEARCH_BATCH_SIZE: "40"
-      RESEARCH_MAX_ATTEMPTS: "3"
+    timeout-minutes: 10
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Check research API configuration
-        id: research_api
+      - name: Validate generated JSON
         run: |
-          if [ -z "$OPENAI_API_KEY" ]; then
-            echo "configured=false" >> "$GITHUB_OUTPUT"
-            echo "OPENAI_API_KEY is not configured. Deep research generation is waiting for repository setup."
-          else
-            echo "configured=true" >> "$GITHUB_OUTPUT"
-          fi
+          python - <<'PY'
+          import json
+          from pathlib import Path
 
-      - name: Build deep research batch
-        if: steps.research_api.outputs.configured == 'true'
-        run: python scripts/build_deep_research.py
+          files = [
+              "data/generated_company_metrics.json",
+              "data/generated_company_quarterly.json",
+              "data/generated_company_analysis.json",
+              "data/generated_company_s1.json",
+              "data/research_pipeline_state.json",
+          ]
 
-      - name: Commit generated research
-        if: steps.research_api.outputs.configured == 'true'
-        run: |
-          if git diff --quiet --             data/generated_company_metrics.json             data/generated_company_quarterly.json             data/generated_company_analysis.json             data/generated_company_s1.json             data/research_pipeline_state.json; then
-            echo "No generated research changes."
-            exit 0
-          fi
+          for filename in files:
+              path = Path(filename)
+              with path.open("r", encoding="utf-8") as handle:
+                  payload = json.load(handle)
+              if not isinstance(payload, dict):
+                  raise TypeError(f"{filename} must contain a JSON object")
+              print(f"{filename}: {len(payload)} records")
 
-          git config user.name "EquityLens Research Bot"
-          git config user.email "actions@users.noreply.github.com"
-          git add             data/generated_company_metrics.json             data/generated_company_quarterly.json             data/generated_company_analysis.json             data/generated_company_s1.json             data/research_pipeline_state.json
-          git commit -m "Auto-build deep company research"
-          git pull --rebase origin main
-          git push
+          print("Generated local-LLM research data is valid.")
+          PY
