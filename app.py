@@ -2176,6 +2176,67 @@ with home_tab:
         unsafe_allow_html=True
     )
 
+    section("Coverage Universe", "Broader public-company coverage")
+
+    coverage_metrics = st.columns(3)
+    coverage_metrics[0].metric("Companies", f"{len(company_universe):,}")
+    coverage_metrics[1].metric("Sectors", f"{company_universe['Sector'].nunique():,}")
+    coverage_metrics[2].metric("Industries", f"{company_universe['Industry'].nunique():,}")
+
+    st.write(
+        "EquityLens now maintains a broader market-coverage universe sourced from the "
+        "Finviz list you provided. These companies can be explored in Market Monitor "
+        "with market context and SEC filing access, while the original deep-research "
+        "set retains the most detailed structured financial analysis."
+    )
+
+    home_coverage_cols = st.columns(2)
+    with home_coverage_cols[0]:
+        home_coverage_sector = st.selectbox(
+            "Browse sector",
+            coverage_sectors,
+            key="home_coverage_sector"
+        )
+
+    home_sector_df = company_universe[
+        company_universe["Sector"] == home_coverage_sector
+    ]
+    home_sector_industries = sorted(
+        [
+            value for value in home_sector_df["Industry"].dropna().unique().tolist()
+            if value
+        ]
+    )
+
+    with home_coverage_cols[1]:
+        home_coverage_industry = st.selectbox(
+            "Browse industry",
+            ["All industries"] + home_sector_industries,
+            key="home_coverage_industry"
+        )
+
+    home_coverage_df = home_sector_df.copy()
+    if home_coverage_industry != "All industries":
+        home_coverage_df = home_coverage_df[
+            home_coverage_df["Industry"] == home_coverage_industry
+        ]
+
+    st.caption(
+        f"{len(home_coverage_df):,} companies in the current coverage view."
+    )
+
+    st.dataframe(
+        home_coverage_df[
+            [
+                column for column in
+                ["Ticker", "Company", "Industry", "Country"]
+                if column in home_coverage_df.columns
+            ]
+        ],
+        use_container_width=True,
+        hide_index=True
+    )
+
     section("Interactive preview", "See the research, not just the promise.")
 
     home_industry = st.selectbox(
@@ -4140,6 +4201,60 @@ with sec_tracker_tab:
         st.caption(
             f"Showing {len(filtered_tracker):,} filing records from the current monitored set. "
             "The monitor checks for new SEC submissions every 15 minutes."
+        )
+
+    section("Registration Filings", "S-1 / F-1 / S-11 History")
+
+    registration_company = st.selectbox(
+        "Company registration history",
+        company_universe["Coverage Key"].tolist(),
+        key="sec_registration_company"
+    )
+
+    registration_feed = sec_filings.get(registration_company, {})
+    registration_rows = registration_feed.get("registration_filings", [])
+
+    if registration_rows:
+        registration_table = pd.DataFrame(
+            [
+                {
+                    "Filed": filing.get("filing_date", ""),
+                    "Form": filing.get("form", ""),
+                    "Description": (
+                        filing.get("description", "")
+                        or filing.get("primary_document", "")
+                    ),
+                    "SEC Filing": filing.get("url", "")
+                }
+                for filing in registration_rows
+            ]
+        )
+
+        st.dataframe(
+            registration_table,
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "SEC Filing": st.column_config.LinkColumn(
+                    "SEC Filing",
+                    display_text="Open filing"
+                )
+            }
+        )
+    else:
+        st.caption(
+            "No S-1, S-1/A, F-1, F-1/A, S-11, or S-11/A has been found in "
+            "the SEC submission history scanned for this company. Older issuers may "
+            "have gone public before modern EDGAR coverage or used another registration form."
+        )
+
+    registration_sec_url = registration_feed.get("sec_company_url", "")
+    if registration_sec_url:
+        st.link_button(
+            "Open complete SEC filing history",
+            registration_sec_url,
+            key="registration_sec_history",
+            use_container_width=True
         )
 
 
