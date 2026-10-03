@@ -1602,10 +1602,14 @@ sec_filings = load_json("data/sec_filings.json")
 
 public_market_data_enabled = bool(
     st.secrets.get("PUBLIC_MARKET_DATA_ENABLED", False)
+    or st.secrets.get("TWELVE_DATA_API_KEY")
+    or st.secrets.get("FINIMPULSE_API_KEY")
 )
 
 public_finviz_data_enabled = bool(
     st.secrets.get("PUBLIC_FINVIZ_DATA_ENABLED", False)
+    or st.secrets.get("FINVIZ_API_KEY")
+    or st.secrets.get("FINVIZ_EXPORT_URL")
 )
 
 industries = sorted({
@@ -2945,6 +2949,10 @@ with market_tab:
         name for name, data in company_data.items()
         if data.get("industry", "Unclassified") == market_industry
     ]
+
+    # Market data loads automatically on first visit so the ticker is visible immediately.
+    if "market_monitor_loaded" not in st.session_state:
+        st.session_state.market_monitor_loaded = True
 
     market_controls = st.columns([2, 1])
     with market_controls[0]:
