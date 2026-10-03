@@ -4,3 +4,5 @@ plotly
 requests
 supabase
 yfinance
+openai
+beautifulsoup4
