@@ -840,94 +840,6 @@ def get_openai_client():
     return OpenAI(api_key=api_key)
 
 
-def build_equitylens_ai_context(company_name):
-    data = company_data.get(company_name, {})
-    analysis = company_analysis.get(company_name, {})
-    quarterly = company_quarterly.get(company_name, {})
-    s1 = company_s1.get(company_name, {})
-    filings = sec_filings.get(company_name, {}).get("filings", [])[:8]
-
-    context = {
-        "company": company_name,
-        "ticker": data.get("ticker"),
-        "industry": data.get("industry"),
-        "annual_financials": {
-            "fiscal_year": data.get("fiscal_year"),
-            "fiscal_year_end": data.get("fiscal_year_end"),
-            "revenue": data.get("revenue"),
-            "gross_profit": data.get("gross_profit"),
-            "operating_income": data.get("operating_income"),
-            "net_income": data.get("net_income"),
-            "cash": data.get("cash"),
-            "assets": data.get("assets"),
-            "history": data.get("history", []),
-            "source_filing": data.get("filing_url")
-        },
-        "capital_structure": data.get("capital_structure", {}),
-        "quarterly_and_ltm": quarterly,
-        "business_and_risk_research": analysis,
-        "historical_s1_context": s1,
-        "recent_sec_filings": filings
-    }
-    return json.dumps(context, indent=2)
-
-
-def equitylens_ai_answer(company_name, messages):
-    client = get_openai_client()
-    if client is None:
-        raise RuntimeError("OPENAI_API_KEY is not configured.")
-
-    context = build_equitylens_ai_context(company_name)
-    recent_messages = messages[-8:]
-
-    instructions = """
-You are EquityLens AI, a source-grounded public-company research assistant.
-
-Your job is to help users understand the company using ONLY the EquityLens context supplied
-with the request. Do not use outside knowledge, memory, web search, or unsupported assumptions.
-
-Rules:
-1. Never invent financial figures, filing details, management commentary, dates, or causes.
-2. If the supplied context does not support an answer, say that the current EquityLens dataset
-   does not contain enough information and identify what additional filing or data would be needed.
-3. Clearly distinguish:
-   - Reported: figures or disclosures from company/SEC sources.
-   - Calculated by EquityLens: metrics derived from reported figures.
-   - Research summary: plain-language interpretation of supplied disclosures.
-4. Do not give personalized investment advice, buy/sell/hold recommendations, price targets,
-   rankings, or say one security is the best investment.
-5. You may neutrally compare growth, profitability, capital structure, business models, and risks.
-6. Be concise but substantive. Explain finance terminology when useful.
-7. When discussing a number, include its relevant reporting period when the context provides one.
-8. End with a short 'Source basis' line naming the relevant filing type or structured EquityLens
-   dataset used. Do not fabricate citations or URLs.
-"""
-
-    input_items = [
-        {
-            "role": "user",
-            "content": (
-                "EQUITYLENS VERIFIED CONTEXT FOR THIS COMPANY:\n"
-                f"{context}\n\n"
-                "Use this context as the sole factual basis for the conversation."
-            )
-        }
-    ]
-
-    for message in recent_messages:
-        input_items.append({
-            "role": message["role"],
-            "content": message["content"]
-        })
-
-    response = client.responses.create(
-        model="gpt-6-luna",
-        instructions=instructions,
-        input=input_items
-    )
-    return response.output_text
-
-
 def equitylens_s1_ai_brief(company_name):
     client = get_openai_client()
     if client is None:
@@ -976,38 +888,6 @@ Rules:
         ]
     )
     return response.output_text
-
-
-def equitylens_source_links(company_name):
-    data = company_data.get(company_name, {})
-    analysis = company_analysis.get(company_name, {})
-    quarterly = company_quarterly.get(company_name, {})
-    links = []
-
-    annual = data.get("filing_url")
-    if annual:
-        links.append(("Annual filing", annual))
-
-    quarter = quarterly.get("source_filing")
-    if quarter and quarter != annual:
-        links.append(("Latest quarterly filing", quarter))
-
-    analysis_source = analysis.get("source_filing")
-    if analysis_source and analysis_source not in [url for _, url in links]:
-        links.append(("Risk / business source", analysis_source))
-
-    for filing in sec_filings.get(company_name, {}).get("filings", [])[:3]:
-        url = filing.get("url")
-        form = filing.get("form", "SEC filing")
-        filed = filing.get("filing_date", "")
-        label = f"{form} filed {filed}" if filed else form
-        if url and url not in [existing_url for _, existing_url in links]:
-            links.append((label, url))
-
-    return links[:5]
-
-
-
 
 
 @st.cache_data(ttl=60)
@@ -1304,11 +1184,10 @@ render_summary_cards([
     ("Monitoring", "Automatic SEC checks")
 ])
 
-home_tab, company_tab, peer_tab, ask_tab, sec_tracker_tab, learn_tab = st.tabs([
+home_tab, company_tab, peer_tab, sec_tracker_tab, learn_tab = st.tabs([
     "Home",
     "Explore Companies",
     "Industry Comparison",
-    "EquityLens AI",
     "Filings",
     "Learn"
 ])
@@ -1336,9 +1215,9 @@ with home_tab:
                 <div class="el-intent-copy">Compare growth, margins, capital structure, business models, and risk themes on the same page.</div>
             </div>
             <div class="el-intent-card">
-                <div class="el-intent-label">EquityLens AI</div>
-                <div class="el-intent-title">What does the filing actually say?</div>
-                <div class="el-intent-copy">Ask plain-English questions against structured filing research and keep the supporting sources close by.</div>
+                <div class="el-intent-label">Filings</div>
+                <div class="el-intent-title">What changed recently?</div>
+                <div class="el-intent-copy">Review newly detected SEC filings, reporting dates, form types, and direct links to the original disclosures.</div>
             </div>
             <div class="el-intent-card">
                 <div class="el-intent-label">Learn</div>
@@ -1493,8 +1372,8 @@ with home_tab:
                 <div class="el-next-copy">Open Industry Comparison to see whether the company's growth, margins, and capital structure differ from selected peers.</div>
             </div>
             <div class="el-next-card">
-                <div class="el-next-title">Have a specific question?</div>
-                <div class="el-next-copy">Open EquityLens AI and ask about a filing, trend, risk, or business-model detail in plain English.</div>
+                <div class="el-next-title">Want the newest disclosures?</div>
+                <div class="el-next-copy">Open Filings to see recently detected SEC submissions and jump directly to the original source.</div>
             </div>
         </div>
         """,
@@ -1527,28 +1406,6 @@ with home_tab:
                     <div class="el-workflow-step-title">Put peers in context</div>
                     <div class="el-workflow-copy">Compare relevant companies without rankings, recommendations, or hidden scoring.</div>
                 </div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    st.markdown(
-        """
-        <div class="el-ai-panel">
-            <div class="el-ai-kicker">EquityLens AI</div>
-            <div class="el-ai-title">Ask the filing, not the internet.</div>
-            <div class="el-ai-copy">
-                The research assistant is grounded in EquityLens company data, filing-derived context,
-                and SEC source links. Use it to explain financial trends, summarize disclosed risks,
-                understand business models, and work through S-1 context without turning the answer
-                into an investment recommendation.
-            </div>
-            <div class="el-ai-chips">
-                <span class="el-ai-chip">Filing-grounded</span>
-                <span class="el-ai-chip">Source-linked</span>
-                <span class="el-ai-chip">Follow-up questions</span>
-                <span class="el-ai-chip">No stock rankings</span>
             </div>
         </div>
         """,
@@ -2315,146 +2172,6 @@ with company_tab:
     else:
         st.info("S-1 research has not been added for this company yet.")
 
-
-with ask_tab:
-    section("Grounded AI research assistant", "Ask EquityLens AI")
-
-    st.write(
-        "Ask questions in plain English about a covered company. The assistant is grounded in "
-        "EquityLens structured financial data, filing-based research, and SEC source links."
-    )
-    st.caption(
-        "It can explain results, compare periods, summarize risks, and answer follow-up questions. "
-        "It does not provide buy, sell, hold, ranking, or personalized investment recommendations."
-    )
-
-    ask_industry = st.selectbox(
-        "Industry",
-        industries,
-        key="ai_chat_industry"
-    )
-
-    ask_industry_companies = [
-        name for name, company in company_data.items()
-        if company.get("industry", "Unclassified") == ask_industry
-    ]
-
-    ask_company = st.selectbox(
-        "Research company",
-        ask_industry_companies,
-        format_func=lambda name: (
-            f"{company_data[name].get('ticker', '')} · {name.split(' (')[0]}"
-        ),
-        key="ai_chat_company"
-    )
-
-    st.caption(
-        f"Researching {company_data[ask_company].get('ticker', '')} in {ask_industry}."
-    )
-
-    openai_client_available = get_openai_client() is not None
-    if not openai_client_available:
-        st.warning(
-            "AI chat is ready but not yet connected. Add OPENAI_API_KEY to Streamlit Secrets "
-            "to activate the grounded assistant."
-        )
-
-    if "equitylens_chat_history" not in st.session_state:
-        st.session_state.equitylens_chat_history = {}
-
-    if ask_company not in st.session_state.equitylens_chat_history:
-        st.session_state.equitylens_chat_history[ask_company] = []
-
-    chat_history = st.session_state.equitylens_chat_history[ask_company]
-
-    starter_cols = st.columns(3)
-    starter_questions = [
-        "What changed in the latest quarter?",
-        "What are the main disclosed risks?",
-        "Explain the profitability trend."
-    ]
-
-    for col, starter in zip(starter_cols, starter_questions):
-        with col:
-            if st.button(starter, key=f"starter_{ask_company}_{starter}", use_container_width=True):
-                st.session_state.ai_starter_question = starter
-
-    for message in chat_history:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-            if message["role"] == "assistant":
-                sources = equitylens_source_links(ask_company)
-                if sources:
-                    with st.expander("Source links"):
-                        for idx, (label, url) in enumerate(sources):
-                            st.link_button(
-                                label,
-                                url,
-                                key=f"history_source_{ask_company}_{len(chat_history)}_{idx}_{message.get('id', idx)}"
-                            )
-
-    prompt = st.chat_input(
-        "Ask about financial performance, filings, risks, business model, or trends..."
-    )
-
-    starter_prompt = st.session_state.pop("ai_starter_question", None)
-    user_prompt = prompt or starter_prompt
-
-    if user_prompt:
-        chat_history.append({
-            "role": "user",
-            "content": user_prompt
-        })
-
-        with st.chat_message("user"):
-            st.markdown(user_prompt)
-
-        if not openai_client_available:
-            with st.chat_message("assistant"):
-                st.info(
-                    "The AI connection is not configured yet. Once OPENAI_API_KEY is added to "
-                    "Streamlit Secrets, this question can be answered from EquityLens data."
-                )
-        else:
-            with st.chat_message("assistant"):
-                with st.spinner("Reviewing EquityLens data and filing context..."):
-                    try:
-                        answer = equitylens_ai_answer(ask_company, chat_history)
-                        st.markdown(answer)
-
-                        assistant_message = {
-                            "role": "assistant",
-                            "content": answer,
-                            "id": len(chat_history)
-                        }
-                        chat_history.append(assistant_message)
-
-                        sources = equitylens_source_links(ask_company)
-                        if sources:
-                            with st.expander("Source links"):
-                                for idx, (label, url) in enumerate(sources):
-                                    st.link_button(
-                                        label,
-                                        url,
-                                        key=f"new_source_{ask_company}_{len(chat_history)}_{idx}"
-                                    )
-                    except Exception as exc:
-                        st.error(
-                            "EquityLens AI could not complete the request. The underlying research "
-                            "data is still available elsewhere in the app."
-                        )
-                        st.caption(str(exc))
-
-    control_cols = st.columns([1, 4])
-    with control_cols[0]:
-        if st.button("Clear chat", key=f"clear_chat_{ask_company}", use_container_width=True):
-            st.session_state.equitylens_chat_history[ask_company] = []
-            st.rerun()
-
-    st.caption(
-        "AI responses are generated from the structured EquityLens context supplied to the model. "
-        "Users should verify material information using the linked SEC filings."
-    )
 
 with sec_tracker_tab:
     section("SEC Monitor", "Filing Tracker")
