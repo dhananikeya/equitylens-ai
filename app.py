@@ -435,22 +435,29 @@ st.markdown(
     }
 
     .el-trust-item {
-        min-height: 68px;
+        min-height: 72px;
         box-sizing: border-box;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: .95rem 1.05rem;
+        padding: 1rem 1.1rem;
         text-align: center;
         font-size: .86rem;
         font-weight: 600;
         color: var(--el-text) !important;
-        border: 2px solid rgba(20, 184, 166, 0.72) !important;
+        border: 1px solid rgba(71, 163, 155, .72) !important;
         border-radius: 12px !important;
-        background: rgba(20, 184, 166, 0.055) !important;
+        background: rgba(18, 27, 33, .72) !important;
         box-shadow:
-            inset 0 0 0 1px rgba(59, 130, 246, 0.08),
-            0 8px 24px rgba(0, 0, 0, 0.14) !important;
+            inset 0 1px 0 rgba(255,255,255,.025),
+            0 10px 28px rgba(0,0,0,.12) !important;
+        transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .el-trust-item:hover {
+        transform: translateY(-2px);
+        border-color: rgba(45, 212, 191, .95) !important;
+        background: rgba(20, 184, 166, .08) !important;
     }
 
     .el-feature-grid {
@@ -461,12 +468,21 @@ st.markdown(
     }
 
     .el-feature-card {
-        min-height: 170px;
-        padding: 1.25rem;
-        border: 1px solid var(--el-border);
-        border-radius: 12px;
-        background: linear-gradient(180deg, var(--el-surface-2), var(--el-surface));
-        box-shadow: 0 12px 35px rgba(0,0,0,.09);
+        min-height: 188px;
+        padding: 1.5rem;
+        border: 1px solid rgba(148, 163, 184, .18);
+        border-radius: 14px;
+        background:
+            linear-gradient(180deg,
+                rgba(255,255,255,.025),
+                rgba(255,255,255,.008));
+        box-shadow: 0 16px 42px rgba(0,0,0,.08);
+        transition: transform .2s ease, border-color .2s ease;
+    }
+
+    .el-feature-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(45, 212, 191, .48);
     }
 
     .el-feature-num {
@@ -547,6 +563,121 @@ st.markdown(
         margin: 0;
     }
 
+    /* Editorial-style navigation, inspired by modern institutional research products. */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: .35rem;
+        border-bottom: 1px solid rgba(148, 163, 184, .14);
+        padding-bottom: .15rem;
+    }
+
+    .stTabs [data-baseweb="tab"] {
+        min-height: 2.9rem;
+        padding: 0 1rem;
+        border-radius: 9px 9px 0 0;
+        color: var(--el-muted);
+    }
+
+    .stTabs [aria-selected="true"] {
+        color: var(--el-text) !important;
+        background: rgba(20, 184, 166, .055);
+    }
+
+    .el-workflow-shell {
+        position: relative;
+        overflow: hidden;
+        margin: .9rem 0 1.8rem 0;
+        padding: 1.65rem;
+        border: 1px solid rgba(148, 163, 184, .16);
+        border-radius: 16px;
+        background:
+            radial-gradient(circle at 86% 18%, rgba(59,130,246,.09), transparent 28%),
+            linear-gradient(180deg, rgba(255,255,255,.018), rgba(255,255,255,.004));
+    }
+
+    .el-workflow-shell::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+            linear-gradient(rgba(148,163,184,.045) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(148,163,184,.045) 1px, transparent 1px);
+        background-size: 34px 34px;
+        mask-image: linear-gradient(90deg, transparent 0%, black 45%, black 100%);
+        -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 45%, black 100%);
+    }
+
+    .el-workflow-kicker {
+        position: relative;
+        z-index: 1;
+        color: var(--el-teal);
+        text-transform: uppercase;
+        letter-spacing: .11em;
+        font-size: .72rem;
+        font-weight: 700;
+        margin-bottom: .45rem;
+    }
+
+    .el-workflow-title {
+        position: relative;
+        z-index: 1;
+        color: var(--el-text);
+        font-size: 1.45rem;
+        font-weight: 700;
+        letter-spacing: -.018em;
+        margin-bottom: 1.15rem;
+    }
+
+    .el-workflow-grid {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: .8rem;
+    }
+
+    .el-workflow-step {
+        position: relative;
+        min-height: 132px;
+        padding: 1.1rem;
+        border: 1px solid rgba(148, 163, 184, .17);
+        border-radius: 12px;
+        background: rgba(10, 15, 20, .34);
+    }
+
+    .el-workflow-step + .el-workflow-step::before {
+        content: "→";
+        position: absolute;
+        left: -.72rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(45,212,191,.8);
+        font-size: 1.05rem;
+        font-weight: 700;
+    }
+
+    .el-workflow-num {
+        color: var(--el-teal);
+        font-size: .7rem;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        margin-bottom: .5rem;
+    }
+
+    .el-workflow-step-title {
+        color: var(--el-text);
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: .35rem;
+    }
+
+    .el-workflow-copy {
+        color: var(--el-muted);
+        font-size: .84rem;
+        line-height: 1.5;
+    }
+
     @media (max-width: 900px) {
         .block-container {
             padding-top: 1rem;
@@ -594,6 +725,21 @@ st.markdown(
         .el-feature-grid {
             grid-template-columns: 1fr;
             gap: .6rem;
+        }
+
+        .el-workflow-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .el-workflow-step + .el-workflow-step::before {
+            content: "↓";
+            left: 50%;
+            top: -.75rem;
+            transform: translateX(-50%);
+        }
+
+        .el-workflow-shell {
+            padding: 1.15rem;
         }
 
         .el-feature-card {
@@ -1162,6 +1308,33 @@ with home_tab:
     st.caption(
         "Continue in Explore Companies for an S-1-focused view of how the company described its business, "
         "strategy, market opportunity, and risks when it prepared to go public."
+    )
+
+    st.markdown(
+        """
+        <div class="el-workflow-shell">
+            <div class="el-workflow-kicker">Research workflow</div>
+            <div class="el-workflow-title">From filing to understanding</div>
+            <div class="el-workflow-grid">
+                <div class="el-workflow-step">
+                    <div class="el-workflow-num">01 · Source</div>
+                    <div class="el-workflow-step-title">Start with primary filings</div>
+                    <div class="el-workflow-copy">EquityLens anchors company research to SEC EDGAR filings and direct source links.</div>
+                </div>
+                <div class="el-workflow-step">
+                    <div class="el-workflow-num">02 · Structure</div>
+                    <div class="el-workflow-step-title">Turn disclosure into usable research</div>
+                    <div class="el-workflow-copy">Reported figures, calculated metrics, business-model context, and risk disclosures are organized consistently.</div>
+                </div>
+                <div class="el-workflow-step">
+                    <div class="el-workflow-num">03 · Compare</div>
+                    <div class="el-workflow-step-title">Understand the company in context</div>
+                    <div class="el-workflow-copy">Review trends and peers without rankings, recommendations, or hidden scoring.</div>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
     )
 
     section("Why EquityLens", "Research built to be understandable and verifiable")
