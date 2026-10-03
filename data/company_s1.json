@@ -621,5 +621,292 @@
         "The filing disclosed significant holdings by founders, directors, executives, and venture investors."
       ]
     }
+  },
+  "Coinbase (COIN)": {
+    "filed_date": "2021-02-25",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1679788/000162828021003168/coinbaseglobalincs-1.htm",
+    "historical_context": "Coinbase's S-1 presented the company as infrastructure for the emerging cryptoeconomy, serving retail users, institutions, and ecosystem partners through trading, custody, staking, and related crypto services.",
+    "what_to_learn": "The filing is useful for understanding Coinbase's transaction-driven economics, exposure to crypto-market activity, institutional and retail platform strategy, custody model, regulatory risks, and the company's direct-listing structure.",
+    "filing_details": {
+      "business_revenue_model": [
+        "Coinbase described a platform connecting retail users, institutions, and ecosystem partners to crypto assets and services.",
+        "Revenue was heavily influenced by transaction activity, with additional revenue from services such as custody, staking, and other crypto-related products."
+      ],
+      "customers_go_to_market": [
+        "The company served both retail and institutional customers and emphasized trusted infrastructure and ease of access to crypto markets.",
+        "Growth depended on attracting users, increasing engagement, and expanding the range of assets and services available on the platform."
+      ],
+      "growth_market_opportunity": [
+        "Management framed crypto adoption and development of the broader cryptoeconomy as the long-term opportunity.",
+        "The filing discussed expanding products for consumers, institutions, and developers rather than remaining only a trading venue."
+      ],
+      "competition_differentiation": [
+        "Coinbase emphasized brand trust, security, regulatory engagement, product breadth, and institutional infrastructure.",
+        "Competition included other crypto exchanges, financial platforms, decentralized protocols, and traditional financial institutions."
+      ],
+      "risk_factors": [
+        "The S-1 highlighted crypto volatility, regulation, cybersecurity, custody, market concentration, blockchain risks, and dependence on continued adoption of crypto assets.",
+        "Trading activity and revenue could fluctuate significantly with crypto prices and market sentiment."
+      ],
+      "financial_history": [
+        "The filing showed results that were highly sensitive to crypto-market cycles and transaction volume.",
+        "Transaction revenue was a major component of the pre-listing business model."
+      ],
+      "ipo_capitalization_dilution": [
+        "Coinbase used a direct listing rather than a traditional underwritten IPO, allowing registered stockholders to resell shares.",
+        "The filing described a multi-class capital structure and voting rights."
+      ],
+      "proceeds_management_ownership": [
+        "Because the listing was structured as a resale registration, Coinbase did not conduct a conventional primary capital raise through the S-1.",
+        "The filing disclosed significant founder, executive, director, and investor ownership."
+      ]
+    }
+  },
+  "Robinhood (HOOD)": {
+    "filed_date": "2021-07-01",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1783879/000162828021013318/robinhoods-1.htm",
+    "historical_context": "Robinhood's S-1 described a mobile-first financial platform built around commission-free investing and a mission of broadening access to financial markets.",
+    "what_to_learn": "The filing helps explain Robinhood's retail brokerage model, transaction-based economics, payment-for-order-flow exposure, crypto expansion, user growth, regulatory obligations, and customer-engagement strategy.",
+    "filing_details": {
+      "business_revenue_model": [
+        "Robinhood described an app-based financial platform offering equities, options, crypto, cash management, and related services.",
+        "Revenue sources included transaction-based revenue, net interest, and other financial-services revenue."
+      ],
+      "customers_go_to_market": [
+        "The company targeted retail investors through a mobile-first product, simple onboarding, referrals, and low-friction investing tools.",
+        "The filing emphasized funded-account growth, customer activity, and product expansion."
+      ],
+      "growth_market_opportunity": [
+        "Management framed financial participation by younger and first-time investors as a major opportunity.",
+        "Growth priorities included adding financial products, increasing customer assets and engagement, and broadening access to investing."
+      ],
+      "competition_differentiation": [
+        "Robinhood emphasized product simplicity, mobile design, low-cost access, brand awareness, and rapid product iteration.",
+        "It competed with traditional brokerages, digital brokers, banks, crypto platforms, and other fintech products."
+      ],
+      "risk_factors": [
+        "The S-1 highlighted regulatory scrutiny, payment-for-order-flow economics, market volatility, customer concentration in active retail trading, outages, cybersecurity, and clearing requirements.",
+        "Rapid growth placed significant demands on compliance and operational systems."
+      ],
+      "financial_history": [
+        "The filing showed rapid account and revenue growth during periods of elevated retail trading activity.",
+        "Results were sensitive to transaction activity and changing customer behavior."
+      ],
+      "ipo_capitalization_dilution": [
+        "The registration statement described the shares offered to the public and Robinhood's multi-class governance structure.",
+        "The company also reserved a portion of the offering for customers through its IPO Access program."
+      ],
+      "proceeds_management_ownership": [
+        "Robinhood expected to use proceeds for working capital and general corporate purposes, including growth and product investment.",
+        "The filing disclosed continuing voting influence held by founders and major pre-IPO holders."
+      ]
+    }
+  },
+  "Affirm (AFRM)": {
+    "filed_date": "2020-11-18",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1820953/000110465920126927/tm2026663-4_s1.htm",
+    "historical_context": "Affirm's S-1 presented a technology-driven payments network built around transparent installment credit offered at the point of sale.",
+    "what_to_learn": "The filing is useful for understanding Affirm's merchant-consumer network, underwriting model, funding strategy, credit risk, merchant economics, and the early development of buy-now-pay-later in U.S. commerce.",
+    "filing_details": {
+      "business_revenue_model": [
+        "Affirm described a two-sided network connecting consumers and merchants through installment-payment products.",
+        "Revenue came from merchant fees, interest income, gains on loan sales, servicing, and related network economics."
+      ],
+      "customers_go_to_market": [
+        "Affirm acquired consumers through merchant checkout integrations and direct consumer relationships.",
+        "The filing emphasized merchant partnerships, repeat consumer use, and expansion into more purchase categories."
+      ],
+      "growth_market_opportunity": [
+        "Management positioned alternatives to revolving credit cards as a large consumer-finance opportunity.",
+        "Growth priorities included adding merchants, increasing consumer frequency, expanding product types, and improving underwriting."
+      ],
+      "competition_differentiation": [
+        "Affirm emphasized transparent payment schedules, technology-driven underwriting, merchant conversion benefits, and consumer experience.",
+        "Competition included credit cards, banks, other installment lenders, BNPL providers, and digital wallets."
+      ],
+      "risk_factors": [
+        "The S-1 highlighted credit losses, funding availability, merchant concentration, regulation, underwriting-model performance, consumer demand, and economic cycles.",
+        "Access to capital and the ability to sell or fund receivables were central financial risks."
+      ],
+      "financial_history": [
+        "The filing showed rapid network and revenue growth while the company was still generating significant losses.",
+        "Credit performance, funding costs, and merchant economics were important drivers of results."
+      ],
+      "ipo_capitalization_dilution": [
+        "Affirm described a dual-class common-stock structure and conversion of pre-IPO securities around the offering.",
+        "The filing discussed dilution to new public investors and outstanding equity awards."
+      ],
+      "proceeds_management_ownership": [
+        "Offering proceeds were intended for working capital and general corporate purposes, with flexibility for investments or acquisitions.",
+        "Founder, executive, director, and major investor ownership was detailed in the filing."
+      ]
+    }
+  },
+  "Block (XYZ)": {
+    "filed_date": "2015-10-14",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1512673/000119312515343733/d937622ds1.htm",
+    "historical_context": "Then known as Square, the company's S-1 described an integrated payments and commerce ecosystem designed to give small businesses access to payment acceptance, software, and financial tools.",
+    "what_to_learn": "The filing shows the original Square seller thesis, hardware-plus-software distribution model, payment economics, small-business focus, ecosystem expansion, and the risks of competing in merchant acquiring.",
+    "filing_details": {
+      "business_revenue_model": [
+        "Square described an ecosystem combining payment acceptance hardware, software, and financial services for sellers.",
+        "Revenue depended heavily on payment processing activity, supplemented by hardware, software, and other seller services."
+      ],
+      "customers_go_to_market": [
+        "The company focused heavily on small businesses and used simple self-service onboarding alongside broader sales and distribution.",
+        "Its compact card readers and integrated software reduced barriers for merchants accepting electronic payments."
+      ],
+      "growth_market_opportunity": [
+        "Management framed underserved small businesses and the digitization of commerce as major opportunities.",
+        "Growth priorities included larger sellers, new software and financial products, and international expansion."
+      ],
+      "competition_differentiation": [
+        "Square emphasized integrated hardware and software, simple pricing, merchant usability, and a unified commerce ecosystem.",
+        "Competition included traditional merchant acquirers, banks, payment processors, and emerging mobile-payment providers."
+      ],
+      "risk_factors": [
+        "The S-1 highlighted payment-network rules, fraud and chargebacks, merchant losses, competition, regulation, hardware execution, and dependence on payment volume.",
+        "The company also faced risks from serving many small businesses and rapidly expanding its product set."
+      ],
+      "financial_history": [
+        "The filing showed rapid payment-volume and revenue growth alongside continued investment and losses before the IPO.",
+        "Transaction-based economics were central to the early business."
+      ],
+      "ipo_capitalization_dilution": [
+        "The registration statement described the common shares offered, preferred-stock conversion, outstanding equity awards, and dilution.",
+        "Square listed publicly under the SQ ticker; the company later became Block and now trades as XYZ."
+      ],
+      "proceeds_management_ownership": [
+        "Square planned to use proceeds for general corporate purposes, working capital, product development, and potential acquisitions or investments.",
+        "The filing disclosed substantial founder and pre-IPO investor ownership."
+      ]
+    }
+  },
+  "Toast (TOST)": {
+    "filed_date": "2021-08-27",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1650164/000119312521258447/d166297ds1.htm",
+    "historical_context": "Toast's S-1 described an end-to-end technology platform purpose-built for restaurants, combining point-of-sale software, payments, digital ordering, payroll, marketing, and other restaurant operations tools.",
+    "what_to_learn": "The filing provides context for Toast's vertical SaaS strategy, payments monetization, restaurant customer economics, hardware deployment, land-and-expand motion, and exposure to restaurant-industry conditions.",
+    "filing_details": {
+      "business_revenue_model": [
+        "Toast described a restaurant-focused platform combining software subscriptions, financial technology and payment processing, hardware, and services.",
+        "Payments activity was tightly integrated with the software relationship and represented a major part of platform economics."
+      ],
+      "customers_go_to_market": [
+        "The company targeted restaurants ranging from independent locations to larger multi-unit groups.",
+        "Growth relied on adding restaurant locations and expanding adoption of additional software and financial products."
+      ],
+      "growth_market_opportunity": [
+        "Management framed restaurant digitization and the shift toward integrated cloud software and payments as a large market opportunity.",
+        "The filing highlighted new modules, larger restaurant groups, and geographic expansion as growth paths."
+      ],
+      "competition_differentiation": [
+        "Toast emphasized vertical specialization, integrated payments, restaurant-specific workflows, and a broad product suite.",
+        "Competition included legacy restaurant POS systems, general payment processors, commerce platforms, and restaurant software vendors."
+      ],
+      "risk_factors": [
+        "The S-1 highlighted restaurant-industry weakness, customer churn, payment volume, hardware deployment, competition, cybersecurity, and reliance on financial and technology partners.",
+        "The COVID-era disruption illustrated the company's exposure to restaurant operating conditions."
+      ],
+      "financial_history": [
+        "The filing reflected rapid platform growth but substantial investment and losses as Toast scaled.",
+        "Recurring software and payment-processing economics were central to the model."
+      ],
+      "ipo_capitalization_dilution": [
+        "The filing described Class A and Class B common stock, preferred-stock conversion, equity awards, and dilution around the IPO.",
+        "The multi-class structure gave certain holders greater voting power."
+      ],
+      "proceeds_management_ownership": [
+        "Toast expected to use proceeds for general corporate purposes, growth investment, and potentially acquisitions or strategic investments.",
+        "The filing disclosed significant founder, employee, and venture-investor ownership."
+      ]
+    }
+  },
+  "BILL Holdings (BILL)": {
+    "filed_date": "2019-11-15",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1786352/000119312519293348/d710902ds1.htm",
+    "historical_context": "BILL's S-1, filed under the Bill.com name, described a cloud-based financial operations platform focused on digitizing back-office payments and workflows for small and midsize businesses.",
+    "what_to_learn": "The filing is useful for understanding BILL's SMB focus, accounts-payable and receivable automation, accounting-firm channel, transaction monetization, network effects, and dependence on banking and payment infrastructure.",
+    "filing_details": {
+      "business_revenue_model": [
+        "Bill.com described a cloud platform automating accounts payable, accounts receivable, document workflows, and business payments.",
+        "Revenue combined subscription fees with transaction-related fees from payment activity."
+      ],
+      "customers_go_to_market": [
+        "The company sold directly to SMBs and worked closely with accounting firms that recommended and used the platform for clients.",
+        "The accounting ecosystem was an important distribution and retention channel."
+      ],
+      "growth_market_opportunity": [
+        "Management framed the digitization of SMB back-office finance and replacement of checks and manual workflows as a large opportunity.",
+        "Growth priorities included more customers, more payment types, deeper accounting integrations, and broader financial workflows."
+      ],
+      "competition_differentiation": [
+        "BILL emphasized workflow automation, accounting integrations, supplier/customer network effects, and a purpose-built SMB experience.",
+        "Competition included banks, accounting-software companies, payment processors, and manual workflows."
+      ],
+      "risk_factors": [
+        "The S-1 highlighted SMB economic sensitivity, payment fraud, banking and network relationships, regulatory compliance, competition, cybersecurity, and customer retention.",
+        "Because BILL moved customer funds, operational controls and payment reliability were particularly important."
+      ],
+      "financial_history": [
+        "The filing showed strong subscription and transaction growth while the company remained loss-making before the IPO.",
+        "Payment volume and customer growth were important drivers of platform economics."
+      ],
+      "ipo_capitalization_dilution": [
+        "The registration statement described common-stock issuance, preferred-stock conversion, employee equity awards, and dilution to IPO investors.",
+        "The company listed publicly under the BILL ticker."
+      ],
+      "proceeds_management_ownership": [
+        "Proceeds were intended for working capital and general corporate purposes, with potential use for acquisitions or strategic investments.",
+        "The filing detailed founder, executive, director, employee, and venture-investor ownership."
+      ]
+    }
+  },
+  "Marqeta (MQ)": {
+    "filed_date": "2021-05-14",
+    "form": "S-1",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1522540/000119312521162113/d64065ds1.htm",
+    "historical_context": "Marqeta's S-1 described a modern card-issuing platform that used APIs to let customers build, launch, and manage customized physical and virtual card programs.",
+    "what_to_learn": "The filing helps explain Marqeta's embedded-finance thesis, processing economics, bank and card-network relationships, customer concentration, developer-first approach, and exposure to payment volume.",
+    "filing_details": {
+      "business_revenue_model": [
+        "Marqeta described an API-first platform for card issuing, transaction processing, and program management.",
+        "Its economics were driven by card-program activity and the services provided to customers operating those programs."
+      ],
+      "customers_go_to_market": [
+        "The company targeted technology companies, fintechs, digital banks, marketplaces, and other businesses embedding card products.",
+        "Its developer-oriented APIs were designed to reduce the time required to launch and customize card programs."
+      ],
+      "growth_market_opportunity": [
+        "Management framed embedded finance, digital commerce, on-demand services, and modern card issuing as major secular opportunities.",
+        "Growth priorities included more customers, new geographies, additional use cases, and deeper program expansion."
+      ],
+      "competition_differentiation": [
+        "Marqeta emphasized open APIs, real-time controls, developer usability, and a modern processing stack.",
+        "Competition included legacy issuing processors, banks, card platforms, and newer fintech infrastructure companies."
+      ],
+      "risk_factors": [
+        "The S-1 highlighted major-customer concentration, card-network and issuing-bank dependence, transaction-volume variability, regulation, competition, fraud, and cybersecurity.",
+        "A significant portion of revenue was tied to a small number of large customer programs at the time of the IPO."
+      ],
+      "financial_history": [
+        "The filing showed rapid processing-volume and revenue growth, with profitability influenced by customer mix and program economics.",
+        "Large-customer activity was particularly important to reported results."
+      ],
+      "ipo_capitalization_dilution": [
+        "Marqeta described Class A and Class B common stock, preferred-stock conversion, outstanding awards, and dilution to IPO purchasers.",
+        "The multi-class structure preserved greater voting power for certain pre-IPO holders."
+      ],
+      "proceeds_management_ownership": [
+        "Offering proceeds were intended for working capital and general corporate purposes and could support acquisitions or strategic investments.",
+        "The filing disclosed significant founder, executive, director, and venture-investor ownership."
+      ]
+    }
   }
 }
