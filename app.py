@@ -3204,14 +3204,15 @@ with market_tab:
                                     "Daily change: %{customdata[3]:+.2f}%"
                                     "<extra></extra>"
                                 ),
-                                texttemplate="<b>%{label}</b>",
-                                textfont={"family": "IBM Plex Mono"}
+                                texttemplate="<b>%{label}</b><br>%{customdata[3]:+.1f}%",
+                                textfont={"family": "IBM Plex Mono", "size": 13}
                             )
                         )
                         heat_fig.update_layout(
-                            height=650,
+                            height=680,
                             margin={"l": 0, "r": 0, "t": 8, "b": 0},
                             paper_bgcolor="rgba(0,0,0,0)",
+                            plot_bgcolor="#050B0E",
                             font={"color": "#EEF3F5", "family": "IBM Plex Sans"}
                         )
 
