@@ -2146,10 +2146,24 @@ def build_change_notes(qdata):
     return notes
 
 
-company_data = load_json("data/company_metrics.json")
-company_analysis = load_json("data/company_analysis.json")
-company_quarterly = load_json("data/company_quarterly.json")
-company_s1 = load_json("data/company_s1.json")
+hand_company_data = load_json("data/company_metrics.json")
+hand_company_analysis = load_json("data/company_analysis.json")
+hand_company_quarterly = load_json("data/company_quarterly.json")
+hand_company_s1 = load_json("data/company_s1.json")
+
+generated_company_data = load_json("data/generated_company_metrics.json")
+generated_company_analysis = load_json("data/generated_company_analysis.json")
+generated_company_quarterly = load_json("data/generated_company_quarterly.json")
+generated_company_s1 = load_json("data/generated_company_s1.json")
+
+# Generated research expands coverage; hand-curated records remain authoritative.
+company_data = {**generated_company_data, **hand_company_data}
+company_analysis = {**generated_company_analysis, **hand_company_analysis}
+company_quarterly = {
+    **generated_company_quarterly,
+    **hand_company_quarterly
+}
+company_s1 = {**generated_company_s1, **hand_company_s1}
 sec_filings = load_json("data/sec_filings.json")
 
 try:
@@ -2188,6 +2202,48 @@ company_universe["Coverage Key"] = (
 coverage_sectors = sorted(
     [value for value in company_universe["Sector"].dropna().unique().tolist() if value]
 )
+
+# Make all 517 companies available throughout the app immediately.
+# Generated SEC research fills these stubs over time.
+_company_key_by_ticker = {
+    str(record.get("ticker", "")).upper(): key
+    for key, record in company_data.items()
+    if record.get("ticker")
+}
+for _, _row in company_universe.iterrows():
+    _ticker = str(_row.get("Ticker", "")).upper().strip()
+    if not _ticker or _ticker in _company_key_by_ticker:
+        continue
+
+    _key = str(_row.get("Coverage Key", "")).strip()
+    company_data[_key] = {
+        "ticker": _ticker,
+        "industry": str(_row.get("Industry", "Unclassified")),
+        "sector": str(_row.get("Sector", "")),
+        "country": str(_row.get("Country", "")),
+        "fiscal_year": None,
+        "fiscal_year_end": None,
+        "source": "SEC research pending",
+        "filing_url": "",
+        "revenue": None,
+        "gross_profit": None,
+        "operating_income": None,
+        "net_income": None,
+        "cash": None,
+        "assets": None,
+        "history": [],
+        "capital_structure": {
+            "shares_outstanding": None,
+            "shares_as_of": None,
+            "total_debt": None,
+            "cash_and_investments": None,
+            "balance_sheet_as_of": None,
+            "source_filing": ""
+        }
+    }
+    company_analysis.setdefault(_key, {})
+    company_quarterly.setdefault(_key, {})
+    _company_key_by_ticker[_ticker] = _key
 
 public_market_data_enabled = True
 
@@ -2306,17 +2362,20 @@ sec_synced_companies = sum(
     if _company_feed.get("cik")
     and _company_feed.get("filings")
 )
-registration_covered_companies = sum(
-    1
-    for _company_feed in sec_filings.values()
-    if _company_feed.get("registration_filings")
-)
+
+deep_research_tickers = {
+    str(company_data.get(_key, {}).get("ticker", "")).upper()
+    for _key, _analysis in company_analysis.items()
+    if _analysis and _analysis.get("business_model")
+}
+deep_research_tickers.discard("")
 
 render_summary_cards([
     ("Companies", f"{len(company_universe):,}"),
     ("Industries", f"{company_universe['Industry'].nunique():,}"),
-    ("Primary Source", "SEC EDGAR"),
-    ("SEC Synced", f"{sec_synced_companies:,} / {len(company_universe):,}")
+    ("SEC Synced", f"{sec_synced_companies:,} / {len(company_universe):,}"),
+    ("Deep Research", f"{len(deep_research_tickers):,} / {len(company_universe):,}"),
+    ("Primary Source", "SEC EDGAR")
 ])
 
 home_tab, company_tab, peer_tab, research_tab, market_tab, sec_tracker_tab, learn_tab = st.tabs([
