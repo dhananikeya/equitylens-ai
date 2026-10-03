@@ -1028,26 +1028,53 @@ def get_live_market_data(symbols):
 
 
 @st.cache_data(ttl=60)
-def get_finviz_screener_data():
+def get_finviz_screener_data(symbols=None):
     export_url = st.secrets.get("FINVIZ_EXPORT_URL")
-
-    if not export_url:
-        raise ValueError("FINVIZ_EXPORT_URL is not configured.")
-
-    response = requests.get(
-        str(export_url),
-        headers={"User-Agent": "EquityLens/1.0"},
-        timeout=30
+    api_key = st.secrets.get("FINVIZ_API_KEY")
+    api_url = st.secrets.get(
+        "FINVIZ_API_URL",
+        "https://elite.finviz.com/export.ashx"
     )
+
+    headers = {"User-Agent": "EquityLens/1.0"}
+
+    if api_key:
+        params = {
+            "v": "152",
+            "auth": str(api_key),
+            "ft": "4"
+        }
+
+        if symbols:
+            params["t"] = ",".join(symbols)
+
+        response = requests.get(
+            str(api_url),
+            params=params,
+            headers=headers,
+            timeout=30
+        )
+    elif export_url:
+        response = requests.get(
+            str(export_url),
+            headers=headers,
+            timeout=30
+        )
+    else:
+        raise ValueError(
+            "Configure FINVIZ_API_KEY or FINVIZ_EXPORT_URL in Streamlit Secrets."
+        )
+
     response.raise_for_status()
 
     payload = response.text.strip()
     if not payload:
         raise ValueError("Finviz returned an empty response.")
 
-    if payload[:200].lower().find("<html") >= 0 or payload[:200].lower().find("<!doctype") >= 0:
+    payload_start = payload[:200].lower()
+    if "<html" in payload_start or "<!doctype" in payload_start:
         raise ValueError(
-            "Finviz did not return CSV data. Check the Elite export/API URL stored in Streamlit Secrets."
+            "Finviz did not return CSV data. Check the Elite API token/export configuration."
         )
 
     data = pd.read_csv(io.StringIO(payload))
@@ -2766,7 +2793,7 @@ with market_tab:
         if public_finviz_data_enabled:
             try:
                 finviz_market = normalize_finviz_screener(
-                    get_finviz_screener_data()
+                    get_finviz_screener_data(industry_symbols)
                 )
             except Exception as exc:
                 st.warning("Finviz screener data is temporarily unavailable.")
