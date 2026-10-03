@@ -28,7 +28,6 @@ from typing import Any
 
 import requests
 from bs4 import BeautifulSoup
-from openai import OpenAI
 
 ROOT = Path(__file__).resolve().parents[1]
 UNIVERSE_PATH = ROOT / "data" / "finviz_universe.csv"
@@ -39,7 +38,9 @@ ANALYSIS_PATH = ROOT / "data" / "generated_company_analysis.json"
 S1_PATH = ROOT / "data" / "generated_company_s1.json"
 STATE_PATH = ROOT / "data" / "research_pipeline_state.json"
 
-MODEL = os.getenv("OPENAI_RESEARCH_MODEL", "gpt-6-luna")
+LOCAL_LLM_PROVIDER = os.getenv("LOCAL_LLM_PROVIDER", "ollama").strip().lower()
+LOCAL_LLM_URL = os.getenv("LOCAL_LLM_URL", "").strip()
+LOCAL_LLM_MODEL = os.getenv("LOCAL_LLM_MODEL", "").strip()
 BATCH_SIZE = max(1, int(os.getenv("RESEARCH_BATCH_SIZE", "40")))
 MAX_ATTEMPTS = max(1, int(os.getenv("RESEARCH_MAX_ATTEMPTS", "3")))
 SEC_DELAY_SECONDS = float(os.getenv("SEC_REQUEST_DELAY_SECONDS", "0.12"))
@@ -865,46 +866,190 @@ def research_prompt(
     )
 
 
-def generate_research(
-    client: OpenAI,
-    prompt: str,
-) -> dict:
-    response = client.responses.create(
-        model=MODEL,
-        input=[
-            {
-                "role": "system",
-                "content": (
-                    "You are EquityLens' SEC filing research extraction engine. "
-                    "Your job is faithful, source-grounded financial research synthesis."
-                ),
-            },
-            {
-                "role": "user",
-                "content": prompt,
-            },
-        ],
-        text={
-            "format": {
-                "type": "json_schema",
-                "name": "equitylens_company_research",
-                "strict": True,
-                "schema": RESEARCH_SCHEMA,
-            }
-        },
-        max_output_tokens=7000,
+def local_llm_base_url() -> str:
+    if LOCAL_LLM_URL:
+        return LOCAL_LLM_URL.rstrip("/")
+
+    if LOCAL_LLM_PROVIDER == "ollama":
+        return "http://127.0.0.1:11434"
+
+    if LOCAL_LLM_PROVIDER in {"openai_compatible", "lmstudio", "lm_studio"}:
+        return "http://127.0.0.1:1234/v1"
+
+    raise ValueError(
+        "Unsupported LOCAL_LLM_PROVIDER. Use 'ollama' or 'openai_compatible'."
     )
-    return json.loads(response.output_text)
+
+
+def detect_local_model() -> str:
+    if LOCAL_LLM_MODEL:
+        return LOCAL_LLM_MODEL
+
+    base_url = local_llm_base_url()
+
+    if LOCAL_LLM_PROVIDER == "ollama":
+        response = requests.get(
+            base_url + "/api/tags",
+            timeout=15,
+        )
+        response.raise_for_status()
+        models = response.json().get("models", [])
+        if not models:
+            raise RuntimeError(
+                "Ollama is reachable, but no local models are installed."
+            )
+        return str(models[0].get("name", "")).strip()
+
+    response = requests.get(
+        base_url + "/models",
+        timeout=15,
+    )
+    response.raise_for_status()
+    models = response.json().get("data", [])
+    if not models:
+        raise RuntimeError(
+            "The local OpenAI-compatible server is reachable, but it exposes no models."
+        )
+    return str(models[0].get("id", "")).strip()
+
+
+def extract_json_object(text: str) -> dict:
+    cleaned = (text or "").strip()
+
+    if cleaned.startswith("```"):
+        cleaned = re.sub(r"^```(?:json)?\s*", "", cleaned, flags=re.I)
+        cleaned = re.sub(r"\s*```$", "", cleaned)
+
+    try:
+        payload = json.loads(cleaned)
+        if isinstance(payload, dict):
+            return payload
+    except json.JSONDecodeError:
+        pass
+
+    start = cleaned.find("{")
+    end = cleaned.rfind("}")
+    if start >= 0 and end > start:
+        payload = json.loads(cleaned[start:end + 1])
+        if isinstance(payload, dict):
+            return payload
+
+    raise ValueError("Local LLM did not return a valid JSON object.")
+
+
+def validate_research_payload(payload: dict) -> dict:
+    required = set(RESEARCH_SCHEMA["required"])
+    missing = sorted(required - set(payload.keys()))
+    if missing:
+        raise ValueError(
+            "Local LLM response is missing required research fields: "
+            + ", ".join(missing)
+        )
+
+    filing_details = payload.get("filing_details", {})
+    required_details = set(
+        RESEARCH_SCHEMA["properties"]["filing_details"]["required"]
+    )
+    missing_details = sorted(required_details - set(filing_details.keys()))
+    if missing_details:
+        raise ValueError(
+            "Local LLM response is missing filing-detail fields: "
+            + ", ".join(missing_details)
+        )
+
+    return payload
+
+
+def generate_research(
+    prompt: str,
+    model: str,
+) -> dict:
+    base_url = local_llm_base_url()
+
+    system_prompt = (
+        "You are EquityLens' SEC filing research extraction engine. "
+        "Use only the supplied SEC-derived evidence. "
+        "Return one JSON object matching the requested schema exactly. "
+        "Do not include markdown fences, commentary, investment recommendations, "
+        "price targets, rankings, or unsupported facts."
+    )
+
+    if LOCAL_LLM_PROVIDER == "ollama":
+        response = requests.post(
+            base_url + "/api/chat",
+            json={
+                "model": model,
+                "messages": [
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": prompt},
+                ],
+                "stream": False,
+                "format": RESEARCH_SCHEMA,
+                "options": {
+                    "temperature": 0.1,
+                },
+            },
+            timeout=900,
+        )
+        response.raise_for_status()
+        content = (
+            response.json()
+            .get("message", {})
+            .get("content", "")
+        )
+        return validate_research_payload(
+            extract_json_object(content)
+        )
+
+    body = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": prompt},
+        ],
+        "temperature": 0.1,
+        "response_format": {"type": "json_object"},
+    }
+
+    response = requests.post(
+        base_url + "/chat/completions",
+        json=body,
+        timeout=900,
+    )
+
+    # Some local OpenAI-compatible servers do not implement response_format.
+    if response.status_code >= 400:
+        body.pop("response_format", None)
+        response = requests.post(
+            base_url + "/chat/completions",
+            json=body,
+            timeout=900,
+        )
+
+    response.raise_for_status()
+    payload = response.json()
+    content = (
+        payload.get("choices", [{}])[0]
+        .get("message", {})
+        .get("content", "")
+    )
+    return validate_research_payload(
+        extract_json_object(content)
+    )
+
 
 
 def main() -> None:
-    api_key = os.getenv("OPENAI_API_KEY", "").strip()
-    if not api_key:
-        raise RuntimeError(
-            "OPENAI_API_KEY is required to build deep company research."
-        )
+    model = detect_local_model()
+    print(
+        "Using local LLM provider "
+        + LOCAL_LLM_PROVIDER
+        + " with model "
+        + model
+        + " at "
+        + local_llm_base_url()
+    )
 
-    client = OpenAI(api_key=api_key)
     universe = load_universe()
     ticker_directory = load_ticker_directory()
 
@@ -946,7 +1091,7 @@ def main() -> None:
         return
 
     print(
-        f"Processing {len(candidates)} companies with {MODEL}. "
+        f"Processing {len(candidates)} companies with local model {model}. "
         f"Current generated coverage: {len(generated_analysis)}/{len(universe)}."
     )
 
@@ -1037,7 +1182,7 @@ def main() -> None:
                 quarterly_excerpt,
                 registration_excerpt,
             )
-            research = generate_research(client, prompt)
+            research = generate_research(prompt, model)
 
             generated_metrics[key] = metrics_record
             generated_quarterly[key] = quarterly_record
@@ -1061,7 +1206,12 @@ def main() -> None:
                     or quarterly_filing.get("url", "")
                 ),
                 "latest_current_filing": current_filing.get("url", ""),
-                "generated_by": MODEL,
+                "generated_by": (
+                    "local:"
+                    + LOCAL_LLM_PROVIDER
+                    + ":"
+                    + model
+                ),
                 "generated_at_utc": datetime.now(
                     timezone.utc
                 ).isoformat(timespec="seconds"),
@@ -1075,7 +1225,12 @@ def main() -> None:
                     "historical_context": research["historical_context"],
                     "what_to_learn": research["what_to_learn"],
                     "filing_details": research["filing_details"],
-                    "generated_by": MODEL,
+                    "generated_by": (
+                        "local:"
+                        + LOCAL_LLM_PROVIDER
+                        + ":"
+                        + model
+                    ),
                     "generated_at_utc": datetime.now(
                         timezone.utc
                     ).isoformat(timespec="seconds"),
