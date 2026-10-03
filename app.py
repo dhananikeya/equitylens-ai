@@ -1291,6 +1291,17 @@ SUBGROUPS = {
     ],
     "Exposure Management": [
         "Tenable (TENB)"
+    ],
+    "Consumer Financial Platforms": [
+        "Coinbase (COIN)",
+        "Robinhood (HOOD)",
+        "Affirm (AFRM)"
+    ],
+    "Payments / Commerce Infrastructure": [
+        "Block (XYZ)",
+        "Toast (TOST)",
+        "BILL Holdings (BILL)",
+        "Marqeta (MQ)"
     ]
 }
 
@@ -1417,9 +1428,26 @@ with home_tab:
     )
 
     home_metrics = st.columns(4)
-    home_metrics[0].metric("Quarter Revenue", format_money(home_latest.get("revenue")))
-    home_metrics[1].metric("YoY Growth", pct(home_qm.get("yoy_growth")))
-    home_metrics[2].metric("Operating Margin", pct(home_qm.get("operating_margin")))
+    if home_latest.get("revenue") is not None:
+        home_metrics[0].metric("Quarter Revenue", format_money(home_latest.get("revenue")))
+        home_metrics[1].metric("YoY Growth", pct(home_qm.get("yoy_growth")))
+        home_metrics[2].metric("Operating Margin", pct(home_qm.get("operating_margin")))
+    else:
+        home_metrics[0].metric("Fiscal Year Revenue", format_money(home_data.get("revenue")))
+        home_metrics[1].metric(
+            "Revenue Growth",
+            pct(
+                calc_growth(
+                    home_data.get("revenue"),
+                    home_data.get("history", [{}])[-2].get("revenue")
+                    if len(home_data.get("history", [])) >= 2 else None
+                )
+            )
+        )
+        home_metrics[2].metric(
+            "Operating Margin",
+            pct(calc_margin(home_data.get("operating_income"), home_data.get("revenue")))
+        )
     home_metrics[3].metric(
         "Cash + Investments",
         format_money(home_data.get("capital_structure", {}).get("cash_and_investments"))
