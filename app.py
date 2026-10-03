@@ -3018,52 +3018,91 @@ with market_tab:
                 tape_items = []
                 for _, ticker_row in ticker_source.iterrows():
                     ticker_symbol = str(ticker_row.get("Ticker", "")).strip()
+                    company_name = str(ticker_row.get("Company", "")).strip()
                     ticker_price = finviz_numeric(ticker_row.get("Price"))
                     ticker_change = finviz_numeric(ticker_row.get("Change"))
 
                     if not ticker_symbol:
                         continue
 
+                    if not company_name or company_name.lower() == "nan":
+                        company_name = ticker_symbol
+
                     if ticker_change is None:
                         change_class = "flat"
                         change_text = "N/A"
+                        arrow = "•"
                     elif ticker_change > 0:
                         change_class = "positive"
-                        change_text = f"+{ticker_change:.2f}%"
+                        change_text = "{:.2f}%".format(ticker_change)
+                        arrow = "▲"
                     elif ticker_change < 0:
                         change_class = "negative"
-                        change_text = f"{ticker_change:.2f}%"
+                        change_text = "{:.2f}%".format(abs(ticker_change))
+                        arrow = "▼"
                     else:
                         change_class = "flat"
                         change_text = "0.00%"
+                        arrow = "•"
 
                     price_text = (
-                        f"${ticker_price:,.2f}"
+                        "$" + "{:,.2f}".format(ticker_price)
                         if ticker_price is not None
                         else "N/A"
                     )
 
                     tape_items.append(
-                        f'<div class="el-ticker-item">'
-                        f'<span class="el-ticker-symbol">{ticker_symbol}</span>'
-                        f'<span class="el-ticker-price">{price_text}</span>'
-                        f'<span class="el-ticker-change {change_class}">{change_text}</span>'
-                        f'</div>'
+                        '<div class="el-ticker-item">'
+                        '<span class="el-ticker-company">{}</span>'.format(company_name)
+                        + '<span class="el-ticker-symbol">{}</span>'.format(ticker_symbol)
+                        + '<span class="el-ticker-price">{}</span>'.format(price_text)
+                        + '<span class="el-ticker-change {}">'.format(change_class)
+                        + '<span class="el-ticker-arrow">{}</span>{}'.format(arrow, change_text)
+                        + '</span></div>'
                     )
 
                 if tape_items:
                     tape_html = "".join(tape_items + tape_items)
                     st.markdown(
-                        f'<div class="el-ticker-shell"><div class="el-ticker-track">{tape_html}</div></div>',
+                        """
+                        <div class="el-exchange-tape">
+                            <div class="el-exchange-pill">
+                                <span>NYSE</span>
+                                <span class="el-exchange-chevron">⌄</span>
+                            </div>
+                            <div class="el-ticker-shell">
+                                <div class="el-ticker-track">{}</div>
+                            </div>
+                        </div>
+                        <div class="el-market-delay">
+                            Source: Finviz Elite · market timing follows your data entitlement · hover to pause
+                        </div>
+                        """.format(tape_html),
                         unsafe_allow_html=True
-                    )
-                    st.caption(
-                        "NYSE tape uses the most active names returned by the live Finviz NYSE screen. Hover to pause."
                     )
                 else:
                     st.caption("NYSE ticker data is not available in the current Finviz response.")
 
                 section("Market Map", "NYSE Heat Map")
+
+                st.markdown(
+                    """
+                    <div class="el-heatmap-head">
+                        <div class="el-heatmap-copy">
+                            Larger tiles represent larger market capitalization. Color represents today's price move.
+                        </div>
+                        <div class="el-heatmap-legend">
+                            <span class="el-legend-item"><span class="el-legend-swatch" style="background:#7F1D1D;"></span>Lower</span>
+                            <span class="el-legend-item"><span class="el-legend-swatch" style="background:#B94A50;"></span>Down</span>
+                            <span class="el-legend-item"><span class="el-legend-swatch" style="background:#24333A;"></span>Flat</span>
+                            <span class="el-legend-item"><span class="el-legend-swatch" style="background:#137F72;"></span>Up</span>
+                            <span class="el-legend-item"><span class="el-legend-swatch" style="background:#16C7B2;"></span>Higher</span>
+                        </div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+
 
                 heatmap_required = {"Ticker", "Sector", "Market Cap", "Change"}
                 if heatmap_required.issubset(set(nyse_finviz.columns)):
