@@ -2138,8 +2138,8 @@ with st.expander("Methodology & source standards"):
 
 
 render_summary_cards([
-    ("Companies", str(len(company_data))),
-    ("Industries", str(len(industries))),
+    ("Companies", f"{len(company_universe):,}"),
+    ("Industries", f"{company_universe['Industry'].nunique():,}"),
     ("Primary Source", "SEC EDGAR"),
     ("Monitoring", "Automatic SEC checks")
 ])
