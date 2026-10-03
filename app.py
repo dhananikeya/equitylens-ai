@@ -430,19 +430,31 @@ st.markdown(
     .el-trust-strip {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: .7rem;
-        margin: 1rem 0 1.4rem 0;
+        gap: .85rem;
+        margin: 1.05rem 0 1.5rem 0;
     }
 
     .el-trust-item {
-        border: 1px solid var(--el-border);
-        border-radius: 10px;
-        background: color-mix(in srgb, var(--el-surface) 88%, transparent);
-        padding: .85rem 1rem;
+        min-height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: .9rem 1rem;
         text-align: center;
-        font-size: .82rem;
+        font-size: .84rem;
         font-weight: 600;
-        color: color-mix(in srgb, var(--el-text) 78%, transparent);
+        color: color-mix(in srgb, var(--el-text) 84%, transparent);
+        border: 1px solid color-mix(in srgb, var(--el-teal) 30%, var(--el-border));
+        border-radius: 12px;
+        background:
+            linear-gradient(
+                180deg,
+                color-mix(in srgb, var(--el-surface) 96%, transparent),
+                color-mix(in srgb, var(--el-surface-2) 92%, transparent)
+            );
+        box-shadow:
+            inset 0 1px 0 color-mix(in srgb, var(--el-text) 6%, transparent),
+            0 8px 22px rgba(0, 0, 0, .07);
     }
 
     .el-feature-grid {
