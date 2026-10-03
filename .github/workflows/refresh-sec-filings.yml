@@ -7,6 +7,7 @@ on:
   push:
     paths:
       - "scripts/update_sec_filings.py"
+      - "data/finviz_universe.csv"
       - ".github/workflows/refresh-sec-filings.yml"
 
 permissions:
@@ -19,7 +20,7 @@ concurrency:
 jobs:
   refresh-sec-filings:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 35
 
     steps:
       - name: Check out repository
