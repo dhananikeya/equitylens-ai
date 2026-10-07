@@ -9,11 +9,17 @@
 import json
 import io
 import html
+import re
+import xml.etree.ElementTree as ET
+from datetime import datetime, timezone
+from urllib.parse import urljoin
+
 import requests
 import pandas as pd
 import yfinance as yf
 import plotly.graph_objects as go
 import streamlit as st
+from bs4 import BeautifulSoup
 from supabase import create_client
 
 st.set_page_config(
@@ -1641,6 +1647,863 @@ def market_provider_error(provider, exc):
         f"{provider} is temporarily unavailable. Check the provider configuration "
         "or try again shortly."
     )
+
+
+
+PUBLIC_DATA_HEADERS = {
+    "User-Agent": "EquityLensAI/1.0 research-dashboard contact: dhanani.keya@gmail.com"
+}
+
+
+def _numeric_text(value):
+    if value is None:
+        return None
+    text = str(value).strip().replace(",", "").replace("%", "")
+    text = text.replace("−", "-").replace("–", "-")
+    match = re.search(r"-?\d+(?:\.\d+)?", text)
+    if not match:
+        return None
+    try:
+        return float(match.group(0))
+    except ValueError:
+        return None
+
+
+@st.cache_data(ttl=1800)
+def get_treasury_yield_curve():
+    """Load the latest official U.S. Treasury par yield curve observation."""
+    year = datetime.now(timezone.utc).year
+    source_url = (
+        "https://home.treasury.gov/resource-center/data-chart-center/"
+        "interest-rates/pages/xml"
+        f"?data=daily_treasury_yield_curve&field_tdr_date_value={year}"
+    )
+    response = requests.get(
+        source_url,
+        headers=PUBLIC_DATA_HEADERS,
+        timeout=25
+    )
+    response.raise_for_status()
+
+    root = ET.fromstring(response.content)
+    records = []
+    for element in root.iter():
+        if element.tag.split("}")[-1].lower() != "properties":
+            continue
+        record = {}
+        for child in list(element):
+            key = child.tag.split("}")[-1]
+            record[key] = (child.text or "").strip()
+        if record:
+            records.append(record)
+
+    if not records:
+        raise ValueError("Treasury returned no yield-curve observations.")
+
+    def record_date(record):
+        raw = record.get("NEW_DATE") or record.get("Date") or ""
+        parsed = pd.to_datetime(raw, errors="coerce")
+        return parsed if pd.notna(parsed) else pd.Timestamp.min
+
+    latest = max(records, key=record_date)
+    latest_date = record_date(latest)
+
+    field_map = {
+        "1M": "BC_1MONTH",
+        "3M": "BC_3MONTH",
+        "6M": "BC_6MONTH",
+        "1Y": "BC_1YEAR",
+        "2Y": "BC_2YEAR",
+        "3Y": "BC_3YEAR",
+        "5Y": "BC_5YEAR",
+        "7Y": "BC_7YEAR",
+        "10Y": "BC_10YEAR",
+        "20Y": "BC_20YEAR",
+        "30Y": "BC_30YEAR",
+    }
+    rates = {
+        tenor: _numeric_text(latest.get(field))
+        for tenor, field in field_map.items()
+    }
+
+    return {
+        "date": (
+            latest_date.strftime("%Y-%m-%d")
+            if latest_date != pd.Timestamp.min else ""
+        ),
+        "rates": rates,
+        "source_url": source_url,
+    }
+
+
+def _find_html_data_row(url, required_header_terms):
+    response = requests.get(
+        url,
+        headers={
+            **PUBLIC_DATA_HEADERS,
+            "User-Agent": (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                "AppleWebKit/537.36 Safari/537.36 EquityLensAI/1.0"
+            ),
+        },
+        timeout=25,
+    )
+    response.raise_for_status()
+    soup = BeautifulSoup(response.text, "html.parser")
+
+    for table in soup.find_all("table"):
+        header_text = " ".join(
+            cell.get_text(" ", strip=True)
+            for cell in table.find_all("th")
+        ).upper()
+        if not all(term.upper() in header_text for term in required_header_terms):
+            continue
+
+        for row in table.find_all("tr"):
+            cells = [
+                cell.get_text(" ", strip=True)
+                for cell in row.find_all("td")
+            ]
+            if cells:
+                return cells
+    return []
+
+
+def _walk_dicts(value):
+    if isinstance(value, dict):
+        yield value
+        for child in value.values():
+            yield from _walk_dicts(child)
+    elif isinstance(value, list):
+        for child in value:
+            yield from _walk_dicts(child)
+
+
+def _normalized_dict(record):
+    return {
+        re.sub(r"[^a-z0-9]", "", str(key).lower()): value
+        for key, value in record.items()
+    }
+
+
+@st.cache_data(ttl=900)
+def get_sofr_reference_rates():
+    """Load SOFR and published SOFR averages from the New York Fed."""
+    sofr_url = "https://www.newyorkfed.org/markets/reference-rates/sofr"
+    averages_url = (
+        "https://www.newyorkfed.org/markets/reference-rates/"
+        "sofr-averages-and-index"
+    )
+
+    result = {
+        "date": "",
+        "SOFR": None,
+        "30D": None,
+        "90D": None,
+        "180D": None,
+        "source_url": averages_url,
+    }
+
+    # Prefer the New York Fed's Markets Data API when available.
+    try:
+        response = requests.get(
+            "https://markets.newyorkfed.org/api/rates/secured/sofr/last/1.json",
+            headers=PUBLIC_DATA_HEADERS,
+            timeout=20,
+        )
+        if response.ok:
+            for record in _walk_dicts(response.json()):
+                normalized = _normalized_dict(record)
+                rate = (
+                    normalized.get("percentrate")
+                    or normalized.get("rate")
+                    or normalized.get("percent")
+                )
+                rate_type = str(
+                    normalized.get("type")
+                    or normalized.get("ratetype")
+                    or ""
+                ).upper()
+                if rate is not None and ("SOFR" in rate_type or not rate_type):
+                    result["SOFR"] = _numeric_text(rate)
+                    result["date"] = str(
+                        normalized.get("effectivedate")
+                        or normalized.get("date")
+                        or result["date"]
+                    )
+                    break
+    except Exception:
+        pass
+
+    try:
+        response = requests.get(
+            "https://markets.newyorkfed.org/api/rates/secured/"
+            "sofr-avg-ind/last/1.json",
+            headers=PUBLIC_DATA_HEADERS,
+            timeout=20,
+        )
+        if response.ok:
+            for record in _walk_dicts(response.json()):
+                normalized = _normalized_dict(record)
+                aliases = {
+                    "30D": [
+                        "average30day", "avg30day", "sofr30dayavg",
+                        "thirtydayaverage", "30dayaverage"
+                    ],
+                    "90D": [
+                        "average90day", "avg90day", "sofr90dayavg",
+                        "ninetydayaverage", "90dayaverage"
+                    ],
+                    "180D": [
+                        "average180day", "avg180day", "sofr180dayavg",
+                        "onehundredeightydayaverage", "180dayaverage"
+                    ],
+                }
+                found_any = False
+                for label, keys in aliases.items():
+                    for key in keys:
+                        if key in normalized:
+                            result[label] = _numeric_text(normalized[key])
+                            found_any = True
+                            break
+                if found_any:
+                    result["date"] = str(
+                        normalized.get("effectivedate")
+                        or normalized.get("date")
+                        or result["date"]
+                    )
+                    break
+    except Exception:
+        pass
+
+    # Fallback to the official public HTML tables.
+    if result["SOFR"] is None:
+        try:
+            cells = _find_html_data_row(
+                sofr_url,
+                ["DATE", "RATE", "VOLUME"]
+            )
+            if len(cells) >= 2:
+                result["date"] = cells[0]
+                result["SOFR"] = _numeric_text(cells[1])
+        except Exception:
+            pass
+
+    if any(result[key] is None for key in ["30D", "90D", "180D"]):
+        try:
+            cells = _find_html_data_row(
+                averages_url,
+                ["DATE", "30-DAY", "90-DAY", "180-DAY"]
+            )
+            if len(cells) >= 4:
+                if not result["date"]:
+                    result["date"] = cells[0]
+                result["30D"] = (
+                    result["30D"]
+                    if result["30D"] is not None
+                    else _numeric_text(cells[1])
+                )
+                result["90D"] = (
+                    result["90D"]
+                    if result["90D"] is not None
+                    else _numeric_text(cells[2])
+                )
+                result["180D"] = (
+                    result["180D"]
+                    if result["180D"] is not None
+                    else _numeric_text(cells[3])
+                )
+        except Exception:
+            pass
+
+    return result
+
+
+def render_rates_ticker(treasury_curve, sofr_rates):
+    """Render official Treasury and New York Fed reference rates as a tape."""
+    treasury_rates = treasury_curve.get("rates", {}) if treasury_curve else {}
+    tape_data = [
+        ("U.S. Treasury", "2Y", treasury_rates.get("2Y"), "%"),
+        ("U.S. Treasury", "5Y", treasury_rates.get("5Y"), "%"),
+        ("U.S. Treasury", "10Y", treasury_rates.get("10Y"), "%"),
+        ("U.S. Treasury", "30Y", treasury_rates.get("30Y"), "%"),
+    ]
+
+    two_year = treasury_rates.get("2Y")
+    ten_year = treasury_rates.get("10Y")
+    spread = None
+    if two_year is not None and ten_year is not None:
+        spread = (ten_year - two_year) * 100
+    tape_data.append(("Yield Curve", "2s10s", spread, " bp"))
+
+    if sofr_rates:
+        tape_data.extend([
+            ("New York Fed", "SOFR", sofr_rates.get("SOFR"), "%"),
+            ("New York Fed", "30D SOFR", sofr_rates.get("30D"), "%"),
+            ("New York Fed", "90D SOFR", sofr_rates.get("90D"), "%"),
+            ("New York Fed", "180D SOFR", sofr_rates.get("180D"), "%"),
+        ])
+
+    items = []
+    for provider, label, value, suffix in tape_data:
+        if value is None:
+            value_text = "N/A"
+        elif suffix == " bp":
+            value_text = f"{value:+.1f} bp"
+        else:
+            value_text = f"{value:.3f}%"
+
+        items.append(
+            '<div class="el-ticker-item">'
+            f'<span class="el-ticker-company">{html.escape(provider)}</span>'
+            f'<span class="el-ticker-symbol">{html.escape(label)}</span>'
+            f'<span class="el-ticker-price">{html.escape(value_text)}</span>'
+            '<span class="el-ticker-change flat">Official</span>'
+            '</div>'
+        )
+
+    if not items:
+        st.caption("Official rates are temporarily unavailable.")
+        return
+
+    st.markdown(
+        f"""
+        <div class="el-exchange-tape">
+            <div class="el-exchange-pill">
+                <span>RATES</span>
+                <span class="el-exchange-chevron">⌄</span>
+            </div>
+            <div class="el-ticker-shell">
+                <div class="el-ticker-track">{"".join(items + items)}</div>
+            </div>
+        </div>
+        <div class="el-market-delay">
+            U.S. Treasury + Federal Reserve Bank of New York · official public data
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+BLS_SERIES_META = {
+    "CPI": {
+        "series_id": "CUUR0000SA0",
+        "label": "CPI YoY",
+        "mode": "yoy",
+        "lag": 12,
+        "source": "Consumer Price Index",
+    },
+    "Core CPI": {
+        "series_id": "CUUR0000SA0L1E",
+        "label": "Core CPI YoY",
+        "mode": "yoy",
+        "lag": 12,
+        "source": "Consumer Price Index",
+    },
+    "PPI": {
+        "series_id": "WPUFD4",
+        "label": "PPI Final Demand YoY",
+        "mode": "yoy",
+        "lag": 12,
+        "source": "Producer Price Index",
+    },
+    "Unemployment": {
+        "series_id": "LNS14000000",
+        "label": "Unemployment Rate",
+        "mode": "percent",
+        "lag": 1,
+        "source": "Employment Situation",
+    },
+    "Payrolls": {
+        "series_id": "CES0000000001",
+        "label": "Nonfarm Payrolls MoM",
+        "mode": "delta",
+        "lag": 1,
+        "source": "Employment Situation",
+    },
+    "Hourly Earnings": {
+        "series_id": "CES0500000003",
+        "label": "Avg. Hourly Earnings YoY",
+        "mode": "yoy",
+        "lag": 12,
+        "source": "Employment Situation",
+    },
+    "ECI": {
+        "series_id": "CIU1010000000000A",
+        "label": "Employment Cost Index YoY",
+        "mode": "yoy",
+        "lag": 4,
+        "source": "Employment Cost Index",
+    },
+}
+
+
+@st.cache_data(ttl=3600)
+def get_bls_macro_snapshot():
+    """Retrieve selected material U.S. labor/inflation series from BLS."""
+    now = datetime.now(timezone.utc)
+    payload = {
+        "seriesid": [
+            metadata["series_id"]
+            for metadata in BLS_SERIES_META.values()
+        ],
+        "startyear": str(now.year - 2),
+        "endyear": str(now.year),
+    }
+    response = requests.post(
+        "https://api.bls.gov/publicAPI/v2/timeseries/data/",
+        json=payload,
+        headers=PUBLIC_DATA_HEADERS,
+        timeout=30,
+    )
+    response.raise_for_status()
+    data = response.json()
+
+    if data.get("status") != "REQUEST_SUCCEEDED":
+        raise ValueError("BLS API request did not succeed.")
+
+    meta_by_id = {
+        metadata["series_id"]: (name, metadata)
+        for name, metadata in BLS_SERIES_META.items()
+    }
+    results = {}
+
+    for series in data.get("Results", {}).get("series", []):
+        series_id = series.get("seriesID")
+        if series_id not in meta_by_id:
+            continue
+
+        name, metadata = meta_by_id[series_id]
+        observations = []
+        for row in series.get("data", []):
+            period = str(row.get("period", ""))
+            if not (
+                period.startswith("M")
+                or period.startswith("Q")
+            ):
+                continue
+            if period == "M13":
+                continue
+            value = _numeric_text(row.get("value"))
+            if value is None:
+                continue
+            try:
+                period_number = int(re.sub(r"\D", "", period))
+                year = int(row.get("year"))
+            except (TypeError, ValueError):
+                continue
+            observations.append({
+                "year": year,
+                "period": period,
+                "period_number": period_number,
+                "period_name": row.get("periodName", period),
+                "value": value,
+            })
+
+        observations.sort(
+            key=lambda row: (row["year"], row["period_number"])
+        )
+        if not observations:
+            continue
+
+        latest = observations[-1]
+        previous = observations[-2] if len(observations) >= 2 else None
+        lag = int(metadata.get("lag", 1))
+        lagged = observations[-(lag + 1)] if len(observations) > lag else None
+
+        metric_value = latest["value"]
+        if metadata["mode"] == "yoy":
+            if lagged and lagged["value"] not in (None, 0):
+                metric_value = (
+                    (latest["value"] - lagged["value"])
+                    / lagged["value"]
+                ) * 100
+            else:
+                metric_value = None
+        elif metadata["mode"] == "delta":
+            metric_value = (
+                latest["value"] - previous["value"]
+                if previous else None
+            )
+
+        results[name] = {
+            **metadata,
+            "latest_level": latest["value"],
+            "previous_level": previous["value"] if previous else None,
+            "display_value": metric_value,
+            "period": f"{latest['period_name']} {latest['year']}",
+        }
+
+    return results
+
+
+def format_bls_display(item):
+    value = item.get("display_value")
+    if value is None:
+        return "N/A"
+    mode = item.get("mode")
+    if mode in {"yoy", "percent"}:
+        return f"{value:.1f}%"
+    if mode == "delta":
+        return f"{value:+,.0f}K"
+    return f"{value:,.2f}"
+
+
+@st.cache_data(ttl=3600)
+def get_bls_release_calendar(limit=16):
+    """Read the automatically updated BLS release calendar."""
+    calendar_url = "https://www.bls.gov/schedule/news_release/bls.ics"
+    response = requests.get(
+        calendar_url,
+        headers=PUBLIC_DATA_HEADERS,
+        timeout=25,
+    )
+    response.raise_for_status()
+
+    ics = (
+        response.text
+        .replace("\r\n ", "")
+        .replace("\n ", "")
+    )
+    blocks = re.findall(
+        r"BEGIN:VEVENT(.*?)END:VEVENT",
+        ics,
+        flags=re.DOTALL,
+    )
+
+    material_terms = [
+        "consumer price index",
+        "producer price index",
+        "employment situation",
+        "job openings",
+        "employment cost index",
+        "productivity and costs",
+    ]
+    source_links = {
+        "consumer price index": "https://www.bls.gov/news.release/cpi.htm",
+        "producer price index": "https://www.bls.gov/news.release/ppi.htm",
+        "employment situation": "https://www.bls.gov/news.release/empsit.htm",
+        "job openings": "https://www.bls.gov/news.release/jolts.htm",
+        "employment cost index": "https://www.bls.gov/news.release/eci.htm",
+        "productivity and costs": "https://www.bls.gov/news.release/prod2.htm",
+    }
+
+    events = []
+    today = datetime.now(timezone.utc).date()
+
+    for block in blocks:
+        summary_match = re.search(
+            r"SUMMARY(?:;[^:]*)?:(.*)",
+            block,
+        )
+        date_match = re.search(
+            r"DTSTART(?:;[^:]*)?:(\d{8})(?:T(\d{6}))?",
+            block,
+        )
+        if not summary_match or not date_match:
+            continue
+
+        summary = (
+            summary_match.group(1)
+            .strip()
+            .replace("\\,", ",")
+            .replace("\\;", ";")
+        )
+        lowered = summary.lower()
+        matched_term = next(
+            (term for term in material_terms if term in lowered),
+            None,
+        )
+        if not matched_term:
+            continue
+
+        date_value = datetime.strptime(
+            date_match.group(1),
+            "%Y%m%d",
+        ).date()
+        if date_value < today:
+            continue
+
+        time_value = ""
+        if date_match.group(2):
+            raw_time = date_match.group(2)
+            time_value = (
+                f"{raw_time[:2]}:{raw_time[2:4]}"
+            )
+
+        events.append({
+            "Date": date_value.isoformat(),
+            "Time": time_value,
+            "Event": summary,
+            "Agency": "BLS",
+            "Source": source_links[matched_term],
+        })
+
+    events.sort(key=lambda row: (row["Date"], row["Time"]))
+    return events[:limit]
+
+
+@st.cache_data(ttl=21600)
+def get_fomc_calendar(limit=12):
+    """Parse the official Federal Reserve FOMC meeting calendar."""
+    source_url = (
+        "https://www.federalreserve.gov/monetarypolicy/"
+        "fomccalendars.htm"
+    )
+    response = requests.get(
+        source_url,
+        headers=PUBLIC_DATA_HEADERS,
+        timeout=25,
+    )
+    response.raise_for_status()
+    soup = BeautifulSoup(response.text, "html.parser")
+    text_lines = [
+        line.strip()
+        for line in soup.stripped_strings
+        if line.strip()
+    ]
+
+    months = {
+        "January": 1,
+        "February": 2,
+        "March": 3,
+        "April": 4,
+        "May": 5,
+        "June": 6,
+        "July": 7,
+        "August": 8,
+        "September": 9,
+        "October": 10,
+        "November": 11,
+        "December": 12,
+    }
+    today = datetime.now(timezone.utc).date()
+    current_year = today.year
+    events = []
+
+    for year in [current_year, current_year + 1]:
+        heading = f"{year} FOMC Meetings"
+        try:
+            start = text_lines.index(heading) + 1
+        except ValueError:
+            continue
+
+        end = len(text_lines)
+        for idx in range(start, len(text_lines)):
+            if re.fullmatch(r"\d{4} FOMC Meetings", text_lines[idx]):
+                end = idx
+                break
+
+        block = text_lines[start:end]
+        for idx, line in enumerate(block):
+            if line not in months:
+                continue
+
+            date_text = None
+            for candidate in block[idx + 1: idx + 7]:
+                if re.fullmatch(r"\d{1,2}(?:-\d{1,2})?\*?", candidate):
+                    date_text = candidate
+                    break
+            if not date_text:
+                continue
+
+            clean_date = date_text.rstrip("*")
+            parts = clean_date.split("-")
+            start_day = int(parts[0])
+            end_day = int(parts[-1])
+            meeting_end = datetime(
+                year,
+                months[line],
+                end_day,
+            ).date()
+            if meeting_end < today:
+                continue
+
+            events.append({
+                "Date": (
+                    f"{year}-{months[line]:02d}-{start_day:02d}"
+                    + (
+                        f" to {year}-{months[line]:02d}-{end_day:02d}"
+                        if end_day != start_day else ""
+                    )
+                ),
+                "Time": "",
+                "Event": (
+                    f"FOMC Meeting{' · SEP' if date_text.endswith('*') else ''}"
+                ),
+                "Agency": "Federal Reserve",
+                "Source": source_url,
+            })
+
+    events.sort(key=lambda row: row["Date"])
+    return events[:limit]
+
+
+@st.cache_data(ttl=3600)
+def get_fed_monetary_updates(limit=6):
+    """Read official Federal Reserve monetary-policy press releases."""
+    feed_url = "https://www.federalreserve.gov/feeds/press_monetary.xml"
+    response = requests.get(
+        feed_url,
+        headers=PUBLIC_DATA_HEADERS,
+        timeout=25,
+    )
+    response.raise_for_status()
+    root = ET.fromstring(response.content)
+
+    rows = []
+    for item in root.findall(".//item"):
+        title = (item.findtext("title") or "").strip()
+        link = (item.findtext("link") or "").strip()
+        published = (
+            item.findtext("pubDate")
+            or item.findtext("date")
+            or ""
+        ).strip()
+        if not title or not link:
+            continue
+        rows.append({
+            "Published": published,
+            "Federal Reserve update": title,
+            "Source": link,
+        })
+        if len(rows) >= limit:
+            break
+    return rows
+
+
+@st.cache_data(ttl=900)
+def get_bloomberg_market_news(limit=10):
+    """Return Bloomberg market headlines and outbound links only."""
+    feed_candidates = [
+        "https://feeds.bloomberg.com/markets/news.rss",
+        "https://feeds.bloomberg.com/economics/news.rss",
+    ]
+    stories = []
+    seen = set()
+
+    for feed_url in feed_candidates:
+        try:
+            response = requests.get(
+                feed_url,
+                headers=PUBLIC_DATA_HEADERS,
+                timeout=20,
+            )
+            if not response.ok:
+                continue
+            root = ET.fromstring(response.content)
+            for item in root.findall(".//item"):
+                title = (item.findtext("title") or "").strip()
+                link = (item.findtext("link") or "").strip()
+                published = (item.findtext("pubDate") or "").strip()
+                if not title or not link or title in seen:
+                    continue
+                seen.add(title)
+                stories.append({
+                    "Published": published,
+                    "Headline": title,
+                    "Bloomberg": link,
+                })
+                if len(stories) >= limit:
+                    return stories
+        except Exception:
+            continue
+
+    # Fallback: capture headline links from Bloomberg Markets without
+    # reproducing article text.
+    try:
+        response = requests.get(
+            "https://www.bloomberg.com/markets",
+            headers={
+                **PUBLIC_DATA_HEADERS,
+                "User-Agent": (
+                    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                    "AppleWebKit/537.36 Safari/537.36"
+                ),
+            },
+            timeout=25,
+        )
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, "html.parser")
+        for anchor in soup.find_all("a", href=True):
+            title = " ".join(anchor.stripped_strings).strip()
+            href = urljoin(
+                "https://www.bloomberg.com",
+                anchor.get("href", ""),
+            )
+            if (
+                len(title) < 20
+                or len(title) > 180
+                or "bloomberg.com" not in href
+                or "/news/" not in href
+                or title in seen
+            ):
+                continue
+            seen.add(title)
+            stories.append({
+                "Published": "",
+                "Headline": title,
+                "Bloomberg": href,
+            })
+            if len(stories) >= limit:
+                break
+    except Exception:
+        pass
+
+    return stories
+
+
+@st.cache_data(ttl=900)
+def get_optional_swap_rates():
+    """
+    Load live swap quotes only when a licensed/provider endpoint is configured.
+    Supported JSON shapes:
+      {"1Y": 4.1, "2Y": 4.0, ...}
+      [{"tenor": "1Y", "rate": 4.1}, ...]
+    """
+    endpoint = str(st.secrets.get("SWAP_RATES_JSON_URL", "")).strip()
+    if not endpoint:
+        return []
+
+    response = requests.get(
+        endpoint,
+        headers=PUBLIC_DATA_HEADERS,
+        timeout=25,
+    )
+    response.raise_for_status()
+    payload = response.json()
+
+    rows = []
+    if isinstance(payload, dict):
+        for tenor, rate in payload.items():
+            numeric = _numeric_text(rate)
+            if numeric is not None:
+                rows.append({
+                    "Tenor": str(tenor),
+                    "Swap Rate": numeric,
+                })
+    elif isinstance(payload, list):
+        for record in payload:
+            if not isinstance(record, dict):
+                continue
+            tenor = (
+                record.get("tenor")
+                or record.get("Tenor")
+                or record.get("maturity")
+            )
+            rate = (
+                record.get("rate")
+                or record.get("Rate")
+                or record.get("swap_rate")
+            )
+            numeric = _numeric_text(rate)
+            if tenor and numeric is not None:
+                rows.append({
+                    "Tenor": str(tenor),
+                    "Swap Rate": numeric,
+                })
+    return rows
+
 
 
 def render_nyse_market_monitor(nyse_finviz):
@@ -4061,6 +4924,14 @@ with market_tab:
             get_live_market_data.clear()
             get_market_history.clear()
             get_finviz_screener_data.clear()
+            get_treasury_yield_curve.clear()
+            get_sofr_reference_rates.clear()
+            get_bls_macro_snapshot.clear()
+            get_bls_release_calendar.clear()
+            get_fomc_calendar.clear()
+            get_fed_monetary_updates.clear()
+            get_bloomberg_market_news.clear()
+            get_optional_swap_rates.clear()
             st.rerun()
 
     with source_col:
@@ -4083,6 +4954,265 @@ with market_tab:
         )
 
     render_nyse_market_monitor(nyse_finviz)
+
+    section("Rates", "Treasury, SOFR & Swap Monitor")
+
+    treasury_curve = {}
+    sofr_reference = {}
+    try:
+        treasury_curve = get_treasury_yield_curve()
+    except Exception:
+        st.warning(
+            "U.S. Treasury yield-curve data is temporarily unavailable."
+        )
+
+    try:
+        sofr_reference = get_sofr_reference_rates()
+    except Exception:
+        st.warning(
+            "New York Fed SOFR reference-rate data is temporarily unavailable."
+        )
+
+    render_rates_ticker(treasury_curve, sofr_reference)
+
+    treasury_rates = treasury_curve.get("rates", {}) if treasury_curve else {}
+    curve_rows = [
+        {"Tenor": tenor, "Yield (%)": rate}
+        for tenor, rate in treasury_rates.items()
+        if rate is not None
+    ]
+    if curve_rows:
+        curve_df = pd.DataFrame(curve_rows)
+        curve_fig = go.Figure()
+        curve_fig.add_trace(
+            go.Scatter(
+                x=curve_df["Tenor"],
+                y=curve_df["Yield (%)"],
+                mode="lines+markers",
+                name="Treasury",
+                line={"color": "#16C7B2", "width": 2},
+                marker={"size": 7},
+            )
+        )
+        curve_fig.update_layout(
+            height=330,
+            margin={"l": 8, "r": 8, "t": 24, "b": 8},
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            font={"color": "#8F9CA6", "family": "IBM Plex Sans"},
+            showlegend=False,
+            xaxis={"showgrid": False, "title": "Maturity"},
+            yaxis={
+                "gridcolor": "rgba(143,156,166,.12)",
+                "title": "Yield (%)",
+                "ticksuffix": "%",
+            },
+        )
+        st.plotly_chart(
+            curve_fig,
+            use_container_width=True,
+            config={"displayModeBar": False},
+        )
+        st.caption(
+            "Daily Treasury par yield curve · U.S. Department of the Treasury"
+            + (
+                f" · as of {treasury_curve.get('date')}"
+                if treasury_curve.get("date") else ""
+            )
+        )
+
+    swap_rates = []
+    try:
+        swap_rates = get_optional_swap_rates()
+    except Exception:
+        swap_rates = []
+
+    if swap_rates:
+        swap_df = pd.DataFrame(swap_rates)
+        swap_df["Swap Rate"] = swap_df["Swap Rate"].map(
+            lambda value: f"{value:.3f}%"
+        )
+        st.markdown("**USD SOFR swap curve**")
+        st.dataframe(
+            swap_df,
+            use_container_width=True,
+            hide_index=True,
+        )
+        st.caption(
+            "Swap quotes are supplied by the configured provider endpoint. "
+            "Provider licensing and timing govern redistribution."
+        )
+    else:
+        st.info(
+            "Live OTC swap quotes are intentionally not estimated from Treasury yields. "
+            "To publish 1Y/2Y/5Y/10Y/30Y SOFR swap rates, connect a licensed data feed "
+            "through SWAP_RATES_JSON_URL in Streamlit Secrets. EquityLens shows official "
+            "Treasury and New York Fed reference rates in the meantime."
+        )
+        st.link_button(
+            "CME: Learn how SOFR swaps are priced",
+            "https://www.cmegroup.com/articles/2025/"
+            "price-and-hedging-usd-sofr-interest-swaps-with-sofr-futures.html",
+            use_container_width=True,
+        )
+
+    section("Macro", "Material U.S. Economic Reports")
+
+    try:
+        bls_snapshot = get_bls_macro_snapshot()
+    except Exception:
+        bls_snapshot = {}
+        st.warning(
+            "BLS macro data is temporarily unavailable. The section will update "
+            "automatically when the BLS public API is reachable."
+        )
+
+    macro_order = [
+        "CPI",
+        "Core CPI",
+        "PPI",
+        "Unemployment",
+        "Payrolls",
+        "Hourly Earnings",
+        "ECI",
+    ]
+    available_macro = [
+        key for key in macro_order if key in bls_snapshot
+    ]
+
+    for row_start in range(0, len(available_macro), 4):
+        row_keys = available_macro[row_start:row_start + 4]
+        cols = st.columns(len(row_keys))
+        for col, key in zip(cols, row_keys):
+            item = bls_snapshot[key]
+            col.metric(
+                item.get("label", key),
+                format_bls_display(item),
+            )
+            col.caption(
+                f"{item.get('period', '')} · BLS"
+            )
+
+    if available_macro:
+        macro_source_rows = [
+            {
+                "Indicator": bls_snapshot[key].get("label", key),
+                "BLS Series": bls_snapshot[key].get("series_id", ""),
+                "Latest period": bls_snapshot[key].get("period", ""),
+                "Primary report": bls_snapshot[key].get("source", ""),
+            }
+            for key in available_macro
+        ]
+        with st.expander("BLS source details"):
+            st.dataframe(
+                pd.DataFrame(macro_source_rows),
+                use_container_width=True,
+                hide_index=True,
+            )
+            st.link_button(
+                "Open BLS Public Data API documentation",
+                "https://www.bls.gov/developers/",
+                use_container_width=True,
+            )
+
+    section("Calendar", "Economic & Federal Reserve Calendar")
+
+    bls_calendar = []
+    fomc_calendar = []
+    try:
+        bls_calendar = get_bls_release_calendar()
+    except Exception:
+        st.caption(
+            "The BLS release calendar is temporarily unavailable."
+        )
+    try:
+        fomc_calendar = get_fomc_calendar()
+    except Exception:
+        st.caption(
+            "The Federal Reserve meeting calendar is temporarily unavailable."
+        )
+
+    calendar_rows = bls_calendar + fomc_calendar
+    if calendar_rows:
+        calendar_df = pd.DataFrame(calendar_rows)
+        calendar_df = calendar_df.sort_values(
+            ["Date", "Agency"],
+            ascending=True,
+        ).head(16)
+        st.dataframe(
+            calendar_df,
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "Source": st.column_config.LinkColumn(
+                    "Primary source",
+                    display_text="Open"
+                )
+            },
+        )
+        st.caption(
+            "BLS dates come from its automatically updated online calendar. "
+            "FOMC dates are read from the Federal Reserve's official meeting calendar."
+        )
+
+    st.markdown("**Latest Federal Reserve monetary-policy updates**")
+    try:
+        fed_updates = get_fed_monetary_updates()
+    except Exception:
+        fed_updates = []
+
+    if fed_updates:
+        st.dataframe(
+            pd.DataFrame(fed_updates),
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "Source": st.column_config.LinkColumn(
+                    "Federal Reserve",
+                    display_text="Open"
+                )
+            },
+        )
+    else:
+        st.link_button(
+            "Open Federal Reserve monetary-policy updates",
+            "https://www.federalreserve.gov/monetarypolicy.htm",
+            use_container_width=True,
+        )
+
+    section("News", "Bloomberg Market News")
+
+    try:
+        bloomberg_news = get_bloomberg_market_news()
+    except Exception:
+        bloomberg_news = []
+
+    if bloomberg_news:
+        st.dataframe(
+            pd.DataFrame(bloomberg_news),
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "Bloomberg": st.column_config.LinkColumn(
+                    "Bloomberg",
+                    display_text="Read"
+                )
+            },
+        )
+        st.caption(
+            "EquityLens displays headline metadata and outbound links only. "
+            "Bloomberg article text is not republished; access may require a Bloomberg subscription."
+        )
+    else:
+        st.caption(
+            "Bloomberg headlines could not be retrieved automatically right now. "
+            "Use the direct Bloomberg Markets link below."
+        )
+        st.link_button(
+            "Open Bloomberg Markets",
+            "https://www.bloomberg.com/markets",
+            use_container_width=True,
+        )
 
     section("Expanded Coverage", "EquityLens Company Universe")
 
@@ -4936,6 +6066,86 @@ with learn_tab:
 
     learning_items = [
         {
+            "term": "S-1 Registration Statement",
+            "definition": "Form S-1 is the SEC registration statement used by many U.S. companies when registering securities under the Securities Act of 1933. It is commonly associated with an initial public offering.",
+            "why": "An S-1 can provide the first detailed public view of a company's business model, historical financial statements, ownership, risks, proposed use of proceeds, management, and offering structure.",
+            "how": "Start with the Prospectus Summary, Risk Factors, Use of Proceeds, MD&A, Business, Financial Statements, and Principal Stockholders. Amendments filed as S-1/A can update pricing, share counts, financial information, or other disclosures before an offering.",
+            "watch": "An S-1 describes an offering before or during the registration process. Terms can change through amendments, and filing a registration statement does not by itself guarantee that an IPO will be completed.",
+            "source_url": "https://www.sec.gov/submit-filings/forms-index"
+        },
+        {
+            "term": "8-K Current Report",
+            "definition": "Form 8-K is the SEC current report public companies use to disclose specified significant corporate events between periodic 10-Q and 10-K reports.",
+            "why": "An 8-K can surface information that matters before the next quarterly report, including certain acquisitions, financing events, leadership changes, material agreements, earnings-related disclosures, and other reportable events.",
+            "how": "Read the item number, event date, filing date, exhibits, and any attached press release or agreement. The item number tells you what category of event triggered the filing.",
+            "watch": "Not every company announcement is an 8-K, and some information in an 8-K may be furnished rather than filed. Read the filing language and exhibits instead of relying only on a headline.",
+            "source_url": "https://www.sec.gov/submit-filings/forms-index"
+        },
+        {
+            "term": "Consumer Price Index (CPI)",
+            "definition": "The Consumer Price Index measures the average change over time in prices paid by urban consumers for a market basket of consumer goods and services.",
+            "why": "CPI is one of the most closely watched U.S. inflation measures and can affect expectations for Federal Reserve policy, Treasury yields, financing conditions, and valuation assumptions.",
+            "how": "EquityLens can compare the latest CPI index level with the level twelve months earlier to calculate a year-over-year inflation rate. Core CPI excludes food and energy.",
+            "watch": "Monthly and year-over-year changes answer different questions. Also distinguish headline CPI from core CPI and from the PCE price index used prominently by the Federal Reserve.",
+            "source_url": "https://www.bls.gov/cpi/"
+        },
+        {
+            "term": "Producer Price Index (PPI)",
+            "definition": "The Producer Price Index measures average changes in selling prices received by domestic producers for their output.",
+            "why": "PPI helps investors track price pressure earlier in the production chain and can provide context for company input costs, margins, and broader inflation trends.",
+            "how": "EquityLens tracks the BLS Final Demand series and can calculate year-over-year change from the official index levels.",
+            "watch": "PPI covers many goods and services and can be volatile. A single monthly reading should be interpreted alongside prior trends and component details.",
+            "source_url": "https://www.bls.gov/ppi/"
+        },
+        {
+            "term": "Employment Situation",
+            "definition": "The BLS Employment Situation combines major labor-market measures including payroll employment, unemployment, labor-force participation, and earnings.",
+            "why": "Labor-market strength influences household income, demand, inflation pressure, and expectations for monetary policy.",
+            "how": "Common market focal points include the unemployment rate, monthly change in nonfarm payrolls, and average hourly earnings.",
+            "watch": "Payroll estimates can be revised. The payroll and household surveys are separate surveys and can tell somewhat different stories in a given month.",
+            "source_url": "https://www.bls.gov/news.release/empsit.htm"
+        },
+        {
+            "term": "JOLTS",
+            "definition": "The Job Openings and Labor Turnover Survey reports job openings, hires, quits, layoffs and discharges, and other labor-turnover measures.",
+            "why": "JOLTS can help show labor demand and worker confidence beyond the monthly payroll count.",
+            "how": "Job openings are often compared with the number of unemployed workers, while the quits rate can provide context on workers' willingness to leave jobs voluntarily.",
+            "watch": "JOLTS is released with a lag and can be revised, so it is best used as part of a broader labor-market picture.",
+            "source_url": "https://www.bls.gov/jlt/"
+        },
+        {
+            "term": "Employment Cost Index (ECI)",
+            "definition": "The Employment Cost Index measures changes in employer costs for employee wages, salaries, and benefits.",
+            "why": "ECI is useful for tracking compensation pressure while controlling for shifts in the mix of occupations and industries.",
+            "how": "EquityLens can compare quarterly ECI index levels with the same quarter a year earlier to show the annual rate of compensation-cost change.",
+            "watch": "ECI is quarterly, so it updates less frequently than payroll and hourly-earnings data.",
+            "source_url": "https://www.bls.gov/eci/"
+        },
+        {
+            "term": "10-Year Treasury Yield",
+            "definition": "The 10-year Treasury yield is the market yield associated with U.S. Treasury securities around the 10-year maturity point on the Treasury par yield curve.",
+            "why": "It is a widely watched benchmark for long-term interest rates and can influence borrowing costs, discount rates, mortgages, and equity valuation assumptions.",
+            "how": "EquityLens reads the official daily Treasury par yield curve and displays the 10-year rate alongside shorter and longer maturities.",
+            "watch": "Treasury yields move with inflation expectations, real-rate expectations, monetary policy, growth expectations, supply and demand, and risk sentiment.",
+            "source_url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates"
+        },
+        {
+            "term": "SOFR",
+            "definition": "The Secured Overnight Financing Rate is a broad measure of the cost of borrowing cash overnight collateralized by U.S. Treasury securities.",
+            "why": "SOFR is a central reference rate for U.S. dollar floating-rate financing and derivatives after the transition away from LIBOR.",
+            "how": "The New York Fed publishes SOFR each business day as well as compounded 30-, 90-, and 180-day SOFR averages and a SOFR Index.",
+            "watch": "SOFR itself is an overnight secured rate. A term or swap rate is a different market measure and should not be inferred simply by adding a spread to SOFR.",
+            "source_url": "https://www.newyorkfed.org/markets/reference-rates/sofr"
+        },
+        {
+            "term": "Interest-Rate Swap",
+            "definition": "An interest-rate swap is a derivative contract in which counterparties exchange interest-payment streams, commonly a fixed rate for a floating rate tied to a benchmark such as SOFR.",
+            "why": "Swap rates reflect market pricing for future interest-rate cash flows and are widely used in corporate finance, hedging, fixed-income markets, and valuation.",
+            "how": "A quoted par swap rate is the fixed rate that makes the present value of the fixed and floating legs equal at inception for the specified maturity.",
+            "watch": "OTC swap quotes depend on tenor, conventions, collateral, clearing, and market data. EquityLens does not manufacture swap quotes from Treasury yields; live swap rates should come from an authorized market-data source.",
+            "source_url": "https://www.cmegroup.com/articles/2025/price-and-hedging-usd-sofr-interest-swaps-with-sofr-futures.html"
+        },
+        {
             "term": "Revenue",
             "definition": "Revenue is the money a company earns from selling its products or services before expenses are deducted.",
             "why": "Revenue helps show the size of the business and whether customer demand is expanding, slowing, or shrinking over time.",
@@ -5017,6 +6227,16 @@ with learn_tab:
             st.write(item["how"])
             st.markdown("**What to watch for**")
             st.write(item["watch"])
+            if item.get("source_url"):
+                st.link_button(
+                    "Open primary source",
+                    item["source_url"],
+                    key="learning_source_" + re.sub(
+                        r"[^a-z0-9]+",
+                        "_",
+                        item["term"].lower()
+                    ).strip("_")
+                )
 
     section("Source Guide", "How EquityLens Labels Information")
     st.markdown(
@@ -5127,10 +6347,13 @@ st.markdown(
     **Source priority**
 
     1. SEC EDGAR filings, including Forms 10-K, 10-Q, 8-K, and S-1
-    2. Company investor-relations materials and company-reported disclosures
-    3. Market-data providers only where the relevant licensing and exchange permissions allow use
+    2. U.S. Bureau of Labor Statistics for CPI, PPI, employment, earnings, ECI, and release schedules
+    3. U.S. Department of the Treasury for the official daily Treasury par yield curve
+    4. Federal Reserve and Federal Reserve Bank of New York for FOMC information, SOFR, and reference rates
+    5. Company investor-relations materials and company-reported disclosures
+    6. Licensed or permitted market-data/news providers where the relevant redistribution rights allow use
 
-    EquityLens distinguishes company-reported figures from metrics calculated inside the app. Material figures should include a reporting period and a link to the original source whenever available.
+    EquityLens distinguishes reported figures from metrics calculated inside the app. Bloomberg headline metadata is displayed only as an outbound news gateway when retrievable; article text is not republished. Material figures should include a reporting period and a link to the original source whenever available.
     """
 )
 
