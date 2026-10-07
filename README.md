@@ -74,7 +74,7 @@ The Market Monitor adds a macro layer around company research:
 - **BLS macro snapshot** covering CPI, Core CPI, PPI Final Demand, unemployment, payrolls, average hourly earnings, and ECI
 - **Economic calendar** sourced from the official BLS release calendar
 - **FOMC meeting calendar** and Federal Reserve monetary-policy updates
-- **Bloomberg market-news gateway** using headline metadata and outbound links only
+- **Visual Bloomberg market-news desk** using headline metadata, outbound links, and original EquityLens context visuals built from market, Treasury, New York Fed, and BLS data
 - **USD SOFR OIS curve** using CheckMySwap's free public JSON endpoint, derived from DTCC public swap transaction reports
 - **Optional override** for another authorized JSON provider when needed
 
