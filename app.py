@@ -4955,48 +4955,51 @@ with company_tab:
             key="explore_company_search"
         )
 
-        explore_options_df = explore_df.copy()
-        if explore_search.strip():
-            search_text = explore_search.strip()
-            search_mask = (
-                explore_options_df["Company"].str.contains(
-                    search_text,
-                    case=False,
-                    regex=False,
-                    na=False
-                )
-                | explore_options_df["Ticker"].str.contains(
-                    search_text,
-                    case=False,
-                    regex=False,
-                    na=False
-                )
+    # Resolve the search directly to a company so there is only one search control.
+    # Ranking: exact ticker -> exact company -> starts-with -> contains.
+    explore_options_df = explore_df.copy()
+    search_text = explore_search.strip()
+
+    if search_text:
+        search_lower = search_text.lower()
+        ticker_lower = explore_options_df["Ticker"].str.lower()
+        company_lower = explore_options_df["Company"].str.lower()
+
+        exact_ticker = explore_options_df[ticker_lower == search_lower]
+        exact_company = explore_options_df[company_lower == search_lower]
+        starts_with = explore_options_df[
+            company_lower.str.startswith(search_lower, na=False)
+            | ticker_lower.str.startswith(search_lower, na=False)
+        ]
+        contains = explore_options_df[
+            company_lower.str.contains(search_lower, regex=False, na=False)
+            | ticker_lower.str.contains(search_lower, regex=False, na=False)
+        ]
+
+        if not exact_ticker.empty:
+            explore_matches = exact_ticker
+        elif not exact_company.empty:
+            explore_matches = exact_company
+        elif not starts_with.empty:
+            explore_matches = starts_with
+        else:
+            explore_matches = contains
+
+        if explore_matches.empty:
+            st.warning(
+                f'No company or ticker matched "{search_text}" in the current filters.'
             )
-            search_matches = explore_options_df[search_mask].copy()
-
-            if not search_matches.empty:
-                explore_options_df = search_matches
-            else:
+            explore_row = explore_options_df.iloc[0]
+        else:
+            explore_row = explore_matches.iloc[0]
+            if len(explore_matches) > 1:
                 st.caption(
-                    "No company or ticker matched that search. "
-                    "The full filtered list is shown below."
+                    f"{len(explore_matches)} matches found. Showing "
+                    f"{explore_row['Company']} ({explore_row['Ticker']}). "
+                    "Keep typing to narrow the result."
                 )
-
-        explore_company = st.selectbox(
-            "Company",
-            explore_options_df["Coverage Key"].tolist(),
-            format_func=lambda key: (
-                key.rsplit(" (", 1)[0]
-                + " · "
-                + key.split(" (")[-1].rstrip(")")
-            ),
-            placeholder="Choose a company",
-            key="explore_s1_company"
-        )
-
-    explore_row = explore_options_df[
-        explore_options_df["Coverage Key"] == explore_company
-    ].iloc[0]
+    else:
+        explore_row = explore_options_df.iloc[0]
 
     explore_ticker = str(explore_row.get("Ticker", ""))
     explore_name = str(explore_row.get("Company", ""))
