@@ -75,11 +75,14 @@ The Market Monitor adds a macro layer around company research:
 - **Economic calendar** sourced from the official BLS release calendar
 - **FOMC meeting calendar** and Federal Reserve monetary-policy updates
 - **Bloomberg market-news gateway** using headline metadata and outbound links only
-- **Optional USD SOFR swap curve** when a licensed JSON endpoint is configured
+- **USD SOFR OIS curve** using CheckMySwap's free public JSON endpoint, derived from DTCC public swap transaction reports
+- **Optional override** for another authorized JSON provider when needed
 
-### Optional Swap-Rate Feed
+### Swap-Rate Feed
 
-Live OTC swap quotes are not inferred from Treasury yields or SOFR. To display authorized swap-rate data, add the following Streamlit secret:
+By default, EquityLens loads the free public USD SOFR OIS curve from CheckMySwap. The curve is a dated indicative estimate derived from public DTCC swap transaction reports; it is not a live executable dealer quote.
+
+A different authorized provider can override the default source by adding this Streamlit secret:
 
 ```toml
 SWAP_RATES_JSON_URL = "https://your-authorized-provider.example/swap-rates"
@@ -100,7 +103,7 @@ or:
 ]
 ```
 
-Provider licensing, redistribution rights, and timing remain the responsibility of the configured data source.
+For the default public source, EquityLens displays the observation date and methodology fields returned by CheckMySwap. Provider licensing, redistribution rights, and timing remain the responsibility of any configured override source.
 
 ## Learning & Filing Reference
 
