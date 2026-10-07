@@ -1338,5 +1338,505 @@
       "Royalty-volume dependence"
     ],
     "source_filing": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm"
+  },
+  "ASML Holding NV (ASML)": {
+    "business_model": "Semiconductor equipment company focused on lithography systems, computational lithography, metrology and related services used by leading chip manufacturers to produce advanced integrated circuits.",
+    "primary_revenue_source": "Sales of EUV and DUV lithography systems, installed-base management services, upgrades and related semiconductor manufacturing solutions.",
+    "customer_type": "Large global semiconductor foundries, logic manufacturers and memory producers operating advanced wafer-fabrication facilities.",
+    "platform_dependency": "Depends on continued semiconductor node migration, customer fab investment, highly specialized suppliers, precision manufacturing and sustained execution of EUV and High-NA technology roadmaps.",
+    "competitive_risk": "ASML has a uniquely strong position in advanced lithography, but competes in parts of the broader patterning and semiconductor-equipment workflow and faces customer pressure on productivity, cost and technology delivery.",
+    "operational_risk": "Exposed to complex supply-chain dependencies, export restrictions, customer concentration, long production cycles, technology execution and geopolitical restrictions affecting semiconductor equipment sales.",
+    "profitability_history": "Highly profitable with strong margins and cash generation, supported by technological leadership and recurring installed-base revenue, while results can fluctuate with semiconductor capital-spending cycles.",
+    "customer_concentration": "A relatively small number of leading semiconductor manufacturers account for a substantial share of system demand.",
+    "international_exposure": "Headquartered in the Netherlands with global customers and suppliers, creating significant trade, export-control, currency and geopolitical exposure.",
+    "key_risk_themes": [
+      "Export controls and China exposure",
+      "Customer concentration",
+      "EUV and High-NA technology execution",
+      "Complex supplier dependencies",
+      "Semiconductor capital-spending cycles",
+      "Geopolitical restrictions"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm"
+  },
+  "Atmos Energy Corp (ATO)": {
+    "business_model": "Regulated natural-gas utility and pipeline company serving customers across eight U.S. states, with distribution operations and a large intrastate pipeline system in Texas.",
+    "primary_revenue_source": "Regulated natural-gas distribution and transportation revenue earned from residential, commercial, public-authority and industrial customers.",
+    "customer_type": "Approximately millions of residential, commercial, public-authority and industrial natural-gas customers across its regulated service territories.",
+    "platform_dependency": "Depends on pipeline and distribution infrastructure, constructive regulation, reliable gas supply, safety performance and access to capital for system modernization.",
+    "competitive_risk": "Direct competition is limited by regulated service territories, but long-term demand can be affected by electrification, energy-efficiency policies, alternative fuels and changes in building-energy regulation.",
+    "operational_risk": "Exposed to pipeline safety, severe weather, regulatory lag, infrastructure failures, gas costs, cybersecurity and execution of a large capital-investment program.",
+    "profitability_history": "Established profitable regulated-utility model with earnings driven largely by rate-base growth, allowed returns and infrastructure investment.",
+    "customer_concentration": "Broad residential and commercial customer base limits single-customer dependence, though regional weather and industrial demand affect volumes.",
+    "international_exposure": "Operations are concentrated in the United States, so direct international exposure is limited.",
+    "key_risk_themes": [
+      "Utility regulation and rate recovery",
+      "Pipeline safety",
+      "Capital-program execution",
+      "Severe weather",
+      "Cybersecurity of critical infrastructure",
+      "Long-term electrification risk"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/731802/000073180225000056/ato-20250930.htm"
+  },
+  "Broadcom Inc (AVGO)": {
+    "business_model": "Diversified infrastructure technology company combining semiconductor solutions with enterprise infrastructure software, including networking, broadband, storage, wireless and VMware-related software.",
+    "primary_revenue_source": "Semiconductor product sales and recurring infrastructure software revenue, with AI networking and custom accelerator demand becoming increasingly important.",
+    "customer_type": "Hyperscalers, data-center operators, networking and storage OEMs, smartphone and consumer-device manufacturers, enterprises and software customers.",
+    "platform_dependency": "Depends on leading semiconductor design, outsourced foundry capacity, major customer design wins, VMware software execution and sustained hyperscale AI infrastructure investment.",
+    "competitive_risk": "Competes with semiconductor, networking and enterprise-software vendors across connectivity, custom compute, storage and virtualization markets.",
+    "operational_risk": "Exposed to customer concentration, semiconductor supply dependencies, integration of large acquisitions, export restrictions, AI spending cycles and rapid technology transitions.",
+    "profitability_history": "Highly profitable with substantial free cash flow, supported by high-margin semiconductor franchises and recurring infrastructure-software revenue.",
+    "customer_concentration": "A small number of large technology customers account for meaningful semiconductor demand, increasing exposure to customer product cycles and purchasing decisions.",
+    "international_exposure": "Global manufacturing, suppliers and customers create significant trade, export-control, currency and geopolitical exposure.",
+    "key_risk_themes": [
+      "AI and hyperscaler customer concentration",
+      "VMware integration",
+      "Foundry and supply-chain dependence",
+      "Export controls",
+      "Rapid semiconductor technology cycles",
+      "Large acquisition execution"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm"
+  },
+  "Avery Dennison Corp (AVY)": {
+    "business_model": "Materials-science and digital-identification company producing pressure-sensitive materials, labels, graphics and intelligent-label technologies including RFID-based solutions.",
+    "primary_revenue_source": "Sales of label and graphic materials, specialty materials and Solutions Group products such as intelligent labels and identification technologies.",
+    "customer_type": "Packaging converters, apparel companies, retailers, consumer-products companies, logistics providers and industrial customers.",
+    "platform_dependency": "Depends on raw-material availability, manufacturing efficiency, converter and brand relationships, adoption of RFID and digital identification and global consumer-product volumes.",
+    "competitive_risk": "Competes with specialty-materials, label, packaging and identification-technology vendors on cost, innovation, sustainability, scale and service.",
+    "operational_risk": "Exposed to raw-material inflation, manufacturing disruption, customer-volume changes, acquisition execution, sustainability regulation and foreign exchange.",
+    "profitability_history": "Established profitable materials business with resilient recurring demand and improving exposure to higher-growth intelligent-label applications.",
+    "customer_concentration": "Broad end-customer base, though large converters, retailers and brand owners can influence demand in individual product categories.",
+    "international_exposure": "Global manufacturing and sales create substantial currency, trade and regional-demand exposure.",
+    "key_risk_themes": [
+      "Raw-material costs",
+      "Consumer-volume sensitivity",
+      "RFID adoption execution",
+      "Manufacturing reliability",
+      "Sustainability regulation",
+      "Foreign-currency exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/8818/000000881826000015/avy-20251231.htm"
+  },
+  "American Water Works Co Inc (AWK)": {
+    "business_model": "Regulated water and wastewater utility company operating across numerous U.S. states and serving residential, commercial, industrial and public-sector customers.",
+    "primary_revenue_source": "Regulated water and wastewater service revenue recovered through state utility rates.",
+    "customer_type": "Residential households, businesses, industrial facilities, municipalities and public authorities.",
+    "platform_dependency": "Depends on water-treatment plants, distribution systems, wastewater infrastructure, source-water availability, regulatory rate recovery and sustained capital investment.",
+    "competitive_risk": "Traditional competition is limited by regulated territories, though municipal systems, privatization economics and alternative ownership models can affect expansion opportunities.",
+    "operational_risk": "Exposed to water quality, infrastructure failures, drought and weather, environmental standards, regulatory recovery, cybersecurity and large capital programs.",
+    "profitability_history": "Stable profitable regulated-utility model with earnings driven by infrastructure investment, allowed returns and customer growth.",
+    "customer_concentration": "Highly diversified across a large regulated customer base, with limited dependence on any one customer.",
+    "international_exposure": "Operations are primarily U.S.-based, limiting direct international exposure.",
+    "key_risk_themes": [
+      "Water-quality regulation",
+      "Infrastructure replacement",
+      "Rate recovery",
+      "Drought and climate conditions",
+      "Cybersecurity",
+      "Capital-investment execution"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1410636/000141063626000034/awk-20251231.htm"
+  },
+  "Axon Enterprise Inc (AXON)": {
+    "business_model": "Public-safety technology company combining TASER devices, body cameras, digital evidence management, real-time operations software and related cloud services.",
+    "primary_revenue_source": "Hardware sales and growing recurring subscription revenue from software, cloud evidence management and bundled public-safety technology contracts.",
+    "customer_type": "Law-enforcement agencies, public-safety organizations, corrections agencies, federal customers and selected commercial users.",
+    "platform_dependency": "Depends on government procurement cycles, Axon Cloud adoption, hardware refreshes, digital-evidence workflows, AI features and the integration of devices with recurring software subscriptions.",
+    "competitive_risk": "Competes with body-camera, public-safety software, records-management, communications and less-lethal device vendors, as well as internal government systems.",
+    "operational_risk": "Exposed to product liability, procurement delays, civil-liberties scrutiny, cybersecurity, cloud reliability, government budgets and responsible deployment of AI-enabled features.",
+    "profitability_history": "Profitable high-growth technology company with increasing recurring software revenue, while substantial investment in product development and international expansion can pressure margins.",
+    "customer_concentration": "Customer base spans many agencies, but large government contracts and procurement programs can materially influence quarterly bookings.",
+    "international_exposure": "Expanding internationally, creating procurement, regulatory, political and foreign-currency exposure.",
+    "key_risk_themes": [
+      "Government procurement cycles",
+      "Product liability",
+      "AI and privacy regulation",
+      "Cloud cybersecurity",
+      "Large-contract timing",
+      "International expansion"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1069183/000162828026011360/axon-20251231.htm"
+  },
+  "American Express Co (AXP)": {
+    "business_model": "Integrated payments and financial-services company operating a closed-loop card network, issuing products directly to consumers and businesses while also acquiring merchants.",
+    "primary_revenue_source": "Discount revenue from merchant transactions, cardmember fees, net interest income and other payments and travel-related fees.",
+    "customer_type": "Consumers, small and mid-sized businesses, large corporations, merchants and travel customers.",
+    "platform_dependency": "Depends on cardmember spending, merchant acceptance, credit underwriting, premium brand positioning, payments infrastructure and travel and rewards ecosystems.",
+    "competitive_risk": "Competes with banks, card issuers, payment networks, fintechs and digital wallets on rewards, acceptance, credit, pricing and customer experience.",
+    "operational_risk": "Exposed to consumer and business credit losses, spending cycles, funding costs, payments regulation, merchant disputes, cybersecurity and travel demand.",
+    "profitability_history": "Highly profitable financial-services model with strong fee and spending economics, though credit losses and funding costs can vary through economic cycles.",
+    "customer_concentration": "Broad cardmember and merchant base limits single-customer dependence, while affluent and premium-spend customers are strategically important.",
+    "international_exposure": "Operates globally, creating currency, regulatory, travel and geopolitical exposure.",
+    "key_risk_themes": [
+      "Consumer credit cycle",
+      "Payments competition",
+      "Funding and interest-rate costs",
+      "Merchant acceptance",
+      "Cybersecurity and fraud",
+      "Travel and discretionary-spending sensitivity"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000080/axp-20251231.htm"
+  },
+  "Autozone Inc (AZO)": {
+    "business_model": "Automotive aftermarket retailer and distributor selling replacement parts, maintenance items and accessories through retail stores and commercial programs.",
+    "primary_revenue_source": "Sales of automotive replacement parts and accessories to do-it-yourself consumers and professional repair shops.",
+    "customer_type": "Vehicle owners, independent repair shops, commercial garages and other automotive-service customers.",
+    "platform_dependency": "Depends on store density, distribution hubs, inventory availability, parts coverage, private-label sourcing and reliable replenishment.",
+    "competitive_risk": "Competes with other auto-parts retailers, distributors, dealerships, ecommerce sellers and mass merchants on availability, convenience, service and price.",
+    "operational_risk": "Exposed to inventory management, wage and freight costs, supplier concentration, tariffs, store execution and changes in vehicle technology.",
+    "profitability_history": "Long-standing profitable retailer with strong returns on capital and resilient demand tied to vehicle maintenance and an aging vehicle fleet.",
+    "customer_concentration": "Highly diversified consumer and commercial customer base with little single-customer dependence.",
+    "international_exposure": "Primary exposure is North America, including Mexico and Brazil, creating currency and regional operating risk.",
+    "key_risk_themes": [
+      "Inventory availability",
+      "Automotive technology change",
+      "Tariffs and sourcing",
+      "Labor and freight costs",
+      "Retail competition",
+      "International expansion"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/866787/000110465925102611/azo-20250830x10k.htm"
+  },
+  "Boeing Co (BA)": {
+    "business_model": "Global aerospace and defense manufacturer operating through commercial airplanes, defense/space/security and global services businesses.",
+    "primary_revenue_source": "Aircraft deliveries, defense and space contracts, aftermarket parts, maintenance, training and other aerospace services.",
+    "customer_type": "Commercial airlines, aircraft lessors, U.S. and allied governments, defense agencies and aerospace operators.",
+    "platform_dependency": "Depends on aircraft certification, manufacturing quality, supplier performance, skilled labor, long-cycle development programs and sustained airline and defense demand.",
+    "competitive_risk": "Competes primarily with Airbus in commercial aircraft and with major defense contractors in military and space programs.",
+    "operational_risk": "Exposed to production quality, certification delays, supplier constraints, fixed-price defense losses, regulatory oversight, labor disruption and high working-capital requirements.",
+    "profitability_history": "Historically profitable at scale but recent years have included significant losses and cash-flow pressure from production, quality and development-program challenges.",
+    "customer_concentration": "Large airline and government customers create meaningful program-level concentration, while order backlogs span many operators.",
+    "international_exposure": "Global commercial customers and supply chains create trade, regulatory, currency and geopolitical exposure.",
+    "key_risk_themes": [
+      "Commercial-aircraft quality and certification",
+      "Supplier and production execution",
+      "Fixed-price defense-program losses",
+      "Regulatory oversight",
+      "Labor availability",
+      "Cash-flow recovery"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/12927/000162828026004357/ba-20251231.htm"
+  },
+  "Bank Of America Corp (BAC)": {
+    "business_model": "Diversified global bank offering consumer banking, wealth management, corporate banking, markets, investment banking and payments services.",
+    "primary_revenue_source": "Net interest income, card and service fees, investment-banking fees, trading revenue and wealth-management fees.",
+    "customer_type": "Consumers, small businesses, corporations, institutions, governments and high-net-worth clients.",
+    "platform_dependency": "Depends on deposits, credit underwriting, capital and liquidity, digital banking infrastructure, payment networks and access to wholesale funding and capital markets.",
+    "competitive_risk": "Competes with major banks, regional banks, brokerages, fintechs, asset managers and nonbank lenders across nearly every financial-services category.",
+    "operational_risk": "Exposed to credit losses, interest-rate changes, deposit competition, capital requirements, market volatility, operational resilience, cybersecurity and regulatory actions.",
+    "profitability_history": "Large profitable banking franchise with earnings diversified across consumer, wealth, corporate and markets businesses, though results remain cyclical.",
+    "customer_concentration": "Very broad customer base, while large corporate and institutional exposures are managed through formal concentration and credit limits.",
+    "international_exposure": "Global markets and corporate-banking activities create currency, sovereign, regulatory and geopolitical exposure.",
+    "key_risk_themes": [
+      "Credit cycle",
+      "Deposit and funding competition",
+      "Interest-rate sensitivity",
+      "Capital regulation",
+      "Markets volatility",
+      "Cybersecurity and operational resilience"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm"
+  },
+  "Ball Corp (BALL)": {
+    "business_model": "Global aluminum packaging company producing beverage cans, bottles, aerosol containers and related sustainable packaging products.",
+    "primary_revenue_source": "Sales of aluminum beverage and specialty packaging to large consumer-products customers.",
+    "customer_type": "Beverage, personal-care and household-products companies worldwide.",
+    "platform_dependency": "Depends on aluminum supply, high-volume manufacturing, customer contracts, plant utilization, recycling economics and consumer demand for packaged beverages.",
+    "competitive_risk": "Competes with other metal, glass and plastic packaging producers on price, scale, sustainability, product innovation and supply reliability.",
+    "operational_risk": "Exposed to aluminum and energy costs, customer concentration, manufacturing utilization, freight, tariffs and shifts in packaging demand.",
+    "profitability_history": "Established profitable packaging business with relatively defensive demand but margins influenced by metal pass-through mechanisms, volume and plant efficiency.",
+    "customer_concentration": "Large multinational beverage companies represent an important portion of sales, creating meaningful account concentration.",
+    "international_exposure": "Manufacturing and customers across multiple regions create foreign-currency, trade and regional-demand exposure.",
+    "key_risk_themes": [
+      "Large beverage-customer concentration",
+      "Aluminum and energy costs",
+      "Plant utilization",
+      "Packaging substitution",
+      "Trade and tariff exposure",
+      "Manufacturing execution"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/9389/000110465926017410/ball-20251231x10k.htm"
+  },
+  "Baxter International Inc (BAX)": {
+    "business_model": "Medical-products company supplying hospital and clinical products across infusion, nutrition, pharmaceuticals, kidney-care-related legacy activities and other care-delivery categories.",
+    "primary_revenue_source": "Sales of medical devices, consumables, pharmaceuticals and related healthcare products to hospitals and other care settings.",
+    "customer_type": "Hospitals, clinics, pharmacies, healthcare systems, distributors and other medical providers.",
+    "platform_dependency": "Depends on regulated manufacturing, hospital purchasing, product quality, supply continuity and successful execution of portfolio restructuring.",
+    "competitive_risk": "Competes with global medical-device and hospital-products companies on product reliability, clinical value, price and contracting relationships.",
+    "operational_risk": "Exposed to product quality and recalls, manufacturing disruptions, hospital budget pressure, regulatory compliance, portfolio separation and debt reduction.",
+    "profitability_history": "Historically profitable medical-products business, though recent restructuring, portfolio changes and impairment or transaction effects have increased earnings volatility.",
+    "customer_concentration": "Large healthcare systems, group purchasing organizations and distributors influence sales, though end-user demand is broad.",
+    "international_exposure": "Global operations create currency, regulatory, supply-chain and geopolitical exposure.",
+    "key_risk_themes": [
+      "Product quality and recalls",
+      "Portfolio restructuring",
+      "Manufacturing reliability",
+      "Hospital spending pressure",
+      "Debt and capital allocation",
+      "Global medical regulation"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/10456/000162828026007733/bax-20251231.htm"
+  },
+  "Best Buy Co Inc (BBY)": {
+    "business_model": "Omnichannel consumer-electronics retailer selling computing, appliances, entertainment, mobile, services and related products through stores and digital channels.",
+    "primary_revenue_source": "Retail sales of consumer electronics and appliances, supplemented by services, memberships, installation and protection offerings.",
+    "customer_type": "Consumers and households purchasing electronics, appliances and technology services.",
+    "platform_dependency": "Depends on store and digital traffic, vendor relationships, product-launch cycles, inventory availability, fulfillment and services execution.",
+    "competitive_risk": "Competes with Amazon, Walmart, warehouse clubs, manufacturer-direct channels and specialty retailers on price, assortment, convenience and service.",
+    "operational_risk": "Exposed to discretionary consumer spending, product cycles, inventory markdowns, theft, labor costs, store productivity and vendor concentration.",
+    "profitability_history": "Profitable retailer with strong cash generation, though revenue and margins are sensitive to consumer electronics replacement cycles and discretionary spending.",
+    "customer_concentration": "Highly diversified consumer customer base; concentration is more relevant among major electronics vendors.",
+    "international_exposure": "Operations are primarily domestic, so direct foreign revenue exposure is limited, while product sourcing remains globally exposed.",
+    "key_risk_themes": [
+      "Consumer discretionary spending",
+      "Vendor concentration",
+      "Online retail competition",
+      "Product-cycle volatility",
+      "Inventory management",
+      "Global sourcing exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/764478/000076447826000009/bby-20260131.htm"
+  },
+  "Becton Dickinson & Co (BDX)": {
+    "business_model": "Global medical-technology company providing medication delivery, diagnostics, biosciences, specimen-management and related healthcare products.",
+    "primary_revenue_source": "Sales of medical devices, consumables, diagnostic systems and life-sciences products through BD Medical, BD Life Sciences and other portfolio businesses.",
+    "customer_type": "Hospitals, laboratories, pharmacies, researchers, blood banks, healthcare providers and distributors.",
+    "platform_dependency": "Depends on regulated manufacturing, recurring consumables, installed diagnostic platforms, hospital relationships and continuous product innovation.",
+    "competitive_risk": "Competes with global medical-device, diagnostics and life-sciences companies on clinical performance, reliability, price, workflow integration and innovation.",
+    "operational_risk": "Exposed to product recalls, quality systems, FDA and international regulation, supply-chain constraints, hospital spending, litigation and acquisition or divestiture execution.",
+    "profitability_history": "Long-established profitable medical-technology model with substantial recurring consumable demand, though portfolio changes and quality costs can affect margins.",
+    "customer_concentration": "Broad healthcare customer base, while group purchasing organizations and large health systems can influence pricing and contract terms.",
+    "international_exposure": "Global sales and manufacturing create currency, regulatory and supply-chain exposure.",
+    "key_risk_themes": [
+      "Product quality and recalls",
+      "Medical-device regulation",
+      "Hospital purchasing pressure",
+      "Supply-chain execution",
+      "Portfolio transformation",
+      "Litigation risk"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/10795/000001079525000099/bdx-20250930.htm"
+  },
+  "Bloom Energy Corp (BE)": {
+    "business_model": "Distributed-energy technology company centered on solid oxide fuel-cell systems that generate electricity on site for data centers, commercial facilities and other customers.",
+    "primary_revenue_source": "Product and installation revenue from Bloom Energy Servers, plus recurring service and electricity-related revenue.",
+    "customer_type": "Data-center operators, utilities, large commercial and industrial customers and other organizations seeking resilient on-site power.",
+    "platform_dependency": "Depends on fuel-cell technology performance, natural-gas or hydrogen access, customer project financing, manufacturing scale, grid constraints and rising demand for reliable power.",
+    "competitive_risk": "Competes with grid power, generators, batteries, renewables, turbines and other distributed-energy technologies on cost, reliability, emissions and deployment speed.",
+    "operational_risk": "Exposed to project timing, customer concentration, manufacturing scale-up, warranty and service costs, fuel-price economics, policy incentives and financing availability.",
+    "profitability_history": "Rapidly growing energy-technology company with improving economics, though profitability has historically been volatile because of manufacturing scale, service obligations and project mix.",
+    "customer_concentration": "Large infrastructure and data-center projects can create meaningful customer and project concentration.",
+    "international_exposure": "International deployments and supply chains create currency, regulatory and geopolitical exposure.",
+    "key_risk_themes": [
+      "Large-project concentration",
+      "Fuel-cell reliability",
+      "Manufacturing scale",
+      "Data-center power demand",
+      "Policy and incentive changes",
+      "Project financing"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026006516/be-20251231.htm"
+  },
+  "Franklin Templeton Inc (BEN)": {
+    "business_model": "Global investment-management organization operating through Franklin Templeton and multiple specialist investment managers across equity, fixed income, alternatives and multi-asset strategies.",
+    "primary_revenue_source": "Investment-management fees, distribution fees and related service revenue tied largely to assets under management.",
+    "customer_type": "Retail investors, financial advisers, institutions, pension plans, sovereign entities and wealth-management clients.",
+    "platform_dependency": "Depends on investment performance, asset flows, distribution relationships, market levels, acquisitions and the strength of specialist investment teams.",
+    "competitive_risk": "Competes with global asset managers, passive providers, alternatives firms and wealth platforms on performance, fees, distribution and product breadth.",
+    "operational_risk": "Exposed to net outflows, market declines, fee compression, investment underperformance, acquisition integration, cybersecurity and regulatory changes.",
+    "profitability_history": "Established profitable asset manager with strong recurring fee revenue, though earnings are sensitive to AUM levels, flows and market performance.",
+    "customer_concentration": "Broad retail and institutional investor base, while large mandates and distribution platforms can influence flows.",
+    "international_exposure": "Global investment and distribution activity creates currency, regulatory and geopolitical exposure.",
+    "key_risk_themes": [
+      "Asset outflows",
+      "Investment performance",
+      "Fee compression",
+      "Acquisition integration",
+      "Market-level sensitivity",
+      "Financial regulation"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/38777/000003877725000238/ben-20250930.htm"
+  },
+  "Brown-Forman Corp (BF-B)": {
+    "business_model": "Global premium spirits company producing and marketing whiskey, tequila and other alcoholic-beverage brands, including the Jack Daniel's family of brands.",
+    "primary_revenue_source": "Sales of branded spirits through distributors, wholesalers and retailers worldwide.",
+    "customer_type": "Alcohol distributors, wholesalers, retailers, bars, restaurants and consumers across global markets.",
+    "platform_dependency": "Depends on brand equity, distributor relationships, aged-whiskey inventory, consumer demand, glass and packaging supply and long-term premiumization trends.",
+    "competitive_risk": "Competes with large global spirits companies and local brands for shelf space, distributor attention and consumer demand.",
+    "operational_risk": "Exposed to tariffs, alcohol regulation, changing consumer preferences, inventory aging, distributor concentration, foreign exchange and input costs.",
+    "profitability_history": "Long-standing profitable branded-consumer business with strong gross margins, though recent results can be affected by inventory normalization, tariffs and demand shifts.",
+    "customer_concentration": "Distribution channels can be concentrated by country, while end-consumer demand remains broad.",
+    "international_exposure": "Substantial global sales create material currency, tariff, regulatory and geopolitical exposure.",
+    "key_risk_themes": [
+      "Tariffs and trade policy",
+      "Consumer preference shifts",
+      "Distributor concentration",
+      "Alcohol regulation",
+      "Aged inventory management",
+      "Foreign-currency exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/14693/000001469326000024/bfb-20260430.htm"
+  },
+  "Bunge Global SA (BG)": {
+    "business_model": "Global agribusiness and food company connecting farmers, processors and customers through oilseed processing, grain origination, refined oils and related agricultural supply-chain operations.",
+    "primary_revenue_source": "Merchandising and processing of oilseeds and grains, refined and specialty oils and other food and feed ingredients.",
+    "customer_type": "Food manufacturers, animal-feed producers, biofuel companies, consumer-products companies and agricultural counterparties.",
+    "platform_dependency": "Depends on global crop flows, origination networks, crushing and refining assets, logistics, commodity risk management and access to growers and customers.",
+    "competitive_risk": "Competes with other global agribusiness companies on origination, logistics, processing efficiency, commodity trading and customer relationships.",
+    "operational_risk": "Exposed to commodity-price volatility, crop conditions, trade policy, working-capital swings, logistics, integration activity and geopolitical disruption.",
+    "profitability_history": "Profitable but cyclical, with earnings influenced by crush margins, commodity spreads, crop availability and processing utilization.",
+    "customer_concentration": "Broad commercial customer base, though commodity counterparties and major food or energy customers can be significant in individual regions.",
+    "international_exposure": "Highly global operations create substantial currency, sovereign, trade and geopolitical exposure.",
+    "key_risk_themes": [
+      "Commodity-price volatility",
+      "Crop and weather conditions",
+      "Global trade policy",
+      "Integration execution",
+      "Working-capital volatility",
+      "Logistics and geopolitical disruption"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1996862/000162828026009842/bg-20251231.htm"
+  },
+  "Biogen Inc (BIIB)": {
+    "business_model": "Biotechnology company developing and commercializing therapies primarily in neuroscience and specialized diseases, with a portfolio spanning multiple sclerosis, rare disease and newer growth areas.",
+    "primary_revenue_source": "Product sales from marketed therapies plus collaboration and royalty revenue.",
+    "customer_type": "Patients, neurologists, hospitals, specialty pharmacies, distributors and government or private payers.",
+    "platform_dependency": "Depends on clinical development, regulatory approvals, patent protection, specialty commercialization, manufacturing and successful launch of newer products as legacy franchises mature.",
+    "competitive_risk": "Faces branded competition, generics and biosimilars, and rapid scientific innovation across neuroscience and rare disease.",
+    "operational_risk": "Exposed to pipeline failures, product concentration, patent erosion, safety findings, reimbursement pressure and restructuring execution.",
+    "profitability_history": "Historically profitable biotechnology company, though legacy-product declines and increased investment in new launches have altered the earnings mix.",
+    "customer_concentration": "Broad patient demand but pharmaceutical distribution and payer relationships create channel concentration.",
+    "international_exposure": "Markets products globally, creating currency, pricing, reimbursement and regulatory exposure.",
+    "key_risk_themes": [
+      "Legacy-product erosion",
+      "Pipeline execution",
+      "Drug pricing and reimbursement",
+      "Patent competition",
+      "New-product launch execution",
+      "Regulatory and safety outcomes"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/875045/000087504526000013/biib-20251231.htm"
+  },
+  "Booking Holdings Inc (BKNG)": {
+    "business_model": "Global online travel company operating digital marketplaces and brands including Booking.com, Priceline, Agoda, KAYAK and OpenTable.",
+    "primary_revenue_source": "Travel reservation commissions and merchant revenue from accommodations, flights, rental cars, experiences and related travel services.",
+    "customer_type": "Travelers and consumers on one side, and hotels, alternative accommodations, airlines, restaurants, rental-car companies and other travel providers on the other.",
+    "platform_dependency": "Depends on digital traffic, supplier inventory, payments, search-engine and app distribution, brand strength, machine learning and a large two-sided marketplace.",
+    "competitive_risk": "Competes with Expedia, Airbnb, Google, direct supplier sites, regional travel platforms and other digital marketplaces.",
+    "operational_risk": "Exposed to travel demand, search-engine dependence, payments and fraud, regulation of online platforms, cybersecurity, supplier relationships and geopolitical disruptions.",
+    "profitability_history": "Highly profitable asset-light travel marketplace with strong cash generation, though results remain sensitive to travel demand and marketing efficiency.",
+    "customer_concentration": "No single traveler dominates, while accommodation supply is highly fragmented; dependence on major digital traffic channels remains important.",
+    "international_exposure": "Extremely global revenue base creates currency, regulatory, tax and geopolitical exposure.",
+    "key_risk_themes": [
+      "Travel-demand cyclicality",
+      "Search and digital-marketing dependence",
+      "Platform regulation",
+      "Payments and fraud",
+      "Competition from direct and marketplace channels",
+      "Foreign-currency exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1075531/000107553126000009/bkng-20251231.htm"
+  },
+  "Baker Hughes Co (BKR)": {
+    "business_model": "Energy technology company providing oilfield services and equipment alongside industrial and energy-technology products for LNG, turbines, compressors and other energy infrastructure.",
+    "primary_revenue_source": "Equipment, services and aftermarket revenue from Oilfield Services & Equipment and Industrial & Energy Technology businesses.",
+    "customer_type": "Oil and gas producers, national oil companies, LNG operators, refiners, pipeline companies and industrial-energy customers.",
+    "platform_dependency": "Depends on upstream spending, LNG and energy-infrastructure investment, installed equipment, long-term service agreements and specialized manufacturing and engineering.",
+    "competitive_risk": "Competes with global oilfield-services and industrial-equipment companies on technology, reliability, price, execution and installed-base support.",
+    "operational_risk": "Exposed to oil and gas cycles, project timing, customer capital spending, geopolitical risk, supply-chain constraints and long-cycle equipment execution.",
+    "profitability_history": "Profitable diversified energy-services model with recurring aftermarket and service revenue helping moderate upstream cyclicality.",
+    "customer_concentration": "Large energy companies and national oil companies can create project-level concentration.",
+    "international_exposure": "Broad global operations create significant geopolitical, sanctions, currency and sovereign exposure.",
+    "key_risk_themes": [
+      "Oil and gas spending cycles",
+      "LNG project timing",
+      "Geopolitical and sanctions risk",
+      "Large-project execution",
+      "Supply-chain constraints",
+      "Energy-transition demand shifts"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm"
+  },
+  "Blackrock Inc (BLK)": {
+    "business_model": "Global investment-management and technology company providing index, active, alternatives, cash-management and technology services, including iShares and Aladdin.",
+    "primary_revenue_source": "Investment-advisory and administration fees tied to assets under management, plus technology and subscription-services revenue and performance fees.",
+    "customer_type": "Institutional investors, pension plans, sovereigns, insurers, financial advisers and retail investors worldwide.",
+    "platform_dependency": "Depends on asset levels, investment flows, market performance, ETF scale, distribution, technology infrastructure and continued adoption of Aladdin and related services.",
+    "competitive_risk": "Competes with global asset managers, passive providers, alternative managers and technology vendors on fees, performance, scale, distribution and technology.",
+    "operational_risk": "Exposed to market declines, fee compression, asset outflows, acquisition integration, technology outages, cybersecurity and global financial regulation.",
+    "profitability_history": "Highly profitable, cash-generative asset manager with substantial recurring fee revenue and significant operating leverage to market levels and net flows.",
+    "customer_concentration": "Diversified across institutional and retail channels, though very large mandates and distribution relationships can materially influence flows.",
+    "international_exposure": "Serves clients in more than 100 countries, creating currency, regulatory and geopolitical exposure.",
+    "key_risk_themes": [
+      "Market and AUM sensitivity",
+      "Fee compression",
+      "Net asset flows",
+      "Technology and cybersecurity",
+      "Acquisition integration",
+      "Global financial regulation"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/2012383/000119312526071966/blk-20251231.htm"
+  },
+  "Bristol-Myers Squibb Co (BMY)": {
+    "business_model": "Global biopharmaceutical company developing and commercializing medicines across oncology, hematology, immunology, cardiovascular and neuroscience.",
+    "primary_revenue_source": "Sales of branded prescription medicines, including major oncology, cardiovascular and immunology products.",
+    "customer_type": "Wholesalers, specialty pharmacies, hospitals, physicians, healthcare systems and public or private payers.",
+    "platform_dependency": "Depends on successful R&D, regulatory approvals, patent protection, manufacturing, reimbursement and replacement of mature products with new growth assets.",
+    "competitive_risk": "Faces branded drug competition, generics, biosimilars and fast-moving therapeutic innovation.",
+    "operational_risk": "Exposed to patent expirations, clinical failures, drug-pricing pressure, manufacturing, acquired-pipeline integration and regulatory outcomes.",
+    "profitability_history": "Large profitable pharmaceutical franchise, though earnings are increasingly shaped by loss-of-exclusivity dynamics and investment in newer products.",
+    "customer_concentration": "Major pharmaceutical wholesalers account for significant distribution volume, although patient demand spans many therapeutic areas.",
+    "international_exposure": "Global commercialization creates currency, pricing, reimbursement and regulatory exposure.",
+    "key_risk_themes": [
+      "Loss of exclusivity",
+      "Pipeline execution",
+      "Drug pricing and reimbursement",
+      "Acquisition integration",
+      "Manufacturing reliability",
+      "Regulatory and safety outcomes"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm"
+  },
+  "Bank Of New York Mellon Corp (BNY)": {
+    "business_model": "Global financial-services institution focused on securities services, custody, clearing, issuer services, treasury services, investment management and wealth management.",
+    "primary_revenue_source": "Investment-services fees, asset-management fees, net interest income, foreign-exchange and other transaction-related revenue.",
+    "customer_type": "Asset managers, banks, broker-dealers, corporations, governments, institutional investors and high-net-worth clients.",
+    "platform_dependency": "Depends on custody and settlement infrastructure, client assets under custody or administration, transaction volumes, capital and liquidity and highly resilient technology systems.",
+    "competitive_risk": "Competes with global custody banks, asset managers and financial-infrastructure providers on scale, technology, fees, service quality and global reach.",
+    "operational_risk": "Exposed to operational failures, cybersecurity, interest rates, market activity, financial regulation, credit and liquidity risk and technology modernization.",
+    "profitability_history": "Long-established profitable financial-infrastructure model with recurring fee revenue and meaningful sensitivity to market values and net interest economics.",
+    "customer_concentration": "Serves a broad institutional client base, though large asset managers and financial institutions can represent significant relationships.",
+    "international_exposure": "Global custody and investment operations create extensive currency, regulatory and geopolitical exposure.",
+    "key_risk_themes": [
+      "Operational resilience",
+      "Cybersecurity",
+      "Market-value sensitivity",
+      "Interest-rate exposure",
+      "Financial regulation",
+      "Large institutional relationships"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1390777/000139077726000033/bk-20251231.htm"
+  },
+  "Broadridge Financial Solutions Inc (BR)": {
+    "business_model": "Financial-technology and investor-communications company providing proxy processing, regulatory communications, trading and post-trade technology and wealth-management infrastructure.",
+    "primary_revenue_source": "Recurring fees from investor communication services and Global Technology and Operations platforms, supplemented by event-driven and distribution revenue.",
+    "customer_type": "Banks, broker-dealers, asset managers, wealth firms, corporate issuers and other financial institutions.",
+    "platform_dependency": "Depends on deeply embedded client workflows, transaction volumes, regulatory requirements, data infrastructure and highly reliable financial-processing systems.",
+    "competitive_risk": "Competes with financial-software vendors, internal bank systems, communications providers and market-infrastructure companies on reliability, functionality, compliance and price.",
+    "operational_risk": "Exposed to technology outages, cybersecurity, transaction-processing errors, regulatory change, large-client concentration and execution of acquisitions and platform migrations.",
+    "profitability_history": "Profitable recurring-revenue fintech infrastructure company with strong retention and cash generation.",
+    "customer_concentration": "Large financial institutions are important clients, though revenue is spread across many relationships and regulatory communication programs.",
+    "international_exposure": "Global financial-institution client base creates regulatory, currency and geopolitical exposure.",
+    "key_risk_themes": [
+      "Technology reliability",
+      "Cybersecurity",
+      "Regulatory change",
+      "Large-client concentration",
+      "Platform migration execution",
+      "Financial-market activity"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1383312/000162828026052243/br-20260630.htm"
   }
 }
