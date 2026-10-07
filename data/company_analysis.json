@@ -438,5 +438,205 @@
       "Fraud and cybersecurity"
     ],
     "source_filing": "https://www.sec.gov/Archives/edgar/data/1522540/000152254026000017/mq-20251231.htm"
+  },
+  "Agilent Technologies Inc (A)": {
+    "business_model": "Global life sciences, diagnostics and applied-markets company providing laboratory instruments, software, consumables, services, automation and workflow solutions.",
+    "primary_revenue_source": "Revenue is generated across Life Sciences and Diagnostics Markets, Agilent CrossLab, and Applied Markets through instrument sales, consumables, software, contract services and recurring laboratory support offerings.",
+    "customer_type": "Pharmaceutical and biotechnology companies, clinical and diagnostics laboratories, academic and government research organizations, chemical and energy companies, food and environmental testing labs, and other laboratory-intensive organizations.",
+    "platform_dependency": "Growth depends on laboratory capital spending, scientific research activity, regulated testing demand, instrument utilization and the installed base that supports recurring consumables and CrossLab services.",
+    "competitive_risk": "Competes with diversified analytical-instrument, diagnostics, life-sciences tools and laboratory-services companies on technology, application performance, workflow integration, service quality, price and global reach.",
+    "operational_risk": "Exposed to cyclical instrument demand, supply-chain and manufacturing execution, tariffs and trade restrictions, foreign-currency movements, regulatory requirements and integration of acquired technologies.",
+    "profitability_history": "Established profitable business with a mix of instrument sales and recurring consumables and services; results can fluctuate with laboratory capital-spending cycles and segment mix.",
+    "customer_concentration": "Serves a broad global customer base across multiple end markets; no single-customer dependence is central to the business model, while large-account spending and research budgets can influence demand.",
+    "international_exposure": "Operates globally with manufacturing, R&D and commercial activity across the United States, Europe and Asia, creating currency, trade, regulatory and geopolitical exposure.",
+    "key_risk_themes": [
+      "Laboratory capital-spending cycles",
+      "Competition in analytical instruments and diagnostics",
+      "Supply-chain and manufacturing execution",
+      "Tariffs and trade restrictions",
+      "Acquisition integration",
+      "Foreign-currency and international regulatory exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1090872/000109087225000087/a-20251031.htm"
+  },
+  "Apple Inc (AAPL)": {
+    "business_model": "Integrated consumer technology ecosystem combining hardware, operating systems, software, digital services and accessories, centered on products such as iPhone, Mac, iPad and wearables.",
+    "primary_revenue_source": "iPhone remains the largest revenue category, supplemented by Mac, iPad, Wearables/Home/Accessories and a rapidly growing Services business including the App Store, advertising, cloud services and other digital offerings.",
+    "customer_type": "Consumers, small and mid-sized businesses, education institutions, enterprises, governments and developers participating in Apple's device and software ecosystem.",
+    "platform_dependency": "The model depends on the installed base of Apple devices, proprietary operating systems, semiconductor and component supply chains, third-party developers, distribution partners and the continued attractiveness of the integrated ecosystem.",
+    "competitive_risk": "Competes intensely in smartphones, personal computers, tablets, wearables, digital services and artificial intelligence against firms with substantial resources, alternative platforms and lower-priced products.",
+    "operational_risk": "Exposed to product-cycle execution, global supply-chain concentration, component availability, manufacturing partners, regulatory scrutiny of platform practices, tariffs, geopolitical tensions and dependence on successful product innovation.",
+    "profitability_history": "Highly profitable with substantial operating cash flow; Services has increased as a higher-margin and recurring contributor alongside the hardware franchise.",
+    "customer_concentration": "Revenue is diversified across a very large global customer base, although product concentration remains meaningful because iPhone represents roughly half of annual net sales.",
+    "international_exposure": "Generates substantial revenue outside the United States and relies on a global manufacturing and supply network, creating significant currency, trade-policy, regulatory and geopolitical exposure.",
+    "key_risk_themes": [
+      "iPhone and major product concentration",
+      "Global supply-chain and manufacturing dependence",
+      "Platform and App Store regulation",
+      "Intense hardware and services competition",
+      "Product and AI innovation execution",
+      "China and broader geopolitical exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+  },
+  "Abbvie Inc (ABBV)": {
+    "business_model": "Global research-based biopharmaceutical company that develops, manufactures and commercializes medicines and therapies across immunology, neuroscience, oncology, aesthetics and other therapeutic areas.",
+    "primary_revenue_source": "Product sales from branded pharmaceutical and aesthetics portfolios, with major franchises including immunology and neuroscience therapies and other specialized medicines.",
+    "customer_type": "Wholesalers, distributors, pharmacies, healthcare systems, government programs, physicians, licensed healthcare providers and patients across global markets.",
+    "platform_dependency": "Performance depends on a portfolio of patented therapies, successful clinical development, regulatory approvals, manufacturing reliability, payer access and commercialization of new indications and replacement products.",
+    "competitive_risk": "Faces branded pharmaceutical competition, biosimilars and generics, especially following loss of exclusivity; Humira and other biologic products face meaningful biosimilar pressure.",
+    "operational_risk": "Drug-development failures, patent challenges, adverse regulatory outcomes, pricing and reimbursement pressure, manufacturing issues and acquisition integration can materially affect results.",
+    "profitability_history": "Large profitable biopharmaceutical company with strong cash generation, though earnings and margins can be affected by patent expirations, acquired-intangible amortization, restructuring and portfolio transitions.",
+    "customer_concentration": "Uses major pharmaceutical wholesale and distribution channels, creating channel concentration risk even though end demand spans many products, providers and patients.",
+    "international_exposure": "Markets products globally and is exposed to foreign reimbursement systems, regulatory regimes, currency movements, trade policy and geopolitical conditions.",
+    "key_risk_themes": [
+      "Loss of exclusivity and biosimilar competition",
+      "Pipeline and clinical-development execution",
+      "Drug pricing and reimbursement pressure",
+      "Patent and intellectual-property challenges",
+      "Manufacturing and regulatory compliance",
+      "Acquisition and portfolio integration"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000008/abbv-20251231.htm"
+  },
+  "Airbnb Inc (ABNB)": {
+    "business_model": "Asset-light global marketplace connecting hosts offering stays, experiences and services with guests through a digital platform and integrated payments ecosystem.",
+    "primary_revenue_source": "Primarily service fees charged in connection with bookings between hosts and guests across stays and the company's expanding experiences and services offerings.",
+    "customer_type": "Individual and professional hosts on the supply side and travelers and local-experience customers on the demand side across more than 220 countries and regions.",
+    "platform_dependency": "Depends on maintaining a two-sided marketplace with sufficient host supply, guest demand, trust and safety systems, integrated payments, search and recommendation technology, and strong brand recognition.",
+    "competitive_risk": "Competes for both hosts and guests with online travel agencies, hotels, alternative-accommodation platforms, local operators and emerging travel and services marketplaces.",
+    "operational_risk": "Exposed to travel demand, local short-term-rental regulation, payments regulation, trust and safety incidents, platform reliability, AI deployment, cybersecurity and the ability to balance host and guest economics.",
+    "profitability_history": "Has transitioned from earlier losses to a profitable, cash-generative model as scale, booking volume and operating leverage improved.",
+    "customer_concentration": "No single host or guest drives the business; marketplace health depends on the aggregate supply of millions of hosts and sustained global guest demand.",
+    "international_exposure": "Operates in more than 220 countries and regions, creating extensive exposure to local lodging rules, taxes, payment regulations, currencies and geopolitical conditions.",
+    "key_risk_themes": [
+      "Short-term-rental and local regulation",
+      "Host and guest marketplace balance",
+      "Travel-demand cyclicality",
+      "Trust, safety and platform integrity",
+      "Payments and data regulation",
+      "Competition from travel and lodging platforms"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1559720/000155972026000004/abnb-20251231.htm"
+  },
+  "Abbott Laboratories (ABT)": {
+    "business_model": "Diversified global healthcare company operating across medical devices, diagnostics, nutrition and established branded pharmaceutical products.",
+    "primary_revenue_source": "Sales of medical devices, diagnostic systems and tests, nutritional products and established pharmaceutical products across four reportable segments.",
+    "customer_type": "Hospitals, physicians, laboratories, clinics, wholesalers, distributors, government agencies, pharmacies, retailers and consumers worldwide.",
+    "platform_dependency": "Growth depends on clinical adoption of medical technologies, installed diagnostic systems, recurring test and consumable demand, product innovation, regulatory approvals and broad healthcare distribution networks.",
+    "competitive_risk": "Competes with diversified medical-device, diagnostics, pharmaceutical and consumer-health companies on clinical performance, innovation, brand, price, reimbursement, distribution and physician or consumer preference.",
+    "operational_risk": "Exposed to product recalls and quality issues, regulatory approvals, reimbursement changes, supply-chain execution, manufacturing complexity, litigation and integration of acquisitions.",
+    "profitability_history": "Long-established profitable healthcare company with diversified segment earnings and recurring demand, though performance can shift with product cycles, acquisitions and changing healthcare utilization.",
+    "customer_concentration": "Broad global customer base across healthcare systems and consumer channels, reducing dependence on any one end customer while preserving exposure to large distributors and government purchasing systems.",
+    "international_exposure": "Substantial international operations, including established pharmaceuticals focused on emerging markets, create currency, regulatory, pricing and geopolitical exposure.",
+    "key_risk_themes": [
+      "Medical-product regulation and quality",
+      "Reimbursement and healthcare pricing",
+      "Product innovation and clinical adoption",
+      "Supply-chain and manufacturing execution",
+      "Acquisition integration",
+      "International and emerging-market exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1800/000162828026010185/abt-20251231.htm"
+  },
+  "Arch Capital Group Ltd (ACGL)": {
+    "business_model": "Global specialty insurer and reinsurer providing insurance, reinsurance and mortgage-related risk solutions through underwriting-focused operating businesses.",
+    "primary_revenue_source": "Premiums and investment income generated through specialty insurance, reinsurance and mortgage insurance operations.",
+    "customer_type": "Commercial insurance buyers, insurance companies seeking reinsurance, mortgage lenders and other financial counterparties served directly or through brokers and intermediaries.",
+    "platform_dependency": "Results depend on disciplined underwriting, pricing risk appropriately, access to distribution and broker relationships, loss-reserve accuracy, capital strength and the investment portfolio.",
+    "competitive_risk": "Competes with global insurers, reinsurers and mortgage insurers for attractive risks, distribution relationships and underwriting talent; pricing can soften when industry capital is abundant.",
+    "operational_risk": "Exposed to catastrophe losses, casualty reserve development, mortgage-credit cycles, investment-market volatility, model risk, regulatory capital requirements and execution across acquired businesses.",
+    "profitability_history": "Historically profitable across underwriting and investment cycles, with earnings capable of significant variation from catastrophe activity, reserve development and investment results.",
+    "customer_concentration": "Risk is diversified across many insureds and cedents, but distribution can be concentrated among major insurance brokers and exposure can accumulate by geography, peril or underwriting class.",
+    "international_exposure": "Bermuda-domiciled with global insurance and reinsurance operations, producing material exposure to international regulation, currencies, catastrophe zones and cross-border capital rules.",
+    "key_risk_themes": [
+      "Catastrophe and severe-loss volatility",
+      "Loss-reserve estimation",
+      "Insurance pricing cycles",
+      "Mortgage-credit conditions",
+      "Investment portfolio volatility",
+      "Regulatory capital and global compliance"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/947484/000094748426000017/acgl-20251231.htm"
+  },
+  "Accenture plc (ACN)": {
+    "business_model": "Global professional services company delivering strategy and consulting, technology, operations, Song and Industry X services, increasingly organized around enterprise reinvention and AI-enabled transformation.",
+    "primary_revenue_source": "Client fees from Consulting and Managed Services engagements across industries and geographic markets.",
+    "customer_type": "Large enterprises, governments and government agencies, including a substantial share of the Fortune Global 100 and 500 and more than 9,000 clients overall.",
+    "platform_dependency": "Depends on a large skilled workforce, proprietary assets and platforms, ecosystem relationships with major technology vendors, client trust and the ability to deploy new technologies such as cloud and AI at scale.",
+    "competitive_risk": "Competes with global consulting and IT-services firms, technology companies, AI-native entrants, outsourcing providers and clients building internal capabilities.",
+    "operational_risk": "Growth depends on utilization, talent supply, wage costs, project execution, managed-services delivery, cybersecurity, AI implementation, acquisition integration and discretionary client spending.",
+    "profitability_history": "Long-standing profitable professional-services model with strong cash generation, supported by diversified industries, geographies and recurring managed-services relationships.",
+    "customer_concentration": "Large and diversified client base with long-term relationships; no single client defines the company, though large enterprise spending cycles influence growth.",
+    "international_exposure": "Operates across the Americas, EMEA and Asia Pacific with a globally distributed workforce, creating currency, labor, tax, regulatory and geopolitical exposure.",
+    "key_risk_themes": [
+      "AI and technology disruption",
+      "Competition and client insourcing",
+      "Talent availability and wage pressure",
+      "Project and managed-services execution",
+      "Discretionary enterprise technology spending",
+      "Global regulatory and geopolitical exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1467373/000146737325000217/acn-20250831.htm"
+  },
+  "Adobe Inc (ADBE)": {
+    "business_model": "Software platform company serving creativity, document productivity and digital customer-experience workflows through Creative Cloud, Acrobat, Firefly, Experience Cloud and related products.",
+    "primary_revenue_source": "Predominantly recurring subscription revenue; subscriptions represented about 96% of fiscal 2025 revenue, led by Digital Media and Digital Experience offerings.",
+    "customer_type": "Creative and marketing professionals, business professionals, consumers, enterprises, marketers, advertisers, developers and executive teams.",
+    "platform_dependency": "Depends on subscription retention, cloud delivery, proprietary creative and document formats, enterprise integrations, AI models and content workflows, and continued adoption across desktop, web and mobile surfaces.",
+    "competitive_risk": "Faces rapid competition from traditional software companies, cloud-native and AI-native vendors, hardware and operating-system providers, social platforms and specialized creative or marketing tools.",
+    "operational_risk": "Exposed to AI product execution, copyright and content-rights issues, subscription retention, cybersecurity, cloud-service reliability, enterprise spending and the pace of technology change.",
+    "profitability_history": "Highly profitable recurring-revenue software model with strong operating cash flow; fiscal 2025 subscription and ARR growth supported continued earnings expansion.",
+    "customer_concentration": "Broad customer base across individuals and enterprises; no single customer is central, while enterprise and creative-professional spending remain important to recurring revenue.",
+    "international_exposure": "Generates material revenue across the Americas, EMEA and APAC, creating currency, privacy, digital-regulation and geopolitical exposure.",
+    "key_risk_themes": [
+      "Generative-AI disruption and execution",
+      "Subscription retention and pricing",
+      "Competition from AI-native and cloud software",
+      "Copyright, content and model-training regulation",
+      "Cybersecurity and cloud reliability",
+      "International privacy and digital regulation"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+  },
+  "Analog Devices Inc (ADI)": {
+    "business_model": "Global semiconductor company focused on high-performance analog, mixed-signal, digital signal processing, power-management, RF and sensor technologies that connect physical-world signals with digital systems.",
+    "primary_revenue_source": "Sales of a broad portfolio of semiconductor integrated circuits, software and subsystems across industrial, automotive, communications and consumer end markets.",
+    "customer_type": "Original equipment manufacturers, electronic subsystem manufacturers, distributors, government contractors and other technology companies building complex electronic systems.",
+    "platform_dependency": "Depends on proprietary analog and mixed-signal design capabilities, internal and external manufacturing, long product life cycles, distribution channels and sustained customer design wins.",
+    "competitive_risk": "Faces intense global semiconductor competition on performance, integration, price, power efficiency, reliability, manufacturing capability and customer support.",
+    "operational_risk": "Exposed to semiconductor cycles, manufacturing capacity, supply-chain disruptions, export restrictions, tariffs, China demand, customer inventory corrections and rapid technology change.",
+    "profitability_history": "Established profitable semiconductor franchise with high-value analog products and long product cycles; results remain cyclical with end-market demand and inventory conditions.",
+    "customer_concentration": "Thousands of end customers and a broad product portfolio reduce direct end-customer concentration, although distributors represent an important sales channel.",
+    "international_exposure": "Sells globally and is exposed to China demand, export controls, tariffs, foreign currencies and geopolitical restrictions affecting semiconductor trade.",
+    "key_risk_themes": [
+      "Semiconductor demand cycles",
+      "Export controls and China exposure",
+      "Manufacturing and supply-chain execution",
+      "Intense global competition",
+      "Customer inventory corrections",
+      "Technology and AI investment execution"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/6281/000000628125000153/adi-20251101.htm"
+  },
+  "Archer Daniels Midland Co (ADM)": {
+    "business_model": "Global agricultural supply-chain and processing company that sources crops, transports and processes commodities, and produces food, feed, fuel and nutrition ingredients.",
+    "primary_revenue_source": "Revenue is generated across Ag Services and Oilseeds, Carbohydrate Solutions and Nutrition through merchandising, transportation, crushing and processing, sweeteners, starches, biofuels and specialty ingredients.",
+    "customer_type": "Food and beverage companies, animal-nutrition producers, industrial customers, energy markets, agricultural counterparties and other manufacturers worldwide.",
+    "platform_dependency": "Depends on global crop supply, origination networks, storage and transportation infrastructure, commodity-processing assets, risk management and access to growers and global trade flows.",
+    "competitive_risk": "Competes largely on commodity pricing, logistics efficiency, global sourcing, quality, foreign exchange and alternative products; Nutrition also competes on innovation and specialized ingredients.",
+    "operational_risk": "Highly exposed to crop prices, weather, commodity volatility, working-capital swings, trade policy, transportation disruptions, processing-plant reliability and regulatory controls.",
+    "profitability_history": "Profitable but inherently cyclical, with earnings influenced by crush margins, commodity spreads, crop availability, energy markets and performance of the Nutrition portfolio.",
+    "customer_concentration": "The company states that no material part of the business depends on a single customer or a very small number of customers.",
+    "international_exposure": "Operates sourcing, processing and commercial networks across North America, South America, Europe, the Middle East, Africa and Asia-Pacific, producing significant commodity, currency, trade and geopolitical exposure.",
+    "key_risk_themes": [
+      "Commodity-price and margin volatility",
+      "Weather and crop-supply risk",
+      "Global trade and tariff policy",
+      "Transportation and processing reliability",
+      "Working-capital and liquidity swings",
+      "Nutrition-segment competition and execution"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/7084/000000708426000011/adm-20251231.htm"
   }
 }
