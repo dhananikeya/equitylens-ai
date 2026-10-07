@@ -4893,77 +4893,130 @@ with company_tab:
         "F-1, S-11, and related amendments when they are available."
     )
 
+    # Build one searchable universe from the 517-company Finviz list plus
+    # any curated/deep-research companies that are not present in that CSV.
+    # This preserves legacy profiles such as MongoDB, Snowflake and Rubrik.
+    explore_universe = company_universe.copy()
+    explore_known_tickers = set(
+        explore_universe["Ticker"].astype(str).str.upper().tolist()
+    )
+    explore_extra_rows = []
+
+    for explore_key, explore_record in company_data.items():
+        extra_ticker = str(explore_record.get("ticker", "")).upper().strip()
+        if not extra_ticker or extra_ticker in explore_known_tickers:
+            continue
+
+        extra_industry = str(
+            explore_record.get("industry", "Other")
+        ).strip() or "Other"
+        extra_sector = str(explore_record.get("sector", "")).strip()
+
+        if not extra_sector:
+            if extra_industry in {
+                "Cloud & Data Infrastructure Software",
+                "Cybersecurity",
+            }:
+                extra_sector = "Technology"
+            elif extra_industry == "Fintech & Digital Finance":
+                extra_sector = "Financial"
+            else:
+                extra_sector = "Other"
+
+        extra_company = explore_key.rsplit(" (", 1)[0]
+        explore_extra_rows.append({
+            "Ticker": extra_ticker,
+            "Company": extra_company,
+            "Sector": extra_sector,
+            "Industry": extra_industry,
+            "Country": str(explore_record.get("country", "")).strip(),
+            "Coverage Key": explore_key,
+        })
+        explore_known_tickers.add(extra_ticker)
+
+    if explore_extra_rows:
+        explore_universe = pd.concat(
+            [explore_universe, pd.DataFrame(explore_extra_rows)],
+            ignore_index=True,
+            sort=False,
+        )
+
+    explore_sectors = sorted(
+        [
+            value
+            for value in explore_universe["Sector"].dropna().unique().tolist()
+            if str(value).strip()
+        ]
+    )
+
     explore_filters = st.columns(3)
 
     with explore_filters[0]:
         explore_sector = st.selectbox(
             "Sector",
-            ["All sectors"] + coverage_sectors,
+            ["All sectors"] + explore_sectors,
             key="explore_sector"
         )
 
     if explore_sector == "All sectors":
-        explore_sector_df = company_universe.copy()
+        explore_sector_df = explore_universe.copy()
     else:
-        explore_sector_df = company_universe[
-            company_universe["Sector"] == explore_sector
+        explore_sector_df = explore_universe[
+            explore_universe["Sector"] == explore_sector
         ].copy()
 
     explore_industries = sorted(
         [
             value
             for value in explore_sector_df["Industry"].dropna().unique().tolist()
-            if value
+            if str(value).strip()
         ]
     )
 
-    # "All sectors" is a true global-search mode. Do not let a stale
-    # industry selection silently hide companies from the Company picker.
-    if explore_sector == "All sectors":
-        explore_industry = "All industries"
-        with explore_filters[1]:
-            st.selectbox(
-                "Industry",
-                ["All industries"],
-                index=0,
-                disabled=True,
-                key="explore_all_sectors_industry"
-            )
-        explore_df = company_universe.copy()
-    else:
-        with explore_filters[1]:
-            explore_industry = st.selectbox(
-                "Industry",
-                ["All industries"] + explore_industries,
-                key="explore_s1_industry"
-            )
+    with explore_filters[1]:
+        explore_industry = st.selectbox(
+            "Industry",
+            ["All industries"] + explore_industries,
+            key="explore_s1_industry"
+        )
 
-        explore_df = explore_sector_df.copy()
-        if explore_industry != "All industries":
-            explore_df = explore_df[
-                explore_df["Industry"] == explore_industry
-            ]
+    explore_df = explore_sector_df.copy()
+    if explore_industry != "All industries":
+        explore_df = explore_df[
+            explore_df["Industry"] == explore_industry
+        ].copy()
 
     with explore_filters[2]:
         explore_search = st.text_input(
             "Search company or ticker",
-            placeholder=(
-                "e.g. MongoDB, MDB, Amazon, AAPL"
-                if explore_sector == "All sectors"
-                else "Search within this sector"
-            ),
+            placeholder="e.g. MongoDB, MDB, Amazon, AAPL",
             key="explore_company_search"
         )
 
-    # Resolve the search directly to a company so there is only one search control.
-    # Ranking: exact ticker -> exact company -> starts-with -> contains.
-    explore_options_df = explore_df.copy()
+    # Text search is intentionally global. If a user types a company or
+    # ticker, search the entire searchable universe instead of silently
+    # excluding it because of a sector/industry filter.
     search_text = explore_search.strip()
+    explore_options_df = (
+        explore_universe.copy()
+        if search_text
+        else explore_df.copy()
+    )
 
     if search_text:
         search_lower = search_text.lower()
-        ticker_lower = explore_options_df["Ticker"].str.lower()
-        company_lower = explore_options_df["Company"].str.lower()
+        ticker_lower = (
+            explore_options_df["Ticker"]
+            .fillna("")
+            .astype(str)
+            .str.lower()
+        )
+        company_lower = (
+            explore_options_df["Company"]
+            .fillna("")
+            .astype(str)
+            .str.lower()
+        )
 
         exact_ticker = explore_options_df[ticker_lower == search_lower]
         exact_company = explore_options_df[company_lower == search_lower]
@@ -4987,9 +5040,9 @@ with company_tab:
 
         if explore_matches.empty:
             st.warning(
-                f'No company or ticker matched "{search_text}" in the current filters.'
+                f'No company or ticker matched "{search_text}".'
             )
-            explore_row = explore_options_df.iloc[0]
+            explore_row = explore_df.iloc[0]
         else:
             explore_row = explore_matches.iloc[0]
             if len(explore_matches) > 1:
@@ -5000,6 +5053,11 @@ with company_tab:
                 )
     else:
         explore_row = explore_options_df.iloc[0]
+
+    st.caption(
+        f"{len(explore_universe):,} companies are searchable across the "
+        "market universe and curated EquityLens coverage."
+    )
 
     explore_ticker = str(explore_row.get("Ticker", ""))
     explore_name = str(explore_row.get("Company", ""))
