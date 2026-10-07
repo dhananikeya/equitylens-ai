@@ -2526,14 +2526,24 @@ def get_bloomberg_market_news(limit=10):
 @st.cache_data(ttl=900)
 def get_optional_swap_rates():
     """
-    Load live swap quotes only when a licensed/provider endpoint is configured.
-    Supported JSON shapes:
-      {"1Y": 4.1, "2Y": 4.0, ...}
-      [{"tenor": "1Y", "rate": 4.1}, ...]
+    Load USD SOFR OIS curve data.
+
+    Priority:
+      1. A user-configured JSON endpoint in Streamlit Secrets.
+      2. CheckMySwap's free public USD SOFR OIS curve endpoint.
+
+    CheckMySwap publishes indicative OIS curves derived from public DTCC
+    swap transaction reports. These are dated curve estimates, not executable
+    dealer quotes.
     """
-    endpoint = str(st.secrets.get("SWAP_RATES_JSON_URL", "")).strip()
-    if not endpoint:
-        return []
+    configured_endpoint = str(
+        st.secrets.get("SWAP_RATES_JSON_URL", "")
+    ).strip()
+    endpoint = (
+        configured_endpoint
+        if configured_endpoint
+        else "https://checkmyswap.com/api/curves/USD"
+    )
 
     response = requests.get(
         endpoint,
@@ -2544,13 +2554,35 @@ def get_optional_swap_rates():
     payload = response.json()
 
     rows = []
-    if isinstance(payload, dict):
+    curve_date = ""
+
+    if isinstance(payload, dict) and isinstance(payload.get("curve"), list):
+        curve_date = str(payload.get("date", "")).strip()
+        for record in payload.get("curve", []):
+            if not isinstance(record, dict):
+                continue
+            tenor = record.get("tenor")
+            rate = _numeric_text(record.get("rate"))
+            if tenor and rate is not None:
+                rows.append({
+                    "Tenor": str(tenor),
+                    "Swap Rate": rate,
+                    "Curve Date": curve_date or str(record.get("date", "")),
+                    "Source": str(
+                        record.get("source", "CheckMySwap / DTCC public data")
+                    ),
+                    "Method": str(record.get("method", "")),
+                })
+    elif isinstance(payload, dict):
         for tenor, rate in payload.items():
             numeric = _numeric_text(rate)
             if numeric is not None:
                 rows.append({
                     "Tenor": str(tenor),
                     "Swap Rate": numeric,
+                    "Curve Date": "",
+                    "Source": "Configured provider",
+                    "Method": "",
                 })
     elif isinstance(payload, list):
         for record in payload:
@@ -2571,7 +2603,11 @@ def get_optional_swap_rates():
                 rows.append({
                     "Tenor": str(tenor),
                     "Swap Rate": numeric,
+                    "Curve Date": str(record.get("date", "")),
+                    "Source": str(record.get("source", "Configured provider")),
+                    "Method": str(record.get("method", "")),
                 })
+
     return rows
 
 
@@ -5102,28 +5138,32 @@ with market_tab:
         swap_df["Swap Rate"] = swap_df["Swap Rate"].map(
             lambda value: f"{value:.3f}%"
         )
-        st.markdown("**USD SOFR swap curve**")
+        st.markdown("**USD SOFR OIS Curve**")
+        visible_swap_columns = [
+            column for column in [
+                "Tenor", "Swap Rate", "Curve Date", "Source", "Method"
+            ]
+            if column in swap_df.columns
+        ]
         st.dataframe(
-            swap_df,
+            swap_df[visible_swap_columns],
             use_container_width=True,
             hide_index=True,
         )
         st.caption(
-            "Swap quotes are supplied by the configured provider endpoint. "
-            "Provider licensing and timing govern redistribution."
+            "Free public curve data: CheckMySwap, derived from DTCC public swap "
+            "transaction reports. These are dated indicative OIS curve estimates, "
+            "not live executable dealer quotes."
+        )
+        st.link_button(
+            "Open CheckMySwap methodology & curve archive",
+            "https://checkmyswap.com/rates?ccy=USD",
+            use_container_width=True,
         )
     else:
         st.info(
-            "Live OTC swap quotes are intentionally not estimated from Treasury yields. "
-            "To publish 1Y/2Y/5Y/10Y/30Y SOFR swap rates, connect a licensed data feed "
-            "through SWAP_RATES_JSON_URL in Streamlit Secrets. EquityLens shows official "
-            "Treasury and New York Fed reference rates in the meantime."
-        )
-        st.link_button(
-            "CME: Learn how SOFR swaps are priced",
-            "https://www.cmegroup.com/articles/2025/"
-            "price-and-hedging-usd-sofr-interest-swaps-with-sofr-futures.html",
-            use_container_width=True,
+            "USD SOFR OIS curve data is temporarily unavailable. EquityLens will "
+            "continue to show official Treasury and New York Fed reference rates."
         )
 
     section("Macro", "Material U.S. Economic Reports")
