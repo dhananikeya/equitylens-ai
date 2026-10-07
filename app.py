@@ -1852,6 +1852,190 @@ def get_market_history(symbol, interval="1day", outputsize=60):
     return history
 
 
+def _yf_table(value):
+    """Normalize yfinance table-like responses without failing the page."""
+    try:
+        if callable(value):
+            value = value()
+    except Exception:
+        return pd.DataFrame()
+
+    if value is None:
+        return pd.DataFrame()
+    if isinstance(value, pd.DataFrame):
+        return value.reset_index()
+    if isinstance(value, pd.Series):
+        return value.to_frame().reset_index()
+    if isinstance(value, dict):
+        try:
+            return pd.DataFrame([value])
+        except Exception:
+            return pd.DataFrame()
+    return pd.DataFrame()
+
+
+def _yf_attribute(ticker_obj, *names):
+    """Return the first yfinance attribute/method that resolves successfully."""
+    for name in names:
+        try:
+            value = getattr(ticker_obj, name)
+            if callable(value):
+                value = value()
+            if value is not None:
+                return value
+        except Exception:
+            continue
+    return None
+
+
+@st.cache_data(ttl=1800)
+def get_company_ownership_data(symbol):
+    """Load supplemental public ownership tables from Yahoo Finance."""
+    ticker = yf.Ticker(str(symbol).upper())
+    return {
+        "major": _yf_table(
+            _yf_attribute(ticker, "major_holders", "get_major_holders")
+        ),
+        "institutional": _yf_table(
+            _yf_attribute(
+                ticker,
+                "institutional_holders",
+                "get_institutional_holders",
+            )
+        ),
+        "mutual_fund": _yf_table(
+            _yf_attribute(
+                ticker,
+                "mutualfund_holders",
+                "get_mutualfund_holders",
+            )
+        ),
+    }
+
+
+@st.cache_data(ttl=1800)
+def get_company_analyst_data(symbol):
+    """Load third-party analyst summary data from Yahoo Finance."""
+    ticker = yf.Ticker(str(symbol).upper())
+
+    targets = _yf_attribute(
+        ticker,
+        "analyst_price_targets",
+        "get_analyst_price_targets",
+    )
+    if isinstance(targets, pd.Series):
+        targets = targets.to_dict()
+    if not isinstance(targets, dict):
+        targets = {}
+
+    recommendations = _yf_table(
+        _yf_attribute(
+            ticker,
+            "recommendations_summary",
+            "get_recommendations_summary",
+            "recommendations",
+            "get_recommendations",
+        )
+    )
+    upgrades = _yf_table(
+        _yf_attribute(
+            ticker,
+            "upgrades_downgrades",
+            "get_upgrades_downgrades",
+        )
+    )
+
+    return {
+        "targets": targets,
+        "recommendations": recommendations,
+        "upgrades": upgrades,
+    }
+
+
+MAJOR_ETF_UNIVERSE = {
+    "SPY": "SPDR S&P 500 ETF Trust",
+    "QQQ": "Invesco QQQ Trust",
+    "VTI": "Vanguard Total Stock Market ETF",
+    "IWM": "iShares Russell 2000 ETF",
+    "XLK": "Technology Select Sector SPDR Fund",
+    "XLF": "Financial Select Sector SPDR Fund",
+    "XLV": "Health Care Select Sector SPDR Fund",
+    "XLY": "Consumer Discretionary Select Sector SPDR Fund",
+    "XLP": "Consumer Staples Select Sector SPDR Fund",
+    "XLI": "Industrial Select Sector SPDR Fund",
+    "XLE": "Energy Select Sector SPDR Fund",
+    "XLU": "Utilities Select Sector SPDR Fund",
+    "SOXX": "iShares Semiconductor ETF",
+    "SMH": "VanEck Semiconductor ETF",
+    "IGV": "iShares Expanded Tech-Software Sector ETF",
+}
+
+
+@st.cache_data(ttl=21600)
+def get_major_etf_exposure(symbol):
+    """Check a curated set of major ETFs for the selected equity."""
+    selected = str(symbol).upper().strip()
+    matches = []
+
+    for etf_symbol, etf_name in MAJOR_ETF_UNIVERSE.items():
+        try:
+            fund = yf.Ticker(etf_symbol).funds_data
+            holdings = getattr(fund, "top_holdings", None)
+            if callable(holdings):
+                holdings = holdings()
+            if not isinstance(holdings, pd.DataFrame) or holdings.empty:
+                continue
+
+            matched_row = None
+            holding_percent = None
+
+            index_lookup = {
+                str(index_value).upper(): index_value
+                for index_value in holdings.index
+            }
+            if selected in index_lookup:
+                matched_row = holdings.loc[index_lookup[selected]]
+            elif "Symbol" in holdings.columns:
+                symbol_mask = (
+                    holdings["Symbol"]
+                    .fillna("")
+                    .astype(str)
+                    .str.upper()
+                    == selected
+                )
+                if symbol_mask.any():
+                    matched_row = holdings.loc[symbol_mask].iloc[0]
+
+            if matched_row is None:
+                continue
+
+            if isinstance(matched_row, pd.DataFrame):
+                matched_row = matched_row.iloc[0]
+
+            for column in [
+                "Holding Percent",
+                "HoldingPercent",
+                "Weight",
+                "% Assets",
+            ]:
+                try:
+                    if column in matched_row.index:
+                        holding_percent = matched_row.get(column)
+                        break
+                except Exception:
+                    pass
+
+            matches.append({
+                "ETF": etf_symbol,
+                "Fund": etf_name,
+                "Holding": holding_percent,
+            })
+        except Exception:
+            continue
+
+    return matches
+
+
 def market_provider_error(provider, exc):
     """Return a safe, user-facing provider error without exposing credentials."""
     status_code = getattr(getattr(exc, "response", None), "status_code", None)
