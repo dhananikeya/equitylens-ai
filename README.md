@@ -11,20 +11,22 @@ The project is designed around a simple principle: **important research claims s
 - **Explore public companies** through company snapshots, quarterly performance, capital structure, historical trends, and qualitative research.
 - **Compare peers** using standardized revenue, growth, margin, balance-sheet, and LTM views.
 - **Track SEC filings** across covered companies with direct links to the original EDGAR documents.
-- **Ask EquityLens** plain-language questions about revenue growth, profitability, cash, debt, business models, and disclosed risks.
+- **Monitor macro conditions** using official BLS inflation and labor-market data, U.S. Treasury yields, SOFR reference rates, and Federal Reserve calendars.
+- **Follow market news** through Bloomberg headline metadata and outbound links without republishing article content.
 - **Review IPO history** through S-1 filing context where available.
-- **Learn the fundamentals** with plain-language explanations of common public-company metrics.
+- **Learn the fundamentals** with plain-language explanations of financial metrics, SEC forms, macroeconomic reports, Treasury yields, SOFR, and interest-rate swaps.
 
 ## Public Experience
 
-The application is organized into six primary areas:
+The application is organized into seven primary areas:
 
-1. **Home** — company search, current snapshot, featured coverage, and product overview.
+1. **Home** — product overview and guided paths into company research.
 2. **Explore Companies** — a deeper company research view with filing-linked analysis.
-3. **Compare** — side-by-side peer research and financial comparison.
-4. **Ask EquityLens** — a grounded research interface using the structured EquityLens dataset.
-5. **Filings** — a monitored SEC filing feed.
-6. **Learn** — explanations of financial metrics and public-company filings.
+3. **Industry Comparison** — side-by-side peer research and financial comparison.
+4. **EquityLens** — a structured company brief covering performance, business model, risks, and source links.
+5. **Market Monitor** — NYSE market tape and heat map, Treasury yield curve, SOFR reference rates, macroeconomic indicators, economic/FOMC calendars, Bloomberg headline links, and company-level market context.
+6. **Filings** — a monitored SEC filing feed and registration-filing history.
+7. **Learn** — explanations of financial metrics, S-1 and 8-K filings, BLS reports, Treasury yields, SOFR, and interest-rate swaps.
 
 ## Research Methodology
 
@@ -38,8 +40,13 @@ EquityLens separates information into clear categories:
 ### Source Priority
 
 1. SEC EDGAR filings, including Forms 10-K, 10-Q, 8-K, and S-1.
-2. Company investor-relations materials and company-reported disclosures.
-3. Appropriately licensed market-data providers where needed.
+2. U.S. Bureau of Labor Statistics for inflation, employment, wage, and release-calendar data.
+3. U.S. Department of the Treasury for the official daily Treasury par yield curve.
+4. Federal Reserve and Federal Reserve Bank of New York for FOMC information, monetary-policy releases, SOFR, and SOFR averages.
+5. Company investor-relations materials and company-reported disclosures.
+6. Appropriately licensed or permitted market-data and news providers where needed.
+
+EquityLens does not fabricate unavailable market data. In particular, live OTC swap quotes are shown only when an authorized data endpoint is configured.
 
 ## SEC Monitoring
 
@@ -55,6 +62,62 @@ The tracker captures information such as:
 - Accession number
 - Direct SEC filing link
 - First detection timestamp inside EquityLens
+
+## Macro & Rates Monitor
+
+The Market Monitor adds a macro layer around company research:
+
+- **Treasury rate tape** with 2Y, 5Y, 10Y, and 30Y yields
+- **2s10s yield-curve spread**
+- **SOFR** plus published 30-day, 90-day, and 180-day SOFR averages
+- **Treasury yield-curve visualization**
+- **BLS macro snapshot** covering CPI, Core CPI, PPI Final Demand, unemployment, payrolls, average hourly earnings, and ECI
+- **Economic calendar** sourced from the official BLS release calendar
+- **FOMC meeting calendar** and Federal Reserve monetary-policy updates
+- **Bloomberg market-news gateway** using headline metadata and outbound links only
+- **Optional USD SOFR swap curve** when a licensed JSON endpoint is configured
+
+### Optional Swap-Rate Feed
+
+Live OTC swap quotes are not inferred from Treasury yields or SOFR. To display authorized swap-rate data, add the following Streamlit secret:
+
+```toml
+SWAP_RATES_JSON_URL = "https://your-authorized-provider.example/swap-rates"
+```
+
+Accepted JSON shapes include:
+
+```json
+{"1Y": 4.10, "2Y": 4.02, "5Y": 3.95, "10Y": 4.08}
+```
+
+or:
+
+```json
+[
+  {"tenor": "1Y", "rate": 4.10},
+  {"tenor": "2Y", "rate": 4.02}
+]
+```
+
+Provider licensing, redistribution rights, and timing remain the responsibility of the configured data source.
+
+## Learning & Filing Reference
+
+The Learn tab now includes primary-source-linked explanations for:
+
+- Form S-1 and S-1/A
+- Form 8-K
+- CPI and Core CPI
+- PPI
+- Employment Situation
+- JOLTS
+- Employment Cost Index
+- 10-Year Treasury yield
+- SOFR
+- Interest-rate swaps
+
+Each entry explains what the item means, why it matters, how to interpret it, what to watch for, and where to verify the definition or data at the primary source.
 
 ## Current Coverage
 
@@ -87,9 +150,15 @@ Coverage is intentionally focused while the research and ingestion workflows are
 
 **Data & APIs**
 - SEC EDGAR
+- U.S. Bureau of Labor Statistics Public Data API
+- U.S. Treasury daily yield-curve feed
+- Federal Reserve / New York Fed reference-rate and calendar sources
+- Bloomberg headline metadata and outbound market-news links
+- Finviz Elite
+- Yahoo Finance via yfinance
 - Structured JSON datasets
 - Requests
-- Optional market-data API integration
+- Optional licensed swap-rate JSON integration
 
 **Infrastructure**
 - GitHub
