@@ -1004,6 +1004,95 @@ p,li,label,input,textarea,button,
     font-size: 1.35rem;
     line-height: 1.35;
 }
+.el-news-visual {
+    position: relative;
+    overflow: hidden;
+    min-height: 104px;
+    margin: .95rem 0 .75rem;
+    padding: .8rem .85rem;
+    border: 1px solid var(--el-border-soft);
+    border-radius: 8px;
+    background:
+        linear-gradient(rgba(125,211,252,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(125,211,252,.035) 1px, transparent 1px),
+        radial-gradient(circle at 88% 18%, rgba(22,199,178,.08), transparent 38%),
+        #071014;
+    background-size: 22px 22px, 22px 22px, auto, auto;
+}
+.el-news-card.featured .el-news-visual {
+    min-height: 132px;
+    margin-top: 1.05rem;
+}
+.el-news-visual-kicker {
+    position: relative;
+    z-index: 2;
+    color: var(--el-muted-2);
+    font-family: var(--el-mono);
+    font-size: .59rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+.el-news-viz-stats {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .65rem;
+    margin-top: .55rem;
+}
+.el-news-viz-stat {
+    min-width: 66px;
+}
+.el-news-viz-label {
+    color: var(--el-muted);
+    font-family: var(--el-mono);
+    font-size: .58rem;
+}
+.el-news-viz-value {
+    margin-top: .12rem;
+    color: var(--el-text);
+    font-family: var(--el-mono);
+    font-size: .76rem;
+    font-weight: 600;
+}
+.el-news-viz-value.positive { color: var(--el-teal); }
+.el-news-viz-value.negative { color: var(--el-red); }
+.el-news-viz-bars {
+    position: absolute;
+    right: .8rem;
+    bottom: .75rem;
+    left: .8rem;
+    height: 33px;
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    opacity: .62;
+    pointer-events: none;
+}
+.el-news-viz-bar {
+    flex: 1;
+    min-width: 4px;
+    border-radius: 2px 2px 0 0;
+    background: linear-gradient(180deg, rgba(22,199,178,.95), rgba(22,199,178,.18));
+}
+.el-news-viz-line {
+    position: absolute;
+    inset: auto 0 0 0;
+    width: 100%;
+    height: 54px;
+    opacity: .58;
+    pointer-events: none;
+}
+.el-news-viz-line polyline {
+    fill: none;
+    stroke: #16C7B2;
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+}
+.el-news-viz-line .el-news-viz-area {
+    fill: rgba(22,199,178,.06);
+    stroke: none;
+}
 .el-news-spacer {
     flex: 1;
     min-height: .8rem;
@@ -2691,26 +2780,173 @@ def _market_news_time(value):
         return parsed.strftime("%b %d · %H:%M UTC")
 
 
-def render_market_news_cards(stories):
-    """Render public market-news headlines as a visual newsroom grid."""
+def _news_context_value(value, suffix="", signed=False):
+    number = safe_float(value)
+    if number is None:
+        return "N/A", "flat"
+    css_class = "positive" if number > 0 else "negative" if number < 0 else "flat"
+    sign = "+" if signed and number > 0 else ""
+    return f"{sign}{number:.2f}{suffix}", css_class
+
+
+def _news_visual_html(topic, context, featured=False):
+    """Create an original market-context visual for a news card."""
+    topic = str(topic or "Markets")
+    context = context or {}
+    stats = []
+    bars = []
+    line_values = []
+
+    if topic == "Rates":
+        treasury = context.get("treasury", {})
+        stats = [
+            ("2Y", treasury.get("2Y"), "%", False),
+            ("10Y", treasury.get("10Y"), "%", False),
+            ("SOFR", context.get("SOFR"), "%", False),
+        ]
+        line_values = [
+            treasury.get(tenor)
+            for tenor in ["1M", "3M", "6M", "1Y", "2Y", "3Y", "5Y", "7Y", "10Y", "20Y", "30Y"]
+            if safe_float(treasury.get(tenor)) is not None
+        ]
+    elif topic == "Economy":
+        stats = [
+            ("CPI YoY", context.get("CPI"), "%", True),
+            ("PPI YoY", context.get("PPI"), "%", True),
+            ("Unemp.", context.get("Unemployment"), "%", False),
+        ]
+        bars = [
+            context.get("CPI"),
+            context.get("Core CPI"),
+            context.get("PPI"),
+            context.get("Unemployment"),
+        ]
+    elif topic == "Commodities":
+        stats = [
+            ("Gold · GLD", context.get("GLD"), "%", True),
+            ("Oil · USO", context.get("USO"), "%", True),
+        ]
+        bars = [context.get("GLD"), context.get("USO"), 0.4, -0.25, 0.6]
+    elif topic == "FX":
+        stats = [
+            ("USD · UUP", context.get("UUP"), "%", True),
+            ("10Y", context.get("treasury", {}).get("10Y"), "%", False),
+        ]
+        bars = [context.get("UUP"), 0.25, -0.15, 0.4, -0.1]
+    else:
+        stats = [
+            ("S&P · SPY", context.get("SPY"), "%", True),
+            ("Nasdaq · QQQ", context.get("QQQ"), "%", True),
+            ("10Y", context.get("treasury", {}).get("10Y"), "%", False),
+        ]
+        bars = [
+            context.get("SPY"),
+            context.get("QQQ"),
+            context.get("GLD"),
+            context.get("USO"),
+        ]
+
+    stat_html = []
+    for label, value, suffix, signed in stats:
+        value_text, css_class = _news_context_value(
+            value,
+            suffix=suffix,
+            signed=signed,
+        )
+        stat_html.append(
+            '<div class="el-news-viz-stat">'
+            f'<div class="el-news-viz-label">{html.escape(label)}</div>'
+            f'<div class="el-news-viz-value {css_class}">{html.escape(value_text)}</div>'
+            '</div>'
+        )
+
+    visual_layer = ""
+    clean_line = [
+        safe_float(value)
+        for value in line_values
+        if safe_float(value) is not None
+    ]
+    if len(clean_line) >= 2:
+        minimum = min(clean_line)
+        maximum = max(clean_line)
+        span = maximum - minimum or 1.0
+        x_step = 100 / max(1, len(clean_line) - 1)
+        points = []
+        area_points = ["0,54"]
+        for index, value in enumerate(clean_line):
+            x = index * x_step
+            y = 45 - ((value - minimum) / span) * 30
+            points.append(f"{x:.1f},{y:.1f}")
+            area_points.append(f"{x:.1f},{y:.1f}")
+        area_points.append("100,54")
+        visual_layer = (
+            '<svg class="el-news-viz-line" viewBox="0 0 100 54" '
+            'preserveAspectRatio="none" aria-hidden="true">'
+            f'<polygon class="el-news-viz-area" points="{" ".join(area_points)}"></polygon>'
+            f'<polyline points="{" ".join(points)}"></polyline>'
+            '</svg>'
+        )
+    else:
+        clean_bars = [
+            safe_float(value)
+            for value in bars
+            if safe_float(value) is not None
+        ]
+        if not clean_bars:
+            clean_bars = [0.2, 0.7, 0.45, 0.85, 0.58]
+        magnitude = max(max(abs(value) for value in clean_bars), 0.01)
+        bar_html = []
+        for value in clean_bars:
+            height = 9 + (abs(value) / magnitude) * 24
+            opacity = 0.45 if value < 0 else 0.88
+            bar_html.append(
+                f'<span class="el-news-viz-bar" style="height:{height:.1f}px;opacity:{opacity:.2f};"></span>'
+            )
+        visual_layer = (
+            '<div class="el-news-viz-bars">'
+            + "".join(bar_html)
+            + '</div>'
+        )
+
+    visual_label = "Live market context" if featured else "Market context"
+    return (
+        '<div class="el-news-visual">'
+        f'<div class="el-news-visual-kicker">{visual_label}</div>'
+        '<div class="el-news-viz-stats">'
+        + "".join(stat_html)
+        + '</div>'
+        + visual_layer
+        + '</div>'
+    )
+
+
+def render_market_news_cards(stories, market_context=None):
+    """Render Bloomberg headlines with original EquityLens market visuals."""
     if not stories:
         return
 
     cards = []
     for index, story in enumerate(stories[:9]):
-        headline = html.escape(str(story.get("Headline", "")).strip())
+        raw_headline = str(story.get("Headline", "")).strip()
+        headline = html.escape(raw_headline)
         link = html.escape(str(story.get("Bloomberg", "")).strip(), quote=True)
         published = html.escape(
             _market_news_time(story.get("Published", ""))
         )
-        topic = html.escape(
-            _market_news_topic(story.get("Headline", ""))
-        )
+        topic_raw = _market_news_topic(raw_headline)
+        topic = html.escape(topic_raw)
 
         if not headline or not link:
             continue
 
-        featured_class = " featured" if index == 0 else ""
+        featured = index == 0
+        featured_class = " featured" if featured else ""
+        visual_html = _news_visual_html(
+            topic_raw,
+            market_context or {},
+            featured=featured,
+        )
+
         cards.append(
             f'<a class="el-news-card{featured_class}" '
             f'href="{link}" target="_blank" rel="noopener noreferrer">'
@@ -2719,6 +2955,7 @@ def render_market_news_cards(stories):
             f'<span class="el-news-topic">{topic}</span>'
             '</div>'
             f'<div class="el-news-headline">{headline}</div>'
+            f'{visual_html}'
             '<div class="el-news-spacer"></div>'
             '<div class="el-news-footer">'
             f'<span class="el-news-time">{published}</span>'
@@ -2735,7 +2972,7 @@ def render_market_news_cards(stories):
         <div class="el-news-shell">
             <div class="el-news-topline">
                 <span class="el-news-live">Latest market headlines</span>
-                <span>Refreshes automatically · source links open Bloomberg</span>
+                <span>Bloomberg headlines · EquityLens market context visuals</span>
             </div>
             <div class="el-news-grid">
         """
@@ -5522,11 +5759,55 @@ with market_tab:
     except Exception:
         bloomberg_news = []
 
+    news_quotes = {}
+    try:
+        news_quotes = get_live_market_data(
+            ["SPY", "QQQ", "GLD", "USO", "UUP"]
+        )
+    except Exception:
+        news_quotes = {}
+
+    news_market_context = {
+        "SPY": safe_float(news_quotes.get("SPY", {}).get("percent_change")),
+        "QQQ": safe_float(news_quotes.get("QQQ", {}).get("percent_change")),
+        "GLD": safe_float(news_quotes.get("GLD", {}).get("percent_change")),
+        "USO": safe_float(news_quotes.get("USO", {}).get("percent_change")),
+        "UUP": safe_float(news_quotes.get("UUP", {}).get("percent_change")),
+        "treasury": (
+            treasury_curve.get("rates", {})
+            if treasury_curve else {}
+        ),
+        "SOFR": safe_float(
+            sofr_reference.get("SOFR")
+            if sofr_reference else None
+        ),
+        "CPI": safe_float(
+            bls_snapshot.get("CPI", {}).get("display_value")
+            if bls_snapshot else None
+        ),
+        "Core CPI": safe_float(
+            bls_snapshot.get("Core CPI", {}).get("display_value")
+            if bls_snapshot else None
+        ),
+        "PPI": safe_float(
+            bls_snapshot.get("PPI", {}).get("display_value")
+            if bls_snapshot else None
+        ),
+        "Unemployment": safe_float(
+            bls_snapshot.get("Unemployment", {}).get("display_value")
+            if bls_snapshot else None
+        ),
+    }
+
     if bloomberg_news:
-        render_market_news_cards(bloomberg_news)
+        render_market_news_cards(
+            bloomberg_news,
+            market_context=news_market_context,
+        )
         st.caption(
-            "Headlines are displayed directly in EquityLens so the Market Monitor reads like a live news desk. "
-            "Selecting a story opens the original Bloomberg article; EquityLens does not republish article text."
+            "Bloomberg supplies the linked headlines. The charts and market-context panels shown on each card "
+            "are original EquityLens visuals built from market, Treasury, New York Fed, and BLS data; they are "
+            "not images copied from Bloomberg articles. Selecting a story opens the original article."
         )
     else:
         st.markdown(
