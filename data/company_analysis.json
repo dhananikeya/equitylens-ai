@@ -838,5 +838,505 @@
       "Export controls and geopolitical supply-chain risk"
     ],
     "source_filing": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000010/alab-20251231.htm"
+  },
+  "Albemarle Corp (ALB)": {
+    "business_model": "Global specialty chemicals company focused primarily on lithium and energy-storage materials, with additional specialty businesses serving industrial and technology markets.",
+    "primary_revenue_source": "Sales of lithium compounds and other specialty materials to battery, automotive, electronics and industrial customers, with lithium pricing and volume as major earnings drivers.",
+    "customer_type": "Battery manufacturers, automotive OEMs, cathode and chemical producers, electronics companies and industrial customers worldwide.",
+    "platform_dependency": "Depends on access to lithium resources, conversion facilities, long-term customer contracts, commodity pricing, project execution and global battery demand.",
+    "competitive_risk": "Competes with global lithium producers and integrated battery-material suppliers on cost position, resource quality, conversion capacity, product quality and customer relationships.",
+    "operational_risk": "Exposed to lithium-price volatility, project delays, mining and permitting risk, geopolitical restrictions, high capital intensity and supply-demand imbalances.",
+    "profitability_history": "Historically profitable but highly cyclical, with earnings and cash flow materially influenced by lithium pricing, utilization and expansion spending.",
+    "customer_concentration": "Large battery and automotive customers are important, though the overall customer base spans multiple end markets and geographies.",
+    "international_exposure": "Operates mining, conversion and commercial assets across the Americas, Australia, Asia and Europe, creating currency, regulatory, geopolitical and trade exposure.",
+    "key_risk_themes": [
+      "Lithium price volatility",
+      "Battery demand and EV-cycle sensitivity",
+      "Mining and conversion project execution",
+      "Capital intensity",
+      "Geopolitical and trade restrictions",
+      "Environmental permitting and regulation"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/915913/000091591326000018/alb-20251231.htm"
+  },
+  "Align Technology Inc (ALGN)": {
+    "business_model": "Digital orthodontics and dentistry company built around Invisalign clear aligners, iTero intraoral scanners and the broader Align Digital Platform.",
+    "primary_revenue_source": "Clear-aligner case revenue plus scanner, services and related digital-dentistry revenue.",
+    "customer_type": "Orthodontists, general dentists, dental service organizations, laboratories and consumers receiving treatment through dental professionals.",
+    "platform_dependency": "Depends on doctor adoption, treatment-planning software, scanner integration, digital workflows, manufacturing scale and the strength of the Invisalign brand.",
+    "competitive_risk": "Competes with traditional braces, other clear-aligner systems, dental scanner vendors and digital-dentistry platforms.",
+    "operational_risk": "Exposed to discretionary dental demand, product innovation, doctor training, manufacturing quality, reimbursement trends and international regulatory requirements.",
+    "profitability_history": "Established profitable medical-technology business with strong gross margins, though growth can fluctuate with orthodontic case volumes and scanner demand.",
+    "customer_concentration": "Broad provider network limits dependence on individual practices, while large DSOs and regional dental groups can influence adoption and purchasing.",
+    "international_exposure": "Operates globally with meaningful exposure to foreign currencies, local dental markets, regulatory approvals and consumer spending.",
+    "key_risk_themes": [
+      "Clear-aligner competition",
+      "Doctor adoption and case growth",
+      "Consumer discretionary sensitivity",
+      "Digital scanner competition",
+      "Manufacturing and product quality",
+      "International regulatory exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1097149/000109714926000014/algn-20251231.htm"
+  },
+  "Allstate Corp (ALL)": {
+    "business_model": "Large U.S. personal-lines insurer providing auto, homeowners and other protection products through exclusive agents, independent agents and direct channels.",
+    "primary_revenue_source": "Insurance premiums and investment income, with personal auto and homeowners coverage representing the core protection franchise.",
+    "customer_type": "U.S. consumers purchasing auto, homeowners and related personal insurance products.",
+    "platform_dependency": "Depends on underwriting and pricing accuracy, claims execution, distribution, catastrophe modeling, telematics, regulatory approvals and investment portfolio performance.",
+    "competitive_risk": "Competes with national and regional insurers and digital-direct carriers on price, brand, distribution, claims service and data-driven underwriting.",
+    "operational_risk": "Exposed to catastrophe losses, repair-cost inflation, bodily-injury severity, reserve adequacy, state regulation and climate-related loss frequency.",
+    "profitability_history": "Profitable over the cycle but earnings can swing materially with catastrophe losses, claim severity and pricing adequacy.",
+    "customer_concentration": "Large diversified consumer base with limited single-customer concentration; geographic concentration can still matter in catastrophe-prone states.",
+    "international_exposure": "Operations are primarily U.S.-focused, so direct international exposure is limited.",
+    "key_risk_themes": [
+      "Catastrophe and climate losses",
+      "Auto claim severity",
+      "Insurance pricing and regulation",
+      "Reserve adequacy",
+      "Competition in personal lines",
+      "Telematics and underwriting execution"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/899051/000089905126000031/all-20251231.htm"
+  },
+  "Allegion plc (ALLE)": {
+    "business_model": "Global security-products company providing locks, electronic access control, door hardware and related solutions for commercial, institutional and residential applications.",
+    "primary_revenue_source": "Sales of mechanical and electronic security products, access-control systems and related services through commercial and residential channels.",
+    "customer_type": "Commercial builders, institutional facilities, distributors, locksmiths, integrators, retailers and homeowners.",
+    "platform_dependency": "Depends on construction and renovation activity, channel partners, installed-base replacement demand, access-control technology and brand strength.",
+    "competitive_risk": "Competes with global lock, access-control and building-security vendors on specification, technology, interoperability, price and distribution.",
+    "operational_risk": "Exposed to construction cycles, raw-material costs, tariffs, supply-chain disruptions, acquisition integration and cybersecurity in connected products.",
+    "profitability_history": "Established profitable industrial company with recurring replacement and renovation demand supporting margins and cash generation.",
+    "customer_concentration": "Broad customer and distributor base, though major distributors and project channels can influence regional demand.",
+    "international_exposure": "Global sales create foreign-currency, trade and regional construction-cycle exposure.",
+    "key_risk_themes": [
+      "Commercial construction cycles",
+      "Electronic-access technology shifts",
+      "Supply chain and tariffs",
+      "Raw-material inflation",
+      "Acquisition integration",
+      "Connected-product cybersecurity"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1579241/000157924126000007/alle-20251231.htm"
+  },
+  "Alnylam Pharmaceuticals Inc (ALNY)": {
+    "business_model": "Biopharmaceutical company focused on RNA interference therapeutics, developing and commercializing medicines that silence disease-causing genes.",
+    "primary_revenue_source": "Product revenue from approved RNAi therapies, along with collaboration and royalty revenue from partnered programs.",
+    "customer_type": "Patients, specialty pharmacies, healthcare providers, hospitals and payers in rare and specialty disease markets.",
+    "platform_dependency": "Depends on the RNAi platform, clinical and regulatory success, specialty commercialization, manufacturing partners and continued expansion into new indications.",
+    "competitive_risk": "Competes with other genetic medicines, small molecules, antibodies and emerging gene-editing or RNA-based therapies.",
+    "operational_risk": "Exposed to clinical trial outcomes, regulatory approval, safety findings, manufacturing scale-up, reimbursement and concentration in a relatively small number of commercial products.",
+    "profitability_history": "Historically loss-making during platform development but increasingly supported by commercial product growth and expanding recurring revenue.",
+    "customer_concentration": "End demand is distributed across specialized patient populations, while distribution and reimbursement channels can be concentrated.",
+    "international_exposure": "Commercializes globally and faces varying reimbursement, regulatory and market-access frameworks.",
+    "key_risk_themes": [
+      "Clinical and regulatory execution",
+      "Commercial adoption of RNAi therapies",
+      "Manufacturing and supply reliability",
+      "Reimbursement and pricing pressure",
+      "Competition from genetic medicines",
+      "Pipeline concentration"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1178670/000162828026007497/alny-20251231.htm"
+  },
+  "Applied Materials Inc (AMAT)": {
+    "business_model": "Semiconductor and display-equipment company supplying manufacturing systems, services and materials-engineering solutions used to fabricate advanced chips and displays.",
+    "primary_revenue_source": "Sales of semiconductor manufacturing equipment and related services, spares and upgrades, with additional display and adjacent-market revenue.",
+    "customer_type": "Leading semiconductor foundries, logic and memory manufacturers, display producers and other advanced manufacturing customers.",
+    "platform_dependency": "Depends on semiconductor capital spending, technology-node transitions, customer fab buildouts, global supply chains and high-end engineering capabilities.",
+    "competitive_risk": "Competes with major wafer-fabrication-equipment vendors on process performance, yield, integration, service and installed-base support.",
+    "operational_risk": "Exposed to semiconductor cycles, export controls, China restrictions, customer concentration, supply constraints and large swings in capital spending.",
+    "profitability_history": "Highly profitable with strong cash generation, though revenue and earnings remain cyclical with semiconductor investment cycles.",
+    "customer_concentration": "A limited number of large semiconductor manufacturers account for a substantial portion of demand.",
+    "international_exposure": "Highly global business with significant Asian revenue and exposure to U.S.-China trade and export-control policy.",
+    "key_risk_themes": [
+      "Semiconductor capital-spending cycles",
+      "Export controls and China exposure",
+      "Customer concentration",
+      "Technology transition execution",
+      "Supply-chain constraints",
+      "Competition in wafer-fab equipment"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/6951/000162828025056742/amat-20251026.htm"
+  },
+  "Amcor Plc (AMCR)": {
+    "business_model": "Global packaging company producing flexible and rigid packaging products for food, beverage, healthcare, personal-care and other consumer markets.",
+    "primary_revenue_source": "Sales of packaging materials and containers under long-term and recurring customer relationships across consumer and healthcare end markets.",
+    "customer_type": "Large multinational and regional consumer-goods, food, beverage, healthcare and personal-care companies.",
+    "platform_dependency": "Depends on resin and raw-material availability, manufacturing efficiency, customer volumes, packaging innovation and global production networks.",
+    "competitive_risk": "Competes with other global and regional packaging producers on price, scale, sustainability, product design and manufacturing reliability.",
+    "operational_risk": "Exposed to resin and energy costs, customer volume changes, sustainability regulation, plant execution, acquisition integration and foreign exchange.",
+    "profitability_history": "Established profitable packaging model with relatively defensive end markets, though margins depend on cost pass-through, mix and manufacturing efficiency.",
+    "customer_concentration": "Large consumer-products customers are significant, but the portfolio spans multiple categories and geographies.",
+    "international_exposure": "Extensive global manufacturing and sales create substantial currency, regulatory and trade exposure.",
+    "key_risk_themes": [
+      "Raw-material and resin costs",
+      "Customer volume trends",
+      "Sustainability and packaging regulation",
+      "Manufacturing execution",
+      "Acquisition integration",
+      "Foreign-currency exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1748790/000174879025000023/amcr-20250630.htm"
+  },
+  "Advanced Micro Devices Inc (AMD)": {
+    "business_model": "Fabless semiconductor company designing CPUs, GPUs, adaptive computing and data-center accelerators for PCs, gaming, embedded systems and AI infrastructure.",
+    "primary_revenue_source": "Sales of data-center, client, gaming and embedded semiconductor products, with data-center and AI accelerators increasingly important to growth.",
+    "customer_type": "Cloud providers, server OEMs, PC manufacturers, enterprises, game-console companies, embedded-system customers and distributors.",
+    "platform_dependency": "Depends on leading-edge foundry capacity, advanced packaging, software ecosystems such as ROCm, major OEM and cloud design wins and rapid product-roadmap execution.",
+    "competitive_risk": "Competes intensely with NVIDIA, Intel and other semiconductor vendors across CPUs, GPUs, accelerators and embedded markets.",
+    "operational_risk": "Exposed to foundry concentration, advanced-packaging capacity, export controls, AI-demand volatility, customer concentration and rapid product obsolescence.",
+    "profitability_history": "Profitable and growing, with earnings increasingly influenced by higher-value data-center and AI products while gaming and client markets remain cyclical.",
+    "customer_concentration": "Large OEMs, hyperscalers and channel partners represent meaningful concentrations of demand.",
+    "international_exposure": "Global sales and Asian manufacturing exposure create significant trade, export-control, supply-chain and geopolitical risk.",
+    "key_risk_themes": [
+      "AI accelerator competition",
+      "Foundry and packaging dependence",
+      "Export controls",
+      "Hyperscaler and OEM concentration",
+      "Rapid technology cycles",
+      "Semiconductor demand volatility"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm"
+  },
+  "Ametek Inc (AME)": {
+    "business_model": "Diversified manufacturer of electronic instruments and electromechanical devices serving aerospace, defense, medical, industrial and technology markets.",
+    "primary_revenue_source": "Sales of highly engineered instruments, sensors, analyzers, precision components and electromechanical products across niche industrial markets.",
+    "customer_type": "Aerospace and defense companies, medical-device manufacturers, industrial operators, research organizations and technology customers.",
+    "platform_dependency": "Depends on specialized engineering, proprietary products, aftermarket demand, acquisition integration and exposure to diverse end markets.",
+    "competitive_risk": "Competes in numerous specialized niches on product performance, reliability, certification, service and technical expertise.",
+    "operational_risk": "Exposed to aerospace and industrial cycles, supply-chain constraints, acquisition integration, input-cost inflation and export restrictions.",
+    "profitability_history": "Long-standing profitable compounder with strong margins and cash flow, supported by niche market positions and acquisitions.",
+    "customer_concentration": "Diversified across many end markets and customers, reducing dependence on any single buyer.",
+    "international_exposure": "Meaningful international sales and manufacturing create currency, trade and geopolitical exposure.",
+    "key_risk_themes": [
+      "Acquisition integration",
+      "Aerospace and industrial cycles",
+      "Supply-chain availability",
+      "Export and trade restrictions",
+      "Specialized talent retention",
+      "Input-cost inflation"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1037868/000103786826000016/ame-20251231.htm"
+  },
+  "AMGEN Inc (AMGN)": {
+    "business_model": "Global biotechnology company developing, manufacturing and commercializing biologic and small-molecule therapies across oncology, inflammation, cardiovascular disease, rare disease and other areas.",
+    "primary_revenue_source": "Product sales from a diversified portfolio of branded medicines, supported by licensing and collaboration revenue.",
+    "customer_type": "Hospitals, physicians, specialty pharmacies, wholesalers, distributors, healthcare systems and government or private payers.",
+    "platform_dependency": "Depends on R&D productivity, patent protection, biologics manufacturing, regulatory approvals, payer access and successful lifecycle management of major products.",
+    "competitive_risk": "Faces branded competition, biosimilars, generics and rapidly evolving therapeutic alternatives.",
+    "operational_risk": "Exposed to clinical failures, patent expiry, manufacturing complexity, pricing pressure, regulatory changes and integration of acquired products and companies.",
+    "profitability_history": "Large profitable biotechnology franchise with strong cash generation, though product mix, competition and acquired-product costs can affect margins.",
+    "customer_concentration": "Distribution is concentrated among large pharmaceutical wholesalers even though end-patient demand spans many products and therapeutic areas.",
+    "international_exposure": "Operates globally with foreign pricing, reimbursement, currency and regulatory exposure.",
+    "key_risk_themes": [
+      "Patent expiry and biosimilar competition",
+      "Pipeline execution",
+      "Drug pricing and reimbursement",
+      "Manufacturing reliability",
+      "Acquisition integration",
+      "Regulatory and safety outcomes"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm"
+  },
+  "Ameriprise Financial Inc (AMP)": {
+    "business_model": "Diversified financial-services company centered on wealth management, asset management, retirement and protection solutions, with a large affiliated advisor network.",
+    "primary_revenue_source": "Advisory and asset-management fees, distribution fees, net investment income and insurance-related revenue.",
+    "customer_type": "Retail wealth-management clients, retirement investors, institutions and asset-management clients.",
+    "platform_dependency": "Depends on advisor productivity and retention, assets under management and administration, market levels, client flows and regulated financial infrastructure.",
+    "competitive_risk": "Competes with broker-dealers, registered investment advisers, banks, insurers and asset managers on advice, product breadth, technology and fees.",
+    "operational_risk": "Exposed to market declines, advisor attrition, regulation, cybersecurity, insurance assumptions, credit risk and investment-performance pressure.",
+    "profitability_history": "Established profitable financial-services model with earnings tied to asset levels, client activity, spread income and capital-market conditions.",
+    "customer_concentration": "Broad retail and institutional client base limits single-customer dependence, while advisor and asset-flow concentration are important operating factors.",
+    "international_exposure": "Primarily U.S.-oriented wealth business with international exposure through global asset-management operations.",
+    "key_risk_themes": [
+      "Market-level sensitivity",
+      "Advisor retention and recruiting",
+      "Asset-management performance",
+      "Financial regulation",
+      "Cybersecurity",
+      "Insurance and investment assumptions"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/820027/000082002726000011/amp-20251231.htm"
+  },
+  "American Tower Corp (AMT)": {
+    "business_model": "Communications-infrastructure REIT owning and operating wireless towers and related assets leased to mobile-network operators and other communications tenants.",
+    "primary_revenue_source": "Recurring site-rental revenue under multi-year leases, supplemented by tenant services and selected data-center exposure.",
+    "customer_type": "Major wireless carriers, broadcasters, government entities and other communications providers.",
+    "platform_dependency": "Depends on tower locations, long-term tenant relationships, carrier network investment, zoning and permitting and access to capital for acquisitions and development.",
+    "competitive_risk": "Competes with other tower companies, alternative infrastructure providers and carrier-owned sites for tenant deployments.",
+    "operational_risk": "Exposed to carrier consolidation, tenant churn, interest rates, foreign exchange, regulatory approvals and leverage.",
+    "profitability_history": "Cash-generative REIT with recurring contractual revenue, though reported earnings are affected by depreciation, financing costs and portfolio transactions.",
+    "customer_concentration": "A small number of major wireless carriers contribute a significant share of site-rental revenue.",
+    "international_exposure": "Operates across multiple international markets, creating currency, sovereign, regulatory and political exposure.",
+    "key_risk_themes": [
+      "Wireless-carrier concentration",
+      "Interest-rate sensitivity",
+      "Tenant churn and consolidation",
+      "International currency exposure",
+      "Leverage and financing",
+      "Technology changes in network architecture"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1053507/000105350726000035/amt-20251231.htm"
+  },
+  "Amazon.com Inc (AMZN)": {
+    "business_model": "Global technology and commerce company spanning online retail, third-party marketplace services, AWS cloud computing, advertising, subscriptions, logistics and digital media.",
+    "primary_revenue_source": "Online and physical store sales, third-party seller services, AWS, advertising services and subscriptions.",
+    "customer_type": "Consumers, merchants, developers, startups, enterprises, governments, advertisers and content subscribers.",
+    "platform_dependency": "Depends on global fulfillment and logistics networks, AWS infrastructure, marketplace scale, digital traffic, Prime membership and continued investment in AI and cloud capacity.",
+    "competitive_risk": "Competes across retail, cloud computing, advertising, logistics, media and AI against large global technology and commerce companies.",
+    "operational_risk": "Exposed to massive infrastructure investment, labor and logistics costs, cloud reliability, antitrust regulation, seller ecosystem risk, cybersecurity and rapid AI-capex requirements.",
+    "profitability_history": "Profitable at scale, with AWS and advertising contributing disproportionately to operating income while retail margins remain thinner and more capital intensive.",
+    "customer_concentration": "Extremely broad customer base, though seller, vendor and cloud-enterprise ecosystems create important partner dependencies.",
+    "international_exposure": "Major global operations create currency, tax, labor, trade and regulatory exposure.",
+    "key_risk_themes": [
+      "Cloud and AI competition",
+      "Antitrust and marketplace regulation",
+      "Fulfillment and logistics costs",
+      "Capital intensity",
+      "Cybersecurity and cloud reliability",
+      "International regulatory exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm"
+  },
+  "Arista Networks Inc (ANET)": {
+    "business_model": "Cloud-networking company supplying high-speed Ethernet switches, routing platforms and network software for data centers, AI clusters and large-scale cloud environments.",
+    "primary_revenue_source": "Sales of network hardware and software, plus service and support revenue.",
+    "customer_type": "Large cloud and internet companies, enterprises, financial institutions, service providers and AI-infrastructure operators.",
+    "platform_dependency": "Depends on merchant silicon, EOS software, hyperscaler design wins, Ethernet adoption in AI networks and rapid product-cycle execution.",
+    "competitive_risk": "Competes with Cisco, NVIDIA and other networking vendors on performance, software, scale, cost and AI-networking capabilities.",
+    "operational_risk": "Exposed to customer concentration, supply-chain availability, rapid technology shifts, product transitions and dependence on large cloud customers.",
+    "profitability_history": "Highly profitable with strong margins and cash generation, supported by premium data-center networking products and software.",
+    "customer_concentration": "A small number of hyperscale cloud customers account for a material portion of revenue.",
+    "international_exposure": "Global sales create trade, export-control, currency and regional technology-spending exposure.",
+    "key_risk_themes": [
+      "Hyperscaler concentration",
+      "AI networking competition",
+      "Supply-chain dependence",
+      "Rapid technology transitions",
+      "Merchant silicon availability",
+      "Export controls"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm"
+  },
+  "Aon Plc (AON)": {
+    "business_model": "Global professional-services firm providing commercial risk, reinsurance, health, wealth and human-capital advisory solutions.",
+    "primary_revenue_source": "Commissions and fees from insurance brokerage, reinsurance, consulting, benefits and human-capital services.",
+    "customer_type": "Large and mid-sized corporations, insurers, governments and institutional clients.",
+    "platform_dependency": "Depends on advisor expertise, carrier and reinsurer relationships, analytics, client retention and global regulatory licenses.",
+    "competitive_risk": "Competes with Marsh McLennan, Gallagher and other brokerage and consulting firms on scale, expertise, analytics, relationships and price.",
+    "operational_risk": "Exposed to professional liability, cyber risk, acquisition integration, regulatory compliance, talent retention and insurance-market conditions.",
+    "profitability_history": "Highly profitable fee-based model with strong cash generation and relatively low balance-sheet underwriting exposure.",
+    "customer_concentration": "Broad global client base; no single client dominates, though large enterprise relationships are strategically important.",
+    "international_exposure": "Extensive global operations create material currency, regulatory and geopolitical exposure.",
+    "key_risk_themes": [
+      "Competition for clients and talent",
+      "Professional liability",
+      "Cybersecurity",
+      "Regulatory compliance",
+      "Acquisition integration",
+      "Insurance-market conditions"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/315293/000162828026008116/aon-20251231.htm"
+  },
+  "A.O. Smith Corp (AOS)": {
+    "business_model": "Manufacturer of residential and commercial water heaters, boilers, water-treatment products and related systems.",
+    "primary_revenue_source": "Sales of water-heating and water-treatment equipment primarily in North America, with additional international operations.",
+    "customer_type": "Wholesalers, distributors, contractors, retailers, commercial facilities and homeowners.",
+    "platform_dependency": "Depends on housing and replacement demand, distribution relationships, manufacturing capacity, product efficiency standards and brand strength.",
+    "competitive_risk": "Competes with other water-heating and treatment manufacturers on efficiency, reliability, price, distribution and product breadth.",
+    "operational_risk": "Exposed to housing cycles, raw-material costs, tariffs, China demand, manufacturing efficiency and regulatory efficiency standards.",
+    "profitability_history": "Established profitable industrial business with significant replacement demand and recurring end-market needs.",
+    "customer_concentration": "Relies on major distributors and retail channels, though end demand is diversified.",
+    "international_exposure": "Meaningful operations outside the U.S., particularly China and India, create currency and regional-demand exposure.",
+    "key_risk_themes": [
+      "Housing and replacement cycles",
+      "China demand",
+      "Raw-material inflation",
+      "Tariffs and trade policy",
+      "Distribution concentration",
+      "Efficiency regulation"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/91142/000009114226000008/aos-20251231.htm"
+  },
+  "APA Corp (APA)": {
+    "business_model": "Independent oil and gas exploration and production company with operations and interests in the United States and selected international regions.",
+    "primary_revenue_source": "Sales of crude oil, natural gas and natural-gas liquids.",
+    "customer_type": "Refiners, midstream companies, utilities, commodity marketers and other energy buyers.",
+    "platform_dependency": "Depends on reserves, drilling inventory, commodity prices, access to infrastructure, geological success and disciplined capital allocation.",
+    "competitive_risk": "Competes with global and independent producers for acreage, services, capital and technical talent.",
+    "operational_risk": "Exposed to oil and gas price volatility, drilling risk, reserve replacement, environmental regulation, geopolitical conditions and high capital requirements.",
+    "profitability_history": "Profitable during supportive commodity cycles but earnings and cash flow can vary sharply with oil and gas prices.",
+    "customer_concentration": "Commodity sales are typically made to a limited number of large energy counterparties by region.",
+    "international_exposure": "International operations create sovereign, fiscal, geopolitical and currency risk in addition to U.S. commodity exposure.",
+    "key_risk_themes": [
+      "Oil and gas price volatility",
+      "Reserve replacement",
+      "Drilling and geological risk",
+      "Environmental regulation",
+      "International political risk",
+      "Capital-allocation discipline"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1841666/000184166626000015/apa-20251231.htm"
+  },
+  "Air Products & Chemicals Inc (APD)": {
+    "business_model": "Industrial-gases company supplying atmospheric and process gases, equipment and large-scale gasification and clean-energy projects.",
+    "primary_revenue_source": "Long-term on-site industrial-gas contracts, merchant and packaged gases, equipment sales and project-related revenue.",
+    "customer_type": "Refining, chemicals, electronics, metals, healthcare, food, energy and other industrial customers.",
+    "platform_dependency": "Depends on large capital projects, long-term customer contracts, reliable plant operations, engineering execution and access to low-cost energy and feedstocks.",
+    "competitive_risk": "Competes with other global industrial-gas companies on reliability, project execution, technology, customer relationships and capital efficiency.",
+    "operational_risk": "Exposed to megaproject execution, cost overruns, customer credit, energy costs, plant reliability, geopolitical risk and large capital commitments.",
+    "profitability_history": "Historically profitable with stable industrial-gas cash flows, though recent project spending can create significant capital and execution risk.",
+    "customer_concentration": "Large on-site contracts create meaningful project and customer exposure despite broad end-market diversification.",
+    "international_exposure": "Global project portfolio creates currency, sovereign, regulatory and geopolitical exposure.",
+    "key_risk_themes": [
+      "Megaproject execution",
+      "Capital intensity",
+      "Energy and feedstock costs",
+      "Customer credit",
+      "International project risk",
+      "Plant reliability"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/2969/000000296925000055/apd-20250930.htm"
+  },
+  "Amphenol Corp (APH)": {
+    "business_model": "Global supplier of connectors, sensors, antennas, interconnect systems and related electronics used across communications, automotive, aerospace, defense, industrial and IT markets.",
+    "primary_revenue_source": "Sales of high-performance interconnect, sensor and antenna products across diversified electronics end markets.",
+    "customer_type": "OEMs, contract manufacturers, distributors, defense contractors, automotive suppliers and communications-equipment companies.",
+    "platform_dependency": "Depends on engineering depth, customer design wins, manufacturing scale, acquisitions and participation in long-duration electronics platforms.",
+    "competitive_risk": "Competes with other connector and component suppliers on performance, miniaturization, reliability, price and customer engineering support.",
+    "operational_risk": "Exposed to electronics cycles, customer concentration within some markets, supply-chain disruptions, acquisitions, tariffs and raw-material costs.",
+    "profitability_history": "Highly profitable diversified electronics supplier with strong margins, cash generation and a long record of acquisition-led growth.",
+    "customer_concentration": "Broad customer portfolio, though specific large OEM programs can create temporary concentration.",
+    "international_exposure": "Global manufacturing and sales create substantial currency, trade and geopolitical exposure.",
+    "key_risk_themes": [
+      "Electronics demand cycles",
+      "Acquisition integration",
+      "Customer design-win concentration",
+      "Tariffs and trade policy",
+      "Supply-chain execution",
+      "Technology transitions"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/820313/000110465926013549/aph-20251231x10k.htm"
+  },
+  "Apollo Global Management Inc (APO)": {
+    "business_model": "Alternative asset manager and retirement-services platform operating across yield, hybrid and equity strategies, closely linked with Athene.",
+    "primary_revenue_source": "Management fees, performance-related income, spread-related earnings, investment income and retirement-services economics.",
+    "customer_type": "Institutional investors, insurance clients, pension funds, sovereign entities, family offices, high-net-worth clients and retirement savers.",
+    "platform_dependency": "Depends on fundraising, investment performance, origination capabilities, insurance balance-sheet growth, credit markets and regulatory capital.",
+    "competitive_risk": "Competes with large alternative managers, insurers, banks and private-credit platforms for capital, deals, talent and investor relationships.",
+    "operational_risk": "Exposed to credit losses, valuation risk, market cycles, fundraising conditions, insurance liabilities, leverage and complex regulation.",
+    "profitability_history": "Profitable and cash-generative but earnings can be volatile because of investment marks, performance fees and insurance-market dynamics.",
+    "customer_concentration": "Large institutional relationships matter, while the broader capital base is diversified across strategies and investor types.",
+    "international_exposure": "Global investment and fundraising activities create regulatory, currency and geopolitical exposure.",
+    "key_risk_themes": [
+      "Credit-cycle exposure",
+      "Fundraising and asset flows",
+      "Insurance and Athene risk",
+      "Asset valuation",
+      "Leverage and liquidity",
+      "Regulatory complexity"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1858681/000185868126000013/apo-20251231.htm"
+  },
+  "AppLovin Corp (APP)": {
+    "business_model": "Advertising-technology company providing AI-driven software that helps advertisers acquire and monetize users across mobile and digital environments.",
+    "primary_revenue_source": "Advertising and software-platform revenue generated through performance marketing, ad placement and monetization tools.",
+    "customer_type": "Mobile-app developers, digital advertisers, ecommerce businesses and publishers.",
+    "platform_dependency": "Depends on machine-learning models, access to advertising inventory and data signals, mobile ecosystems and the effectiveness of its advertising platform.",
+    "competitive_risk": "Competes with Google, Meta, other ad-tech platforms and in-house advertiser tools on performance, scale, data and return on ad spend.",
+    "operational_risk": "Exposed to platform-policy changes, privacy rules, ad-market demand, model performance, customer concentration and reputational scrutiny.",
+    "profitability_history": "Profitable and high-growth, with expanding margins as software-platform revenue has scaled.",
+    "customer_concentration": "Large advertisers and publishers can create revenue concentration even as the broader client base expands.",
+    "international_exposure": "Global advertiser and publisher activity creates privacy, currency and regulatory exposure.",
+    "key_risk_themes": [
+      "Ad-platform policy changes",
+      "Privacy regulation",
+      "AI-model performance",
+      "Advertising-cycle sensitivity",
+      "Competition from major platforms",
+      "Customer concentration"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1751008/000175100826000010/app-20251231.htm"
+  },
+  "Aptiv Plc (APTV)": {
+    "business_model": "Automotive technology supplier providing electrical architecture, advanced safety, connectivity and software-related systems to global vehicle manufacturers.",
+    "primary_revenue_source": "Sales of high-voltage and low-voltage electrical distribution, connectors, active safety systems and other automotive electronics.",
+    "customer_type": "Global automotive OEMs and mobility customers.",
+    "platform_dependency": "Depends on vehicle production, OEM platform wins, long product cycles, automotive-grade manufacturing and semiconductor availability.",
+    "competitive_risk": "Competes with global auto suppliers and electronics companies on cost, engineering, software, electrification and safety technology.",
+    "operational_risk": "Exposed to auto-production cycles, OEM concentration, supply constraints, tariffs, EV adoption rates and complex global manufacturing.",
+    "profitability_history": "Profitable but cyclical, with margins influenced by vehicle volumes, mix, restructuring and supply-chain conditions.",
+    "customer_concentration": "Major global automakers account for substantial portions of revenue.",
+    "international_exposure": "Extensive global manufacturing creates currency, trade, labor and geopolitical exposure.",
+    "key_risk_themes": [
+      "OEM customer concentration",
+      "Vehicle-production cycles",
+      "EV and software transition",
+      "Supply-chain constraints",
+      "Tariffs and trade policy",
+      "Global manufacturing execution"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1521332/000152133226000009/aptv-20251231.htm"
+  },
+  "Alexandria Real Estate Equities Inc (ARE)": {
+    "business_model": "Life-science-focused REIT owning, operating and developing laboratory and office campuses in major U.S. innovation clusters.",
+    "primary_revenue_source": "Rental income from life-science, biotechnology, pharmaceutical and research tenants, plus development and property-related activity.",
+    "customer_type": "Biotechnology companies, pharmaceutical companies, research institutions, technology firms and venture-backed life-science companies.",
+    "platform_dependency": "Depends on occupancy, tenant credit, cluster location quality, leasing spreads, access to capital and demand for specialized laboratory space.",
+    "competitive_risk": "Competes with other life-science landlords and conventional office owners converting or developing specialized space.",
+    "operational_risk": "Exposed to biotech funding cycles, tenant failures, elevated interest rates, development costs, office-market weakness and asset values.",
+    "profitability_history": "REIT cash flow has historically been supported by long-term leases, though earnings and NAV are sensitive to interest rates, leasing demand and property valuations.",
+    "customer_concentration": "Large life-science and pharmaceutical tenants are important, and tenant distress can be amplified during weak biotech-funding periods.",
+    "international_exposure": "Portfolio is primarily U.S.-based, limiting direct foreign exposure.",
+    "key_risk_themes": [
+      "Life-science tenant demand",
+      "Biotech funding conditions",
+      "Interest-rate sensitivity",
+      "Development and leasing execution",
+      "Tenant credit",
+      "Real-estate valuation pressure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000013/are-20251231.htm"
+  },
+  "Ares Management Corp (ARES)": {
+    "business_model": "Global alternative asset manager focused on credit, real estate, private equity and infrastructure strategies.",
+    "primary_revenue_source": "Management fees, performance income, investment income and other economics tied to assets under management and fund performance.",
+    "customer_type": "Pension funds, insurers, sovereign wealth funds, endowments, family offices, wealth-management clients and other institutional investors.",
+    "platform_dependency": "Depends on fundraising, investment performance, private-credit origination, investor relationships and continued institutional allocation to alternatives.",
+    "competitive_risk": "Competes with major alternative managers, banks, private-credit platforms and real-estate investment firms for capital, deals and talent.",
+    "operational_risk": "Exposed to credit losses, asset valuations, fundraising cycles, leverage, acquisition integration and regulatory scrutiny.",
+    "profitability_history": "Profitable fee-related model with growing recurring management fees, supplemented by more volatile performance and investment income.",
+    "customer_concentration": "Large institutional clients are important, though AUM is diversified across strategies and investor types.",
+    "international_exposure": "Global investing and fundraising create currency, regulatory and geopolitical exposure.",
+    "key_risk_themes": [
+      "Fundraising conditions",
+      "Private-credit cycle",
+      "Asset valuation",
+      "Investment performance",
+      "Acquisition integration",
+      "Regulatory scrutiny"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1176948/000162828026011413/ares-20251231.htm"
+  },
+  "Arm Holdings Plc ADR (ARM)": {
+    "business_model": "Semiconductor intellectual-property company licensing CPU architectures, processor designs and related compute technology used across mobile, cloud, automotive, embedded and AI systems.",
+    "primary_revenue_source": "License revenue from technology agreements and recurring royalty revenue tied to customer chip shipments.",
+    "customer_type": "Semiconductor designers, system-on-chip vendors, cloud and data-center companies, smartphone manufacturers, automotive technology companies and embedded-system developers.",
+    "platform_dependency": "Depends on Arm architecture adoption, ecosystem software compatibility, customer chip volumes, R&D investment and long-term licensing relationships.",
+    "competitive_risk": "Competes with alternative processor architectures and custom silicon approaches, including x86 and RISC-V ecosystems.",
+    "operational_risk": "Exposed to customer concentration, semiconductor cycles, China and related-party exposure, export controls, rapid R&D spending and the success of new platform initiatives such as data-center and AI CPU products.",
+    "profitability_history": "Profitable licensing and royalty model with high gross margins, while operating expenses have risen significantly as Arm increases investment in next-generation products.",
+    "customer_concentration": "A relatively small number of major semiconductor and device companies generate a meaningful share of licensing and royalty revenue.",
+    "international_exposure": "Global customer base and material China exposure create significant geopolitical, export-control and currency risk.",
+    "key_risk_themes": [
+      "Customer concentration",
+      "China and export-control exposure",
+      "Competition from alternative architectures",
+      "R&D execution",
+      "Semiconductor-cycle sensitivity",
+      "Royalty-volume dependence"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm"
   }
 }
