@@ -638,5 +638,205 @@
       "Nutrition-segment competition and execution"
     ],
     "source_filing": "https://www.sec.gov/Archives/edgar/data/7084/000000708426000011/adm-20251231.htm"
+  },
+  "Automatic Data Processing Inc (ADP)": {
+    "business_model": "Human capital management and payroll services company operating through Employer Services and Professional Employer Organization (PEO) segments, combining cloud software, payroll processing, HR outsourcing, benefits, compliance, retirement and co-employment services.",
+    "primary_revenue_source": "Recurring service revenue from payroll and HCM processing, HR outsourcing and related solutions, plus PEO revenue generated through ADP TotalSource co-employment arrangements.",
+    "customer_type": "Businesses ranging from single-employee firms to large global enterprises, as well as employers using outsourced HR, payroll, benefits and workforce-management services.",
+    "platform_dependency": "Depends on cloud-based HCM platforms, payroll-processing infrastructure, compliance expertise, banking and payment rails, client retention, employment levels and the reliability and security of highly sensitive workforce data.",
+    "competitive_risk": "Competes with payroll processors, HCM software vendors, PEOs, enterprise software platforms and newer cloud-native HR providers on product breadth, ease of use, compliance capabilities, price, integration and service quality.",
+    "operational_risk": "Exposed to cybersecurity and privacy events, processing errors, regulatory changes in payroll and employment law, client employment trends, PEO workers' compensation and benefits costs, and the need to modernize platforms without disrupting service.",
+    "profitability_history": "Long-established profitable recurring-revenue model with strong cash generation and high client retention; earnings benefit from scale and interest earned on client funds but remain sensitive to labor-market activity and interest-rate conditions.",
+    "customer_concentration": "Serves a broad and diversified employer base across company sizes and industries, reducing dependence on any single customer while tying results to aggregate employment and wage trends.",
+    "international_exposure": "Provides HCM and payroll services globally, creating exposure to foreign employment regulation, privacy requirements, currencies, tax rules and cross-border payroll complexity.",
+    "key_risk_themes": [
+      "Cybersecurity and employee-data privacy",
+      "Payroll-processing reliability",
+      "Employment and wage-cycle sensitivity",
+      "Competition in cloud HCM and payroll",
+      "PEO benefits and workers' compensation costs",
+      "Regulatory and compliance complexity"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/8670/000000867026000030/adp-20260630.htm"
+  },
+  "Autodesk Inc (ADSK)": {
+    "business_model": "Subscription software company providing design, engineering, construction, manufacturing, media and entertainment tools through desktop, cloud and collaborative workflow products.",
+    "primary_revenue_source": "Predominantly recurring subscription revenue from term-based product subscriptions, cloud services, enterprise business agreements and industry collections.",
+    "customer_type": "Architects, engineers, contractors, product designers, manufacturers, media creators, construction firms, enterprises and smaller project-based users worldwide.",
+    "platform_dependency": "Depends on sustained adoption and renewal of subscription plans, cloud infrastructure, collaborative workflows, developer and partner ecosystems, and continued relevance of products such as AutoCAD, Revit, Fusion and construction solutions.",
+    "competitive_risk": "Competes with design, engineering, CAD, BIM, manufacturing and creative-software vendors, including cloud-native and AI-enabled alternatives, on workflow depth, interoperability, price and industry specialization.",
+    "operational_risk": "Exposed to subscription renewal and pricing execution, channel-transition complexity, cloud availability, cybersecurity, AI-driven product disruption, customer capital-spending cycles and the need to maintain compatibility across complex industry workflows.",
+    "profitability_history": "Profitable recurring-software model with growing subscription revenue and operating leverage as the business has transitioned away from perpetual licenses toward cloud and subscription offerings.",
+    "customer_concentration": "Broad global customer base across industries and company sizes; no single customer is central, while architecture, engineering, construction and manufacturing spending cycles influence demand.",
+    "international_exposure": "Generates substantial revenue internationally and is exposed to foreign currencies, data and software regulation, sanctions, export restrictions and differing construction and manufacturing cycles.",
+    "key_risk_themes": [
+      "Subscription renewal and pricing execution",
+      "AI and cloud-software competition",
+      "Architecture and construction-cycle exposure",
+      "Channel and go-to-market transformation",
+      "Cybersecurity and cloud-service reliability",
+      "International regulatory and currency exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/769397/000076939726000015/adsk-20260131.htm"
+  },
+  "Ameren Corp (AEE)": {
+    "business_model": "Regulated electric and natural-gas utility holding company centered on Ameren Missouri, Ameren Illinois and Ameren Transmission, providing generation, transmission and distribution services across Missouri and Illinois.",
+    "primary_revenue_source": "Regulated utility revenue collected from electric and natural-gas customers through state and federal rate structures, including generation, transmission and distribution charges.",
+    "customer_type": "Residential, commercial, industrial and governmental utility customers in Missouri and Illinois, along with wholesale and transmission counterparties.",
+    "platform_dependency": "Depends on regulated utility infrastructure, generation assets, transmission networks, distribution systems, fuel and purchased-power availability, constructive rate regulation and access to capital for large infrastructure programs.",
+    "competitive_risk": "Traditional retail competition is limited by regulated service territories, but Ameren faces pressure from distributed generation, energy efficiency, changing customer usage, alternative energy sources and competition for transmission and generation investment opportunities.",
+    "operational_risk": "Exposed to severe weather, grid reliability, wildfire and storm damage, environmental compliance, nuclear and generation risks, regulatory recovery, large capital programs, fuel costs and cybersecurity of critical infrastructure.",
+    "profitability_history": "Established profitable regulated-utility model in which earnings are driven largely by allowed returns on invested capital, rate-case outcomes and execution of infrastructure investment plans.",
+    "customer_concentration": "Utility revenue is spread across millions of residential and commercial customers, though large industrial loads and regional economic conditions can influence usage.",
+    "international_exposure": "Operations are concentrated in the United States, primarily Missouri and Illinois, so direct foreign exposure is limited; supply-chain, commodity and capital-market conditions can still create global indirect exposure.",
+    "key_risk_themes": [
+      "State and federal rate regulation",
+      "Large capital-investment execution",
+      "Grid reliability and severe weather",
+      "Environmental and generation-transition requirements",
+      "Cybersecurity of critical infrastructure",
+      "Interest rates and financing costs"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1002910/000100291026000009/aee-20251231.htm"
+  },
+  "American Electric Power Company Inc (AEP)": {
+    "business_model": "One of the largest U.S. investor-owned electric utility holding companies, with vertically integrated utilities, transmission-and-distribution utilities and a large regulated transmission network.",
+    "primary_revenue_source": "Electricity generation, transmission and distribution revenue earned through regulated utility rates across multiple U.S. states and FERC-regulated transmission operations.",
+    "customer_type": "More than five million retail electric customers across residential, commercial and industrial classes in eleven U.S. states, plus wholesale and transmission customers.",
+    "platform_dependency": "Depends on large-scale generation, transmission and distribution assets, regulated rate recovery, grid reliability, access to fuel and purchased power, and continued capital investment in transmission and utility infrastructure.",
+    "competitive_risk": "Protected service territories limit direct retail competition, but AEP faces changing power-generation economics, distributed energy resources, large-load customer demands, competitive wholesale markets and competition for capital and new generation opportunities.",
+    "operational_risk": "Exposed to severe weather, wildfire and storm restoration, generation outages, fuel and power-price volatility, environmental rules, coal-plant transition costs, regulatory disallowance, cybersecurity and execution of major grid investments.",
+    "profitability_history": "Long-standing profitable regulated-utility business with earnings largely tied to allowed returns, rate-base growth, cost recovery and capital investment; results can vary with weather, regulatory decisions and generation performance.",
+    "customer_concentration": "Diversified retail customer base across multiple states, though certain territories have material industrial and large-load customers that can affect regional demand.",
+    "international_exposure": "Business is overwhelmingly U.S.-based, limiting direct foreign operating exposure, while equipment sourcing, fuel markets and financing conditions create indirect global exposure.",
+    "key_risk_themes": [
+      "Multi-state utility regulation",
+      "Transmission and generation capital execution",
+      "Severe weather and grid resilience",
+      "Energy-transition and coal-retirement costs",
+      "Cybersecurity and physical infrastructure security",
+      "Financing and interest-rate sensitivity"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/aep-20251231.htm"
+  },
+  "AES Corp (AES)": {
+    "business_model": "Global power company operating renewable generation, regulated utilities, conventional energy infrastructure and new energy-technology investments.",
+    "primary_revenue_source": "Revenue and cash flow from power-generation contracts, wholesale electricity sales and regulated utility operations, with growing contributions from renewables and energy storage projects.",
+    "customer_type": "Utilities, industrial and commercial users, governments, wholesale power markets and residential, commercial and industrial customers served by regulated utilities.",
+    "platform_dependency": "Depends on power plants, renewable and storage assets, long-term power purchase agreements, regulated utility systems, access to project financing and the ability to develop and construct new energy projects.",
+    "competitive_risk": "Competes for renewable and storage projects, power purchase agreements, development sites, financing, equipment and large corporate or utility customers in rapidly changing power markets.",
+    "operational_risk": "Exposed to construction and commissioning delays, project financing, commodity and power prices, permitting, interconnection queues, extreme weather, political and regulatory changes, counterparty credit and performance of global generation assets.",
+    "profitability_history": "Diversified power and utility company with recurring contracted and regulated cash flows, but GAAP earnings can be volatile because of impairments, asset sales, restructuring, foreign exchange and project-level financing effects.",
+    "customer_concentration": "Many projects depend on long-term contracts with utilities or large counterparties, creating project-level counterparty concentration even though the overall portfolio is geographically and technologically diversified.",
+    "international_exposure": "Operates in multiple countries and therefore has meaningful currency, political, regulatory, sovereign and emerging-market exposure in addition to U.S. operations.",
+    "key_risk_themes": [
+      "Renewable-project construction and interconnection",
+      "Counterparty and power-purchase agreement exposure",
+      "Global regulatory and political risk",
+      "Project financing and interest rates",
+      "Commodity and power-price volatility",
+      "Energy-transition execution"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/874761/000087476126000063/aes-20251231.htm"
+  },
+  "Aflac Inc (AFL)": {
+    "business_model": "Supplemental health and life insurer operating primarily through Aflac Japan and Aflac U.S., paying cash benefits directly to policyholders for covered illnesses, accidents and other insured events.",
+    "primary_revenue_source": "Insurance premiums from supplemental health and life policies, together with investment income earned on the investment portfolio supporting insurance liabilities.",
+    "customer_type": "Individuals and employees purchasing supplemental cancer, medical, accident, disability, dental, vision and life-insurance products through employer, agency and partner distribution channels in Japan and the United States.",
+    "platform_dependency": "Depends on insurance distribution, policy persistency, claims management, investment performance, regulatory capital, brand strength and the ability to price products appropriately across Japan and the U.S.",
+    "competitive_risk": "Competes with life and health insurers, employee-benefits providers and other supplemental-insurance carriers on product design, distribution, brand, price, claims service and digital capabilities.",
+    "operational_risk": "Exposed to morbidity and mortality experience, policyholder behavior, interest rates, investment credit quality, foreign-exchange movements, regulation, distribution productivity and concentration in Japan.",
+    "profitability_history": "Long-established profitable insurance model supported by underwriting and investment income; earnings can fluctuate with investment gains and losses, currency movements and claims experience.",
+    "customer_concentration": "No single policyholder drives the business, but geographic concentration is significant because Aflac Japan remains the principal contributor to consolidated earnings and represented a majority of adjusted revenue in 2025.",
+    "international_exposure": "Japan is a core market and major source of earnings, creating substantial yen currency, Japanese regulatory, demographic and economic exposure alongside U.S. operations.",
+    "key_risk_themes": [
+      "Japan market and yen concentration",
+      "Claims and policyholder-behavior assumptions",
+      "Investment portfolio and interest-rate risk",
+      "Insurance regulation and capital requirements",
+      "Distribution productivity",
+      "Competition in supplemental benefits"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/4977/000162828026011402/afl-20251231.htm"
+  },
+  "American International Group Inc (AIG)": {
+    "business_model": "Global commercial and personal property-casualty insurer operating through North America Commercial, International Commercial and Global Personal segments, supported by underwriting, claims and investment capabilities.",
+    "primary_revenue_source": "Insurance premiums from commercial property, casualty, financial lines, specialty and personal insurance products, plus investment income earned on assets supporting policyholder obligations.",
+    "customer_type": "Individuals, small and mid-sized businesses, large multinational corporations and other organizations in more than 200 countries and jurisdictions, primarily distributed through brokers, agents and other intermediaries.",
+    "platform_dependency": "Depends on underwriting discipline, pricing and risk selection, claims execution, reinsurance markets, distribution relationships, investment portfolio performance, regulatory capital and global insurance licenses.",
+    "competitive_risk": "Competes with global and regional insurers and specialty carriers for attractive risks, broker relationships and underwriting talent; competition can pressure pricing, terms and retention.",
+    "operational_risk": "Exposed to catastrophe losses, casualty reserve development, inflation, investment-market volatility, reinsurance availability, cybersecurity, regulatory requirements and execution of portfolio and capital-management strategies.",
+    "profitability_history": "Large profitable insurer with earnings driven by underwriting income and investment returns; 2025 results reflected strong underwriting performance and capital returns, though insurance earnings can remain volatile from catastrophe and reserve activity.",
+    "customer_concentration": "Broad global client base across personal and commercial lines; no single customer defines the franchise, while broker distribution and large commercial accounts can create channel and account concentration.",
+    "international_exposure": "Operates across more than 200 countries and jurisdictions through direct operations and network partners, creating material regulatory, currency, geopolitical and catastrophe exposure.",
+    "key_risk_themes": [
+      "Catastrophe and severe-loss volatility",
+      "Loss-reserve adequacy",
+      "Insurance pricing cycles",
+      "Investment portfolio risk",
+      "Broker and distribution relationships",
+      "Global regulatory and geopolitical exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/5272/000000527226000023/aig-20251231.htm"
+  },
+  "Assurant Inc (AIZ)": {
+    "business_model": "Global protection-services company operating through Global Lifestyle and Global Housing, providing connected-device protection, service contracts, vehicle protection and specialty housing insurance.",
+    "primary_revenue_source": "Premiums, fees and other income from mobile-device protection and lifecycle services, extended service contracts, vehicle protection products and lender-placed, manufactured-home, flood, renters and other housing insurance.",
+    "customer_type": "Consumers reached through major mobile carriers, retailers, manufacturers, automotive partners, financial institutions, mortgage servicers and other large distribution partners.",
+    "platform_dependency": "Depends heavily on embedded distribution partnerships, device and automotive ecosystems, claims and repair networks, technology platforms, regulatory licenses and the ability to manage insured and service-contract risk.",
+    "competitive_risk": "Competes with insurers, warranty providers, device-protection specialists, automotive protection administrators and in-house programs offered by major distribution partners.",
+    "operational_risk": "Exposed to partner concentration, mobile-device volumes, catastrophe losses in housing, repair and claims costs, regulation, technology reliability, vendor networks and underwriting performance.",
+    "profitability_history": "Profitable specialty-insurance and protection-services model with earnings diversified between Global Lifestyle and Global Housing, though catastrophe activity and partner-program performance can create volatility.",
+    "customer_concentration": "Distribution relationships with large mobile carriers, retailers, manufacturers, lenders and mortgage servicers create meaningful partner concentration even though end consumers are highly diversified.",
+    "international_exposure": "Global Lifestyle operates across North America, Latin America, Europe and Asia Pacific, generating currency, consumer-protection, insurance-regulatory and geopolitical exposure.",
+    "key_risk_themes": [
+      "Large distribution-partner concentration",
+      "Catastrophe exposure in housing",
+      "Mobile-device and automotive program execution",
+      "Claims and repair-cost inflation",
+      "Insurance and consumer-protection regulation",
+      "Technology and vendor-network reliability"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1267238/000126723826000010/aiz-20251231.htm"
+  },
+  "Arthur J. Gallagher & Co (AJG)": {
+    "business_model": "Global insurance brokerage, reinsurance brokerage, employee-benefits consulting and third-party claims administration company operating primarily through Brokerage and Risk Management segments.",
+    "primary_revenue_source": "Commissions and fees from insurance and reinsurance brokerage, consulting and benefits services, supplemented by fees from claims administration, loss-control and risk-management services.",
+    "customer_type": "Commercial companies, nonprofit organizations, public-sector entities, insurance and reinsurance companies, self-insured organizations, captives and, to a lesser extent, individuals.",
+    "platform_dependency": "Depends on broker and consultant expertise, insurer capacity, client relationships, claims-administration platforms, acquisition integration and access to a broad global network of underwriting counterparties.",
+    "competitive_risk": "Competes with large global insurance brokers, regional brokers, benefits consultants, reinsurance intermediaries and claims administrators on expertise, scale, carrier access, analytics, service and acquisition opportunities.",
+    "operational_risk": "Exposed to acquisition integration, professional liability, cyber and data risks, insurer credit quality, commission and fee pressure, regulatory requirements and retention of producers and specialized talent.",
+    "profitability_history": "Long-standing profitable, cash-generative brokerage model with limited net underwriting risk; growth has been supported by organic expansion and a substantial acquisition program.",
+    "customer_concentration": "Broad client base across commercial and public-sector markets; no single client dominates, though relationships with major insurers and large accounts remain strategically important.",
+    "international_exposure": "Operates directly and through correspondent networks across approximately 130 countries, with meaningful activity in the U.S., U.K., Canada, Australia and New Zealand, creating currency and regulatory exposure.",
+    "key_risk_themes": [
+      "Acquisition integration and valuation",
+      "Competition for clients and brokerage talent",
+      "Professional liability and errors",
+      "Cybersecurity and sensitive client data",
+      "Insurance-market capacity and pricing",
+      "International regulatory exposure"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/354190/000162828026008662/ajg-20251231.htm"
+  },
+  "Astera Labs Inc (ALAB)": {
+    "business_model": "Fabless semiconductor company developing high-speed connectivity and memory infrastructure products for cloud and AI data centers, including Aries PCIe/CXL retimers and cable modules, Taurus Ethernet products and Scorpio fabric-switch products.",
+    "primary_revenue_source": "Sales of semiconductor devices and hardware modules used in hyperscale cloud and AI infrastructure, with 2025 growth driven by higher unit shipments and product mix across Aries, Scorpio and Taurus families.",
+    "customer_type": "Large hyperscalers, cloud-service providers, AI-infrastructure builders, server and system manufacturers, and other data-center ecosystem companies.",
+    "platform_dependency": "Depends on design wins with a relatively select group of large customers, evolving PCIe/CXL and Ethernet standards, third-party foundries and manufacturing partners, and continued expansion of cloud and AI infrastructure spending.",
+    "competitive_risk": "Competes with large semiconductor and connectivity vendors on performance, power efficiency, standards compliance, time-to-market, product integration and the ability to qualify solutions with major cloud customers.",
+    "operational_risk": "Exposed to customer and product concentration, lengthy qualification cycles, semiconductor supply constraints, outsourced manufacturing, pricing declines, rapid technology transitions, export controls and the risk that AI infrastructure demand develops differently than expected.",
+    "profitability_history": "Reached substantial profitability in 2025 after losses in 2024 and 2023 as revenue more than doubled, but management notes the company has only a limited history of generating net income and continues investing heavily in growth.",
+    "customer_concentration": "Business is oriented toward a select group of the world's largest cloud and AI infrastructure customers, creating meaningful customer and design-win concentration risk.",
+    "international_exposure": "Serves global customers and relies on international semiconductor manufacturing and supply chains, creating exposure to export controls, tariffs, geopolitical tensions and foreign manufacturing disruptions.",
+    "key_risk_themes": [
+      "Hyperscaler and customer concentration",
+      "AI infrastructure demand sustainability",
+      "Product qualification and design-win timing",
+      "Third-party semiconductor manufacturing",
+      "Rapid connectivity-standard transitions",
+      "Export controls and geopolitical supply-chain risk"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000010/alab-20251231.htm"
   }
 }
