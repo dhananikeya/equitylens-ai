@@ -906,6 +906,136 @@ p,li,label,input,textarea,button,
     }
 }
 
+
+/* Market news */
+.el-news-shell {
+    margin: .9rem 0 1.4rem;
+}
+.el-news-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: .7rem;
+    color: var(--el-muted);
+    font-family: var(--el-mono);
+    font-size: .7rem;
+}
+.el-news-live {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    color: var(--el-teal);
+    font-weight: 600;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+}
+.el-news-live::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--el-teal);
+    box-shadow: 0 0 0 4px rgba(22,199,178,.08);
+}
+.el-news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .8rem;
+}
+.el-news-card {
+    min-height: 190px;
+    padding: 1.05rem 1.1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--el-border);
+    border-radius: 9px;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,.015), transparent),
+        #091217;
+    text-decoration: none !important;
+    transition: transform .14s ease, border-color .14s ease, background .14s ease;
+}
+.el-news-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(22,199,178,.5);
+    background:
+        radial-gradient(circle at 92% 8%, rgba(22,199,178,.06), transparent 34%),
+        #0A151A;
+}
+.el-news-card.featured {
+    grid-column: span 2;
+    min-height: 225px;
+    padding: 1.25rem 1.3rem 1.15rem;
+}
+.el-news-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .6rem;
+    margin-bottom: .8rem;
+}
+.el-news-source {
+    color: var(--el-teal);
+    font-family: var(--el-mono);
+    font-size: .66rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+.el-news-topic {
+    padding: .22rem .42rem;
+    border: 1px solid var(--el-border);
+    border-radius: 999px;
+    color: var(--el-muted);
+    font-family: var(--el-mono);
+    font-size: .61rem;
+    white-space: nowrap;
+}
+.el-news-headline {
+    color: var(--el-text);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.45;
+    letter-spacing: -.018em;
+}
+.el-news-card.featured .el-news-headline {
+    max-width: 820px;
+    font-size: 1.35rem;
+    line-height: 1.35;
+}
+.el-news-spacer {
+    flex: 1;
+    min-height: .8rem;
+}
+.el-news-footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: .7rem;
+    padding-top: .75rem;
+    border-top: 1px solid var(--el-border-soft);
+}
+.el-news-time {
+    color: var(--el-muted-2);
+    font-family: var(--el-mono);
+    font-size: .64rem;
+}
+.el-news-read {
+    color: var(--el-blue);
+    font-family: var(--el-mono);
+    font-size: .67rem;
+    font-weight: 600;
+}
+@media (max-width: 900px) {
+    .el-news-grid {
+        grid-template-columns: 1fr;
+    }
+    .el-news-card.featured {
+        grid-column: span 1;
+    }
+}
+
 /* Native Streamlit surfaces */
 div[data-testid="stMetric"] {
     background:#091217 !important;
@@ -2521,6 +2651,101 @@ def get_bloomberg_market_news(limit=10):
         pass
 
     return stories
+
+
+def _market_news_topic(headline):
+    text = str(headline or "").lower()
+    if any(term in text for term in [
+        "fed", "federal reserve", "rate", "yield", "treasury", "bond"
+    ]):
+        return "Rates"
+    if any(term in text for term in [
+        "inflation", "cpi", "ppi", "jobs", "payroll", "gdp", "economy"
+    ]):
+        return "Economy"
+    if any(term in text for term in [
+        "oil", "gold", "copper", "commodity", "natural gas"
+    ]):
+        return "Commodities"
+    if any(term in text for term in [
+        "stock", "shares", "earnings", "equity", "nasdaq", "s&p"
+    ]):
+        return "Equities"
+    if any(term in text for term in [
+        "dollar", "yen", "euro", "currency", "fx"
+    ]):
+        return "FX"
+    return "Markets"
+
+
+def _market_news_time(value):
+    if not value:
+        return "Latest"
+    parsed = pd.to_datetime(value, errors="coerce", utc=True)
+    if pd.isna(parsed):
+        return str(value)[:42]
+    try:
+        eastern = parsed.tz_convert("America/New_York")
+        return eastern.strftime("%b %d · %I:%M %p ET")
+    except Exception:
+        return parsed.strftime("%b %d · %H:%M UTC")
+
+
+def render_market_news_cards(stories):
+    """Render public market-news headlines as a visual newsroom grid."""
+    if not stories:
+        return
+
+    cards = []
+    for index, story in enumerate(stories[:9]):
+        headline = html.escape(str(story.get("Headline", "")).strip())
+        link = html.escape(str(story.get("Bloomberg", "")).strip(), quote=True)
+        published = html.escape(
+            _market_news_time(story.get("Published", ""))
+        )
+        topic = html.escape(
+            _market_news_topic(story.get("Headline", ""))
+        )
+
+        if not headline or not link:
+            continue
+
+        featured_class = " featured" if index == 0 else ""
+        cards.append(
+            f'<a class="el-news-card{featured_class}" '
+            f'href="{link}" target="_blank" rel="noopener noreferrer">'
+            '<div class="el-news-card-top">'
+            '<span class="el-news-source">Bloomberg</span>'
+            f'<span class="el-news-topic">{topic}</span>'
+            '</div>'
+            f'<div class="el-news-headline">{headline}</div>'
+            '<div class="el-news-spacer"></div>'
+            '<div class="el-news-footer">'
+            f'<span class="el-news-time">{published}</span>'
+            '<span class="el-news-read">Read story ↗</span>'
+            '</div>'
+            '</a>'
+        )
+
+    if not cards:
+        return
+
+    st.markdown(
+        """
+        <div class="el-news-shell">
+            <div class="el-news-topline">
+                <span class="el-news-live">Latest market headlines</span>
+                <span>Refreshes automatically · source links open Bloomberg</span>
+            </div>
+            <div class="el-news-grid">
+        """
+        + "".join(cards)
+        + """
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 @st.cache_data(ttl=900)
@@ -5298,25 +5523,22 @@ with market_tab:
         bloomberg_news = []
 
     if bloomberg_news:
-        st.dataframe(
-            pd.DataFrame(bloomberg_news),
-            use_container_width=True,
-            hide_index=True,
-            column_config={
-                "Bloomberg": st.column_config.LinkColumn(
-                    "Bloomberg",
-                    display_text="Read"
-                )
-            },
-        )
+        render_market_news_cards(bloomberg_news)
         st.caption(
-            "EquityLens displays headline metadata and outbound links only. "
-            "Bloomberg article text is not republished; access may require a Bloomberg subscription."
+            "Headlines are displayed directly in EquityLens so the Market Monitor reads like a live news desk. "
+            "Selecting a story opens the original Bloomberg article; EquityLens does not republish article text."
         )
     else:
-        st.caption(
-            "Bloomberg headlines could not be retrieved automatically right now. "
-            "Use the direct Bloomberg Markets link below."
+        st.markdown(
+            """
+            <div class="el-news-shell">
+                <div class="el-news-topline">
+                    <span class="el-news-live">Market news</span>
+                    <span>Bloomberg feed temporarily unavailable</span>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
         )
         st.link_button(
             "Open Bloomberg Markets",
