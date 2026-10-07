@@ -4945,24 +4945,57 @@ with company_tab:
             ]
 
     with explore_filters[2]:
+        explore_search = st.text_input(
+            "Search company or ticker",
+            placeholder=(
+                "e.g. MongoDB, MDB, Amazon, AAPL"
+                if explore_sector == "All sectors"
+                else "Search within this sector"
+            ),
+            key="explore_company_search"
+        )
+
+        explore_options_df = explore_df.copy()
+        if explore_search.strip():
+            search_text = explore_search.strip()
+            search_mask = (
+                explore_options_df["Company"].str.contains(
+                    search_text,
+                    case=False,
+                    regex=False,
+                    na=False
+                )
+                | explore_options_df["Ticker"].str.contains(
+                    search_text,
+                    case=False,
+                    regex=False,
+                    na=False
+                )
+            )
+            search_matches = explore_options_df[search_mask].copy()
+
+            if not search_matches.empty:
+                explore_options_df = search_matches
+            else:
+                st.caption(
+                    "No company or ticker matched that search. "
+                    "The full filtered list is shown below."
+                )
+
         explore_company = st.selectbox(
             "Company",
-            explore_df["Coverage Key"].tolist(),
+            explore_options_df["Coverage Key"].tolist(),
             format_func=lambda key: (
-                key.split(" (")[-1].rstrip(")")
+                key.rsplit(" (", 1)[0]
                 + " · "
-                + key.rsplit(" (", 1)[0]
+                + key.split(" (")[-1].rstrip(")")
             ),
-            placeholder=(
-                "Search all 517 companies"
-                if explore_sector == "All sectors"
-                else "Search this sector"
-            ),
+            placeholder="Choose a company",
             key="explore_s1_company"
         )
 
-    explore_row = explore_df[
-        explore_df["Coverage Key"] == explore_company
+    explore_row = explore_options_df[
+        explore_options_df["Coverage Key"] == explore_company
     ].iloc[0]
 
     explore_ticker = str(explore_row.get("Ticker", ""))
