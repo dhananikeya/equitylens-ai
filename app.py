@@ -1651,7 +1651,7 @@ def market_provider_error(provider, exc):
 
 
 PUBLIC_DATA_HEADERS = {
-    "User-Agent": "EquityLensAI/1.0 research-dashboard contact: dhanani.keya@gmail.com"
+    "User-Agent": "EquityLensAI/1.0 (+https://github.com/dhananikeya/equitylens-ai)"
 }
 
 
@@ -2335,6 +2335,49 @@ def get_fomc_calendar(limit=12):
                 "Source": source_url,
             })
 
+    if not events:
+        joined = " ".join(text_lines)
+        for year in [current_year, current_year + 1]:
+            year_match = re.search(
+                rf"{year} FOMC Meetings(.*?)(?=\\d{{4}} FOMC Meetings|$)",
+                joined,
+                flags=re.DOTALL,
+            )
+            if not year_match:
+                continue
+            for month_name, date_text in re.findall(
+                r"(January|February|March|April|May|June|July|August|"
+                r"September|October|November|December)\\s+"
+                r"(\\d{1,2}(?:-\\d{1,2})?\\*?)",
+                year_match.group(1),
+            ):
+                clean_date = date_text.rstrip("*")
+                parts = clean_date.split("-")
+                start_day = int(parts[0])
+                end_day = int(parts[-1])
+                meeting_end = datetime(
+                    year,
+                    months[month_name],
+                    end_day,
+                ).date()
+                if meeting_end < today:
+                    continue
+                events.append({
+                    "Date": (
+                        f"{year}-{months[month_name]:02d}-{start_day:02d}"
+                        + (
+                            f" to {year}-{months[month_name]:02d}-{end_day:02d}"
+                            if end_day != start_day else ""
+                        )
+                    ),
+                    "Time": "",
+                    "Event": (
+                        f"FOMC Meeting{' · SEP' if date_text.endswith('*') else ''}"
+                    ),
+                    "Agency": "Federal Reserve",
+                    "Source": source_url,
+                })
+
     events.sort(key=lambda row: row["Date"])
     return events[:limit]
 
@@ -2369,6 +2412,33 @@ def get_fed_monetary_updates(limit=6):
         })
         if len(rows) >= limit:
             break
+
+    if not rows:
+        atom = "{http://www.w3.org/2005/Atom}"
+        for entry in root.findall(f".//{atom}entry"):
+            title = (
+                entry.findtext(f"{atom}title")
+                or ""
+            ).strip()
+            link_element = entry.find(f"{atom}link")
+            link = (
+                link_element.attrib.get("href", "")
+                if link_element is not None else ""
+            )
+            published = (
+                entry.findtext(f"{atom}updated")
+                or entry.findtext(f"{atom}published")
+                or ""
+            ).strip()
+            if not title or not link:
+                continue
+            rows.append({
+                "Published": published,
+                "Federal Reserve update": title,
+                "Source": link,
+            })
+            if len(rows) >= limit:
+                break
     return rows
 
 
