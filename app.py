@@ -4917,18 +4917,32 @@ with company_tab:
         ]
     )
 
-    with explore_filters[1]:
-        explore_industry = st.selectbox(
-            "Industry",
-            ["All industries"] + explore_industries,
-            key="explore_s1_industry"
-        )
+    # "All sectors" is a true global-search mode. Do not let a stale
+    # industry selection silently hide companies from the Company picker.
+    if explore_sector == "All sectors":
+        explore_industry = "All industries"
+        with explore_filters[1]:
+            st.selectbox(
+                "Industry",
+                ["All industries"],
+                index=0,
+                disabled=True,
+                key="explore_all_sectors_industry"
+            )
+        explore_df = company_universe.copy()
+    else:
+        with explore_filters[1]:
+            explore_industry = st.selectbox(
+                "Industry",
+                ["All industries"] + explore_industries,
+                key="explore_s1_industry"
+            )
 
-    explore_df = explore_sector_df.copy()
-    if explore_industry != "All industries":
-        explore_df = explore_df[
-            explore_df["Industry"] == explore_industry
-        ]
+        explore_df = explore_sector_df.copy()
+        if explore_industry != "All industries":
+            explore_df = explore_df[
+                explore_df["Industry"] == explore_industry
+            ]
 
     with explore_filters[2]:
         explore_company = st.selectbox(
@@ -4938,6 +4952,11 @@ with company_tab:
                 key.split(" (")[-1].rstrip(")")
                 + " · "
                 + key.rsplit(" (", 1)[0]
+            ),
+            placeholder=(
+                "Search all 517 companies"
+                if explore_sector == "All sectors"
+                else "Search this sector"
             ),
             key="explore_s1_company"
         )
