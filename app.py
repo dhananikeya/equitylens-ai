@@ -5055,8 +5055,8 @@ with company_tab:
         explore_row = explore_options_df.iloc[0]
 
     st.caption(
-        f"{len(explore_universe):,} companies are searchable across the "
-        "market universe and curated EquityLens coverage."
+        f"All {len(company_universe):,} companies in the core EquityLens market universe are searchable by company name or ticker. "
+        "Legacy curated profiles are also included in search coverage."
     )
 
     explore_ticker = str(explore_row.get("Ticker", ""))
