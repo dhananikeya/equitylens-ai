@@ -121,25 +121,9 @@ Each entry explains what the item means, why it matters, how to interpret it, wh
 
 ## Current Coverage
 
-The current research universe focuses on cloud infrastructure, data platforms, and cybersecurity companies, including companies such as:
+EquityLens currently exposes a **517-company market universe** across multiple sectors and industries. SEC access is available throughout the expanded universe, while deeper structured research is built progressively as company filings are processed and standardized.
 
-- MongoDB
-- Snowflake
-- Datadog
-- Cloudflare
-- Rubrik
-- Elastic
-- Dynatrace
-- Akamai
-- Palo Alto Networks
-- Zscaler
-- CrowdStrike
-- Okta
-- Fortinet
-- SentinelOne
-- Tenable
-
-Coverage is intentionally focused while the research and ingestion workflows are expanded.
+The platform distinguishes between broad market coverage and deeper research coverage so that a company appearing in the universe is not mistaken for a fully completed analyst profile.
 
 ## Technology
 
