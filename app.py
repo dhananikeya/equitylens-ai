@@ -4898,13 +4898,16 @@ with company_tab:
     with explore_filters[0]:
         explore_sector = st.selectbox(
             "Sector",
-            coverage_sectors,
+            ["All sectors"] + coverage_sectors,
             key="explore_sector"
         )
 
-    explore_sector_df = company_universe[
-        company_universe["Sector"] == explore_sector
-    ].copy()
+    if explore_sector == "All sectors":
+        explore_sector_df = company_universe.copy()
+    else:
+        explore_sector_df = company_universe[
+            company_universe["Sector"] == explore_sector
+        ].copy()
 
     explore_industries = sorted(
         [
