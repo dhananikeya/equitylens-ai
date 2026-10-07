@@ -3993,11 +3993,10 @@ render_summary_cards([
     ("Primary Source", "SEC EDGAR")
 ])
 
-home_tab, company_tab, peer_tab, research_tab, market_tab, sec_tracker_tab, learn_tab = st.tabs([
+home_tab, company_tab, peer_tab, market_tab, sec_tracker_tab, learn_tab = st.tabs([
     "Home",
-    "Explore Companies",
+    "Company Research",
     "Industry Comparison",
-    "EquityLens",
     "Market Monitor",
     "Filings",
     "Learn"
@@ -4016,19 +4015,14 @@ with home_tab:
         </div>
         <div class="el-intent-grid">
             <div class="el-intent-card">
-                <div class="el-intent-label">Explore Companies</div>
-                <div class="el-intent-title">How does this company work?</div>
-                <div class="el-intent-copy">Understand the business model, customers, strategy, risks, and IPO-era story from its S-1.</div>
+                <div class="el-intent-label">Company Research</div>
+                <div class="el-intent-title">What should I know about this company?</div>
+                <div class="el-intent-copy">Open one research workspace for price, fundamentals, financials, filings, ownership, analyst views, peers, ETFs, and SEC-backed business context.</div>
             </div>
             <div class="el-intent-card">
                 <div class="el-intent-label">Industry Comparison</div>
                 <div class="el-intent-title">How does it compare with peers?</div>
                 <div class="el-intent-copy">Compare growth, margins, capital structure, business models, and risk themes on the same page.</div>
-            </div>
-            <div class="el-intent-card">
-                <div class="el-intent-label">EquityLens</div>
-                <div class="el-intent-title">What should I understand first?</div>
-                <div class="el-intent-copy">Get a structured company brief covering performance, business model, risk themes, recent changes, and source links without using a chatbot.</div>
             </div>
             <div class="el-intent-card">
                 <div class="el-intent-label">Market Monitor</div>
@@ -4054,9 +4048,9 @@ with home_tab:
 
     st.write(
         "EquityLens now maintains a broader market-coverage universe sourced from the "
-        "Finviz list you provided. These companies can be explored in Market Monitor "
-        "with market context and SEC filing access, while the original deep-research "
-        "set retains the most detailed structured financial analysis."
+        "Finviz list you provided. These companies can be opened from the Company Research workspace, where market data, "
+        "financials, filings, ownership, analyst context, peers, and deep research are organized "
+        "around one selected company."
     )
 
     home_coverage_cols = st.columns(2)
