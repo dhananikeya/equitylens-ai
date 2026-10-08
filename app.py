@@ -4884,27 +4884,62 @@ with peer_tab:
             "More companies can be added without changing the comparison workflow."
         )
 
+    peer_financial_cache = {}
     if selected_companies:
+        for company in selected_companies:
+            ticker = str(company_data[company].get("ticker", "")).upper()
+            try:
+                peer_financial_cache[company] = get_company_financial_snapshot(ticker)
+            except Exception:
+                peer_financial_cache[company] = {}
+
         section("Balance Sheet", "Capital Structure Snapshot")
 
         capital_rows = []
         for company in selected_companies:
             capital = company_data[company].get("capital_structure", {})
+            supplemental = peer_financial_cache.get(company, {})
+            supplemental_capital = supplemental.get("capital_structure", {})
+
+            shares = (
+                capital.get("shares_outstanding")
+                if capital.get("shares_outstanding") is not None
+                else supplemental_capital.get("shares_outstanding")
+            )
+            debt = (
+                capital.get("total_debt")
+                if capital.get("total_debt") is not None
+                else supplemental_capital.get("total_debt")
+            )
+            cash_investments = (
+                capital.get("cash_and_investments")
+                if capital.get("cash_and_investments") is not None
+                else supplemental_capital.get("cash_and_investments")
+            )
+            balance_date = (
+                capital.get("balance_sheet_as_of")
+                or supplemental_capital.get("balance_sheet_as_of")
+                or "N/A"
+            )
+            filing_source = capital.get("source_filing", "")
+            data_source = (
+                "SEC filing"
+                if filing_source
+                else "Yahoo Finance supplemental"
+            )
+
             capital_rows.append({
                 "Company": company,
                 "Shares Outstanding": (
-                    f"{capital.get('shares_outstanding'):,}"
-                    if capital.get("shares_outstanding") is not None
+                    f"{int(shares):,}"
+                    if shares is not None
                     else "N/A"
                 ),
-                "Debt": format_money(capital.get("total_debt")),
-                "Cash + Investments": format_money(
-                    capital.get("cash_and_investments")
-                ),
-                "Balance Sheet Date": capital.get(
-                    "balance_sheet_as_of", "N/A"
-                ),
-                "Source": capital.get("source_filing", "")
+                "Debt": format_money(debt),
+                "Cash + Investments": format_money(cash_investments),
+                "Balance Sheet Date": balance_date,
+                "Data Source": data_source,
+                "Source Filing": filing_source,
             })
 
         st.dataframe(
@@ -4912,8 +4947,8 @@ with peer_tab:
             use_container_width=True,
             hide_index=True,
             column_config={
-                "Source": st.column_config.LinkColumn(
-                    "Source",
+                "Source Filing": st.column_config.LinkColumn(
+                    "Source Filing",
                     display_text="Open filing"
                 )
             }
@@ -4974,8 +5009,32 @@ with peer_tab:
             annual_rows = []
             for company in selected_companies:
                 data = company_data[company]
-                revenue = data.get("revenue")
-                history = data.get("history", [])
+                supplemental = peer_financial_cache.get(company, {})
+                supplemental_latest = supplemental.get("latest", {})
+                supplemental_history = supplemental.get("history", [])
+                supplemental_capital = supplemental.get("capital_structure", {})
+
+                revenue = (
+                    data.get("revenue")
+                    if data.get("revenue") is not None
+                    else supplemental_latest.get("revenue")
+                )
+                gross_profit = (
+                    data.get("gross_profit")
+                    if data.get("gross_profit") is not None
+                    else supplemental_latest.get("gross_profit")
+                )
+                operating_income = (
+                    data.get("operating_income")
+                    if data.get("operating_income") is not None
+                    else supplemental_latest.get("operating_income")
+                )
+                net_income = (
+                    data.get("net_income")
+                    if data.get("net_income") is not None
+                    else supplemental_latest.get("net_income")
+                )
+                history = data.get("history", []) or supplemental_history
                 growth = None
                 if len(history) >= 2:
                     growth = calc_growth(
@@ -4985,20 +5044,27 @@ with peer_tab:
 
                 annual_rows.append({
                     "Company": company,
-                    "FY": data.get("fiscal_year"),
+                    "FY": data.get("fiscal_year") or supplemental_latest.get("fiscal_year"),
                     "Revenue": format_money(revenue),
                     "YoY Revenue Growth": pct(growth),
-                    "Gross Margin": pct(
-                        calc_margin(data.get("gross_profit"), revenue)
+                    "Gross Margin": pct(calc_margin(gross_profit, revenue)),
+                    "Operating Margin": pct(calc_margin(operating_income, revenue)),
+                    "Net Margin": pct(calc_margin(net_income, revenue)),
+                    "Cash + Investments": format_money(
+                        data.get("capital_structure", {}).get("cash_and_investments")
+                        if data.get("capital_structure", {}).get("cash_and_investments") is not None
+                        else supplemental_capital.get("cash_and_investments")
                     ),
-                    "Operating Margin": pct(
-                        calc_margin(data.get("operating_income"), revenue)
+                    "Assets": format_money(
+                        data.get("assets")
+                        if data.get("assets") is not None
+                        else supplemental_capital.get("total_assets")
                     ),
-                    "Net Margin": pct(
-                        calc_margin(data.get("net_income"), revenue)
+                    "Data Source": (
+                        "SEC filing"
+                        if data.get("filing_url")
+                        else "Yahoo Finance supplemental"
                     ),
-                    "Cash": format_money(data.get("cash")),
-                    "Assets": format_money(data.get("assets")),
                     "SEC Filing": data.get("filing_url", "")
                 })
 
@@ -5020,36 +5086,69 @@ with peer_tab:
 
             for company in selected_companies:
                 qdata = company_quarterly.get(company, {})
-                latest = qdata.get("latest_quarter", {})
-                ltm = qdata.get("ltm", {})
-                qm = quarterly_metrics(qdata)
+                supplemental_quarters = peer_financial_cache.get(
+                    company, {}
+                ).get("quarterly_history", [])
+
+                if qdata.get("latest_quarter"):
+                    latest = qdata.get("latest_quarter", {})
+                    ltm = qdata.get("ltm", {})
+                    qm = quarterly_metrics(qdata)
+                    quarter_label = qdata.get("quarter_label", "Latest quarter")
+                    quarter_source = "SEC filing"
+                    quarter_filing = qdata.get("source_filing", "")
+                else:
+                    latest = supplemental_quarters[-1] if supplemental_quarters else {}
+                    prior_q = supplemental_quarters[-2] if len(supplemental_quarters) >= 2 else {}
+                    prior_y = supplemental_quarters[-5] if len(supplemental_quarters) >= 5 else {}
+                    fallback_qdata = {
+                        "latest_quarter": latest,
+                        "prior_quarter": prior_q,
+                        "prior_year_quarter": prior_y,
+                    }
+                    qm = quarterly_metrics(fallback_qdata)
+                    quarter_label = latest.get("period_end", "N/A")
+                    quarter_source = "Yahoo Finance supplemental"
+                    quarter_filing = ""
+
+                    trailing = supplemental_quarters[-4:]
+                    ltm = {}
+                    if trailing:
+                        for field in [
+                            "revenue",
+                            "gross_profit",
+                            "operating_income",
+                            "net_income",
+                        ]:
+                            values = [
+                                row.get(field)
+                                for row in trailing
+                                if row.get(field) is not None
+                            ]
+                            ltm[field] = sum(values) if values else None
 
                 quarter_rows.append({
                     "Company": company,
-                    "Quarter": qdata.get("quarter_label", "N/A"),
+                    "Quarter": quarter_label,
                     "Revenue": format_money(qm["revenue"]),
                     "YoY Growth": pct(qm["yoy_growth"]),
                     "QoQ Growth": pct(qm["qoq_growth"]),
                     "Gross Margin": pct(qm["gross_margin"]),
                     "Operating Margin": pct(qm["operating_margin"]),
                     "Net Income": format_money(latest.get("net_income")),
-                    "SEC Filing": qdata.get("source_filing", "")
+                    "Data Source": quarter_source,
+                    "SEC Filing": quarter_filing,
                 })
 
                 ltm_revenue = ltm.get("revenue")
                 ltm_rows.append({
                     "Company": company,
                     "LTM Revenue": format_money(ltm_revenue),
-                    "LTM Gross Margin": pct(
-                        calc_margin(ltm.get("gross_profit"), ltm_revenue)
-                    ),
-                    "LTM Operating Margin": pct(
-                        calc_margin(ltm.get("operating_income"), ltm_revenue)
-                    ),
+                    "LTM Gross Margin": pct(calc_margin(ltm.get("gross_profit"), ltm_revenue)),
+                    "LTM Operating Margin": pct(calc_margin(ltm.get("operating_income"), ltm_revenue)),
                     "LTM Net Income": format_money(ltm.get("net_income")),
-                    "LTM Net Margin": pct(
-                        calc_margin(ltm.get("net_income"), ltm_revenue)
-                    )
+                    "LTM Net Margin": pct(calc_margin(ltm.get("net_income"), ltm_revenue)),
+                    "Data Source": quarter_source,
                 })
 
             st.markdown("**Latest Quarter**")
@@ -5080,7 +5179,10 @@ with peer_tab:
 
             revenue_rows = []
             for company in selected_companies:
-                for item in company_data[company].get("history", []):
+                history = company_data[company].get("history", [])
+                if not history:
+                    history = peer_financial_cache.get(company, {}).get("history", [])
+                for item in history:
                     revenue_rows.append({
                         "Company": company,
                         "Fiscal Year": str(item.get("fiscal_year")),
@@ -5100,6 +5202,8 @@ with peer_tab:
                 trend_rows = []
                 for company in selected_companies:
                     history = company_data[company].get("history", [])
+                    if not history:
+                        history = peer_financial_cache.get(company, {}).get("history", [])
                     if not history:
                         continue
 
