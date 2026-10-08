@@ -2,13 +2,13 @@
 
 > **Understand companies. Not documents.**
 
-EquityLens AI is a public-company research platform that turns SEC filings and structured financial data into clearer company research. It combines filing-linked financial analysis, quarterly and trailing-twelve-month metrics, business-model context, disclosed risk themes, peer comparisons, and an interactive research assistant in one Streamlit application.
+EquityLens AI is a public-company research platform that turns SEC filings and structured financial data into clearer company research. It combines filing-linked financial analysis, quarterly and trailing-twelve-month metrics, business-model context, disclosed risk themes, peer comparisons, market context, ownership data, and third-party analyst context in one Streamlit application.
 
 The project is designed around a simple principle: **important research claims should stay connected to the underlying source.**
 
 ## What EquityLens Does
 
-- **Explore public companies** through company snapshots, quarterly performance, capital structure, historical trends, and qualitative research.
+- **Research public companies** through one unified workspace covering market snapshots, financials, filings, ownership, analyst context, peers, ETFs, capital structure, historical trends, and qualitative research.
 - **Compare peers** using standardized revenue, growth, margin, balance-sheet, and LTM views.
 - **Track SEC filings** across covered companies with direct links to the original EDGAR documents.
 - **Monitor macro conditions** using official BLS inflation and labor-market data, U.S. Treasury yields, SOFR reference rates, and Federal Reserve calendars.
@@ -18,15 +18,16 @@ The project is designed around a simple principle: **important research claims s
 
 ## Public Experience
 
-The application is organized into seven primary areas:
+The application is organized into six primary areas:
 
-1. **Home** — product overview and guided paths into company research.
-2. **Explore Companies** — a deeper company research view with filing-linked analysis.
+1. **Home** — product overview and guided paths into research.
+2. **Company Research** — a Fidelity-inspired research workspace with one selected company and sub-tabs for Snapshot, Financials, Filings, Ownership, Analyst Research, and Peers & ETFs.
 3. **Industry Comparison** — side-by-side peer research and financial comparison.
-4. **EquityLens** — a structured company brief covering performance, business model, risks, and source links.
-5. **Market Monitor** — NYSE market tape and heat map, Treasury yield curve, SOFR reference rates, macroeconomic indicators, economic/FOMC calendars, Bloomberg headline links, and company-level market context.
-6. **Filings** — a monitored SEC filing feed and registration-filing history.
-7. **Learn** — explanations of financial metrics, S-1 and 8-K filings, BLS reports, Treasury yields, SOFR, and interest-rate swaps.
+4. **Market Monitor** — NYSE market tape and heat map, Treasury yield curve, SOFR reference rates, macroeconomic indicators, economic/FOMC calendars, Bloomberg headline links, and market-wide movement.
+5. **Filings** — a monitored SEC filing feed and registration-filing history.
+6. **Learn** — explanations of financial metrics, S-1 and 8-K filings, BLS reports, Treasury yields, SOFR, and interest-rate swaps.
+
+The Company Research workspace is the single home for company-specific analysis. The Coverage Universe table can be used to select a company directly, while name/ticker search works across the full core universe plus legacy curated profiles.
 
 ## Research Methodology
 
@@ -65,7 +66,7 @@ The tracker captures information such as:
 
 ## Macro & Rates Monitor
 
-The Market Monitor adds a macro layer around company research:
+The Market Monitor is intentionally market-wide so company-specific research is not duplicated outside the Company Research workspace:
 
 - **Treasury rate tape** with 2Y, 5Y, 10Y, and 30Y yields
 - **2s10s yield-curve spread**
@@ -126,7 +127,7 @@ Each entry explains what the item means, why it matters, how to interpret it, wh
 
 EquityLens currently exposes a **517-company market universe** across multiple sectors and industries. SEC access is available throughout the expanded universe, while deeper structured research is built progressively as company filings are processed and standardized.
 
-The platform distinguishes between broad market coverage and deeper research coverage so that a company appearing in the universe is not mistaken for a fully completed analyst profile.
+The platform distinguishes between broad market coverage and deeper research coverage so that a company appearing in the universe is not mistaken for a fully completed analyst profile. Legacy curated profiles that fall outside the 517-row Finviz universe remain searchable in the unified Company Research workspace.
 
 ## Technology
 
@@ -142,7 +143,7 @@ The platform distinguishes between broad market coverage and deeper research cov
 - Federal Reserve / New York Fed reference-rate and calendar sources
 - Bloomberg headline metadata and outbound market-news links
 - Finviz Elite
-- Yahoo Finance via yfinance
+- Yahoo Finance via yfinance for supplemental quotes, ownership tables, analyst aggregates, and major ETF holdings checks
 - Structured JSON datasets
 - Requests
 - Optional licensed swap-rate JSON integration
