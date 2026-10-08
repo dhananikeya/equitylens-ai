@@ -3988,6 +3988,68 @@ def render_summary_cards(cards):
             )
 
 
+def financial_period_label(record, default="Period unavailable"):
+    for field in ("period", "quarter_label", "period_end", "fiscal_year", "year", "quarter", "label"):
+        value = record.get(field)
+        if value not in (None, ""):
+            return str(value)
+    return default
+
+
+def choose_income_period(company, quarterly, fallback):
+    """Choose one income-statement record; never fill it from another period."""
+    latest_quarter = quarterly.get("latest_quarter", {})
+    structured_history = sorted(
+        [row for row in company.get("history", []) if row.get("fiscal_year") is not None],
+        key=lambda row: str(row["fiscal_year"]),
+    )
+    fallback_history = sorted(
+        [row for row in fallback.get("history", []) if row.get("fiscal_year") is not None],
+        key=lambda row: str(row["fiscal_year"]),
+    )
+    annual_history = structured_history or fallback_history
+    annual_source = "Structured annual company dataset" if structured_history else "Yahoo Finance annual statements"
+    if latest_quarter.get("revenue") is not None:
+        return {
+            "record": latest_quarter,
+            "period": quarterly.get("quarter_label") or quarterly.get("period_end") or financial_period_label(latest_quarter),
+            "source": "Structured quarterly company dataset",
+            "source_url": quarterly.get("source_filing"),
+            "growth": calc_growth(latest_quarter.get("revenue"), quarterly.get("prior_year_quarter", {}).get("revenue")),
+            "growth_basis": "Same quarter one year earlier",
+            "annual_history": annual_history,
+            "annual_source": annual_source,
+        }
+    if annual_history:
+        current = annual_history[-1]
+        prior = annual_history[-2] if len(annual_history) > 1 else {}
+        try:
+            consecutive = int(current["fiscal_year"]) - int(prior.get("fiscal_year")) == 1
+        except (TypeError, ValueError):
+            consecutive = False
+        return {
+            "record": current,
+            "period": financial_period_label(current),
+            "source": annual_source,
+            "source_url": company.get("filing_url") if structured_history else None,
+            "growth": calc_growth(current.get("revenue"), prior.get("revenue")) if consecutive else None,
+            "growth_basis": "Previous fiscal year" if consecutive else "Comparable prior year unavailable",
+            "annual_history": annual_history,
+            "annual_source": annual_source,
+        }
+    record = fallback.get("latest") or company
+    return {
+        "record": record,
+        "period": financial_period_label(record),
+        "source": "Yahoo Finance annual statements" if fallback.get("latest") else "Structured company dataset",
+        "source_url": None,
+        "growth": None,
+        "growth_basis": "Comparable prior period unavailable",
+        "annual_history": [],
+        "annual_source": annual_source,
+    }
+
+
 def quarterly_metrics(qdata):
     latest = qdata.get("latest_quarter", {})
     prior_q = qdata.get("prior_quarter", {})
@@ -4318,9 +4380,12 @@ def save_rendered_choices():
         "workspace_company_search", "workspace_sector", "workspace_industry",
         "peer_industry", "peer_subgroup", "peer_companies",
         "nyse_heatmap_sector", "nyse_heatmap_limit", "nyse_heatmap_search",
+        "market_monitor_industry", "market_movement_threshold",
+        "finviz_min_relative_volume", "finviz_min_abs_change",
+        "sec_tracker_company", "sec_tracker_forms", "sec_registration_company",
     }
     for key, value in list(st.session_state.items()):
-        if key in choice_keys or key.startswith("workspace_chart_range_"):
+        if key in choice_keys or key.startswith(("workspace_chart_range_", "workspace_section_")):
             st.session_state["saved_choices"][key] = value
 
 
@@ -5366,27 +5431,13 @@ if active_destination == "Company Research":
         help="Price-to-earnings ratio: share price relative to earnings per share. An unavailable value does not mean zero.",
     )
 
-    if selected_latest.get("revenue") is not None:
-        workspace_revenue = selected_latest.get("revenue")
-        workspace_growth = selected_qm.get("yoy_growth")
-        revenue_source_label = "Structured quarterly company dataset"
-    else:
-        annual_history = selected_data.get("history", []) or selected_fallback_history
-        prior_revenue = annual_history[-2].get("revenue") if len(annual_history) >= 2 else None
-        workspace_revenue = (
-            selected_data.get("revenue")
-            if selected_data.get("revenue") is not None
-            else selected_fallback_latest.get("revenue")
-        )
-        workspace_growth = calc_growth(workspace_revenue, prior_revenue)
-        revenue_source_label = (
-            "Structured annual company dataset"
-            if selected_data.get("revenue") is not None
-            else "Yahoo Finance annual statement fallback"
-        )
+    income_selection = choose_income_period(selected_data, selected_qdata, selected_financial_fallback)
+    workspace_revenue = income_selection["record"].get("revenue")
+    workspace_growth = income_selection["growth"]
+    revenue_source_label = income_selection["source"]
 
     header_metrics[3].metric("Revenue", format_money(workspace_revenue), help="Sales before expenses. Check the period shown below before comparing companies.")
-    header_metrics[4].metric("Revenue Growth", pct(workspace_growth), help="Percentage change from the comparison period. Quarterly growth here compares with the same quarter a year earlier.")
+    header_metrics[4].metric("Revenue Growth", pct(workspace_growth), help=income_selection["growth_basis"])
 
     quote_session = selected_quote.get("quote_session")
     quote_retrieved_at = selected_quote.get("retrieved_at")
@@ -5407,11 +5458,7 @@ if active_destination == "Company Research":
     )
     filing_date = latest_available_filing.get("filing_date") or "Date unavailable"
     filing_form = latest_available_filing.get("form") or "Form unavailable"
-    financial_period = selected_latest.get("period") or selected_latest.get("quarter") or selected_latest.get("label")
-    if not financial_period and selected_latest.get("year"):
-        financial_period = str(selected_latest["year"])
-    if not financial_period:
-        financial_period = selected_fallback_latest.get("period") or selected_fallback_latest.get("year")
+    financial_period = income_selection["period"]
     st.caption(
         f"Financial period: {financial_period or 'See Financials for source periods'} · "
         "Market quotes may be delayed. Unavailable figures are not zero."
@@ -5447,23 +5494,15 @@ if active_destination == "Company Research":
         )
         st.button("Open Learn", key="summary_open_learn", on_click=navigate_to, args=("Learn",))
 
-    (
-        snapshot_subtab,
-        financials_subtab,
-        filings_subtab,
-        ownership_subtab,
-        analyst_subtab,
-        peers_subtab,
-    ) = st.tabs([
-        "Snapshot",
-        "Financials",
-        "Filings",
-        "Ownership",
-        "Analyst Research",
-        "Peers & ETFs",
-    ])
+    company_section = st.radio(
+        "Company sections",
+        ["Snapshot", "Financials", "Filings", "Ownership", "Analyst Research", "Peers & ETFs"],
+        horizontal=True,
+        key=f"workspace_section_{selected_ticker}",
+        label_visibility="collapsed",
+    )
 
-    with snapshot_subtab:
+    if company_section == "Snapshot":
         snapshot_chart_col, snapshot_context_col = st.columns([1.65, 1])
 
         with snapshot_chart_col:
@@ -5593,34 +5632,13 @@ if active_destination == "Company Research":
         else:
             st.caption("Recent filing metadata is not available yet.")
 
-    with financials_subtab:
+    if company_section == "Financials":
         section("Financials", "Income Statement & Balance Sheet")
 
-        latest_financial_period = (
-            selected_latest
-            if selected_latest and selected_latest.get("revenue") is not None
-            else {
-                "revenue": (
-                    selected_data.get("revenue")
-                    if selected_data.get("revenue") is not None
-                    else selected_fallback_latest.get("revenue")
-                ),
-                "gross_profit": (
-                    selected_data.get("gross_profit")
-                    if selected_data.get("gross_profit") is not None
-                    else selected_fallback_latest.get("gross_profit")
-                ),
-                "operating_income": (
-                    selected_data.get("operating_income")
-                    if selected_data.get("operating_income") is not None
-                    else selected_fallback_latest.get("operating_income")
-                ),
-                "net_income": (
-                    selected_data.get("net_income")
-                    if selected_data.get("net_income") is not None
-                    else selected_fallback_latest.get("net_income")
-                ),
-            }
+        latest_financial_period = income_selection["record"]
+        st.caption(
+            f"Income statement: {income_selection['period']} · {income_selection['source']}. "
+            "Unavailable fields stay unavailable rather than being filled from another period."
         )
 
         financial_metric_cols = st.columns(4)
@@ -5629,7 +5647,8 @@ if active_destination == "Company Research":
         financial_metric_cols[2].metric("Operating Income", format_money(latest_financial_period.get("operating_income")))
         financial_metric_cols[3].metric("Net Income", format_money(latest_financial_period.get("net_income")))
 
-        annual_history = selected_data.get("history", [])
+        annual_history = income_selection["annual_history"]
+        st.caption(f"Annual trend source: {income_selection['annual_source']}")
         financial_chart_cols = st.columns(2)
 
         with financial_chart_cols[0]:
@@ -5675,7 +5694,7 @@ if active_destination == "Company Research":
                 pnl_fig = go.Figure(
                     go.Bar(
                         x=pnl_labels,
-                        y=[value if value is not None else 0 for value in pnl_values],
+                        y=pnl_values,
                         marker={"color": "#7DD3FC"},
                     )
                 )
@@ -5748,25 +5767,17 @@ if active_destination == "Company Research":
         capital_structure = selected_data.get("capital_structure", {})
         fallback_capital = selected_financial_fallback.get("capital_structure", {})
 
-        cash_value = (
-            selected_data.get("cash")
-            if selected_data.get("cash") is not None
-            else fallback_capital.get("cash_and_investments")
-        )
-        cash_investments_value = (
-            capital_structure.get("cash_and_investments")
-            if capital_structure.get("cash_and_investments") is not None
-            else fallback_capital.get("cash_and_investments")
-        )
-        debt_value = (
-            capital_structure.get("total_debt")
-            if capital_structure.get("total_debt") is not None
-            else fallback_capital.get("total_debt")
-        )
-        assets_value = (
-            selected_data.get("assets")
-            if selected_data.get("assets") is not None
-            else fallback_capital.get("total_assets")
+        balance_fields = ["cash_and_investments", "total_debt", "total_assets", "cash"]
+        use_structured_balance = any(capital_structure.get(field) is not None for field in balance_fields)
+        balance_record = capital_structure if use_structured_balance else fallback_capital
+        balance_source = "Structured company balance sheet" if use_structured_balance else "Yahoo Finance balance sheet"
+        cash_value = balance_record.get("cash")
+        cash_investments_value = balance_record.get("cash_and_investments")
+        debt_value = balance_record.get("total_debt")
+        assets_value = balance_record.get("total_assets")
+        st.caption(
+            f"Balance sheet: {balance_record.get('balance_sheet_as_of') or 'Date unavailable'} · {balance_source}. "
+            "Its reporting date may differ from the income statement."
         )
 
         balance_cols = st.columns(4)
@@ -5775,11 +5786,7 @@ if active_destination == "Company Research":
         balance_cols[2].metric("Total Debt", format_money(debt_value))
         balance_cols[3].metric("Total Assets", format_money(assets_value))
 
-        financial_source = (
-            selected_qdata.get("source_filing")
-            or selected_data.get("filing_url")
-            or capital_structure.get("source_filing")
-        )
+        financial_source = income_selection.get("source_url")
         if financial_source:
             st.link_button(
                 "Open source financial filing",
@@ -5789,12 +5796,12 @@ if active_destination == "Company Research":
 
         st.caption(
             "EquityLens uses standardized SEC-reported figures when available. "
-            "If a company has not yet completed the standardized financial pipeline, "
-            "the workspace fills visible gaps with clearly supplemental Yahoo Finance statement data. "
+             "Income statements and balance sheets each use a single source record; "
+            "missing fields remain unavailable. Annual trends can use labeled Yahoo Finance fallback history. "
             "Market values and financial statement periods update on different schedules."
         )
 
-    with filings_subtab:
+    if company_section == "Filings":
         section("Filings", "SEC Filing History & Deep Filing Research")
 
         filing_metric_cols = st.columns(4)
@@ -5896,7 +5903,7 @@ if active_destination == "Company Research":
                 key=f"workspace_sec_history_{selected_ticker}",
             )
 
-    with ownership_subtab:
+    if company_section == "Ownership":
         section("Ownership", "Ownership & Major Holders")
         st.caption(
             "Ownership combines SEC beneficial-ownership filings with supplemental institutional and fund-holder data. "
@@ -6125,7 +6132,7 @@ if active_destination == "Company Research":
             "SEC filings are the primary ownership source. Institutional and fund-holder tables are supplemental Yahoo Finance data via yfinance."
         )
 
-    with analyst_subtab:
+    if company_section == "Analyst Research":
         section("Analyst Research", "Consensus, Price Targets & Rating Changes")
         st.caption(
             "These are third-party analyst opinions and market-data aggregates. "
@@ -6202,7 +6209,7 @@ if active_destination == "Company Research":
             "EquityLens does not convert third-party opinions into its own buy, sell, or hold rating."
         )
 
-    with peers_subtab:
+    if company_section == "Peers & ETFs":
         section("Peers", "Related Companies & Major ETF Exposure")
 
         peer_rows = workspace_universe[
