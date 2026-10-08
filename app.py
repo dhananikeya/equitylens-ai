@@ -4879,148 +4879,58 @@ with peer_tab:
                     "Operating Margin Change shows how many percentage points reported operating margin moved over the same period."
                 )
 
-            section("Qualitative Research", "Risk & Business Model")
+            section("Research Context", "Business Model & Risk Comparison")
             st.caption(
-                "Choose any company in EquityLens to explore how it makes money, "
-                "who it serves, what its platform depends on, and the risks disclosed in its filings."
+                "Company-specific deep dives now live in Company Research. "
+                "Industry Comparison keeps only the fields that are useful side by side."
             )
 
-            risk_company = st.selectbox(
-                "Choose a company to explore",
-                list(company_data.keys()),
-                index=(
-                    list(company_data.keys()).index(selected_companies[0])
-                    if selected_companies and selected_companies[0] in company_data
-                    else 0
-                ),
-                format_func=lambda name: (
-                    f"{company_data[name].get('ticker', '')} · {name.split(' (')[0]} "
-                    f"— {company_data[name].get('industry', 'Unclassified')}"
-                ),
-                key="peer_risk_company"
-            )
-
-            risk_ticker = str(
-                company_data.get(risk_company, {}).get("ticker", "")
-            ).upper()
-            risk_analysis = _analysis_by_ticker.get(
-                risk_ticker,
-                company_analysis.get(risk_company, {}),
-            )
-            risk_themes = risk_analysis.get("key_risk_themes", [])
-            risk_source = risk_analysis.get(
-                "source_filing",
-                company_data.get(risk_company, {}).get("filing_url", "")
-            )
-            risk_name = risk_company.split(" (")[0]
-            risk_industry = company_data.get(risk_company, {}).get(
-                "industry", "Unclassified"
-            )
-
-            st.markdown(
-                f"""
-                <div class="el-company-hero">
-                    <div class="el-kicker">{risk_ticker} · {risk_industry}</div>
-                    <div class="el-company-title">{risk_name}</div>
-                    <p class="el-subtitle">{risk_analysis.get('business_model', 'Business model information is not available.')}</p>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-
-            risk_left, risk_right = st.columns(2)
-
-            with risk_left:
-                st.markdown(
-                    f"""
-                    <div class="el-risk-card">
-                        <div class="el-risk-title">How the company makes money</div>
-                        <p class="el-change-copy">{risk_analysis.get('primary_revenue_source', 'N/A')}</p>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
+            qualitative_rows = []
+            for company in selected_companies:
+                ticker = str(
+                    company_data.get(company, {}).get("ticker", "")
+                ).upper()
+                analysis = _analysis_by_ticker.get(
+                    ticker,
+                    company_analysis.get(company, {}),
                 )
-                st.markdown(
-                    f"""
-                    <div class="el-risk-card">
-                        <div class="el-risk-title">Who it serves</div>
-                        <p class="el-change-copy">{risk_analysis.get('customer_type', 'N/A')}</p>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-                st.markdown(
-                    f"""
-                    <div class="el-risk-card">
-                        <div class="el-risk-title">Platform dependency</div>
-                        <p class="el-change-copy">{risk_analysis.get('platform_dependency', 'N/A')}</p>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
+                themes = analysis.get("key_risk_themes", [])
+                qualitative_rows.append({
+                    "Company": company.split(" (")[0],
+                    "Ticker": ticker,
+                    "Business Model": analysis.get(
+                        "business_model",
+                        "Research pending",
+                    ),
+                    "Primary Revenue Source": analysis.get(
+                        "primary_revenue_source",
+                        "Research pending",
+                    ),
+                    "Competitive Risk": analysis.get(
+                        "competitive_risk",
+                        "Research pending",
+                    ),
+                    "Operational Risk": analysis.get(
+                        "operational_risk",
+                        "Research pending",
+                    ),
+                    "Key Risk Themes": (
+                        ", ".join(themes[:5])
+                        if themes
+                        else "Research pending"
+                    ),
+                })
 
-            with risk_right:
-                st.markdown(
-                    f"""
-                    <div class="el-risk-card">
-                        <div class="el-risk-title">Competitive risk</div>
-                        <p class="el-change-copy">{risk_analysis.get('competitive_risk', 'N/A')}</p>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-                st.markdown(
-                    f"""
-                    <div class="el-risk-card">
-                        <div class="el-risk-title">Operational risk</div>
-                        <p class="el-change-copy">{risk_analysis.get('operational_risk', 'N/A')}</p>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-                st.markdown(
-                    f"""
-                    <div class="el-risk-card">
-                        <div class="el-risk-title">Profitability history</div>
-                        <p class="el-change-copy">{risk_analysis.get('profitability_history', 'N/A')}</p>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-
-            if risk_themes:
-                st.markdown("**Key risk themes disclosed or summarized from company filings**")
-                theme_cols = st.columns(min(3, len(risk_themes)))
-                for idx, theme in enumerate(risk_themes):
-                    with theme_cols[idx % len(theme_cols)]:
-                        st.markdown(
-                            f"""
-                            <div class="el-risk-card">
-                                <div class="el-risk-title">{theme}</div>
-                            </div>
-                            """,
-                            unsafe_allow_html=True
-                        )
-
-            extra_left, extra_right = st.columns(2)
-            with extra_left:
-                st.markdown("**Customer concentration**")
-                st.write(risk_analysis.get("customer_concentration", "N/A"))
-            with extra_right:
-                st.markdown("**International exposure**")
-                st.write(risk_analysis.get("international_exposure", "N/A"))
-
-            if risk_source:
-                st.caption("Source: company SEC filing")
-                st.link_button(
-                    "Open source filing",
-                    risk_source,
-                    key=f"risk_source_selected_{risk_ticker}"
+            if qualitative_rows:
+                st.dataframe(
+                    pd.DataFrame(qualitative_rows),
+                    use_container_width=True,
+                    hide_index=True,
                 )
 
             st.caption(
-                "This section summarizes publicly disclosed company information for educational research. "
-                "It does not rate the company or recommend buying, selling, or holding its securities."
+                "Use Company Research for the full filing-linked business model, ownership, "
+                "financials, analyst context, and source documents for an individual company."
             )
 
 with company_tab:
