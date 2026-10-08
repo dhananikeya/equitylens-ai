@@ -4283,7 +4283,7 @@ with home_tab:
             <div class="el-intent-card">
                 <div class="el-intent-label">Market Monitor</div>
                 <div class="el-intent-title">What is moving now?</div>
-                <div class="el-intent-copy">See prices, daily changes, volume, notable movement, and recent SEC filing context for covered companies.</div>
+                <div class="el-intent-copy">See market movement, the NYSE heat map, rates, macro releases, economic calendars, and current market news.</div>
             </div>
             <div class="el-intent-card">
                 <div class="el-intent-label">Learn</div>
@@ -4307,53 +4307,6 @@ with home_tab:
         "Finviz list you provided. These companies can be opened from the Company Research workspace, where market data, "
         "financials, filings, ownership, analyst context, peers, and deep research are organized "
         "around one selected company."
-    )
-
-    home_coverage_cols = st.columns(2)
-    with home_coverage_cols[0]:
-        home_coverage_sector = st.selectbox(
-            "Browse sector",
-            coverage_sectors,
-            key="home_coverage_sector"
-        )
-
-    home_sector_df = company_universe[
-        company_universe["Sector"] == home_coverage_sector
-    ]
-    home_sector_industries = sorted(
-        [
-            value for value in home_sector_df["Industry"].dropna().unique().tolist()
-            if value
-        ]
-    )
-
-    with home_coverage_cols[1]:
-        home_coverage_industry = st.selectbox(
-            "Browse industry",
-            ["All industries"] + home_sector_industries,
-            key="home_coverage_industry"
-        )
-
-    home_coverage_df = home_sector_df.copy()
-    if home_coverage_industry != "All industries":
-        home_coverage_df = home_coverage_df[
-            home_coverage_df["Industry"] == home_coverage_industry
-        ]
-
-    st.caption(
-        f"{len(home_coverage_df):,} companies in the current coverage view."
-    )
-
-    st.dataframe(
-        home_coverage_df[
-            [
-                column for column in
-                ["Ticker", "Company", "Industry", "Country"]
-                if column in home_coverage_df.columns
-            ]
-        ],
-        use_container_width=True,
-        hide_index=True
     )
 
     st.info(
