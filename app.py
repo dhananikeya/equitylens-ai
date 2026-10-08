@@ -6356,6 +6356,57 @@ with market_tab:
             use_container_width=True,
         )
 
+    # Rebuild the market-board state here. This state used to live inside the
+    # removed duplicate Expanded Coverage section, so Market Monitor now owns it.
+    pulse_control_cols = st.columns([2, 1])
+
+    with pulse_control_cols[0]:
+        market_industry = st.selectbox(
+            "Market board industry",
+            industries,
+            key="market_monitor_industry",
+        )
+
+    with pulse_control_cols[1]:
+        movement_threshold = st.number_input(
+            "Notable move threshold (%)",
+            min_value=0.5,
+            max_value=25.0,
+            value=3.0,
+            step=0.5,
+            key="market_movement_threshold",
+        )
+
+    market_companies = [
+        name
+        for name, company in company_data.items()
+        if company.get("industry", "Unclassified") == market_industry
+    ]
+    industry_symbols = [
+        str(company_data[name].get("ticker", "")).upper()
+        for name in market_companies
+        if company_data[name].get("ticker")
+    ]
+
+    try:
+        benchmark_market = get_live_market_data(["SPY", "QQQ"])
+    except Exception:
+        benchmark_market = {}
+
+    try:
+        industry_market = get_live_market_data(industry_symbols)
+    except Exception:
+        industry_market = {}
+
+    finviz_market = pd.DataFrame()
+    if public_finviz_data_enabled and industry_symbols:
+        try:
+            finviz_market = normalize_finviz_screener(
+                get_finviz_screener_data(symbols=industry_symbols)
+            )
+        except Exception:
+            finviz_market = pd.DataFrame()
+
     section("Pulse", "Market Snapshot")
 
     pulse_cols = st.columns(4)
