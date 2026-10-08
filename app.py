@@ -4248,26 +4248,32 @@ def reset_coverage_selection():
     st.session_state.pop("workspace_coverage_table", None)
 
 
-search_labels = {
-    str(row["Ticker"]): f'{row["Company"]} ({row["Ticker"]})'
-    for _, row in workspace_universe.iterrows()
+# One toolbar searches destinations across the website.
+navigation_labels = {
+    "Home": "Home",
+    "Company Research": "Company Research — companies, tickers & SEC analysis",
+    "Industry Comparison": "Industry Comparison — industries & peers",
+    "Market Monitor": "Market Monitor — company monitor, markets, ticker & heat map",
+    "Filings": "Filings — SEC tracker, S-1, 10-K & 10-Q",
+    "Learn": "Learn — learn the basics, lessons & financial terms",
 }
 st.markdown(
     '<div class="el-kicker">EquityLens AI</div>',
     unsafe_allow_html=True,
 )
-top_search_ticker = st.selectbox(
-    "Search company or ticker",
-    options=list(search_labels),
+toolbar_destination = st.selectbox(
+    "Search the website",
+    options=list(navigation_labels),
     index=None,
-    format_func=lambda ticker: search_labels.get(ticker, ticker),
-    placeholder="Search companies or tickers — e.g. Amazon or AMZN",
-    key="top_company_search",
-    on_change=reset_coverage_selection,
+    format_func=lambda destination: navigation_labels[destination],
+    placeholder="Where do you want to go? Search Learn, Company Research, Market Monitor…",
+    key="toolbar_destination",
 )
-workspace_search = top_search_ticker or ""
+active_destination = toolbar_destination or "Home"
+workspace_search = ""
 
-if not workspace_search:
+
+if active_destination == "Home":
     st.markdown(
         """
         <div class="el-product-hero">
@@ -4333,7 +4339,7 @@ deep_research_tickers = {
 }
 deep_research_tickers.discard("")
 
-if not workspace_search:
+if active_destination == "Home":
     render_summary_cards([
         ("Companies", f"{len(company_universe):,}"),
         ("Industries", f"{company_universe['Industry'].nunique():,}"),
@@ -4342,15 +4348,18 @@ if not workspace_search:
         ("Primary Source", "SEC EDGAR")
     ])
 
-# Search opens the company workspace as the first tab without scrolling.
-if workspace_search:
-    company_tab, home_tab, peer_tab, market_tab, sec_tracker_tab, learn_tab = st.tabs([
-        "Company Research", "Home", "Industry Comparison", "Market Monitor", "Filings", "Learn"
-    ])
-else:
-    home_tab, company_tab, peer_tab, market_tab, sec_tracker_tab, learn_tab = st.tabs([
-        "Home", "Company Research", "Industry Comparison", "Market Monitor", "Filings", "Learn"
-    ])
+# Render the searched destination first so it opens immediately on rerun.
+navigation_order = [active_destination] + [
+    destination for destination in navigation_labels
+    if destination != active_destination
+]
+navigation_tabs = dict(zip(navigation_order, st.tabs(navigation_order)))
+home_tab = navigation_tabs["Home"]
+company_tab = navigation_tabs["Company Research"]
+peer_tab = navigation_tabs["Industry Comparison"]
+market_tab = navigation_tabs["Market Monitor"]
+sec_tracker_tab = navigation_tabs["Filings"]
+learn_tab = navigation_tabs["Learn"]
 
 with home_tab:
     st.markdown(
@@ -5015,6 +5024,13 @@ with company_tab:
         "One company, one research workspace. Search the full EquityLens universe or select a row "
         "from Coverage Universe, then move through Snapshot, Financials, Filings, Ownership, "
         "Analyst Research, and Peers & ETFs without jumping between duplicate company pages."
+    )
+
+    workspace_search = st.text_input(
+        "Search company or ticker",
+        placeholder="e.g. Amazon, AMZN, MongoDB or MDB",
+        key="workspace_company_search",
+        on_change=reset_coverage_selection,
     )
 
     workspace_sectors = sorted(
