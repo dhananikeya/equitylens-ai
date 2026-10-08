@@ -2338,5 +2338,505 @@
       "Export controls"
     ],
     "source_filing": "https://www.sec.gov/Archives/edgar/data/936395/000162828025056698/cien-20251101.htm"
+  },
+  "Cincinnati Financial Corp (CINF)": {
+    "business_model": "Property and casualty insurance holding company operating primarily through independent insurance agencies, with commercial lines, personal lines, excess and surplus lines, life insurance and investment operations.",
+    "primary_revenue_source": "Insurance premiums from commercial and personal property-casualty policies, supplemented by investment income and life-insurance revenue.",
+    "customer_type": "Individuals, small and mid-sized businesses and other insureds served primarily through independent insurance agencies.",
+    "platform_dependency": "Depends on disciplined underwriting, long-standing agency relationships, claims execution, pricing adequacy, reinsurance and investment portfolio performance.",
+    "competitive_risk": "Competes with national, regional and specialty insurers for profitable accounts and productive independent-agent relationships.",
+    "operational_risk": "Exposed to catastrophe losses, inflation in repair and liability costs, reserve development, investment-market volatility and insurance regulation.",
+    "profitability_history": "Historically profitable over the insurance cycle, with underwriting results and investment income both contributing materially to earnings.",
+    "customer_concentration": "Broad insured base limits single-customer concentration, while the independent-agency channel is strategically important.",
+    "international_exposure": "Operations are primarily U.S.-based, so direct international exposure is limited.",
+    "key_risk_themes": [
+      "Catastrophe losses",
+      "Loss-reserve adequacy",
+      "Claims inflation",
+      "Independent-agent relationships",
+      "Investment portfolio volatility",
+      "Insurance pricing cycles"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/20286/000002028626000008/cinf-20251231.htm"
+  },
+  "Colgate-Palmolive Co (CL)": {
+    "business_model": "Global consumer-products company focused on oral care, personal care, home care and pet nutrition, with brands including Colgate, Palmolive and Hill's.",
+    "primary_revenue_source": "Sales of branded consumer staples and pet-nutrition products through retail, ecommerce and professional channels.",
+    "customer_type": "Mass merchants, grocery and drug retailers, ecommerce platforms, distributors, dental professionals, veterinarians and consumers.",
+    "platform_dependency": "Depends on brand equity, retailer access, innovation, advertising, manufacturing efficiency and global distribution.",
+    "competitive_risk": "Competes with multinational consumer-products companies, private labels and specialized pet-nutrition brands on brand strength, innovation, price and shelf space.",
+    "operational_risk": "Exposed to commodity and packaging inflation, retailer concentration, foreign exchange, supply-chain disruptions and changing consumer preferences.",
+    "profitability_history": "Long-established profitable consumer-staples model with strong global brands and recurring everyday demand.",
+    "customer_concentration": "Large global retailers are important customers, although the consumer base is highly diversified.",
+    "international_exposure": "Substantial international sales create significant currency, regulatory and emerging-market exposure.",
+    "key_risk_themes": [
+      "Foreign-currency exposure",
+      "Retailer concentration",
+      "Input-cost inflation",
+      "Brand competition",
+      "Supply-chain execution",
+      "Consumer preference shifts"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/21665/000002166526000006/cl-20251231.htm"
+  },
+  "Clorox Co (CLX)": {
+    "business_model": "Consumer-products company selling household cleaning, lifestyle, food, wellness and international consumer brands.",
+    "primary_revenue_source": "Sales of branded household and consumer products through retail and ecommerce channels.",
+    "customer_type": "Mass merchants, grocery stores, warehouse clubs, ecommerce platforms, distributors and consumers.",
+    "platform_dependency": "Depends on brand loyalty, retailer relationships, product availability, manufacturing and distribution reliability and continued marketing investment.",
+    "competitive_risk": "Competes with other branded consumer-products companies and private-label alternatives on price, innovation, shelf placement and marketing.",
+    "operational_risk": "Exposed to retailer concentration, cybersecurity, commodity and logistics costs, promotional spending, supply-chain disruption and brand execution.",
+    "profitability_history": "Profitable consumer-staples company with recurring demand, though margins can vary with inflation, pricing and operational disruptions.",
+    "customer_concentration": "Large U.S. retailers represent meaningful portions of sales, creating channel concentration.",
+    "international_exposure": "Predominantly U.S.-oriented with international operations that add currency and regulatory exposure.",
+    "key_risk_themes": [
+      "Retailer concentration",
+      "Commodity and logistics inflation",
+      "Cybersecurity",
+      "Private-label competition",
+      "Brand execution",
+      "Supply-chain resilience"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/21076/000002107626000034/clx-20260630.htm"
+  },
+  "Comcast Corp (CMCSA)": {
+    "business_model": "Diversified media and connectivity company spanning broadband, wireless, business services, NBCUniversal media and studios, theme parks and other entertainment assets.",
+    "primary_revenue_source": "Connectivity and broadband subscriptions, business services, advertising, content distribution, theme parks, studio activity and other media revenue.",
+    "customer_type": "Residential broadband and mobile subscribers, businesses, advertisers, distributors, streaming and media audiences and theme-park guests.",
+    "platform_dependency": "Depends on broadband infrastructure, content rights, network reliability, customer retention, wireless partnerships and successful operation of media and entertainment assets.",
+    "competitive_risk": "Competes with fiber, fixed wireless, streaming platforms, traditional media companies, mobile carriers and other entertainment providers.",
+    "operational_risk": "Exposed to broadband subscriber pressure, programming and content costs, cord-cutting, capital intensity, media-advertising cycles and regulatory scrutiny.",
+    "profitability_history": "Large profitable company with recurring connectivity cash flow helping offset more cyclical media and entertainment businesses.",
+    "customer_concentration": "Broad consumer and business customer base with limited single-customer concentration.",
+    "international_exposure": "Meaningful international exposure through media, studios and theme parks, though connectivity operations are primarily U.S.-based.",
+    "key_risk_themes": [
+      "Broadband competition",
+      "Cord-cutting and media disruption",
+      "Content costs",
+      "Capital intensity",
+      "Advertising cyclicality",
+      "Regulatory scrutiny"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026004994/cmcsa-20251231.htm"
+  },
+  "CME Group Inc (CME)": {
+    "business_model": "Global derivatives marketplace operating regulated exchanges and clearing services for futures and options across interest rates, equity indexes, foreign exchange, energy, agricultural products and metals.",
+    "primary_revenue_source": "Transaction and clearing fees, market-data revenue and other exchange-related services.",
+    "customer_type": "Banks, asset managers, hedge funds, proprietary trading firms, corporations, commodity producers, commercial hedgers and retail market participants.",
+    "platform_dependency": "Depends on electronic trading and clearing infrastructure, market liquidity, benchmark relevance, regulatory licenses and reliable risk-management systems.",
+    "competitive_risk": "Competes with other exchanges, OTC markets and alternative trading venues for contracts, liquidity, data and clearing activity.",
+    "operational_risk": "Exposed to trading-system outages, clearing risk, regulatory change, cyber threats, market-structure shifts and lower volatility or transaction volumes.",
+    "profitability_history": "Highly profitable, high-margin exchange model with recurring data revenue and strong operating leverage to trading volumes.",
+    "customer_concentration": "Large institutional intermediaries are important participants, but trading volume is broadly diversified across markets and end users.",
+    "international_exposure": "Global customer participation creates regulatory and geopolitical exposure despite U.S.-based exchange infrastructure.",
+    "key_risk_themes": [
+      "Trading-volume variability",
+      "Exchange competition",
+      "Clearing and counterparty risk",
+      "Technology reliability",
+      "Financial regulation",
+      "Cybersecurity"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1156375/000115637526000009/cme-20251231.htm"
+  },
+  "Chipotle Mexican Grill (CMG)": {
+    "business_model": "Company-operated fast-casual restaurant chain focused on a limited menu of Mexican-inspired meals prepared with fresh ingredients and increasingly supported by digital ordering and Chipotlanes.",
+    "primary_revenue_source": "Restaurant food and beverage sales through in-store, digital pickup, delivery and drive-through-style Chipotlane channels.",
+    "customer_type": "Consumers seeking fast-casual meals across company-operated restaurants in North America and selected international markets.",
+    "platform_dependency": "Depends on restaurant traffic, unit expansion, food sourcing, labor availability, digital channels, real estate and consistent food-safety execution.",
+    "competitive_risk": "Competes with quick-service and fast-casual restaurants, delivery platforms and local dining options on food quality, convenience, price and brand.",
+    "operational_risk": "Exposed to food and labor inflation, food-safety events, wage regulation, restaurant execution, commodity sourcing and consumer spending.",
+    "profitability_history": "Profitable growth restaurant model with earnings driven by same-store sales, unit growth and restaurant-level margins.",
+    "customer_concentration": "Highly diversified consumer base with minimal single-customer concentration.",
+    "international_exposure": "Primarily U.S.-based with a smaller international footprint.",
+    "key_risk_themes": [
+      "Food-safety risk",
+      "Labor costs and availability",
+      "Commodity inflation",
+      "Restaurant execution",
+      "Consumer discretionary demand",
+      "Unit-expansion execution"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1058090/000105809026000009/cmg-20251231.htm"
+  },
+  "Cummins Inc (CMI)": {
+    "business_model": "Global power-solutions company designing and manufacturing engines, components, power systems, distribution solutions and zero-emissions technologies.",
+    "primary_revenue_source": "Sales and service of engines, components, power-generation equipment, distribution products and related aftermarket parts.",
+    "customer_type": "Truck and equipment manufacturers, fleets, industrial customers, data centers, construction and mining customers, governments and distributors.",
+    "platform_dependency": "Depends on global manufacturing, OEM relationships, emissions technology, supplier networks, aftermarket demand and successful investment in alternative powertrains.",
+    "competitive_risk": "Competes with engine manufacturers, industrial-power companies and emerging battery, fuel-cell and electrification providers.",
+    "operational_risk": "Exposed to heavy-duty vehicle cycles, emissions regulation, warranty costs, supply chains, tariffs and execution of the transition toward lower-emission technologies.",
+    "profitability_history": "Established profitable industrial franchise with meaningful aftermarket cash flow, though demand remains cyclical.",
+    "customer_concentration": "Large OEM customers are important, while end-market exposure is diversified across transportation and industrial applications.",
+    "international_exposure": "Extensive global manufacturing and sales create currency, trade and geopolitical exposure.",
+    "key_risk_themes": [
+      "Truck and industrial cycles",
+      "Emissions regulation",
+      "Technology transition",
+      "OEM concentration",
+      "Supply-chain execution",
+      "Warranty and product quality"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/26172/000002617226000009/cmi-20251231.htm"
+  },
+  "CMS Energy Corp (CMS)": {
+    "business_model": "Michigan-based energy holding company centered on regulated utility Consumers Energy, providing electric and natural-gas service alongside selected non-utility energy activities.",
+    "primary_revenue_source": "Regulated electric and natural-gas utility revenue recovered through customer rates.",
+    "customer_type": "Residential, commercial and industrial utility customers across Michigan.",
+    "platform_dependency": "Depends on regulated generation, transmission and distribution infrastructure, fuel and power supply, constructive regulation and access to capital.",
+    "competitive_risk": "Traditional retail competition is limited by regulated territories, while distributed energy, energy efficiency and electrification trends can affect long-term demand.",
+    "operational_risk": "Exposed to severe weather, grid reliability, wildfire and storm risk, environmental rules, rate recovery and large capital-program execution.",
+    "profitability_history": "Established profitable regulated-utility model driven largely by allowed returns and rate-base investment.",
+    "customer_concentration": "Broad utility customer base limits single-customer dependence.",
+    "international_exposure": "Operations are concentrated in the United States, primarily Michigan.",
+    "key_risk_themes": [
+      "Utility regulation",
+      "Grid reliability",
+      "Severe weather",
+      "Capital investment",
+      "Environmental compliance",
+      "Interest rates and financing"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/811156/000081115626000004/cms-20251231.htm"
+  },
+  "Centene Corp (CNC)": {
+    "business_model": "Managed-care company focused on government-sponsored healthcare programs, including Medicaid, Medicare and Health Insurance Marketplace products.",
+    "primary_revenue_source": "Premium revenue from state Medicaid programs, Medicare products and Marketplace health plans, supplemented by related healthcare services.",
+    "customer_type": "Individuals enrolled in government-sponsored healthcare plans, states and federal healthcare programs.",
+    "platform_dependency": "Depends on government contracts, accurate medical-cost management, provider networks, risk adjustment, member retention and regulatory compliance.",
+    "competitive_risk": "Competes with national and regional managed-care organizations for state contracts, members and provider access.",
+    "operational_risk": "Exposed to medical-cost trends, reimbursement rates, redeterminations, risk-adjustment accuracy, regulatory changes and execution across many state programs.",
+    "profitability_history": "Large profitable managed-care platform, though margins can be pressured by medical-cost trends and government rate-setting.",
+    "customer_concentration": "Revenue is concentrated in government-sponsored programs and state contracts rather than individual members.",
+    "international_exposure": "Operations are primarily U.S.-based.",
+    "key_risk_themes": [
+      "Medical-cost inflation",
+      "Medicaid rate adequacy",
+      "Government contract concentration",
+      "Risk adjustment",
+      "Regulatory change",
+      "Member eligibility trends"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1071739/000107173926000049/cnc-20251231.htm"
+  },
+  "Centerpoint Energy Inc (CNP)": {
+    "business_model": "Regulated electric and natural-gas utility company serving customers primarily in Texas and several other U.S. states.",
+    "primary_revenue_source": "Regulated transmission, distribution and natural-gas utility revenue collected through customer rates.",
+    "customer_type": "Residential, commercial and industrial utility customers.",
+    "platform_dependency": "Depends on reliable electric and gas infrastructure, constructive regulation, system modernization and access to capital.",
+    "competitive_risk": "Direct competition is limited by regulated service territories, though distributed energy, conservation and electrification trends can influence demand.",
+    "operational_risk": "Exposed to hurricanes and severe weather, grid reliability, storm restoration, regulatory scrutiny, large capital programs and cybersecurity.",
+    "profitability_history": "Regulated-utility earnings are driven by allowed returns, rate-base growth and successful cost recovery.",
+    "customer_concentration": "Broad regulated customer base reduces single-customer dependence.",
+    "international_exposure": "Operations are concentrated in the United States.",
+    "key_risk_themes": [
+      "Storm and hurricane exposure",
+      "Utility regulation",
+      "Grid reliability",
+      "Capital-program execution",
+      "Cybersecurity",
+      "Rate recovery"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/48732/000113031026000008/cnp-20251231.htm"
+  },
+  "Capital One Financial Corp (COF)": {
+    "business_model": "Diversified consumer financial-services company centered on credit cards, consumer banking and commercial banking, with a large technology-driven direct banking platform.",
+    "primary_revenue_source": "Net interest income and fees from credit cards, consumer loans, deposits, auto finance and commercial banking.",
+    "customer_type": "Consumers, small businesses and commercial clients.",
+    "platform_dependency": "Depends on credit underwriting, funding and deposits, payments infrastructure, digital banking technology, capital and liquidity and fraud management.",
+    "competitive_risk": "Competes with major banks, card issuers, fintechs, payment platforms and nonbank lenders.",
+    "operational_risk": "Exposed to consumer credit losses, funding costs, interest rates, cybersecurity, regulatory capital requirements and integration risk from major acquisitions.",
+    "profitability_history": "Profitable but cyclical financial franchise with earnings highly sensitive to credit costs, loan growth and funding conditions.",
+    "customer_concentration": "Broad consumer customer base, though credit-card exposures represent a major share of assets and earnings.",
+    "international_exposure": "Operations are predominantly U.S.-based.",
+    "key_risk_themes": [
+      "Consumer credit cycle",
+      "Funding and deposit competition",
+      "Regulatory capital",
+      "Cybersecurity and fraud",
+      "Acquisition integration",
+      "Interest-rate sensitivity"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/927628/000092762826000024/cof-20251231.htm"
+  },
+  "Coherent Corp (COHR)": {
+    "business_model": "Photonics and materials technology company supplying lasers, optical communications components, engineered materials and semiconductor-related products across data-center, communications, industrial and electronics markets.",
+    "primary_revenue_source": "Sales of photonics, optical networking, laser and engineered-material products, increasingly supported by AI and data-center demand.",
+    "customer_type": "Cloud and networking companies, telecom-equipment makers, industrial manufacturers, semiconductor customers and consumer-electronics companies.",
+    "platform_dependency": "Depends on specialized manufacturing, customer design wins, advanced optical technology, global supply chains and continued investment in high-speed datacenter connectivity.",
+    "competitive_risk": "Competes with optical-component, photonics, laser and materials companies on performance, yield, cost and time-to-market.",
+    "operational_risk": "Exposed to customer concentration, cyclical communications demand, manufacturing yields, integration and restructuring, tariffs and rapid technology transitions.",
+    "profitability_history": "Profitable technology manufacturer with improving exposure to high-growth AI and datacenter optical markets, while margins remain sensitive to mix and manufacturing efficiency.",
+    "customer_concentration": "Large technology and communications customers can represent meaningful portions of revenue.",
+    "international_exposure": "Extensive global manufacturing and customer exposure creates currency, trade and geopolitical risk.",
+    "key_risk_themes": [
+      "AI/datacenter demand concentration",
+      "Optical technology transitions",
+      "Manufacturing yields",
+      "Customer concentration",
+      "Supply-chain and tariffs",
+      "Integration and restructuring"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm"
+  },
+  "Coinbase Global Inc (COIN)": {
+    "business_model": "Crypto-financial-services platform providing consumer and institutional trading, custody, staking, subscriptions, stablecoin-related services and blockchain infrastructure.",
+    "primary_revenue_source": "Transaction revenue from crypto trading plus subscription and services revenue including stablecoin economics, staking, custody and other platform services.",
+    "customer_type": "Retail crypto users, institutional investors, asset managers, developers and blockchain ecosystem participants.",
+    "platform_dependency": "Depends on crypto market activity, asset prices, platform security, regulatory permissions, banking relationships and blockchain network availability.",
+    "competitive_risk": "Competes with global crypto exchanges, brokerages, fintechs, decentralized platforms and financial institutions entering digital assets.",
+    "operational_risk": "Exposed to crypto price and volume volatility, regulatory change, custody and cybersecurity risk, stablecoin economics, litigation and reputational risk.",
+    "profitability_history": "Highly cyclical earnings profile, with profitability materially influenced by crypto trading volumes, asset prices and subscription-services growth.",
+    "customer_concentration": "Large retail and institutional user base, though activity can concentrate in a small number of crypto assets.",
+    "international_exposure": "Global customer activity creates significant regulatory and jurisdictional exposure.",
+    "key_risk_themes": [
+      "Crypto market volatility",
+      "Digital-asset regulation",
+      "Cybersecurity and custody",
+      "Stablecoin economics",
+      "Trading-volume dependence",
+      "Reputational risk"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1679788/000167978826000015/coin-20251231.htm"
+  },
+  "Cooper Companies Inc (COO)": {
+    "business_model": "Medical-device company operating through CooperVision contact lenses and CooperSurgical women's health and fertility products.",
+    "primary_revenue_source": "Sales of contact lenses, fertility and reproductive-health products and related medical devices.",
+    "customer_type": "Eye-care professionals, distributors, optical retailers, fertility clinics, hospitals and other healthcare providers.",
+    "platform_dependency": "Depends on product innovation, regulated manufacturing, practitioner adoption, distribution and acquisition integration.",
+    "competitive_risk": "Competes with global contact-lens companies and women's-health and fertility-device manufacturers on clinical performance, product breadth and price.",
+    "operational_risk": "Exposed to product quality, medical regulation, manufacturing execution, acquisition integration, reimbursement and foreign exchange.",
+    "profitability_history": "Established profitable medtech company with recurring demand in contact lenses and specialty healthcare products.",
+    "customer_concentration": "Broad healthcare customer base, though distributors and large optical chains can be significant.",
+    "international_exposure": "Global sales create meaningful currency, regulatory and supply-chain exposure.",
+    "key_risk_themes": [
+      "Product quality",
+      "Medical-device regulation",
+      "Acquisition integration",
+      "Foreign-currency exposure",
+      "Manufacturing reliability",
+      "Healthcare competition"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/711404/000162828025055615/coo-20251031.htm"
+  },
+  "Conoco Phillips (COP)": {
+    "business_model": "Large independent exploration and production company focused on crude oil, natural gas and natural-gas liquids across a diversified global asset portfolio.",
+    "primary_revenue_source": "Sales of crude oil, natural gas and natural-gas liquids.",
+    "customer_type": "Refiners, utilities, commodity marketers, LNG participants and other energy counterparties.",
+    "platform_dependency": "Depends on hydrocarbon reserves, drilling inventory, commodity prices, operating efficiency, access to infrastructure and disciplined capital allocation.",
+    "competitive_risk": "Competes with integrated majors and independent producers for acreage, resources, services, capital and technical talent.",
+    "operational_risk": "Exposed to commodity-price volatility, drilling and reserve risk, environmental regulation, geopolitical exposure and capital-intensive projects.",
+    "profitability_history": "Profitable during supportive commodity environments but earnings and free cash flow remain highly sensitive to oil and gas prices.",
+    "customer_concentration": "Commodity sales are made to large counterparties, but production is diversified across assets and regions.",
+    "international_exposure": "Meaningful global operations create sovereign, tax, currency and geopolitical exposure.",
+    "key_risk_themes": [
+      "Oil and gas price volatility",
+      "Reserve replacement",
+      "Project execution",
+      "Environmental regulation",
+      "Geopolitical risk",
+      "Capital allocation"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1163165/000116316526000009/cop-20251231.htm"
+  },
+  "Cencora Inc (COR)": {
+    "business_model": "Global pharmaceutical sourcing and distribution company serving healthcare providers and pharmaceutical manufacturers across human and animal health.",
+    "primary_revenue_source": "High-volume pharmaceutical distribution, specialty distribution and manufacturer services.",
+    "customer_type": "Hospitals, health systems, pharmacies, clinics, physician practices, veterinarians and pharmaceutical and biotech manufacturers.",
+    "platform_dependency": "Depends on large-scale logistics, supplier and customer contracts, specialty-drug capabilities, working-capital efficiency and regulatory compliance.",
+    "competitive_risk": "Competes with other major pharmaceutical distributors and specialty-services providers on scale, logistics, service breadth and price.",
+    "operational_risk": "Exposed to very thin distribution margins, customer and supplier concentration, drug-pricing and reimbursement changes, litigation and inventory management.",
+    "profitability_history": "Profitable high-volume distributor with relatively low margins but substantial cash flow and scale advantages.",
+    "customer_concentration": "Large pharmacy chains and healthcare systems can represent significant portions of revenue.",
+    "international_exposure": "Operates in select global markets, adding currency and regulatory exposure.",
+    "key_risk_themes": [
+      "Large-customer concentration",
+      "Thin distribution margins",
+      "Drug pricing and reimbursement",
+      "Supplier relationships",
+      "Healthcare regulation",
+      "Litigation and compliance"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1140859/000114085925000131/cor-20250930.htm"
+  },
+  "Costco Wholesale Corp (COST)": {
+    "business_model": "Membership-based warehouse retailer selling a limited assortment of branded and private-label merchandise at low markups, supported by recurring membership fees.",
+    "primary_revenue_source": "Warehouse and ecommerce merchandise sales plus high-margin membership fees.",
+    "customer_type": "Consumers and small businesses purchasing groceries, general merchandise, fuel and services through membership warehouses and digital channels.",
+    "platform_dependency": "Depends on membership renewal, high inventory turnover, purchasing scale, warehouse productivity, supplier relationships and the Kirkland Signature brand.",
+    "competitive_risk": "Competes with Walmart, Sam's Club, Amazon, grocery chains and other retailers on value, assortment, convenience and membership economics.",
+    "operational_risk": "Exposed to consumer spending, labor and freight costs, merchandise inflation, supply chains, international expansion and membership retention.",
+    "profitability_history": "Highly profitable retailer with durable membership-fee economics and strong cash generation despite low merchandise margins.",
+    "customer_concentration": "Highly diversified member base with minimal individual customer concentration.",
+    "international_exposure": "Meaningful operations across Canada, Mexico, Asia, Europe and other markets create currency and regional consumer exposure.",
+    "key_risk_themes": [
+      "Membership renewal",
+      "Retail competition",
+      "Labor and freight costs",
+      "Supply-chain execution",
+      "International expansion",
+      "Consumer spending"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/909832/000090983225000101/cost-20250831.htm"
+  },
+  "Corpay Inc (CPAY)": {
+    "business_model": "Corporate-payments company providing vehicle payments, lodging, accounts-payable automation and cross-border payment solutions.",
+    "primary_revenue_source": "Transaction fees, payment spreads and program revenue generated from commercial payment products and networks.",
+    "customer_type": "Businesses, fleets, government entities, travel and lodging customers and companies making domestic and cross-border payments.",
+    "platform_dependency": "Depends on payment networks, proprietary software, merchant acceptance, customer retention, credit underwriting and acquisition integration.",
+    "competitive_risk": "Competes with card networks, banks, fintechs and specialized fleet, AP and cross-border payment providers.",
+    "operational_risk": "Exposed to credit losses, transaction volumes, foreign exchange, payments regulation, cybersecurity and acquisition integration.",
+    "profitability_history": "Highly profitable payments model with strong margins and recurring transaction revenue.",
+    "customer_concentration": "Broad commercial customer base with some concentration by product channel and partner relationships.",
+    "international_exposure": "Substantial cross-border and international operations create currency and regulatory exposure.",
+    "key_risk_themes": [
+      "Payments competition",
+      "Credit risk",
+      "Cybersecurity",
+      "Foreign exchange",
+      "Acquisition integration",
+      "Regulatory compliance"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1175454/000117545426000018/flt-20251231.htm"
+  },
+  "Copart Inc (CPRT)": {
+    "business_model": "Online vehicle-auction and remarketing company specializing in salvage and used vehicles, supported by a large network of owned and leased storage locations.",
+    "primary_revenue_source": "Service fees from vehicle sellers and buyers, transaction fees and related remarketing services.",
+    "customer_type": "Insurance companies, vehicle dealers, fleet operators, charities, financial institutions and vehicle buyers.",
+    "platform_dependency": "Depends on insurer relationships, auction technology, land and storage capacity, towing logistics and efficient processing of total-loss vehicles.",
+    "competitive_risk": "Competes with salvage auctions, vehicle remarketing platforms and other wholesale automotive marketplaces.",
+    "operational_risk": "Exposed to catastrophe volumes, vehicle supply, real-estate availability, transportation costs, regulatory requirements and international execution.",
+    "profitability_history": "Highly profitable asset-intensive marketplace with strong margins and cash generation.",
+    "customer_concentration": "Major insurance companies are important vehicle suppliers, creating channel concentration.",
+    "international_exposure": "Operates in multiple countries, adding currency and regulatory exposure.",
+    "key_risk_themes": [
+      "Insurance-customer concentration",
+      "Catastrophe volume variability",
+      "Land and storage capacity",
+      "Vehicle supply",
+      "International execution",
+      "Auction-platform reliability"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/900075/000119312526405731/cprt-20260731.htm"
+  },
+  "Camden Property Trust (CPT)": {
+    "business_model": "Residential REIT focused on owning, operating, developing and acquiring multifamily apartment communities in high-growth U.S. markets.",
+    "primary_revenue_source": "Rental income from apartment communities and related resident fees.",
+    "customer_type": "Residential tenants in multifamily communities across major U.S. Sun Belt and growth markets.",
+    "platform_dependency": "Depends on occupancy, rental rates, property operations, development execution, access to capital and regional housing demand.",
+    "competitive_risk": "Competes with other apartment owners, new multifamily supply and alternative housing options.",
+    "operational_risk": "Exposed to interest rates, new apartment supply, property taxes, insurance costs, development costs and tenant affordability.",
+    "profitability_history": "Recurring rental cash flow supports REIT distributions, while funds from operations and valuations are sensitive to occupancy, rents and financing costs.",
+    "customer_concentration": "Highly diversified tenant base with limited individual concentration.",
+    "international_exposure": "Portfolio is U.S.-based, limiting direct international exposure.",
+    "key_risk_themes": [
+      "Interest-rate sensitivity",
+      "Apartment supply",
+      "Occupancy and rent growth",
+      "Property taxes and insurance",
+      "Development execution",
+      "Housing affordability"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/906345/000162828026007697/cpt-20251231.htm"
+  },
+  "CRH Plc (CRH)": {
+    "business_model": "Global building-materials company producing aggregates, cement, asphalt, ready-mixed concrete and building products, with a particularly large North American footprint.",
+    "primary_revenue_source": "Sales of construction materials and building products to infrastructure, residential and non-residential construction markets.",
+    "customer_type": "Contractors, governments, infrastructure developers, homebuilders and commercial construction customers.",
+    "platform_dependency": "Depends on quarry and production assets, local market density, construction spending, infrastructure investment, energy costs and disciplined acquisitions.",
+    "competitive_risk": "Competes with regional and global building-materials producers on location, logistics, scale, product availability and price.",
+    "operational_risk": "Exposed to construction cycles, energy and transportation costs, weather, environmental regulation, acquisitions and large capital requirements.",
+    "profitability_history": "Profitable cyclical materials business with strong local market positions and substantial cash generation.",
+    "customer_concentration": "Broad construction customer base, although government infrastructure spending can be a major demand driver.",
+    "international_exposure": "Major operations in North America and Europe create currency, regulatory and regional construction-cycle exposure.",
+    "key_risk_themes": [
+      "Construction cycles",
+      "Infrastructure spending",
+      "Energy and logistics costs",
+      "Environmental regulation",
+      "Acquisition execution",
+      "Weather sensitivity"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/849395/000162828026009043/crh-20251231.htm"
+  },
+  "Charles River Laboratories International Inc (CRL)": {
+    "business_model": "Contract research organization providing research models, discovery services, safety assessment and manufacturing-support services to pharmaceutical and biotechnology customers.",
+    "primary_revenue_source": "Fees for outsourced preclinical research, safety testing, research models and related drug-development services.",
+    "customer_type": "Pharmaceutical companies, biotechnology firms, academic institutions and government research organizations.",
+    "platform_dependency": "Depends on drug-development R&D spending, scientific expertise, specialized facilities, research-model supply and regulatory compliance.",
+    "competitive_risk": "Competes with CROs, internal pharmaceutical research capabilities and specialized laboratory providers.",
+    "operational_risk": "Exposed to biotech funding cycles, customer project delays, animal-welfare regulation, facility utilization, labor costs and acquisition integration.",
+    "profitability_history": "Historically profitable CRO model, though earnings can be cyclical with pharmaceutical and biotech research spending.",
+    "customer_concentration": "Large pharmaceutical customers are important, while the broader client base spans many biotech and research organizations.",
+    "international_exposure": "Global facilities and customers create currency, regulatory and operational exposure.",
+    "key_risk_themes": [
+      "Biotech funding cycles",
+      "Pharma R&D spending",
+      "Animal-welfare regulation",
+      "Facility utilization",
+      "Customer project delays",
+      "Acquisition integration"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1100682/000110068226000022/crl-20251227.htm"
+  },
+  "Salesforce Inc (CRM)": {
+    "business_model": "Enterprise cloud-software company offering customer relationship management, data, analytics, integration, collaboration and AI applications through subscription-based platforms.",
+    "primary_revenue_source": "Recurring subscription and support revenue from cloud software products and platforms.",
+    "customer_type": "Businesses and public-sector organizations ranging from small companies to large global enterprises.",
+    "platform_dependency": "Depends on subscription renewals, cloud infrastructure, enterprise integrations, partner ecosystem, data platforms and successful commercialization of AI products such as Agentforce.",
+    "competitive_risk": "Competes with Microsoft, Oracle, SAP, ServiceNow, HubSpot and other enterprise software and AI-platform providers.",
+    "operational_risk": "Exposed to enterprise IT spending, AI execution, data security, cloud reliability, acquisition integration and pricing or renewal pressure.",
+    "profitability_history": "Large profitable recurring-software company with expanding operating margins and strong cash generation.",
+    "customer_concentration": "Broad enterprise customer base with limited dependence on any single customer.",
+    "international_exposure": "Significant global sales create currency, privacy, tax and regulatory exposure.",
+    "key_risk_themes": [
+      "Enterprise software competition",
+      "AI product execution",
+      "Subscription renewal",
+      "Cybersecurity and privacy",
+      "Acquisition integration",
+      "International regulation"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+  },
+  "Crowdstrike Holdings Inc (CRWD)": {
+    "business_model": "Cloud-native cybersecurity company delivering endpoint, identity, cloud and security-operations products through the Falcon platform.",
+    "primary_revenue_source": "Recurring subscription revenue from cybersecurity modules sold through the Falcon platform.",
+    "customer_type": "Enterprises, governments, small and mid-sized businesses and managed-security partners.",
+    "platform_dependency": "Depends on the Falcon cloud platform, threat intelligence, endpoint telemetry, customer trust, channel partners and rapid security-product innovation.",
+    "competitive_risk": "Competes with Microsoft, Palo Alto Networks, SentinelOne and other endpoint, cloud and security-platform vendors.",
+    "operational_risk": "Exposed to service outages, cybersecurity incidents, customer concentration in large enterprises, intense competition, regulatory scrutiny and product reliability.",
+    "profitability_history": "High-growth recurring-revenue software model with improving operating leverage and strong cash generation.",
+    "customer_concentration": "Broad customer base, though large enterprise accounts contribute materially to subscription revenue.",
+    "international_exposure": "Global customer base creates privacy, data-sovereignty and regulatory exposure.",
+    "key_risk_themes": [
+      "Platform reliability",
+      "Cybersecurity competition",
+      "Customer trust",
+      "Cloud infrastructure dependence",
+      "International privacy regulation",
+      "Rapid threat evolution"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000010/crwd-20260131.htm"
+  },
+  "CoreWeave Inc (CRWV)": {
+    "business_model": "AI-focused cloud infrastructure company providing GPU-accelerated computing capacity, networking and software infrastructure for training and inference workloads.",
+    "primary_revenue_source": "Cloud-compute revenue from contracted GPU infrastructure and related AI cloud services.",
+    "customer_type": "AI labs, hyperscale technology companies, enterprises and developers requiring large-scale GPU compute.",
+    "platform_dependency": "Depends heavily on access to NVIDIA GPUs and advanced infrastructure, data-center capacity, power availability, financing and a relatively concentrated set of large customers.",
+    "competitive_risk": "Competes with hyperscale cloud providers and specialized AI infrastructure companies on GPU availability, performance, cost and deployment speed.",
+    "operational_risk": "Exposed to extreme capital intensity, customer concentration, supplier concentration, leverage, power and data-center availability and rapid changes in AI hardware.",
+    "profitability_history": "Very high-growth infrastructure company with heavy depreciation, interest expense and capital requirements, making profitability and free cash flow highly sensitive to utilization and financing.",
+    "customer_concentration": "Revenue is materially concentrated among a small number of large AI and technology customers.",
+    "international_exposure": "Operations are primarily U.S.-centered but depend on global semiconductor supply chains and may expand internationally.",
+    "key_risk_themes": [
+      "Customer concentration",
+      "NVIDIA and supplier dependence",
+      "Capital intensity and leverage",
+      "Power and data-center capacity",
+      "AI demand sustainability",
+      "Rapid hardware obsolescence"
+    ],
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm"
   }
 }
