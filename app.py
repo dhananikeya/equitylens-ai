@@ -2009,6 +2009,12 @@ def get_company_financial_snapshot(symbol):
         "financials",
         "get_income_stmt",
     )
+    quarterly_income = _yf_attribute(
+        ticker,
+        "quarterly_income_stmt",
+        "quarterly_financials",
+        "get_income_stmt",
+    )
     balance = _yf_attribute(
         ticker,
         "balance_sheet",
@@ -2017,6 +2023,8 @@ def get_company_financial_snapshot(symbol):
 
     if not isinstance(income, pd.DataFrame):
         income = pd.DataFrame()
+    if not isinstance(quarterly_income, pd.DataFrame):
+        quarterly_income = pd.DataFrame()
     if not isinstance(balance, pd.DataFrame):
         balance = pd.DataFrame()
 
@@ -2068,6 +2076,54 @@ def get_company_financial_snapshot(symbol):
         key=lambda row: str(row.get("fiscal_year", "")),
     )
 
+    quarterly_history = []
+    for column in list(quarterly_income.columns)[:5]:
+        try:
+            period_end = pd.to_datetime(column).date().isoformat()
+        except Exception:
+            period_end = str(column)
+
+        quarterly_history.append({
+            "period_end": period_end,
+            "revenue": _statement_value(
+                quarterly_income,
+                ["Total Revenue", "Operating Revenue"],
+                column,
+            ),
+            "gross_profit": _statement_value(
+                quarterly_income,
+                ["Gross Profit"],
+                column,
+            ),
+            "operating_income": _statement_value(
+                quarterly_income,
+                ["Operating Income"],
+                column,
+            ),
+            "net_income": _statement_value(
+                quarterly_income,
+                ["Net Income", "Net Income Common Stockholders"],
+                column,
+            ),
+        })
+
+    quarterly_history = [
+        row for row in quarterly_history
+        if any(
+            row.get(field) is not None
+            for field in [
+                "revenue",
+                "gross_profit",
+                "operating_income",
+                "net_income",
+            ]
+        )
+    ]
+    quarterly_history = sorted(
+        quarterly_history,
+        key=lambda row: str(row.get("period_end", "")),
+    )
+
     latest_income = annual_history[-1] if annual_history else {}
     latest_balance_column = balance.columns[0] if not balance.empty else None
 
@@ -2116,6 +2172,7 @@ def get_company_financial_snapshot(symbol):
     return {
         "latest": latest_income,
         "history": annual_history,
+        "quarterly_history": quarterly_history,
         "capital_structure": {
             "shares_outstanding": shares_outstanding,
             "total_debt": total_debt,
