@@ -1779,6 +1779,8 @@ def normalize_finviz_screener(dataframe):
         )
 
     normalized["Ticker"] = normalized["Ticker"].astype(str).str.upper().str.strip()
+    if "Market Cap" in normalized.columns:
+        normalized["Market Cap"] = normalized["Market Cap"].apply(finviz_market_cap_dollars)
     return normalized
 
 
@@ -1809,6 +1811,15 @@ def finviz_numeric(value):
         return float(text) * multiplier
     except ValueError:
         return None
+
+
+def finviz_market_cap_dollars(value):
+    """Finviz plain market-cap export numbers are millions; suffixed values carry their units."""
+    parsed = finviz_numeric(value)
+    if parsed is None:
+        return None
+    text = str(value).strip()
+    return parsed if text[-1:].upper() in {"K", "M", "B", "T"} else parsed * 1_000_000
 
 
 @st.cache_data(ttl=900)
@@ -4174,6 +4185,8 @@ for _column in ["Ticker", "Company", "Sector", "Industry", "Country"]:
     company_universe[_column] = (
         company_universe[_column].fillna("").astype(str).str.strip()
     )
+if "Market Cap" in company_universe.columns:
+    company_universe["Market Cap"] = company_universe["Market Cap"].apply(finviz_market_cap_dollars)
 company_universe["Ticker"] = company_universe["Ticker"].str.upper()
 company_universe["Coverage Key"] = (
     company_universe["Company"]
@@ -4631,12 +4644,13 @@ if active_destination == "Industry Comparison":
 
     peer_financial_cache = {}
     if selected_companies:
-        for company in selected_companies:
-            ticker = str(company_data[company].get("ticker", "")).upper()
-            try:
-                peer_financial_cache[company] = get_company_financial_snapshot(ticker)
-            except Exception:
-                peer_financial_cache[company] = {}
+        with st.spinner("Loading peer financial statements from Yahoo Finance…"):
+            for company in selected_companies:
+                ticker = str(company_data[company].get("ticker", "")).upper()
+                try:
+                    peer_financial_cache[company] = get_company_financial_snapshot(ticker)
+                except Exception:
+                    peer_financial_cache[company] = {}
 
         section("Balance Sheet", "Capital Structure Snapshot")
 
@@ -4707,7 +4721,11 @@ if active_destination == "Industry Comparison":
             }
         )
 
-    if st.button("Run Peer Comparison", type="primary"):
+    run_comparison = st.button("Run Peer Comparison", type="primary")
+    comparison_signature = tuple(selected_companies)
+    if run_comparison and len(selected_companies) >= 2:
+        st.session_state["completed_comparison"] = comparison_signature
+    if run_comparison or (len(selected_companies) >= 2 and st.session_state.get("completed_comparison") == comparison_signature):
         if len(selected_companies) < 2:
             st.warning("Select at least two companies to compare.")
         else:
@@ -4719,7 +4737,8 @@ if active_destination == "Industry Comparison":
                     for company in selected_companies
                 ]
                 try:
-                    live_market = get_live_market_data(symbols)
+                    with st.spinner("Loading comparison prices from Yahoo Finance…"):
+                        live_market = get_live_market_data(symbols)
                 except Exception as exc:
                     st.warning(
                         "Live market data is temporarily unavailable. "
@@ -5310,9 +5329,10 @@ if active_destination == "Company Research":
     selected_latest = selected_qdata.get("latest_quarter", {})
 
     try:
-        selected_financial_fallback = get_company_financial_snapshot(
-            selected_ticker
-        )
+        with st.spinner("Loading financial statements from Yahoo Finance…"):
+            selected_financial_fallback = get_company_financial_snapshot(
+                selected_ticker
+            )
     except Exception:
         selected_financial_fallback = {}
 
@@ -5327,7 +5347,8 @@ if active_destination == "Company Research":
     )
 
     try:
-        selected_sec = get_sec_company_research(selected_ticker)
+        with st.spinner("Loading company filings from SEC EDGAR…"):
+            selected_sec = get_sec_company_research(selected_ticker)
         selected_sec_error = None
     except Exception:
         selected_sec = {}
@@ -5354,7 +5375,8 @@ if active_destination == "Company Research":
     primary_registration = selected_registrations[0] if selected_registrations else {}
 
     try:
-        selected_quote = get_live_market_data([selected_ticker]).get(selected_ticker, {})
+        with st.spinner("Loading the latest available Yahoo Finance price…"):
+            selected_quote = get_live_market_data([selected_ticker]).get(selected_ticker, {})
     except Exception:
         selected_quote = {}
 
