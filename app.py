@@ -31,6 +31,25 @@ st.set_page_config(
 st.markdown(
     """
     <style>
+/* Compact tool homepage and a stable navigation row. */
+.el-tool-hero { padding: 1.7rem 1.8rem; margin: .7rem 0 1rem; }
+.el-tool-hero .el-eyebrow { margin-bottom: .8rem; }
+.el-tool-hero .el-product-title { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.12; }
+.el-tool-hero .el-product-subtitle { margin-top: .8rem; font-size: 1rem; max-width: 820px; }
+.st-key-main_navigation [role="radiogroup"] {
+    gap: .5rem; flex-wrap: wrap; padding: .6rem;
+    border: 1px solid var(--el-border); border-radius: 9px; background: var(--el-surface);
+}
+.st-key-main_navigation label { padding: .3rem .45rem; }
+@media (max-width: 640px) {
+    .block-container { padding-left: 1rem !important; padding-right: 1rem !important; }
+    .el-tool-hero { padding: 1.3rem; }
+    [data-testid="stHorizontalBlock"] { flex-wrap: wrap !important; gap: .8rem !important; }
+    [data-testid="stColumn"] { width: 100% !important; flex: 1 1 100% !important; min-width: 0 !important; }
+    .st-key-main_navigation [role="radiogroup"] { gap: .2rem; }
+    [data-testid="stDataFrame"] { max-width: 100%; overflow-x: auto; }
+}
+
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
 
 :root {
@@ -4257,71 +4276,39 @@ navigation_labels = {
     "Filings": "Filings — SEC tracker, S-1, 10-K & 10-Q",
     "Learn": "Learn — learn the basics, lessons & financial terms",
 }
-st.markdown(
-    '<div class="el-kicker">EquityLens AI</div>',
-    unsafe_allow_html=True,
-)
-toolbar_destination = st.selectbox(
+def navigate_to(destination):
+    st.session_state["main_navigation"] = destination
+    st.session_state["toolbar_destination"] = destination
+
+
+def navigate_from_toolbar():
+    navigate_to(st.session_state.get("toolbar_destination") or "Home")
+
+
+def sync_navigation_search():
+    st.session_state["toolbar_destination"] = st.session_state["main_navigation"]
+
+
+st.session_state.setdefault("main_navigation", "Home")
+st.markdown('<div class="el-kicker">EquityLens AI · Research tool</div>', unsafe_allow_html=True)
+st.selectbox(
     "Search the website",
     options=list(navigation_labels),
     index=None,
     format_func=lambda destination: navigation_labels[destination],
-    placeholder="Where do you want to go? Search Learn, Company Research, Market Monitor…",
+    placeholder="Search Learn, Company Research, Market Monitor…",
     key="toolbar_destination",
+    on_change=navigate_from_toolbar,
 )
-active_destination = toolbar_destination or "Home"
+active_destination = st.radio(
+    "Explore EquityLens",
+    options=list(navigation_labels),
+    horizontal=True,
+    key="main_navigation",
+    label_visibility="collapsed",
+    on_change=sync_navigation_search,
+)
 workspace_search = ""
-
-
-if active_destination == "Home":
-    st.markdown(
-        """
-        <div class="el-product-hero">
-            <div class="el-eyebrow">Public-markets research, made legible</div>
-            <h1 class="el-product-title">Understand public companies.<br><span>Without digging through hundreds of pages.</span></h1>
-            <p class="el-product-subtitle">
-                EquityLens organizes financial performance, company strategy, risk disclosures,
-                business models, and SEC filings into structured research while keeping the
-                original sources visible. <strong style="color:#16C7B2;">EquityLens informs. You decide.</strong>
-            </p>
-            <div class="el-badges">
-                <span class="el-badge">SEC EDGAR sourced</span>
-                <span class="el-badge">Calculations shown</span>
-                <span class="el-badge">Direct filing links</span>
-                <span class="el-badge">Period-aware research</span>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    st.markdown(
-        """
-        <div class="el-trust-strip">
-            <div class="el-trust-item">Primary SEC sources</div>
-            <div class="el-trust-item">Reported vs. calculated</div>
-            <div class="el-trust-item">Plain-language explanations</div>
-            <div class="el-trust-item">Source-linked research</div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    with st.expander("Methodology & source standards"):
-        st.markdown(
-            """
-            **Reported** — taken from a company filing or company-reported disclosure.
-
-            **Calculated by EquityLens** — derived from reported figures, such as growth rates,
-            margins, and trailing-twelve-month metrics.
-
-            **Research summary** — plain-language context built from structured company information
-            and filing disclosures. It is not a recommendation.
-
-            **Source priority:** SEC EDGAR first, company investor-relations disclosures second,
-            and appropriately licensed market-data providers where needed.
-            """
-        )
 
 
 
@@ -4340,138 +4327,52 @@ deep_research_tickers = {
 deep_research_tickers.discard("")
 
 if active_destination == "Home":
-    render_summary_cards([
-        ("Companies", f"{len(company_universe):,}"),
-        ("Industries", f"{company_universe['Industry'].nunique():,}"),
-        ("SEC Synced", f"{sec_synced_companies:,} / {len(company_universe):,}"),
-        ("Deep Research", f"{len(deep_research_tickers):,} / {len(company_universe):,}"),
-        ("Primary Source", "SEC EDGAR")
-    ])
-
-# Render the searched destination first so it opens immediately on rerun.
-navigation_order = [active_destination] + [
-    destination for destination in navigation_labels
-    if destination != active_destination
-]
-navigation_tabs = dict(zip(navigation_order, st.tabs(navigation_order)))
-home_tab = navigation_tabs["Home"]
-company_tab = navigation_tabs["Company Research"]
-peer_tab = navigation_tabs["Industry Comparison"]
-market_tab = navigation_tabs["Market Monitor"]
-sec_tracker_tab = navigation_tabs["Filings"]
-learn_tab = navigation_tabs["Learn"]
-
-with home_tab:
     st.markdown(
         """
-        <div class="el-user-intro">
-            <div class="el-user-intro-kicker">Start with what you want to know</div>
-            <div class="el-user-intro-title">What are you trying to understand?</div>
-            <div class="el-user-intro-copy">
-                EquityLens is organized around research questions, not a pile of financial data.
-                Pick the path that matches what you are actually trying to figure out.
-            </div>
-        </div>
-        <div class="el-intent-grid">
-            <div class="el-intent-card">
-                <div class="el-intent-label">Company Research</div>
-                <div class="el-intent-title">What should I know about this company?</div>
-                <div class="el-intent-copy">Open one research workspace for price, fundamentals, financials, filings, ownership, analyst views, peers, ETFs, and SEC-backed business context.</div>
-            </div>
-            <div class="el-intent-card">
-                <div class="el-intent-label">Industry Comparison</div>
-                <div class="el-intent-title">How does it compare with peers?</div>
-                <div class="el-intent-copy">Compare growth, margins, capital structure, business models, and risk themes on the same page.</div>
-            </div>
-            <div class="el-intent-card">
-                <div class="el-intent-label">Market Monitor</div>
-                <div class="el-intent-title">What is moving now?</div>
-                <div class="el-intent-copy">See market movement, the NYSE heat map, rates, macro releases, economic calendars, and current market news.</div>
-            </div>
-            <div class="el-intent-card">
-                <div class="el-intent-label">Learn</div>
-                <div class="el-intent-title">What does this metric mean?</div>
-                <div class="el-intent-copy">Learn the financial concepts first, then return to the company with enough context to interpret the numbers.</div>
-            </div>
+        <div class="el-product-hero el-tool-hero">
+            <div class="el-eyebrow">A research tool created by Keya Dhanani</div>
+            <h1 class="el-product-title">Explore. Understand. Compare.</h1>
+            <p class="el-product-subtitle">Explore public companies, compare industries, and follow markets with financial data and original SEC sources in one place.</p>
         </div>
         """,
-        unsafe_allow_html=True
+        unsafe_allow_html=True,
     )
 
-    section("Coverage Universe", "Broader public-company coverage")
+    section("Start here", "What would you like to explore?")
+    quick_actions = [
+        ("Research a company", "Company Research", "Financials, business context, risks, and original filings."),
+        ("Compare companies", "Industry Comparison", "Compare growth, margins, and business models across peers."),
+        ("Explore markets", "Market Monitor", "Market movement, heat maps, rates, and economic releases."),
+        ("Learn the basics", "Learn", "Plain-language explanations of financial terms and concepts."),
+    ]
+    action_columns = st.columns(2)
+    for action_index, (label, destination, description) in enumerate(quick_actions):
+        with action_columns[action_index % 2]:
+            st.button(
+                label,
+                key=f"home_action_{action_index}",
+                on_click=navigate_to,
+                args=(destination,),
+                use_container_width=True,
+            )
+            st.caption(description)
 
-    coverage_metrics = st.columns(3)
-    coverage_metrics[0].metric("Companies", f"{len(company_universe):,}")
-    coverage_metrics[1].metric("Sectors", f"{company_universe['Sector'].nunique():,}")
-    coverage_metrics[2].metric("Industries", f"{company_universe['Industry'].nunique():,}")
-
-    st.write(
-        "EquityLens now maintains a broader market-coverage universe sourced from the "
-        "Finviz list you provided. These companies can be opened from the Company Research workspace, where market data, "
-        "financials, filings, ownership, analyst context, peers, and deep research are organized "
-        "around one selected company."
-    )
-
-    st.info(
-        "Use the Company Research tab to open any company in the coverage universe. "
-        "Company-specific price, financial, filing, ownership, analyst, peer, and ETF views live there so the Home page does not duplicate research content."
-    )
-
-    st.markdown(
-        """
-        <div class="el-workflow-shell">
-            <div class="el-workflow-kicker">The research workflow</div>
-            <div class="el-workflow-title">From primary source to useful context.</div>
-            <div class="el-workflow-grid">
-                <div class="el-workflow-step">
-                    <div class="el-workflow-num">01 · Source</div>
-                    <div class="el-workflow-step-title">Primary disclosure</div>
-                    <div class="el-workflow-copy">Original SEC filings and company disclosures stay connected to the research.</div>
-                </div>
-                <div class="el-workflow-step">
-                    <div class="el-workflow-num">02 · Structure</div>
-                    <div class="el-workflow-step-title">Organize the facts</div>
-                    <div class="el-workflow-copy">Reported figures, business context, and risk disclosures are organized consistently.</div>
-                </div>
-                <div class="el-workflow-step">
-                    <div class="el-workflow-num">03 · Understand</div>
-                    <div class="el-workflow-step-title">Build useful context</div>
-                    <div class="el-workflow-copy">Review trends, economics, risks, and what changed across reporting periods.</div>
-                </div>
-                <div class="el-workflow-step">
-                    <div class="el-workflow-num">04 · Compare</div>
-                    <div class="el-workflow-step-title">Put peers in context</div>
-                    <div class="el-workflow-copy">Compare relevant companies without rankings, recommendations, or hidden scoring.</div>
-                </div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    section("Why EquityLens", "Research built to be understandable and verifiable")
-    st.markdown(
-        """
-        <div class="el-feature-grid">
-            <div class="el-feature-card">
-                <div class="el-feature-num">01 · Understand</div>
-                <div class="el-feature-title">Make finance easier to read</div>
-                <div class="el-feature-copy">Plain-language explanations sit beside reported numbers so users can understand what a metric means before interpreting it.</div>
-            </div>
-            <div class="el-feature-card">
-                <div class="el-feature-num">02 · Compare</div>
-                <div class="el-feature-title">Put peers on the same page</div>
-                <div class="el-feature-copy">Standardized growth, margins, LTM results, capital structure, business models, and risks make peer research easier to follow.</div>
-            </div>
-            <div class="el-feature-card">
-                <div class="el-feature-num">03 · Verify</div>
-                <div class="el-feature-title">Show the source</div>
-                <div class="el-feature-copy">Material figures and filing-based research stay connected to original SEC sources so users can inspect the underlying disclosure themselves.</div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    with st.expander("Coverage & sources"):
+        st.caption(
+            f"{len(company_universe):,} companies · "
+            f"{company_universe['Industry'].nunique():,} industries · "
+            f"{sec_synced_companies:,} companies with synced SEC filings"
+        )
+        st.write(
+            "Company coverage and completed research are different. "
+            "Some companies have market data and filings while structured analysis is still being added."
+        )
+        st.markdown(
+            "**Reported:** taken from a company disclosure. "
+            "**Calculated:** derived from reported figures. "
+            "**Research summary:** context based on available disclosures."
+        )
+        st.caption("Primary sources: SEC EDGAR and company disclosures. Market-data sources are identified in each view.")
 
     section("Recently updated", "Latest SEC filings detected")
     recent_filing_rows = []
@@ -4512,14 +4413,7 @@ with home_tab:
     else:
         st.caption("Recent SEC filing activity will appear here as the automated filing monitor populates.")
 
-    section("What makes it different", "Research that shows its work")
-    st.info(
-        "EquityLens separates company-reported figures from calculations and summaries, "
-        "links material claims back to SEC filings, and keeps interpretation separate from the source data."
-    )
-
-
-with peer_tab:
+if active_destination == "Industry Comparison":
     section("Peer Research", "Industry Comparison")
 
     selected_industry = st.selectbox(
@@ -5017,14 +4911,28 @@ with peer_tab:
                 "financials, analyst context, and source documents for an individual company."
             )
 
-with company_tab:
+if active_destination == "Company Research":
     section("Company Research", "Company Research Workspace")
 
     st.caption(
-        "One company, one research workspace. Search the full EquityLens universe or select a row "
-        "from Coverage Universe, then move through Snapshot, Financials, Filings, Ownership, "
-        "Analyst Research, and Peers & ETFs without jumping between duplicate company pages."
+        "Find a company by name or ticker. Start with its summary, then explore the details below."
     )
+
+    def reopen_recent_company(ticker):
+        st.session_state["workspace_company_search"] = ticker
+        reset_coverage_selection()
+
+    recent_companies = st.session_state.get("recent_companies", [])
+    if recent_companies:
+        with st.expander("Recently viewed"):
+            for recent_ticker, recent_name in recent_companies:
+                st.button(
+                    f"{recent_name} ({recent_ticker})",
+                    key=f"recent_company_{recent_ticker}",
+                    on_click=reopen_recent_company,
+                    args=(recent_ticker,),
+                )
+            st.caption("Recent companies are remembered during this visit.")
 
     workspace_search = st.text_input(
         "Search company or ticker",
@@ -5177,6 +5085,12 @@ with company_tab:
 
     selected_ticker = str(selected_workspace_row.get("Ticker", "")).upper().strip()
     selected_name = str(selected_workspace_row.get("Company", "")).strip()
+    st.session_state["recent_companies"] = [
+        (selected_ticker, selected_name)
+    ] + [
+        item for item in st.session_state.get("recent_companies", [])
+        if item[0] != selected_ticker
+    ][:4]
     selected_sector_name = str(selected_workspace_row.get("Sector", "")).strip()
     selected_industry_name = str(selected_workspace_row.get("Industry", "")).strip()
     selected_country = str(selected_workspace_row.get("Country", "")).strip()
@@ -5293,10 +5207,11 @@ with company_tab:
         ("$" + f"{selected_price:,.2f}") if selected_price is not None else "N/A",
         f"{selected_change:+.2f}%" if selected_change is not None else None,
     )
-    header_metrics[1].metric("Market Cap", format_money(selected_market_cap))
+    header_metrics[1].metric("Market Cap", format_money(selected_market_cap), help="Share price multiplied by shares outstanding. Market value differs from revenue or cash.")
     header_metrics[2].metric(
         "P/E",
         f"{selected_pe:.1f}x" if selected_pe is not None else "N/A",
+        help="Price-to-earnings ratio: share price relative to earnings per share. An unavailable value does not mean zero.",
     )
 
     if selected_latest.get("revenue") is not None:
@@ -5312,8 +5227,55 @@ with company_tab:
         )
         workspace_growth = calc_growth(workspace_revenue, prior_revenue)
 
-    header_metrics[3].metric("Revenue", format_money(workspace_revenue))
-    header_metrics[4].metric("Revenue Growth", pct(workspace_growth))
+    header_metrics[3].metric("Revenue", format_money(workspace_revenue), help="Sales before expenses. Check the period shown below before comparing companies.")
+    header_metrics[4].metric("Revenue Growth", pct(workspace_growth), help="Percentage change from the comparison period. Quarterly growth here compares with the same quarter a year earlier.")
+
+    latest_available_filing = max(
+        selected_filings,
+        key=lambda filing: str(filing.get("filing_date") or ""),
+        default={},
+    )
+    filing_date = latest_available_filing.get("filing_date") or "Date unavailable"
+    filing_form = latest_available_filing.get("form") or "Form unavailable"
+    financial_period = selected_latest.get("period") or selected_latest.get("quarter") or selected_latest.get("label")
+    if not financial_period and selected_latest.get("year"):
+        financial_period = str(selected_latest["year"])
+    if not financial_period:
+        financial_period = selected_fallback_latest.get("period") or selected_fallback_latest.get("year")
+    st.caption(
+        f"Financial period: {financial_period or 'See Financials for source periods'} · "
+        "Market quotes may be delayed. Unavailable figures are not zero."
+    )
+
+    section("At a glance", "Research summary")
+    summary_columns = st.columns(2)
+    with summary_columns[0]:
+        st.markdown("**Key risks to explore**")
+        summary_risks = selected_analysis.get("key_risk_themes", [])
+        if summary_risks:
+            for risk in summary_risks[:3]:
+                st.write(f"• {risk}")
+        else:
+            st.caption("Risk summary is still being added. Review Risk Factors in the original filings.")
+    with summary_columns[1]:
+        st.markdown("**Latest filing available**")
+        if latest_available_filing:
+            st.write(f"{filing_form} · Filed {filing_date}")
+            if latest_available_filing.get("url"):
+                st.link_button("Read the original filing", latest_available_filing["url"])
+        else:
+            st.caption("No filing is available in this feed yet.")
+        st.caption("This is the latest filing returned by the source feed.")
+
+    with st.expander("Need help reading these numbers?"):
+        st.markdown(
+            "**Revenue:** sales before expenses.\n\n"
+            "**Operating margin:** operating profit as a percentage of revenue.\n\n"
+            "**LTM:** the most recent twelve months of results.\n\n"
+            "**YoY:** comparison with the same period one year earlier.\n\n"
+            "**10-K / 10-Q:** annual / quarterly SEC reports."
+        )
+        st.button("Open Learn", key="summary_open_learn", on_click=navigate_to, args=("Learn",))
 
     (
         snapshot_subtab,
@@ -6144,7 +6106,7 @@ with company_tab:
         )
 
 
-with market_tab:
+if active_destination == "Market Monitor":
     section("Market", "Market Monitor")
 
     st.markdown(
@@ -6789,7 +6751,7 @@ with market_tab:
     )
 
 
-with sec_tracker_tab:
+if active_destination == "Filings":
     section("SEC Monitor", "Filing Tracker")
 
     st.write(
@@ -6987,7 +6949,7 @@ with sec_tracker_tab:
             )
 
 
-with learn_tab:
+if active_destination == "Learn":
     section("Learning", "Understand the Numbers")
     st.write(
         "EquityLens is designed for users who are still learning how to read public-company information. "
