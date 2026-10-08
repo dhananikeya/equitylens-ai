@@ -2169,6 +2169,25 @@ def get_company_financial_snapshot(symbol):
         except Exception:
             balance_date = str(latest_balance_column)
 
+    # Statement tables can omit individual rows for otherwise well-covered companies.
+    # Use Yahoo summary fields only as a supplemental fallback for missing values.
+    info = {}
+    try:
+        raw_info = ticker.info
+        if isinstance(raw_info, dict):
+            info = raw_info
+    except Exception:
+        info = {}
+
+    if shares_outstanding is None:
+        shares_outstanding = safe_float(info.get("sharesOutstanding"))
+    if total_debt is None:
+        total_debt = safe_float(info.get("totalDebt"))
+    if cash_and_investments is None:
+        cash_and_investments = safe_float(info.get("totalCash"))
+    if total_assets is None:
+        total_assets = safe_float(info.get("totalAssets"))
+
     return {
         "latest": latest_income,
         "history": annual_history,
@@ -2178,7 +2197,7 @@ def get_company_financial_snapshot(symbol):
             "total_debt": total_debt,
             "cash_and_investments": cash_and_investments,
             "total_assets": total_assets,
-            "balance_sheet_as_of": balance_date,
+            "balance_sheet_as_of": balance_date or "Latest available",
         },
         "source": "Yahoo Finance via yfinance",
     }
@@ -4500,10 +4519,18 @@ with peer_tab:
                 or "N/A"
             )
             filing_source = capital.get("source_filing", "")
+            has_capital_value = any(
+                value is not None
+                for value in [shares, debt, cash_investments]
+            )
             data_source = (
                 "SEC filing"
                 if filing_source
-                else "Yahoo Finance supplemental"
+                else (
+                    "Yahoo Finance supplemental"
+                    if has_capital_value
+                    else "Data unavailable"
+                )
             )
 
             capital_rows.append({
@@ -4873,14 +4900,19 @@ with peer_tab:
                 key="peer_risk_company"
             )
 
-            risk_analysis = company_analysis.get(risk_company, {})
+            risk_ticker = str(
+                company_data.get(risk_company, {}).get("ticker", "")
+            ).upper()
+            risk_analysis = _analysis_by_ticker.get(
+                risk_ticker,
+                company_analysis.get(risk_company, {}),
+            )
             risk_themes = risk_analysis.get("key_risk_themes", [])
             risk_source = risk_analysis.get(
                 "source_filing",
                 company_data.get(risk_company, {}).get("filing_url", "")
             )
             risk_name = risk_company.split(" (")[0]
-            risk_ticker = company_data.get(risk_company, {}).get("ticker", "")
             risk_industry = company_data.get(risk_company, {}).get(
                 "industry", "Unclassified"
             )
@@ -5211,10 +5243,19 @@ with company_tab:
     )
 
     selected_data = company_data.get(selected_company_key, {})
-    selected_analysis = company_analysis.get(selected_company_key, {})
-    selected_qdata = company_quarterly.get(selected_company_key, {})
+    selected_analysis = _analysis_by_ticker.get(
+        selected_ticker,
+        company_analysis.get(selected_company_key, {}),
+    )
+    selected_qdata = _quarterly_by_ticker.get(
+        selected_ticker,
+        company_quarterly.get(selected_company_key, {}),
+    )
     selected_qm = quarterly_metrics(selected_qdata)
-    selected_s1 = company_s1.get(selected_company_key, {})
+    selected_s1 = _s1_by_ticker.get(
+        selected_ticker,
+        company_s1.get(selected_company_key, {}),
+    )
     selected_latest = selected_qdata.get("latest_quarter", {})
 
     try:
