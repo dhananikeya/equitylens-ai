@@ -12,7 +12,7 @@ import html
 import re
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlencode
 
 import requests
 import pandas as pd
@@ -3852,6 +3852,27 @@ def render_nyse_market_monitor(nyse_finviz):
         "Tile size represents market capitalization and color represents daily price change."
     )
 
+    with st.expander("Open research for a company on this map"):
+        map_research_rows = heatmap_df[["Ticker"]].copy()
+        map_research_rows["Company"] = heatmap_df.get("Company", heatmap_df["Ticker"])
+        map_research_rows = map_research_rows[
+            map_research_rows["Ticker"].astype(str).str.upper().isin(workspace_known_tickers)
+        ]
+        if heatmap_search:
+            map_research_rows = map_research_rows[
+                map_research_rows["Ticker"].astype(str).isin(matching_tickers)
+            ]
+        if not map_research_rows.empty:
+            map_research_rows["Research"] = map_research_rows["Ticker"].apply(research_link)
+            st.dataframe(
+                map_research_rows,
+                hide_index=True,
+                use_container_width=True,
+                column_config={"Research": st.column_config.LinkColumn("Research", display_text="Open research")},
+            )
+        else:
+            st.caption("No companies in this map selection have a matching research profile.")
+
     if heatmap_search:
         if matching_tickers:
             st.caption(
@@ -4276,6 +4297,51 @@ navigation_labels = {
     "Filings": "Filings — SEC tracker, S-1, 10-K & 10-Q",
     "Learn": "Learn — learn the basics, lessons & financial terms",
 }
+# Durable copies keep widget choices when their section is not rendered.
+saved_choices = st.session_state.setdefault("saved_choices", {})
+for choice_key, choice_value in saved_choices.items():
+    st.session_state.setdefault(choice_key, choice_value)
+
+
+def remember_choice(key, value):
+    st.session_state[key] = value
+    st.session_state["saved_choices"][key] = value
+
+
+def open_company_research(ticker):
+    remember_choice("workspace_company_search", ticker)
+    st.session_state["last_research_ticker"] = ticker
+    reset_coverage_selection()
+    navigate_to("Company Research")
+
+
+def compare_company(company_key):
+    comparison_industry = company_data[company_key].get("industry", "Unclassified")
+    peers = [
+        name for name, data in company_data.items()
+        if data.get("industry", "Unclassified") == comparison_industry
+        and name != company_key
+    ]
+    remember_choice("peer_industry", comparison_industry)
+    remember_choice("peer_subgroup", "All current peers")
+    remember_choice("peer_companies", [company_key] + peers[:2])
+    navigate_to("Industry Comparison")
+
+
+def retry_company_data(ticker):
+    get_sec_company_research.clear(ticker)
+    get_live_market_data.clear([ticker])
+    get_company_financial_snapshot.clear(ticker)
+    get_market_history.clear()
+
+
+def research_link(ticker=None, destination="Company Research"):
+    params = {"section": destination}
+    if ticker:
+        params["ticker"] = ticker
+    return "https://equitylens-ai-2h7rd8qluv3bc8sdqf5cu3.streamlit.app/?" + urlencode(params)
+
+
 def navigate_to(destination):
     st.session_state["main_navigation"] = destination
     st.session_state["toolbar_destination"] = destination
@@ -4288,6 +4354,15 @@ def navigate_from_toolbar():
 def sync_navigation_search():
     st.session_state["toolbar_destination"] = st.session_state["main_navigation"]
 
+
+if not st.session_state.get("shared_link_loaded"):
+    shared_destination = st.query_params.get("section")
+    shared_ticker = str(st.query_params.get("ticker", "")).upper().strip()
+    if shared_destination in navigation_labels:
+        navigate_to(shared_destination)
+    if shared_ticker and shared_ticker in workspace_known_tickers:
+        open_company_research(shared_ticker)
+    st.session_state["shared_link_loaded"] = True
 
 st.session_state.setdefault("main_navigation", "Home")
 st.markdown('<div class="el-kicker">EquityLens AI · Research tool</div>', unsafe_allow_html=True)
@@ -4419,7 +4494,8 @@ if active_destination == "Industry Comparison":
     selected_industry = st.selectbox(
         "Industry",
         industries,
-        index=0
+        index=0,
+        key="peer_industry",
     )
 
     industry_companies = [
@@ -4432,10 +4508,13 @@ if active_destination == "Industry Comparison":
         if any(member in industry_companies for member in members)
     ]
 
+    if st.session_state.get("peer_subgroup") not in subgroup_options:
+        remember_choice("peer_subgroup", "All current peers")
     selected_subgroup = st.selectbox(
         "Sub-group",
         subgroup_options,
-        index=0
+        index=0,
+        key="peer_subgroup",
     )
 
     if selected_subgroup == "All current peers":
@@ -4447,10 +4526,13 @@ if active_destination == "Industry Comparison":
         ]
 
     defaults = available_companies[:3]
+    if "peer_companies" in st.session_state:
+        remember_choice("peer_companies", [name for name in st.session_state["peer_companies"] if name in available_companies])
     selected_companies = st.multiselect(
         "Select companies to compare",
         available_companies,
-        default=defaults
+        default=defaults,
+        key="peer_companies",
     )
 
     if selected_subgroup != "All current peers":
@@ -4919,8 +5001,7 @@ if active_destination == "Company Research":
     )
 
     def reopen_recent_company(ticker):
-        st.session_state["workspace_company_search"] = ticker
-        reset_coverage_selection()
+        open_company_research(ticker)
 
     recent_companies = st.session_state.get("recent_companies", [])
     if recent_companies:
@@ -4972,6 +5053,9 @@ if active_destination == "Company Research":
             if str(value).strip()
         ]
     )
+
+    if st.session_state.get("workspace_industry", "All industries") not in ["All industries"] + workspace_industries:
+        remember_choice("workspace_industry", "All industries")
 
     with workspace_filters[1]:
         workspace_industry = st.selectbox(
@@ -5077,6 +5161,14 @@ if active_destination == "Company Research":
                 if not table_match.empty:
                     selected_workspace_row = table_match.iloc[0]
 
+    if selected_workspace_row is None and not search_text:
+        previous_ticker = st.session_state.get("last_research_ticker")
+        previous_match = workspace_filtered[
+            workspace_filtered["Ticker"].astype(str).str.upper() == previous_ticker
+        ]
+        if not previous_match.empty:
+            selected_workspace_row = previous_match.iloc[0]
+
     if selected_workspace_row is None:
         if not workspace_filtered.empty:
             selected_workspace_row = workspace_filtered.iloc[0]
@@ -5084,6 +5176,7 @@ if active_destination == "Company Research":
             selected_workspace_row = workspace_universe.iloc[0]
 
     selected_ticker = str(selected_workspace_row.get("Ticker", "")).upper().strip()
+    st.session_state["last_research_ticker"] = selected_ticker
     selected_name = str(selected_workspace_row.get("Company", "")).strip()
     st.session_state["recent_companies"] = [
         (selected_ticker, selected_name)
@@ -5200,6 +5293,32 @@ if active_destination == "Company Research":
         """,
         unsafe_allow_html=True,
     )
+
+    research_actions = st.columns(2)
+    with research_actions[0]:
+        if selected_company_key in company_data and company_data[selected_company_key].get("industry", "Unclassified") in industries:
+            st.button(
+                "Compare this company",
+                key="research_compare_company",
+                on_click=compare_company,
+                args=(selected_company_key,),
+                use_container_width=True,
+            )
+        else:
+            st.caption("Peer comparison is not available for this company's industry yet.")
+    with research_actions[1]:
+        with st.expander("Share this research"):
+            st.caption("Copy this link to open the same company. Data may change as sources update.")
+            st.code(research_link(selected_ticker), language=None)
+
+    if selected_sec_error or selected_price is None or not selected_financial_fallback:
+        st.caption("Some source data is unavailable. You can retry without losing your selected company.")
+        st.button(
+            "Retry company data",
+            key="retry_company_data",
+            on_click=retry_company_data,
+            args=(selected_ticker,),
+        )
 
     header_metrics = st.columns(5)
     header_metrics[0].metric(
@@ -7219,6 +7338,16 @@ if active_destination == "Learn":
         "EquityLens provides outbound links and attribution only. Video availability, titles, and content "
         "may change at the creator's discretion."
     )
+
+# Snapshot rendered controls separately from Streamlit's widget lifecycle.
+persistent_choice_keys = {
+    "workspace_company_search", "workspace_sector", "workspace_industry",
+    "peer_industry", "peer_subgroup", "peer_companies",
+    "nyse_heatmap_sector", "nyse_heatmap_limit", "nyse_heatmap_search",
+}
+for choice_key, choice_value in list(st.session_state.items()):
+    if choice_key in persistent_choice_keys or choice_key.startswith("workspace_chart_range_"):
+        st.session_state["saved_choices"][choice_key] = choice_value
 
 st.markdown(
     """
