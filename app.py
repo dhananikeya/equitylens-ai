@@ -5998,12 +5998,12 @@ with market_tab:
     st.markdown(
         """
         <div class="el-market-hero">
-            <div class="el-market-hero-label">Covered-company market context</div>
-            <div class="el-market-hero-title">See what is moving, then inspect the company behind it.</div>
+            <div class="el-market-hero-label">Market-wide context</div>
+            <div class="el-market-hero-title">See what is moving across markets, rates, macro, and news.</div>
             <div class="el-market-hero-copy">
-                Monitor price changes and volume for EquityLens-covered companies, then place that movement
-                beside company fundamentals and recent SEC filings. Market movement and filing activity are
-                displayed together without assuming one caused the other.
+                Monitor price movement, the NYSE heat map, Treasury and SOFR rates, economic releases,
+                calendars, and market headlines in one place. Company-specific fundamentals and filings
+                now stay inside the dedicated Company Research workspace.
             </div>
         </div>
         """,
