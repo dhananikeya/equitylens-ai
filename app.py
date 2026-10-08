@@ -5063,32 +5063,31 @@ with peer_tab:
             )
 
 with company_tab:
-    section("Explore Companies", "Research the Company Through SEC Filings")
+    section("Company Research", "Company Research Workspace")
 
     st.caption(
-        "Explore all companies in the EquityLens coverage universe. The app resolves current "
-        "SEC filing history on demand and searches historical registration filings for S-1, "
-        "F-1, S-11, and related amendments when they are available."
+        "One company, one research workspace. Search the full EquityLens universe or select a row "
+        "from Coverage Universe, then move through Snapshot, Financials, Filings, Ownership, "
+        "Analyst Research, and Peers & ETFs without jumping between duplicate company pages."
     )
 
-    # Build one searchable universe from the 517-company Finviz list plus
-    # any curated/deep-research companies that are not present in that CSV.
-    # This preserves legacy profiles such as MongoDB, Snowflake and Rubrik.
-    explore_universe = company_universe.copy()
-    explore_known_tickers = set(
-        explore_universe["Ticker"].astype(str).str.upper().tolist()
+    # Build a unified searchable universe from the 517-company Finviz list plus
+    # curated legacy research profiles that are not present in that CSV.
+    workspace_universe = company_universe.copy()
+    workspace_known_tickers = set(
+        workspace_universe["Ticker"].astype(str).str.upper().tolist()
     )
-    explore_extra_rows = []
+    workspace_extra_rows = []
 
-    for explore_key, explore_record in company_data.items():
-        extra_ticker = str(explore_record.get("ticker", "")).upper().strip()
-        if not extra_ticker or extra_ticker in explore_known_tickers:
+    for workspace_key, workspace_record in company_data.items():
+        extra_ticker = str(workspace_record.get("ticker", "")).upper().strip()
+        if not extra_ticker or extra_ticker in workspace_known_tickers:
             continue
 
         extra_industry = str(
-            explore_record.get("industry", "Other")
+            workspace_record.get("industry", "Other")
         ).strip() or "Other"
-        extra_sector = str(explore_record.get("sector", "")).strip()
+        extra_sector = str(workspace_record.get("sector", "")).strip()
 
         if not extra_sector:
             if extra_industry in {
@@ -5101,660 +5100,896 @@ with company_tab:
             else:
                 extra_sector = "Other"
 
-        extra_company = explore_key.rsplit(" (", 1)[0]
-        explore_extra_rows.append({
+        workspace_extra_rows.append({
             "Ticker": extra_ticker,
-            "Company": extra_company,
+            "Company": workspace_key.rsplit(" (", 1)[0],
             "Sector": extra_sector,
             "Industry": extra_industry,
-            "Country": str(explore_record.get("country", "")).strip(),
-            "Coverage Key": explore_key,
+            "Country": str(workspace_record.get("country", "")).strip(),
+            "Coverage Key": workspace_key,
         })
-        explore_known_tickers.add(extra_ticker)
+        workspace_known_tickers.add(extra_ticker)
 
-    if explore_extra_rows:
-        explore_universe = pd.concat(
-            [explore_universe, pd.DataFrame(explore_extra_rows)],
+    if workspace_extra_rows:
+        workspace_universe = pd.concat(
+            [workspace_universe, pd.DataFrame(workspace_extra_rows)],
             ignore_index=True,
             sort=False,
         )
 
-    explore_sectors = sorted(
+    workspace_sectors = sorted(
         [
             value
-            for value in explore_universe["Sector"].dropna().unique().tolist()
+            for value in workspace_universe["Sector"].dropna().unique().tolist()
             if str(value).strip()
         ]
     )
 
-    explore_filters = st.columns(3)
+    workspace_filters = st.columns([1, 1, 1.35])
 
-    with explore_filters[0]:
-        explore_sector = st.selectbox(
+    with workspace_filters[0]:
+        workspace_sector = st.selectbox(
             "Sector",
-            ["All sectors"] + explore_sectors,
-            key="explore_sector"
+            ["All sectors"] + workspace_sectors,
+            key="workspace_sector",
         )
 
-    if explore_sector == "All sectors":
-        explore_sector_df = explore_universe.copy()
+    if workspace_sector == "All sectors":
+        workspace_sector_df = workspace_universe.copy()
     else:
-        explore_sector_df = explore_universe[
-            explore_universe["Sector"] == explore_sector
+        workspace_sector_df = workspace_universe[
+            workspace_universe["Sector"] == workspace_sector
         ].copy()
 
-    explore_industries = sorted(
+    workspace_industries = sorted(
         [
             value
-            for value in explore_sector_df["Industry"].dropna().unique().tolist()
+            for value in workspace_sector_df["Industry"].dropna().unique().tolist()
             if str(value).strip()
         ]
     )
 
-    with explore_filters[1]:
-        explore_industry = st.selectbox(
+    with workspace_filters[1]:
+        workspace_industry = st.selectbox(
             "Industry",
-            ["All industries"] + explore_industries,
-            key="explore_s1_industry"
+            ["All industries"] + workspace_industries,
+            key="workspace_industry",
         )
 
-    explore_df = explore_sector_df.copy()
-    if explore_industry != "All industries":
-        explore_df = explore_df[
-            explore_df["Industry"] == explore_industry
+    workspace_filtered = workspace_sector_df.copy()
+    if workspace_industry != "All industries":
+        workspace_filtered = workspace_filtered[
+            workspace_filtered["Industry"] == workspace_industry
         ].copy()
 
-    with explore_filters[2]:
-        explore_search = st.text_input(
+    with workspace_filters[2]:
+        workspace_search = st.text_input(
             "Search company or ticker",
             placeholder="e.g. MongoDB, MDB, Amazon, AAPL",
-            key="explore_company_search"
+            key="workspace_company_search",
         )
 
-    # Text search is intentionally global. If a user types a company or
-    # ticker, search the entire searchable universe instead of silently
-    # excluding it because of a sector/industry filter.
-    search_text = explore_search.strip()
-    explore_options_df = (
-        explore_universe.copy()
-        if search_text
-        else explore_df.copy()
-    )
+    search_text = workspace_search.strip()
+    search_pool = workspace_universe.copy() if search_text else workspace_filtered.copy()
+    selected_workspace_row = None
 
     if search_text:
         search_lower = search_text.lower()
-        ticker_lower = (
-            explore_options_df["Ticker"]
-            .fillna("")
-            .astype(str)
-            .str.lower()
-        )
-        company_lower = (
-            explore_options_df["Company"]
-            .fillna("")
-            .astype(str)
-            .str.lower()
-        )
+        ticker_lower = search_pool["Ticker"].fillna("").astype(str).str.lower()
+        company_lower = search_pool["Company"].fillna("").astype(str).str.lower()
 
-        exact_ticker = explore_options_df[ticker_lower == search_lower]
-        exact_company = explore_options_df[company_lower == search_lower]
-        starts_with = explore_options_df[
+        exact_ticker = search_pool[ticker_lower == search_lower]
+        exact_company = search_pool[company_lower == search_lower]
+        starts_with = search_pool[
             company_lower.str.startswith(search_lower, na=False)
             | ticker_lower.str.startswith(search_lower, na=False)
         ]
-        contains = explore_options_df[
+        contains = search_pool[
             company_lower.str.contains(search_lower, regex=False, na=False)
             | ticker_lower.str.contains(search_lower, regex=False, na=False)
         ]
 
         if not exact_ticker.empty:
-            explore_matches = exact_ticker
+            search_matches = exact_ticker
         elif not exact_company.empty:
-            explore_matches = exact_company
+            search_matches = exact_company
         elif not starts_with.empty:
-            explore_matches = starts_with
+            search_matches = starts_with
         else:
-            explore_matches = contains
+            search_matches = contains
 
-        if explore_matches.empty:
-            st.warning(
-                f'No company or ticker matched "{search_text}".'
-            )
-            explore_row = explore_df.iloc[0]
-        else:
-            explore_row = explore_matches.iloc[0]
-            if len(explore_matches) > 1:
+        if not search_matches.empty:
+            selected_workspace_row = search_matches.iloc[0]
+            if len(search_matches) > 1:
                 st.caption(
-                    f"{len(explore_matches)} matches found. Showing "
-                    f"{explore_row['Company']} ({explore_row['Ticker']}). "
-                    "Keep typing to narrow the result."
+                    f"{len(search_matches)} matches found. Showing "
+                    f"{selected_workspace_row['Company']} "
+                    f"({selected_workspace_row['Ticker']}). Keep typing to narrow the result."
                 )
-    else:
-        explore_row = explore_options_df.iloc[0]
+        else:
+            st.warning(f'No company or ticker matched "{search_text}".')
 
-    st.caption(
-        f"All {len(company_universe):,} companies in the core EquityLens market universe are searchable by company name or ticker. "
-        "Legacy curated profiles are also included in search coverage."
-    )
+    coverage_display = workspace_filtered[
+        [
+            column
+            for column in [
+                "Ticker", "Company", "Sector", "Industry", "Country",
+                "Market Cap", "P/E", "Price", "Change",
+            ]
+            if column in workspace_filtered.columns
+        ]
+    ].copy().reset_index(drop=True)
 
-    explore_ticker = str(explore_row.get("Ticker", ""))
-    explore_name = str(explore_row.get("Company", ""))
-    explore_industry_name = str(explore_row.get("Industry", ""))
-    explore_country = str(explore_row.get("Country", ""))
+    with st.expander(
+        f"Coverage Universe · {len(workspace_filtered):,} companies in current filters",
+        expanded=False,
+    ):
+        st.caption("Select a row to open that company directly in the research workspace.")
+        coverage_event = None
+        try:
+            coverage_event = st.dataframe(
+                coverage_display,
+                use_container_width=True,
+                hide_index=True,
+                on_select="rerun",
+                selection_mode="single-row",
+                key="workspace_coverage_table",
+            )
+        except TypeError:
+            st.dataframe(
+                coverage_display,
+                use_container_width=True,
+                hide_index=True,
+            )
 
-    deep_explore_company = next(
+    if coverage_event is not None:
+        try:
+            selected_rows = list(coverage_event.selection.rows)
+        except Exception:
+            selected_rows = []
+        if selected_rows:
+            selected_index = selected_rows[0]
+            if 0 <= selected_index < len(coverage_display):
+                selected_ticker_from_table = str(
+                    coverage_display.iloc[selected_index].get("Ticker", "")
+                ).upper()
+                table_match = workspace_universe[
+                    workspace_universe["Ticker"].astype(str).str.upper()
+                    == selected_ticker_from_table
+                ]
+                if not table_match.empty:
+                    selected_workspace_row = table_match.iloc[0]
+
+    if selected_workspace_row is None:
+        if not workspace_filtered.empty:
+            selected_workspace_row = workspace_filtered.iloc[0]
+        else:
+            selected_workspace_row = workspace_universe.iloc[0]
+
+    selected_ticker = str(selected_workspace_row.get("Ticker", "")).upper().strip()
+    selected_name = str(selected_workspace_row.get("Company", "")).strip()
+    selected_sector_name = str(selected_workspace_row.get("Sector", "")).strip()
+    selected_industry_name = str(selected_workspace_row.get("Industry", "")).strip()
+    selected_country = str(selected_workspace_row.get("Country", "")).strip()
+
+    selected_company_key = next(
         (
             company_name
             for company_name, company in company_data.items()
-            if str(company.get("ticker", "")).upper() == explore_ticker
+            if str(company.get("ticker", "")).upper() == selected_ticker
         ),
-        None
+        str(selected_workspace_row.get("Coverage Key", "")).strip(),
     )
-    deep_explore_s1 = (
-        company_s1.get(deep_explore_company, {})
-        if deep_explore_company
-        else {}
-    )
+
+    selected_data = company_data.get(selected_company_key, {})
+    selected_analysis = company_analysis.get(selected_company_key, {})
+    selected_qdata = company_quarterly.get(selected_company_key, {})
+    selected_qm = quarterly_metrics(selected_qdata)
+    selected_s1 = company_s1.get(selected_company_key, {})
+    selected_latest = selected_qdata.get("latest_quarter", {})
 
     try:
-        explore_sec = get_sec_company_research(explore_ticker)
-        explore_sec_error = None
+        selected_sec = get_sec_company_research(selected_ticker)
+        selected_sec_error = None
     except Exception:
-        explore_sec = {}
-        explore_sec_error = (
+        selected_sec = {}
+        selected_sec_error = (
             "SEC EDGAR is temporarily unavailable for this company. "
-            "Try again shortly."
+            "The rest of the workspace will continue to load."
         )
 
-    explore_filings = explore_sec.get("filings", [])
-    explore_registrations = explore_sec.get("registration_filings", [])
+    selected_filings = selected_sec.get("filings", [])
+    selected_registrations = selected_sec.get("registration_filings", [])
 
     latest_annual = latest_filing_by_forms(
-        explore_filings,
-        {"10-K", "10-K/A", "20-F", "20-F/A", "40-F", "40-F/A"}
+        selected_filings,
+        {"10-K", "10-K/A", "20-F", "20-F/A", "40-F", "40-F/A"},
     )
     latest_quarter = latest_filing_by_forms(
-        explore_filings,
-        {"10-Q", "10-Q/A"}
+        selected_filings,
+        {"10-Q", "10-Q/A"},
     )
     latest_current = latest_filing_by_forms(
-        explore_filings,
-        {"8-K", "8-K/A", "6-K", "6-K/A"}
+        selected_filings,
+        {"8-K", "8-K/A", "6-K", "6-K/A"},
     )
-    primary_registration = (
-        explore_registrations[0]
-        if explore_registrations
-        else {}
-    )
+    primary_registration = selected_registrations[0] if selected_registrations else {}
 
-    registration_label = (
-        primary_registration.get("form", "")
-        if primary_registration
-        else "No registration filing found"
+    try:
+        selected_quote = get_live_market_data([selected_ticker]).get(selected_ticker, {})
+    except Exception:
+        selected_quote = {}
+
+    selected_price = selected_quote.get("close")
+    selected_change = selected_quote.get("percent_change")
+
+    selected_market_cap_m = finviz_numeric(selected_workspace_row.get("Market Cap"))
+    selected_market_cap = (
+        selected_market_cap_m * 1_000_000
+        if selected_market_cap_m is not None
+        else None
+    )
+    selected_pe = finviz_numeric(selected_workspace_row.get("P/E"))
+
+    business_summary = selected_analysis.get(
+        "business_model",
+        "Structured company research is being expanded for this company. "
+        "SEC filings and market data remain available in the workspace.",
     )
 
     st.markdown(
         f"""
         <div class="el-company-hero">
-            <div class="el-kicker">{explore_ticker} · {explore_industry_name}</div>
-            <div class="el-company-title">{explore_name}</div>
-            <p class="el-subtitle">
-                Primary-source research from SEC EDGAR, including current public-company
-                filings and IPO-era registration materials when available.
-            </p>
+            <div class="el-kicker">
+                {html.escape(selected_ticker)} · {html.escape(selected_sector_name)} · {html.escape(selected_industry_name)}
+            </div>
+            <div class="el-company-title">{html.escape(selected_name)}</div>
+            <p class="el-subtitle">{html.escape(str(business_summary))}</p>
             <div class="el-badges">
-                <span class="el-badge">{explore_sector}</span>
-                <span class="el-badge">{explore_country}</span>
-                <span class="el-badge">{registration_label}</span>
-                <span class="el-badge">SEC EDGAR</span>
+                <span class="el-badge">{html.escape(selected_country or "Global")}</span>
+                <span class="el-badge">SEC sourced</span>
+                <span class="el-badge">Research only</span>
             </div>
         </div>
         """,
-        unsafe_allow_html=True
+        unsafe_allow_html=True,
     )
 
-    if explore_sec_error:
-        st.warning(explore_sec_error)
+    header_metrics = st.columns(5)
+    header_metrics[0].metric(
+        "Price",
+        ("$" + f"{selected_price:,.2f}") if selected_price is not None else "N/A",
+        f"{selected_change:+.2f}%" if selected_change is not None else None,
+    )
+    header_metrics[1].metric("Market Cap", format_money(selected_market_cap))
+    header_metrics[2].metric(
+        "P/E",
+        f"{selected_pe:.1f}x" if selected_pe is not None else "N/A",
+    )
+
+    if selected_latest.get("revenue") is not None:
+        workspace_revenue = selected_latest.get("revenue")
+        workspace_growth = selected_qm.get("yoy_growth")
     else:
-        source_metrics = st.columns(4)
-        source_metrics[0].metric(
-            "Annual filing",
-            latest_annual.get("form", "N/A"),
-            latest_annual.get("filing_date") or None
-        )
-        source_metrics[1].metric(
-            "Quarterly filing",
-            latest_quarter.get("form", "N/A"),
-            latest_quarter.get("filing_date") or None
-        )
-        source_metrics[2].metric(
-            "Current report",
-            latest_current.get("form", "N/A"),
-            latest_current.get("filing_date") or None
-        )
-        source_metrics[3].metric(
-            "Registration",
-            primary_registration.get("form", "Not found"),
-            primary_registration.get("filing_date") or None
+        annual_history = selected_data.get("history", [])
+        prior_revenue = annual_history[-2].get("revenue") if len(annual_history) >= 2 else None
+        workspace_revenue = selected_data.get("revenue")
+        workspace_growth = calc_growth(selected_data.get("revenue"), prior_revenue)
+
+    header_metrics[3].metric("Revenue", format_money(workspace_revenue))
+    header_metrics[4].metric("Revenue Growth", pct(workspace_growth))
+
+    (
+        snapshot_subtab,
+        financials_subtab,
+        filings_subtab,
+        ownership_subtab,
+        analyst_subtab,
+        peers_subtab,
+    ) = st.tabs([
+        "Snapshot",
+        "Financials",
+        "Filings",
+        "Ownership",
+        "Analyst Research",
+        "Peers & ETFs",
+    ])
+
+    with snapshot_subtab:
+        snapshot_chart_col, snapshot_context_col = st.columns([1.65, 1])
+
+        with snapshot_chart_col:
+            st.markdown("**Price Performance**")
+            chart_range = st.radio(
+                "Range",
+                ["1M", "3M", "1Y", "2Y"],
+                index=2,
+                horizontal=True,
+                key=f"workspace_chart_range_{selected_ticker}",
+                label_visibility="collapsed",
+            )
+            chart_sizes = {"1M": 35, "3M": 70, "1Y": 140, "2Y": 260}
+            try:
+                selected_history = get_market_history(
+                    selected_ticker,
+                    interval="1day",
+                    outputsize=chart_sizes.get(chart_range, 140),
+                )
+            except Exception:
+                selected_history = pd.DataFrame()
+
+            if not selected_history.empty:
+                price_fig = go.Figure(
+                    go.Scatter(
+                        x=selected_history["datetime"],
+                        y=selected_history["close"],
+                        mode="lines",
+                        name=selected_ticker,
+                        line={"color": "#16C7B2", "width": 2},
+                    )
+                )
+                price_fig.update_layout(
+                    height=390,
+                    margin={"l": 8, "r": 8, "t": 22, "b": 8},
+                    paper_bgcolor="rgba(0,0,0,0)",
+                    plot_bgcolor="rgba(0,0,0,0)",
+                    font={"color": "#8F9CA6", "family": "IBM Plex Sans"},
+                    hovermode="x unified",
+                    showlegend=False,
+                    xaxis={"showgrid": False, "zeroline": False, "title": None},
+                    yaxis={
+                        "gridcolor": "rgba(143,156,166,.12)",
+                        "zeroline": False,
+                        "title": None,
+                        "tickprefix": "$",
+                    },
+                )
+                st.plotly_chart(
+                    price_fig,
+                    use_container_width=True,
+                    config={"displayModeBar": False},
+                )
+            else:
+                st.info("Price history is temporarily unavailable.")
+
+        with snapshot_context_col:
+            st.markdown("**Company Snapshot**")
+            snapshot_items = [
+                ("Primary revenue source", selected_analysis.get("primary_revenue_source", "Research in progress.")),
+                ("Customer type", selected_analysis.get("customer_type", "Research in progress.")),
+                ("Platform / operating dependency", selected_analysis.get("platform_dependency", "Research in progress.")),
+            ]
+            for label, value in snapshot_items:
+                st.markdown(f"**{label}**")
+                st.write(value)
+
+        st.markdown("---")
+        snapshot_left, snapshot_right = st.columns(2)
+
+        with snapshot_left:
+            st.markdown("**What changed recently**")
+            change_notes = build_change_notes(selected_qdata)
+            if not change_notes:
+                annual_history = selected_data.get("history", [])
+                if len(annual_history) >= 2:
+                    latest_year = annual_history[-1]
+                    prior_year = annual_history[-2]
+                    annual_growth = calc_growth(
+                        latest_year.get("revenue"),
+                        prior_year.get("revenue"),
+                    )
+                    if annual_growth is not None:
+                        change_notes = [(
+                            "Annual revenue",
+                            f"Revenue changed {annual_growth:+.1f}% from "
+                            f"FY{prior_year.get('fiscal_year')} to FY{latest_year.get('fiscal_year')}.",
+                        )]
+
+            if change_notes:
+                for label, copy in change_notes[:4]:
+                    st.markdown(f"**{label}**")
+                    st.write(copy)
+            else:
+                st.caption("Recent standardized period-over-period changes are still being prepared.")
+
+        with snapshot_right:
+            st.markdown("**Key disclosed risk themes**")
+            risk_themes = selected_analysis.get("key_risk_themes", [])
+            if risk_themes:
+                for risk in risk_themes[:8]:
+                    st.markdown(f"- {risk}")
+            else:
+                st.caption("Structured risk themes are being added as deep research coverage expands.")
+
+        st.markdown("**Recent SEC activity**")
+        if selected_filings:
+            snapshot_filing_rows = [
+                {
+                    "Filed": filing.get("filing_date", ""),
+                    "Form": filing.get("form", ""),
+                    "Description": filing.get("description", "") or filing.get("primary_document", ""),
+                    "SEC Filing": filing.get("url", ""),
+                }
+                for filing in selected_filings[:6]
+            ]
+            st.dataframe(
+                pd.DataFrame(snapshot_filing_rows),
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "SEC Filing": st.column_config.LinkColumn("SEC Filing", display_text="Open")
+                },
+            )
+        elif selected_sec_error:
+            st.warning(selected_sec_error)
+        else:
+            st.caption("Recent filing metadata is not available yet.")
+
+    with financials_subtab:
+        section("Financials", "Income Statement & Balance Sheet")
+
+        latest_financial_period = (
+            selected_latest
+            if selected_latest
+            else {
+                "revenue": selected_data.get("revenue"),
+                "gross_profit": selected_data.get("gross_profit"),
+                "operating_income": selected_data.get("operating_income"),
+                "net_income": selected_data.get("net_income"),
+            }
         )
 
-        section("Registration", "IPO / Registration Filing History")
+        financial_metric_cols = st.columns(4)
+        financial_metric_cols[0].metric("Revenue", format_money(latest_financial_period.get("revenue")))
+        financial_metric_cols[1].metric("Gross Profit", format_money(latest_financial_period.get("gross_profit")))
+        financial_metric_cols[2].metric("Operating Income", format_money(latest_financial_period.get("operating_income")))
+        financial_metric_cols[3].metric("Net Income", format_money(latest_financial_period.get("net_income")))
 
-        if explore_registrations:
-            registration_table = pd.DataFrame(
-                [
-                    {
-                        "Filed": filing.get("filing_date", ""),
-                        "Form": filing.get("form", ""),
-                        "Description": (
-                            filing.get("description", "")
-                            or filing.get("primary_document", "")
-                        ),
-                        "SEC Filing": filing.get("url", "")
-                    }
-                    for filing in explore_registrations
-                ]
+        annual_history = selected_data.get("history", [])
+        financial_chart_cols = st.columns(2)
+
+        with financial_chart_cols[0]:
+            st.markdown("**Annual Revenue Trend**")
+            annual_rows = [
+                row for row in annual_history
+                if row.get("fiscal_year") is not None and row.get("revenue") is not None
+            ]
+            if annual_rows:
+                annual_df = pd.DataFrame(annual_rows)
+                annual_fig = go.Figure(
+                    go.Bar(
+                        x=annual_df["fiscal_year"].astype(str),
+                        y=annual_df["revenue"],
+                        name="Revenue",
+                        marker={"color": "#16C7B2"},
+                    )
+                )
+                annual_fig.update_layout(
+                    height=330,
+                    margin={"l": 8, "r": 8, "t": 20, "b": 8},
+                    paper_bgcolor="rgba(0,0,0,0)",
+                    plot_bgcolor="rgba(0,0,0,0)",
+                    font={"color": "#8F9CA6", "family": "IBM Plex Sans"},
+                    showlegend=False,
+                    xaxis={"showgrid": False, "title": None},
+                    yaxis={"gridcolor": "rgba(143,156,166,.12)", "title": None},
+                )
+                st.plotly_chart(annual_fig, use_container_width=True, config={"displayModeBar": False})
+            else:
+                st.info("Annual revenue history is still being standardized.")
+
+        with financial_chart_cols[1]:
+            st.markdown("**Latest P&L Structure**")
+            pnl_labels = ["Revenue", "Gross Profit", "Operating Income", "Net Income"]
+            pnl_values = [
+                latest_financial_period.get("revenue"),
+                latest_financial_period.get("gross_profit"),
+                latest_financial_period.get("operating_income"),
+                latest_financial_period.get("net_income"),
+            ]
+            if any(value is not None for value in pnl_values):
+                pnl_fig = go.Figure(
+                    go.Bar(
+                        x=pnl_labels,
+                        y=[value if value is not None else 0 for value in pnl_values],
+                        marker={"color": "#7DD3FC"},
+                    )
+                )
+                pnl_fig.update_layout(
+                    height=330,
+                    margin={"l": 8, "r": 8, "t": 20, "b": 8},
+                    paper_bgcolor="rgba(0,0,0,0)",
+                    plot_bgcolor="rgba(0,0,0,0)",
+                    font={"color": "#8F9CA6", "family": "IBM Plex Sans"},
+                    showlegend=False,
+                    xaxis={"showgrid": False, "title": None},
+                    yaxis={"gridcolor": "rgba(143,156,166,.12)", "title": None},
+                )
+                st.plotly_chart(pnl_fig, use_container_width=True, config={"displayModeBar": False})
+            else:
+                st.info("P&L data is still being standardized.")
+
+        latest_q = selected_qdata.get("latest_quarter", {})
+        prior_q = selected_qdata.get("prior_quarter", {})
+        prior_y_q = selected_qdata.get("prior_year_quarter", {})
+
+        if latest_q and (prior_q or prior_y_q):
+            st.markdown("**Quarterly Financial Comparison**")
+            quarter_series = []
+            for label, payload in [
+                ("Prior Year Quarter", prior_y_q),
+                ("Prior Quarter", prior_q),
+                ("Latest Quarter", latest_q),
+            ]:
+                if payload:
+                    quarter_series.append({
+                        "Period": label,
+                        "Revenue": payload.get("revenue"),
+                        "Gross Profit": payload.get("gross_profit"),
+                        "Operating Income": payload.get("operating_income"),
+                        "Net Income": payload.get("net_income"),
+                    })
+
+            quarter_df = pd.DataFrame(quarter_series)
+            quarter_fig = go.Figure()
+            for metric in ["Revenue", "Gross Profit", "Operating Income", "Net Income"]:
+                quarter_fig.add_trace(go.Bar(name=metric, x=quarter_df["Period"], y=quarter_df[metric]))
+            quarter_fig.update_layout(
+                barmode="group",
+                height=380,
+                margin={"l": 8, "r": 8, "t": 30, "b": 8},
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(0,0,0,0)",
+                font={"color": "#8F9CA6", "family": "IBM Plex Sans"},
+                legend={"orientation": "h", "yanchor": "bottom", "y": 1.02, "xanchor": "left", "x": 0},
+                xaxis={"showgrid": False, "title": None},
+                yaxis={"gridcolor": "rgba(143,156,166,.12)", "title": None},
+            )
+            st.plotly_chart(quarter_fig, use_container_width=True, config={"displayModeBar": False})
+
+        st.markdown("**Balance Sheet Snapshot**")
+        capital_structure = selected_data.get("capital_structure", {})
+        balance_cols = st.columns(4)
+        balance_cols[0].metric("Cash", format_money(selected_data.get("cash")))
+        balance_cols[1].metric("Cash + Investments", format_money(capital_structure.get("cash_and_investments")))
+        balance_cols[2].metric("Total Debt", format_money(capital_structure.get("total_debt")))
+        balance_cols[3].metric("Total Assets", format_money(selected_data.get("assets")))
+
+        financial_source = (
+            selected_qdata.get("source_filing")
+            or selected_data.get("filing_url")
+            or capital_structure.get("source_filing")
+        )
+        if financial_source:
+            st.link_button(
+                "Open source financial filing",
+                financial_source,
+                key=f"workspace_financial_source_{selected_ticker}",
             )
 
+        st.caption(
+            "Reported figures are sourced from company SEC filings where standardized EquityLens "
+            "financial coverage is available. Market values and financial statement periods update on different schedules."
+        )
+
+    with filings_subtab:
+        section("Filings", "SEC Filing History & Deep Filing Research")
+
+        filing_metric_cols = st.columns(4)
+        filing_metric_cols[0].metric("Annual", latest_annual.get("form", "N/A"), latest_annual.get("filing_date") or None)
+        filing_metric_cols[1].metric("Quarterly", latest_quarter.get("form", "N/A"), latest_quarter.get("filing_date") or None)
+        filing_metric_cols[2].metric("Current Report", latest_current.get("form", "N/A"), latest_current.get("filing_date") or None)
+        filing_metric_cols[3].metric("Registration", primary_registration.get("form", "Not found"), primary_registration.get("filing_date") or None)
+
+        if selected_sec_error:
+            st.warning(selected_sec_error)
+
+        if selected_filings:
+            st.markdown("**Recent SEC filings**")
+            filing_table = pd.DataFrame([
+                {
+                    "Filed": filing.get("filing_date", ""),
+                    "Form": filing.get("form", ""),
+                    "Report Period": filing.get("report_date", ""),
+                    "Description": filing.get("description", "") or filing.get("primary_document", ""),
+                    "SEC Filing": filing.get("url", ""),
+                }
+                for filing in selected_filings[:25]
+            ])
+            st.dataframe(
+                filing_table,
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "SEC Filing": st.column_config.LinkColumn("SEC Filing", display_text="Open filing")
+                },
+            )
+
+        st.markdown("**IPO / Registration history**")
+        if selected_registrations:
+            registration_table = pd.DataFrame([
+                {
+                    "Filed": filing.get("filing_date", ""),
+                    "Form": filing.get("form", ""),
+                    "Description": filing.get("description", "") or filing.get("primary_document", ""),
+                    "SEC Filing": filing.get("url", ""),
+                }
+                for filing in selected_registrations
+            ])
             st.dataframe(
                 registration_table,
                 use_container_width=True,
                 hide_index=True,
                 column_config={
-                    "SEC Filing": st.column_config.LinkColumn(
-                        "SEC Filing",
-                        display_text="Open filing"
-                    )
-                }
+                    "SEC Filing": st.column_config.LinkColumn("SEC Filing", display_text="Open filing")
+                },
             )
-
-            if primary_registration.get("url"):
-                st.link_button(
-                    "Open primary registration filing on SEC EDGAR",
-                    primary_registration.get("url"),
-                    key="explore_primary_registration"
-                )
         else:
-            st.info(
-                "No S-1, S-1/A, F-1, F-1/A, S-11, or S-11/A was found in the "
-                "issuer's available SEC submission history. That does not mean the company "
-                "never registered securities: older issuers may predate modern EDGAR coverage, "
-                "and some companies used a different registration path."
-            )
+            st.caption("No S-1, F-1, S-11 or related amendment was found in the available SEC submission history.")
 
-        if deep_explore_s1:
-            section("EquityLens Deep Research", "Structured IPO Filing Analysis")
-
-            st.write(
-                deep_explore_s1.get(
-                    "historical_context",
-                    "Historical IPO context is available for this company."
-                )
-            )
-
+        if selected_s1:
+            st.markdown("**Structured registration-file research**")
+            st.write(selected_s1.get("historical_context", "Historical registration context is available."))
             st.markdown("**What to learn from the filing**")
             st.write(
-                deep_explore_s1.get(
+                selected_s1.get(
                     "what_to_learn",
-                    "Review the original registration filing for business-model, risk, "
-                    "ownership, and financial-history context."
+                    "Review the original filing for business, risk, ownership and financial context.",
                 )
             )
 
-            detail_cols = st.columns(2)
-            detail_map = deep_explore_s1.get("filing_details", {})
-
+            detail_map = selected_s1.get("filing_details", {})
             detail_sections = [
-                (
-                    "Business & Revenue Model",
-                    "business_revenue_model",
-                    "How the company described what it sells, who pays, and how revenue is generated."
-                ),
-                (
-                    "Customers & Go-to-Market",
-                    "customers_go_to_market",
-                    "Customer mix, sales motion, distribution, retention, and expansion strategy."
-                ),
-                (
-                    "Growth Strategy & Market Opportunity",
-                    "growth_market_opportunity",
-                    "Management's growth priorities, market opportunity, products, and expansion plans."
-                ),
-                (
-                    "Competition & Differentiation",
-                    "competition_differentiation",
-                    "Competitors, alternatives, and the capabilities management said differentiated the business."
-                ),
-                (
-                    "Risk Factors",
-                    "risk_factors",
-                    "Company-disclosed risks and operating dependencies."
-                ),
-                (
-                    "Financial Condition & Operating History",
-                    "financial_history",
-                    "Historical revenue, profitability, cash flow, and capital needs around the IPO."
-                ),
-                (
-                    "IPO Structure, Capitalization & Dilution",
-                    "ipo_capitalization_dilution",
-                    "Share structure, voting rights, capitalization, dilution, and offering mechanics."
-                ),
-                (
-                    "Use of Proceeds, Management & Ownership",
-                    "proceeds_management_ownership",
-                    "Use of proceeds, governance, executives, principal stockholders, and ownership."
-                )
+                ("Business & Revenue Model", "business_revenue_model"),
+                ("Customers & Go-to-Market", "customers_go_to_market"),
+                ("Growth & Market Opportunity", "growth_market_opportunity"),
+                ("Competition & Differentiation", "competition_differentiation"),
+                ("Risk Factors", "risk_factors"),
+                ("Financial History", "financial_history"),
+                ("Capitalization & Dilution", "ipo_capitalization_dilution"),
+                ("Proceeds, Management & Ownership", "proceeds_management_ownership"),
             ]
-
-            for idx, (label, field, explainer) in enumerate(detail_sections):
+            detail_cols = st.columns(2)
+            for idx, (label, field) in enumerate(detail_sections):
                 with detail_cols[idx % 2]:
                     with st.expander(label, expanded=(idx < 2)):
-                        st.write(explainer)
-                        filing_points = detail_map.get(field, [])
-                        for point in filing_points:
-                            st.markdown(f"- {point}")
+                        points = detail_map.get(field, [])
+                        if points:
+                            for point in points:
+                                st.markdown(f"- {point}")
+                        else:
+                            st.caption("Structured detail is not available yet.")
 
-            if deep_explore_s1.get("source_url"):
+            if selected_s1.get("source_url"):
                 st.link_button(
-                    "Open EquityLens source registration filing",
-                    deep_explore_s1.get("source_url"),
-                    key="explore_deep_s1_source"
+                    "Open EquityLens registration source",
+                    selected_s1.get("source_url"),
+                    key=f"workspace_s1_source_{selected_ticker}",
                 )
-        else:
-            section("Research Guide", "How to Read the Registration Filing")
-            st.markdown(
-                """
-                Use the original registration filing to examine:
 
-                - **Business model:** what the company sold and how it generated revenue.
-                - **Customers and go-to-market:** who bought the product and how the company reached them.
-                - **Growth strategy:** the opportunities management presented to prospective public investors.
-                - **Competition:** alternatives, competitors, and stated differentiation.
-                - **Risk factors:** material risks disclosed before or around the public listing.
-                - **Financial history:** revenue, costs, profitability, cash flow, and capital requirements.
-                - **Capitalization and dilution:** share classes, voting rights, preferred-stock conversion, and offering mechanics.
-                - **Use of proceeds and ownership:** how proceeds were expected to be used and who controlled the company.
-                """
-            )
-
-        section("Recent SEC Activity", "Current Company Filings")
-
-        if explore_filings:
-            recent_table = pd.DataFrame(
-                [
-                    {
-                        "Filed": filing.get("filing_date", ""),
-                        "Form": filing.get("form", ""),
-                        "Report Period": filing.get("report_date", ""),
-                        "Description": (
-                            filing.get("description", "")
-                            or filing.get("primary_document", "")
-                        ),
-                        "SEC Filing": filing.get("url", "")
-                    }
-                    for filing in explore_filings[:20]
-                ]
-            )
-
-            st.dataframe(
-                recent_table,
-                use_container_width=True,
-                hide_index=True,
-                column_config={
-                    "SEC Filing": st.column_config.LinkColumn(
-                        "SEC Filing",
-                        display_text="Open filing"
-                    )
-                }
-            )
-
-        if explore_sec.get("sec_company_url"):
+        if selected_sec.get("sec_company_url"):
             st.link_button(
-                "Open complete SEC company filing history",
-                explore_sec.get("sec_company_url"),
-                key="explore_complete_sec_history"
+                "Open complete SEC company history",
+                selected_sec.get("sec_company_url"),
+                key=f"workspace_sec_history_{selected_ticker}",
             )
+
+    with ownership_subtab:
+        section("Ownership", "Institutional, Fund & SEC Ownership Context")
+        st.caption(
+            "Ownership combines supplemental market-data tables with SEC ownership filings when available. "
+            "Holder data can update on a different schedule from SEC filings."
+        )
+
+        try:
+            ownership_data = get_company_ownership_data(selected_ticker)
+        except Exception:
+            ownership_data = {
+                "major": pd.DataFrame(),
+                "institutional": pd.DataFrame(),
+                "mutual_fund": pd.DataFrame(),
+            }
+
+        ownership_cols = st.columns(2)
+        with ownership_cols[0]:
+            st.markdown("**Major ownership summary**")
+            major_table = ownership_data.get("major", pd.DataFrame())
+            if isinstance(major_table, pd.DataFrame) and not major_table.empty:
+                st.dataframe(major_table, use_container_width=True, hide_index=True)
+            else:
+                st.caption("Major-holder summary is unavailable from the supplemental feed.")
+
+        with ownership_cols[1]:
+            st.markdown("**SEC beneficial-ownership filings**")
+            ownership_forms = {"DEF 14A", "DEFA14A", "SC 13D", "SC 13D/A", "SC 13G", "SC 13G/A"}
+            sec_ownership_rows = [
+                {
+                    "Filed": filing.get("filing_date", ""),
+                    "Form": filing.get("form", ""),
+                    "Description": filing.get("description", "") or filing.get("primary_document", ""),
+                    "SEC Filing": filing.get("url", ""),
+                }
+                for filing in selected_filings
+                if filing.get("form") in ownership_forms
+            ][:15]
+
+            if sec_ownership_rows:
+                st.dataframe(
+                    pd.DataFrame(sec_ownership_rows),
+                    use_container_width=True,
+                    hide_index=True,
+                    column_config={
+                        "SEC Filing": st.column_config.LinkColumn("SEC Filing", display_text="Open")
+                    },
+                )
+            else:
+                st.caption("No recent proxy or Schedule 13D/13G filing appeared in the currently loaded filing window.")
+
+        st.markdown("**Largest institutional holders**")
+        institutional_table = ownership_data.get("institutional", pd.DataFrame())
+        if isinstance(institutional_table, pd.DataFrame) and not institutional_table.empty:
+            st.dataframe(institutional_table.head(20), use_container_width=True, hide_index=True)
+        else:
+            st.caption("Institutional-holder detail is unavailable from the supplemental feed.")
+
+        st.markdown("**Largest mutual-fund holders**")
+        mutual_table = ownership_data.get("mutual_fund", pd.DataFrame())
+        if isinstance(mutual_table, pd.DataFrame) and not mutual_table.empty:
+            st.dataframe(mutual_table.head(20), use_container_width=True, hide_index=True)
+        else:
+            st.caption("Mutual-fund holder detail is unavailable from the supplemental feed.")
 
         st.caption(
-            "SEC filing metadata is resolved on demand and cached briefly for performance. "
-            "Registration filings are searched through both the current SEC submission feed "
-            "and the issuer's historical submission files."
+            "Supplemental ownership tables: Yahoo Finance via yfinance. "
+            "SEC ownership filings remain the primary source for disclosed beneficial ownership."
         )
 
-
-with research_tab:
-    section("EquityLens", "Company Research Brief")
-
-    st.write(
-        "A structured company view for users who want the important context in one place without using a chatbot. "
-        "This page combines reported financials, calculated metrics, business-model context, disclosed risk themes, "
-        "and direct SEC source links."
-    )
-
-    research_industry = st.selectbox(
-        "Industry",
-        industries,
-        key="equitylens_research_industry"
-    )
-
-    research_companies = [
-        name for name, company in company_data.items()
-        if company.get("industry", "Unclassified") == research_industry
-    ]
-
-    research_company = st.selectbox(
-        "Company",
-        research_companies,
-        format_func=lambda name: (
-            f"{company_data[name].get('ticker', '')} · {name.split(' (')[0]}"
-        ),
-        key="equitylens_research_company"
-    )
-
-    research_data = company_data.get(research_company, {})
-    research_analysis = company_analysis.get(research_company, {})
-    research_qdata = company_quarterly.get(research_company, {})
-    research_qm = quarterly_metrics(research_qdata)
-    research_latest = research_qdata.get("latest_quarter", {})
-    research_ticker = research_data.get("ticker", "")
-    research_name = research_company.split(" (")[0]
-
-    st.markdown(
-        f"""
-        <div class="el-company-hero">
-            <div class="el-kicker">{research_ticker} · {research_data.get('industry', 'Unclassified')}</div>
-            <div class="el-company-title">{research_name}</div>
-            <p class="el-subtitle">{research_analysis.get('business_model', 'Company research is being prepared.')}</p>
-            <div class="el-badges">
-                <span class="el-badge">{research_qdata.get('quarter_label', f"FY{research_data.get('fiscal_year', '')}")}</span>
-                <span class="el-badge">SEC filing sourced</span>
-                <span class="el-badge">No chatbot</span>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    research_metrics = st.columns(4)
-
-    if research_latest.get("revenue") is not None:
-        research_revenue = research_latest.get("revenue")
-        research_growth = research_qm.get("yoy_growth")
-        research_margin = research_qm.get("operating_margin")
-        research_period = research_qdata.get("quarter_label", "Latest quarter")
-    else:
-        research_history = research_data.get("history", [])
-        prior_revenue = (
-            research_history[-2].get("revenue")
-            if len(research_history) >= 2 else None
-        )
-        research_revenue = research_data.get("revenue")
-        research_growth = calc_growth(research_data.get("revenue"), prior_revenue)
-        research_margin = calc_margin(
-            research_data.get("operating_income"),
-            research_data.get("revenue")
-        )
-        research_period = f"FY{research_data.get('fiscal_year', '')}"
-
-    research_metrics[0].metric("Revenue", format_money(research_revenue))
-    research_metrics[1].metric("YoY Growth", pct(research_growth))
-    research_metrics[2].metric("Operating Margin", pct(research_margin))
-    research_metrics[3].metric(
-        "Cash + Investments",
-        format_money(
-            research_data.get("capital_structure", {}).get("cash_and_investments")
-        )
-    )
-
-    section("Research Summary", "What to Understand First")
-
-    change_notes = build_change_notes(research_qdata)
-    if not change_notes:
-        annual_history = research_data.get("history", [])
-        if len(annual_history) >= 2:
-            latest_year = annual_history[-1]
-            prior_year = annual_history[-2]
-            annual_growth = calc_growth(
-                latest_year.get("revenue"),
-                prior_year.get("revenue")
-            )
-            if annual_growth is not None:
-                change_notes = [(
-                    "Annual revenue",
-                    f"Revenue changed {annual_growth:+.1f}% from FY{prior_year.get('fiscal_year')} "
-                    f"to FY{latest_year.get('fiscal_year')}."
-                )]
-
-    risk_themes = research_analysis.get("key_risk_themes", [])
-    risk_chips = "".join(
-        f'<span class="el-risk-chip">{risk}</span>'
-        for risk in risk_themes[:8]
-    )
-
-    change_copy = (
-        " ".join(note[1] for note in change_notes[:3])
-        if change_notes
-        else "Recent period-over-period changes are not yet fully standardized for this company."
-    )
-
-    st.markdown(
-        f"""
-        <div class="el-research-grid">
-            <div class="el-research-panel">
-                <div class="el-research-panel-kicker">Business model</div>
-                <div class="el-research-panel-title">How the company makes money</div>
-                <div class="el-research-panel-copy">
-                    {research_analysis.get('business_model', 'Business-model context is being prepared.')}
-                    <br><br>
-                    <strong style="color:#EEF3F5;">Primary revenue source:</strong>
-                    {research_analysis.get('primary_revenue_source', 'Not yet standardized.')}
-                </div>
-            </div>
-            <div class="el-research-panel">
-                <div class="el-research-panel-kicker">Customers</div>
-                <div class="el-research-panel-title">Who the business serves</div>
-                <div class="el-research-panel-copy">
-                    {research_analysis.get('customer_type', 'Customer context is being prepared.')}
-                </div>
-            </div>
-            <div class="el-research-panel">
-                <div class="el-research-panel-kicker">Recent performance</div>
-                <div class="el-research-panel-title">What changed in {research_period}</div>
-                <div class="el-research-panel-copy">{change_copy}</div>
-            </div>
-            <div class="el-research-panel">
-                <div class="el-research-panel-kicker">Operating context</div>
-                <div class="el-research-panel-title">What the business depends on</div>
-                <div class="el-research-panel-copy">
-                    {research_analysis.get('platform_dependency', 'Platform and operating dependencies are being prepared.')}
-                </div>
-            </div>
-            <div class="el-research-panel wide">
-                <div class="el-research-panel-kicker">Disclosed risk themes</div>
-                <div class="el-research-panel-title">What can materially affect the business</div>
-                <div class="el-research-panel-copy">
-                    {research_analysis.get('competitive_risk', '')}
-                    {(' ' + research_analysis.get('operational_risk', '')) if research_analysis.get('operational_risk') else ''}
-                </div>
-                <div class="el-risk-chip-row">{risk_chips}</div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    section("Context", "Profitability, Concentration & Exposure")
-    context_cols = st.columns(3)
-    with context_cols[0]:
-        st.markdown("**Profitability history**")
-        st.write(
-            research_analysis.get(
-                "profitability_history",
-                "Profitability history is being prepared."
-            )
-        )
-    with context_cols[1]:
-        st.markdown("**Customer concentration**")
-        st.write(
-            research_analysis.get(
-                "customer_concentration",
-                "Customer-concentration context is being prepared."
-            )
-        )
-    with context_cols[2]:
-        st.markdown("**International exposure**")
-        st.write(
-            research_analysis.get(
-                "international_exposure",
-                "International exposure context is being prepared."
-            )
+    with analyst_subtab:
+        section("Analyst Research", "Consensus, Price Targets & Rating Changes")
+        st.caption(
+            "These are third-party analyst opinions and market-data aggregates. "
+            "They are not EquityLens ratings, recommendations, or price forecasts."
         )
 
-    section("Sources", "Verify the Research")
-    source_rows = []
-
-    annual_source = research_data.get("filing_url")
-    if annual_source:
-        source_rows.append({
-            "Source": research_data.get("source", "Annual filing"),
-            "Period": research_data.get("fiscal_year_end", "N/A"),
-            "SEC Filing": annual_source
-        })
-
-    quarterly_source = research_qdata.get("source_filing")
-    if quarterly_source and quarterly_source != annual_source:
-        source_rows.append({
-            "Source": research_qdata.get("quarter_label", "Latest quarterly filing"),
-            "Period": research_qdata.get("period_end", "N/A"),
-            "SEC Filing": quarterly_source
-        })
-
-    analysis_source = research_analysis.get("source_filing")
-    if analysis_source and analysis_source not in [row["SEC Filing"] for row in source_rows]:
-        source_rows.append({
-            "Source": "Business & risk source",
-            "Period": "See filing",
-            "SEC Filing": analysis_source
-        })
-
-    if source_rows:
-        st.dataframe(
-            pd.DataFrame(source_rows),
-            use_container_width=True,
-            hide_index=True,
-            column_config={
-                "SEC Filing": st.column_config.LinkColumn(
-                    "SEC Filing",
-                    display_text="Open filing"
-                )
+        try:
+            analyst_data = get_company_analyst_data(selected_ticker)
+        except Exception:
+            analyst_data = {
+                "targets": {},
+                "recommendations": pd.DataFrame(),
+                "upgrades": pd.DataFrame(),
             }
+
+        targets = analyst_data.get("targets", {}) or {}
+
+        def target_value(*keys):
+            for key in keys:
+                if key in targets and targets.get(key) is not None:
+                    return safe_float(targets.get(key))
+            return None
+
+        current_target_price = target_value("current", "currentPrice", "Current")
+        mean_target = target_value("mean", "meanPriceTarget", "targetMeanPrice")
+        median_target = target_value("median", "medianPriceTarget", "targetMedianPrice")
+        low_target = target_value("low", "lowPriceTarget", "targetLowPrice")
+        high_target = target_value("high", "highPriceTarget", "targetHighPrice")
+
+        analyst_metric_cols = st.columns(5)
+        analyst_metric_cols[0].metric(
+            "Current Price",
+            ("$" + f"{(current_target_price or selected_price):,.2f}")
+            if (current_target_price or selected_price) is not None
+            else "N/A",
+        )
+        analyst_metric_cols[1].metric(
+            "Mean Target",
+            ("$" + f"{mean_target:,.2f}") if mean_target is not None else "N/A",
+        )
+        analyst_metric_cols[2].metric(
+            "Median Target",
+            ("$" + f"{median_target:,.2f}") if median_target is not None else "N/A",
+        )
+        analyst_metric_cols[3].metric(
+            "Low Target",
+            ("$" + f"{low_target:,.2f}") if low_target is not None else "N/A",
+        )
+        analyst_metric_cols[4].metric(
+            "High Target",
+            ("$" + f"{high_target:,.2f}") if high_target is not None else "N/A",
         )
 
-    st.caption(
-        "EquityLens separates reported figures from calculated metrics and research summaries, "
-        "with direct links back to the underlying SEC sources."
-    )
+        recommendations_table = analyst_data.get("recommendations", pd.DataFrame())
+        st.markdown("**Recommendation summary**")
+        if isinstance(recommendations_table, pd.DataFrame) and not recommendations_table.empty:
+            st.dataframe(recommendations_table, use_container_width=True, hide_index=True)
+        else:
+            st.caption("Consensus recommendation data is unavailable from the supplemental feed.")
+
+        upgrades_table = analyst_data.get("upgrades", pd.DataFrame())
+        st.markdown("**Recent upgrades / downgrades**")
+        if isinstance(upgrades_table, pd.DataFrame) and not upgrades_table.empty:
+            st.dataframe(
+                upgrades_table.tail(25).iloc[::-1],
+                use_container_width=True,
+                hide_index=True,
+            )
+        else:
+            st.caption("Recent analyst rating-change data is unavailable from the supplemental feed.")
+
+        st.caption(
+            "Supplemental analyst data: Yahoo Finance via yfinance. "
+            "EquityLens does not convert third-party opinions into its own buy, sell, or hold rating."
+        )
+
+    with peers_subtab:
+        section("Peers", "Related Companies & Major ETF Exposure")
+
+        peer_rows = workspace_universe[
+            (workspace_universe["Industry"] == selected_industry_name)
+            & (workspace_universe["Ticker"].astype(str).str.upper() != selected_ticker)
+        ].copy()
+
+        if "Market Cap" in peer_rows.columns:
+            peer_rows["_market_cap_sort"] = peer_rows["Market Cap"].apply(finviz_numeric)
+            peer_rows = peer_rows.sort_values("_market_cap_sort", ascending=False)
+
+        peer_columns = [
+            column
+            for column in [
+                "Ticker", "Company", "Sector", "Industry",
+                "Market Cap", "P/E", "Price", "Change",
+            ]
+            if column in peer_rows.columns
+        ]
+
+        st.markdown("**Industry peers**")
+        if not peer_rows.empty:
+            st.dataframe(
+                peer_rows[peer_columns].head(20),
+                use_container_width=True,
+                hide_index=True,
+            )
+        else:
+            st.caption("No additional companies share this exact industry label in the current universe.")
+
+        st.markdown("**Major ETF exposure**")
+        st.caption(
+            "This scanner checks a curated set of large broad-market, sector, semiconductor, and software ETFs. "
+            "It is useful context, not an exhaustive ETF-ownership database."
+        )
+
+        etf_state_key = f"workspace_etf_scan_{selected_ticker}"
+        if st.button("Scan major ETFs", key=f"workspace_etf_button_{selected_ticker}"):
+            st.session_state[etf_state_key] = True
+
+        if st.session_state.get(etf_state_key, False):
+            try:
+                etf_matches = get_major_etf_exposure(selected_ticker)
+            except Exception:
+                etf_matches = []
+
+            if etf_matches:
+                etf_df = pd.DataFrame(etf_matches)
+                if "Holding" in etf_df.columns:
+                    etf_df["Holding"] = etf_df["Holding"].apply(
+                        lambda value: (
+                            f"{safe_float(value) * 100:.2f}%"
+                            if safe_float(value) is not None and abs(safe_float(value)) <= 1
+                            else (
+                                f"{safe_float(value):.2f}%"
+                                if safe_float(value) is not None
+                                else "N/A"
+                            )
+                        )
+                    )
+                st.dataframe(etf_df, use_container_width=True, hide_index=True)
+            else:
+                st.caption("The selected stock was not found in the currently scanned top-holdings lists.")
+
+        st.caption(
+            "Peer groups use the EquityLens industry classification. "
+            "ETF holdings are supplemental market data and may be delayed."
+        )
 
 
 with market_tab:
