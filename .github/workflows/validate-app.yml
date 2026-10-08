@@ -1,0 +1,41 @@
+name: Validate Streamlit App
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app.py"
+      - "data/**"
+      - ".github/workflows/validate-app.yml"
+  pull_request:
+    paths:
+      - "app.py"
+      - "data/**"
+      - ".github/workflows/validate-app.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile app.py
+        run: python -m py_compile app.py
+
+      - name: Validate JSON datasets
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          for path in Path("data").glob("*.json"):
+              with path.open("r", encoding="utf-8") as handle:
+                  json.load(handle)
+              print(f"validated {path}")
+          PY
