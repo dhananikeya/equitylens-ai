@@ -5323,11 +5323,8 @@ with company_tab:
     selected_price = selected_quote.get("close")
     selected_change = selected_quote.get("percent_change")
 
-    selected_market_cap_m = finviz_numeric(selected_workspace_row.get("Market Cap"))
-    selected_market_cap = (
-        selected_market_cap_m * 1_000_000
-        if selected_market_cap_m is not None
-        else None
+    selected_market_cap = finviz_numeric(
+        selected_workspace_row.get("Market Cap")
     )
     selected_pe = finviz_numeric(selected_workspace_row.get("P/E"))
 
