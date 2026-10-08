@@ -1580,7 +1580,7 @@ def get_sec_company_research(ticker):
             "name",
             ticker_record.get("title", "")
         ),
-        "filings": recent_rows[:40],
+        "filings": recent_rows[:200],
         "registration_filings": registration_unique,
         "sec_company_url": (
             "https://www.sec.gov/edgar/browse/"
@@ -5640,6 +5640,23 @@ with company_tab:
     selected_latest = selected_qdata.get("latest_quarter", {})
 
     try:
+        selected_financial_fallback = get_company_financial_snapshot(
+            selected_ticker
+        )
+    except Exception:
+        selected_financial_fallback = {}
+
+    selected_fallback_latest = selected_financial_fallback.get(
+        "latest", {}
+    )
+    selected_fallback_history = selected_financial_fallback.get(
+        "history", []
+    )
+    selected_fallback_quarters = selected_financial_fallback.get(
+        "quarterly_history", []
+    )
+
+    try:
         selected_sec = get_sec_company_research(selected_ticker)
         selected_sec_error = None
     except Exception:
@@ -5719,10 +5736,14 @@ with company_tab:
         workspace_revenue = selected_latest.get("revenue")
         workspace_growth = selected_qm.get("yoy_growth")
     else:
-        annual_history = selected_data.get("history", [])
+        annual_history = selected_data.get("history", []) or selected_fallback_history
         prior_revenue = annual_history[-2].get("revenue") if len(annual_history) >= 2 else None
-        workspace_revenue = selected_data.get("revenue")
-        workspace_growth = calc_growth(selected_data.get("revenue"), prior_revenue)
+        workspace_revenue = (
+            selected_data.get("revenue")
+            if selected_data.get("revenue") is not None
+            else selected_fallback_latest.get("revenue")
+        )
+        workspace_growth = calc_growth(workspace_revenue, prior_revenue)
 
     header_metrics[3].metric("Revenue", format_money(workspace_revenue))
     header_metrics[4].metric("Revenue Growth", pct(workspace_growth))
@@ -5818,7 +5839,7 @@ with company_tab:
             st.markdown("**What changed recently**")
             change_notes = build_change_notes(selected_qdata)
             if not change_notes:
-                annual_history = selected_data.get("history", [])
+                annual_history = selected_data.get("history", []) or selected_fallback_history
                 if len(annual_history) >= 2:
                     latest_year = annual_history[-1]
                     prior_year = annual_history[-2]
@@ -5878,12 +5899,28 @@ with company_tab:
 
         latest_financial_period = (
             selected_latest
-            if selected_latest
+            if selected_latest and selected_latest.get("revenue") is not None
             else {
-                "revenue": selected_data.get("revenue"),
-                "gross_profit": selected_data.get("gross_profit"),
-                "operating_income": selected_data.get("operating_income"),
-                "net_income": selected_data.get("net_income"),
+                "revenue": (
+                    selected_data.get("revenue")
+                    if selected_data.get("revenue") is not None
+                    else selected_fallback_latest.get("revenue")
+                ),
+                "gross_profit": (
+                    selected_data.get("gross_profit")
+                    if selected_data.get("gross_profit") is not None
+                    else selected_fallback_latest.get("gross_profit")
+                ),
+                "operating_income": (
+                    selected_data.get("operating_income")
+                    if selected_data.get("operating_income") is not None
+                    else selected_fallback_latest.get("operating_income")
+                ),
+                "net_income": (
+                    selected_data.get("net_income")
+                    if selected_data.get("net_income") is not None
+                    else selected_fallback_latest.get("net_income")
+                ),
             }
         )
 
@@ -5961,6 +5998,19 @@ with company_tab:
         prior_q = selected_qdata.get("prior_quarter", {})
         prior_y_q = selected_qdata.get("prior_year_quarter", {})
 
+        if not latest_q and selected_fallback_quarters:
+            latest_q = selected_fallback_quarters[-1]
+            prior_q = (
+                selected_fallback_quarters[-2]
+                if len(selected_fallback_quarters) >= 2
+                else {}
+            )
+            prior_y_q = (
+                selected_fallback_quarters[-5]
+                if len(selected_fallback_quarters) >= 5
+                else {}
+            )
+
         if latest_q and (prior_q or prior_y_q):
             st.markdown("**Quarterly Financial Comparison**")
             quarter_series = []
@@ -5997,11 +6047,34 @@ with company_tab:
 
         st.markdown("**Balance Sheet Snapshot**")
         capital_structure = selected_data.get("capital_structure", {})
+        fallback_capital = selected_financial_fallback.get("capital_structure", {})
+
+        cash_value = (
+            selected_data.get("cash")
+            if selected_data.get("cash") is not None
+            else fallback_capital.get("cash_and_investments")
+        )
+        cash_investments_value = (
+            capital_structure.get("cash_and_investments")
+            if capital_structure.get("cash_and_investments") is not None
+            else fallback_capital.get("cash_and_investments")
+        )
+        debt_value = (
+            capital_structure.get("total_debt")
+            if capital_structure.get("total_debt") is not None
+            else fallback_capital.get("total_debt")
+        )
+        assets_value = (
+            selected_data.get("assets")
+            if selected_data.get("assets") is not None
+            else fallback_capital.get("total_assets")
+        )
+
         balance_cols = st.columns(4)
-        balance_cols[0].metric("Cash", format_money(selected_data.get("cash")))
-        balance_cols[1].metric("Cash + Investments", format_money(capital_structure.get("cash_and_investments")))
-        balance_cols[2].metric("Total Debt", format_money(capital_structure.get("total_debt")))
-        balance_cols[3].metric("Total Assets", format_money(selected_data.get("assets")))
+        balance_cols[0].metric("Cash", format_money(cash_value))
+        balance_cols[1].metric("Cash + Investments", format_money(cash_investments_value))
+        balance_cols[2].metric("Total Debt", format_money(debt_value))
+        balance_cols[3].metric("Total Assets", format_money(assets_value))
 
         financial_source = (
             selected_qdata.get("source_filing")
@@ -6016,8 +6089,10 @@ with company_tab:
             )
 
         st.caption(
-            "Reported figures are sourced from company SEC filings where standardized EquityLens "
-            "financial coverage is available. Market values and financial statement periods update on different schedules."
+            "EquityLens uses standardized SEC-reported figures when available. "
+            "If a company has not yet completed the standardized financial pipeline, "
+            "the workspace fills visible gaps with clearly supplemental Yahoo Finance statement data. "
+            "Market values and financial statement periods update on different schedules."
         )
 
     with filings_subtab:
