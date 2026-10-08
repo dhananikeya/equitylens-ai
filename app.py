@@ -1662,6 +1662,8 @@ def get_live_market_data(symbols):
             "open": open_price,
             "previous_close": previous_close,
             "percent_change": percent_change,
+            "quote_session": pd.Timestamp(history.index[-1]).date().isoformat(),
+            "retrieved_at": datetime.now(timezone.utc).isoformat(),
             "volume": volume
         }
 
@@ -1810,7 +1812,7 @@ def finviz_numeric(value):
 
 
 @st.cache_data(ttl=900)
-def get_market_history(symbol, interval="1day", outputsize=60):
+def get_market_history(symbol, interval="1day", outputsize=60, calendar_range=None):
     """Fetch chart history from Yahoo Finance via yfinance."""
     interval_map = {
         "15min": "15m",
@@ -1819,7 +1821,10 @@ def get_market_history(symbol, interval="1day", outputsize=60):
     }
     yf_interval = interval_map.get(interval, "1d")
 
-    if yf_interval == "15m":
+    calendar_periods = {"1M": "1mo", "3M": "3mo", "1Y": "1y", "2Y": "2y"}
+    if calendar_range in calendar_periods and yf_interval == "1d":
+        period = calendar_periods[calendar_range]
+    elif yf_interval == "15m":
         period = "5d"
     elif yf_interval == "1h":
         period = "1mo"
@@ -1865,7 +1870,7 @@ def get_market_history(symbol, interval="1day", outputsize=60):
             history[column] = pd.to_numeric(history[column], errors="coerce")
 
     history = history.dropna(subset=["datetime", "close"]).sort_values("datetime")
-    if outputsize and len(history) > outputsize:
+    if not calendar_range and outputsize and len(history) > outputsize:
         history = history.tail(outputsize)
 
     return history
@@ -4308,7 +4313,25 @@ def remember_choice(key, value):
     st.session_state["saved_choices"][key] = value
 
 
+def save_rendered_choices():
+    choice_keys = {
+        "workspace_company_search", "workspace_sector", "workspace_industry",
+        "peer_industry", "peer_subgroup", "peer_companies",
+        "nyse_heatmap_sector", "nyse_heatmap_limit", "nyse_heatmap_search",
+    }
+    for key, value in list(st.session_state.items()):
+        if key in choice_keys or key.startswith("workspace_chart_range_"):
+            st.session_state["saved_choices"][key] = value
+
+
+def clear_company_filters():
+    remember_choice("workspace_sector", "All sectors")
+    remember_choice("workspace_industry", "All industries")
+    reset_coverage_selection()
+
+
 def open_company_research(ticker):
+    clear_company_filters()
     remember_choice("workspace_company_search", ticker)
     st.session_state["last_research_ticker"] = ticker
     reset_coverage_selection()
@@ -5071,7 +5094,9 @@ if active_destination == "Company Research":
         ].copy()
 
     search_text = workspace_search.strip()
-    search_pool = workspace_universe.copy() if search_text else workspace_filtered.copy()
+    search_pool = workspace_filtered.copy()
+    st.caption("Company search uses the sector and industry filters above.")
+    st.button("Reset filters", key="research_reset_filters", on_click=clear_company_filters)
     selected_workspace_row = None
 
     if search_text:
@@ -5108,9 +5133,13 @@ if active_destination == "Company Research":
                     f"({selected_workspace_row['Ticker']}). Keep typing to narrow the result."
                 )
         else:
-            st.warning(f'No company or ticker matched "{search_text}".')
+            st.info(f'No company or ticker matched "{search_text}" within the current filters.')
+            st.caption("Check the spelling, try a ticker, or reset the filters to search all companies.")
+            save_rendered_choices()
+            st.stop()
 
-    coverage_display = workspace_filtered[
+    coverage_pool = search_matches if search_text else workspace_filtered
+    coverage_display = coverage_pool[
         [
             column
             for column in [
@@ -5122,7 +5151,7 @@ if active_destination == "Company Research":
     ].copy().reset_index(drop=True)
 
     with st.expander(
-        f"Coverage Universe · {len(workspace_filtered):,} companies in current filters",
+        f"Matching companies · {len(coverage_pool):,} results",
         expanded=False,
     ):
         st.caption("Select a row to open that company directly in the research workspace.")
@@ -5173,7 +5202,9 @@ if active_destination == "Company Research":
         if not workspace_filtered.empty:
             selected_workspace_row = workspace_filtered.iloc[0]
         else:
-            selected_workspace_row = workspace_universe.iloc[0]
+            st.info("No companies match these filters. Reset filters to see the full list.")
+            save_rendered_choices()
+            st.stop()
 
     selected_ticker = str(selected_workspace_row.get("Ticker", "")).upper().strip()
     st.session_state["last_research_ticker"] = selected_ticker
@@ -5270,6 +5301,8 @@ if active_destination == "Company Research":
     )
     selected_pe = finviz_numeric(selected_workspace_row.get("P/E"))
 
+    filing_badge = "SEC filings available" if selected_filings else "SEC filings unavailable"
+
     business_summary = selected_analysis.get(
         "business_model",
         "Structured company research is being expanded for this company. "
@@ -5286,7 +5319,7 @@ if active_destination == "Company Research":
             <p class="el-subtitle">{html.escape(str(business_summary))}</p>
             <div class="el-badges">
                 <span class="el-badge">{html.escape(selected_country or "Global")}</span>
-                <span class="el-badge">SEC sourced</span>
+                <span class="el-badge">{html.escape(filing_badge)}</span>
                 <span class="el-badge">Research only</span>
             </div>
         </div>
@@ -5336,6 +5369,7 @@ if active_destination == "Company Research":
     if selected_latest.get("revenue") is not None:
         workspace_revenue = selected_latest.get("revenue")
         workspace_growth = selected_qm.get("yoy_growth")
+        revenue_source_label = "Structured quarterly company dataset"
     else:
         annual_history = selected_data.get("history", []) or selected_fallback_history
         prior_revenue = annual_history[-2].get("revenue") if len(annual_history) >= 2 else None
@@ -5345,9 +5379,26 @@ if active_destination == "Company Research":
             else selected_fallback_latest.get("revenue")
         )
         workspace_growth = calc_growth(workspace_revenue, prior_revenue)
+        revenue_source_label = (
+            "Structured annual company dataset"
+            if selected_data.get("revenue") is not None
+            else "Yahoo Finance annual statement fallback"
+        )
 
     header_metrics[3].metric("Revenue", format_money(workspace_revenue), help="Sales before expenses. Check the period shown below before comparing companies.")
     header_metrics[4].metric("Revenue Growth", pct(workspace_growth), help="Percentage change from the comparison period. Quarterly growth here compares with the same quarter a year earlier.")
+
+    quote_session = selected_quote.get("quote_session")
+    quote_retrieved_at = selected_quote.get("retrieved_at")
+    st.caption(
+        "Price source: Yahoo Finance daily price data · "
+        f"Trading session: {quote_session or 'Unavailable'} · "
+        f"Retrieved (UTC): {quote_retrieved_at or 'Unavailable'}. Quotes may be delayed."
+    )
+    st.caption(
+        f"Revenue source: {revenue_source_label}. "
+        "Market cap and P/E: coverage screener dataset; may have a different update time."
+    )
 
     latest_available_filing = max(
         selected_filings,
@@ -5425,12 +5476,12 @@ if active_destination == "Company Research":
                 key=f"workspace_chart_range_{selected_ticker}",
                 label_visibility="collapsed",
             )
-            chart_sizes = {"1M": 35, "3M": 70, "1Y": 140, "2Y": 260}
             try:
                 selected_history = get_market_history(
                     selected_ticker,
                     interval="1day",
-                    outputsize=chart_sizes.get(chart_range, 140),
+                    outputsize=None,
+                    calendar_range=chart_range,
                 )
             except Exception:
                 selected_history = pd.DataFrame()
@@ -7339,15 +7390,7 @@ if active_destination == "Learn":
         "may change at the creator's discretion."
     )
 
-# Snapshot rendered controls separately from Streamlit's widget lifecycle.
-persistent_choice_keys = {
-    "workspace_company_search", "workspace_sector", "workspace_industry",
-    "peer_industry", "peer_subgroup", "peer_companies",
-    "nyse_heatmap_sector", "nyse_heatmap_limit", "nyse_heatmap_search",
-}
-for choice_key, choice_value in list(st.session_state.items()):
-    if choice_key in persistent_choice_keys or choice_key.startswith("workspace_chart_range_"):
-        st.session_state["saved_choices"][choice_key] = choice_value
+save_rendered_choices()
 
 st.markdown(
     """
