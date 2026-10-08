@@ -4196,54 +4196,127 @@ SUBGROUPS = {
     ]
 }
 
-st.markdown(
-    """
-    <div class="el-product-hero">
-        <div class="el-eyebrow">Public-markets research, made legible</div>
-        <h1 class="el-product-title">Understand public companies.<br><span>Without digging through hundreds of pages.</span></h1>
-        <p class="el-product-subtitle">
-            EquityLens organizes financial performance, company strategy, risk disclosures,
-            business models, and SEC filings into structured research while keeping the
-            original sources visible. <strong style="color:#16C7B2;">EquityLens informs. You decide.</strong>
-        </p>
-        <div class="el-badges">
-            <span class="el-badge">SEC EDGAR sourced</span>
-            <span class="el-badge">Calculations shown</span>
-            <span class="el-badge">Direct filing links</span>
-            <span class="el-badge">Period-aware research</span>
-        </div>
-    </div>
-    """,
-    unsafe_allow_html=True
+# Build a unified searchable universe from the 517-company Finviz list plus
+# curated legacy research profiles that are not present in that CSV.
+workspace_universe = company_universe.copy()
+workspace_known_tickers = set(
+    workspace_universe["Ticker"].astype(str).str.upper().tolist()
 )
+workspace_extra_rows = []
 
+for workspace_key, workspace_record in company_data.items():
+    extra_ticker = str(workspace_record.get("ticker", "")).upper().strip()
+    if not extra_ticker or extra_ticker in workspace_known_tickers:
+        continue
+
+    extra_industry = str(
+        workspace_record.get("industry", "Other")
+    ).strip() or "Other"
+    extra_sector = str(workspace_record.get("sector", "")).strip()
+
+    if not extra_sector:
+        if extra_industry in {
+            "Cloud & Data Infrastructure Software",
+            "Cybersecurity",
+        }:
+            extra_sector = "Technology"
+        elif extra_industry == "Fintech & Digital Finance":
+            extra_sector = "Financial"
+        else:
+            extra_sector = "Other"
+
+    workspace_extra_rows.append({
+        "Ticker": extra_ticker,
+        "Company": workspace_key.rsplit(" (", 1)[0],
+        "Sector": extra_sector,
+        "Industry": extra_industry,
+        "Country": str(workspace_record.get("country", "")).strip(),
+        "Coverage Key": workspace_key,
+    })
+    workspace_known_tickers.add(extra_ticker)
+
+if workspace_extra_rows:
+    workspace_universe = pd.concat(
+        [workspace_universe, pd.DataFrame(workspace_extra_rows)],
+        ignore_index=True,
+        sort=False,
+    )
+
+
+def reset_coverage_selection():
+    # A new top-level search takes precedence over a previously selected table row.
+    st.session_state.pop("workspace_coverage_table", None)
+
+
+search_labels = {
+    str(row["Ticker"]): f'{row["Company"]} ({row["Ticker"]})'
+    for _, row in workspace_universe.iterrows()
+}
 st.markdown(
-    """
-    <div class="el-trust-strip">
-        <div class="el-trust-item">Primary SEC sources</div>
-        <div class="el-trust-item">Reported vs. calculated</div>
-        <div class="el-trust-item">Plain-language explanations</div>
-        <div class="el-trust-item">Source-linked research</div>
-    </div>
-    """,
-    unsafe_allow_html=True
+    '<div class="el-kicker">EquityLens AI</div>',
+    unsafe_allow_html=True,
 )
+top_search_ticker = st.selectbox(
+    "Search company or ticker",
+    options=list(search_labels),
+    index=None,
+    format_func=lambda ticker: search_labels.get(ticker, ticker),
+    placeholder="Search companies or tickers — e.g. Amazon or AMZN",
+    key="top_company_search",
+    on_change=reset_coverage_selection,
+)
+workspace_search = top_search_ticker or ""
 
-with st.expander("Methodology & source standards"):
+if not workspace_search:
     st.markdown(
         """
-        **Reported** — taken from a company filing or company-reported disclosure.
-
-        **Calculated by EquityLens** — derived from reported figures, such as growth rates,
-        margins, and trailing-twelve-month metrics.
-
-        **Research summary** — plain-language context built from structured company information
-        and filing disclosures. It is not a recommendation.
-
-        **Source priority:** SEC EDGAR first, company investor-relations disclosures second,
-        and appropriately licensed market-data providers where needed.
-        """
+        <div class="el-product-hero">
+            <div class="el-eyebrow">Public-markets research, made legible</div>
+            <h1 class="el-product-title">Understand public companies.<br><span>Without digging through hundreds of pages.</span></h1>
+            <p class="el-product-subtitle">
+                EquityLens organizes financial performance, company strategy, risk disclosures,
+                business models, and SEC filings into structured research while keeping the
+                original sources visible. <strong style="color:#16C7B2;">EquityLens informs. You decide.</strong>
+            </p>
+            <div class="el-badges">
+                <span class="el-badge">SEC EDGAR sourced</span>
+                <span class="el-badge">Calculations shown</span>
+                <span class="el-badge">Direct filing links</span>
+                <span class="el-badge">Period-aware research</span>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
     )
+
+    st.markdown(
+        """
+        <div class="el-trust-strip">
+            <div class="el-trust-item">Primary SEC sources</div>
+            <div class="el-trust-item">Reported vs. calculated</div>
+            <div class="el-trust-item">Plain-language explanations</div>
+            <div class="el-trust-item">Source-linked research</div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    with st.expander("Methodology & source standards"):
+        st.markdown(
+            """
+            **Reported** — taken from a company filing or company-reported disclosure.
+
+            **Calculated by EquityLens** — derived from reported figures, such as growth rates,
+            margins, and trailing-twelve-month metrics.
+
+            **Research summary** — plain-language context built from structured company information
+            and filing disclosures. It is not a recommendation.
+
+            **Source priority:** SEC EDGAR first, company investor-relations disclosures second,
+            and appropriately licensed market-data providers where needed.
+            """
+        )
+
 
 
 sec_synced_companies = sum(
@@ -4260,22 +4333,24 @@ deep_research_tickers = {
 }
 deep_research_tickers.discard("")
 
-render_summary_cards([
-    ("Companies", f"{len(company_universe):,}"),
-    ("Industries", f"{company_universe['Industry'].nunique():,}"),
-    ("SEC Synced", f"{sec_synced_companies:,} / {len(company_universe):,}"),
-    ("Deep Research", f"{len(deep_research_tickers):,} / {len(company_universe):,}"),
-    ("Primary Source", "SEC EDGAR")
-])
+if not workspace_search:
+    render_summary_cards([
+        ("Companies", f"{len(company_universe):,}"),
+        ("Industries", f"{company_universe['Industry'].nunique():,}"),
+        ("SEC Synced", f"{sec_synced_companies:,} / {len(company_universe):,}"),
+        ("Deep Research", f"{len(deep_research_tickers):,} / {len(company_universe):,}"),
+        ("Primary Source", "SEC EDGAR")
+    ])
 
-home_tab, company_tab, peer_tab, market_tab, sec_tracker_tab, learn_tab = st.tabs([
-    "Home",
-    "Company Research",
-    "Industry Comparison",
-    "Market Monitor",
-    "Filings",
-    "Learn"
-])
+# Search opens the company workspace as the first tab without scrolling.
+if workspace_search:
+    company_tab, home_tab, peer_tab, market_tab, sec_tracker_tab, learn_tab = st.tabs([
+        "Company Research", "Home", "Industry Comparison", "Market Monitor", "Filings", "Learn"
+    ])
+else:
+    home_tab, company_tab, peer_tab, market_tab, sec_tracker_tab, learn_tab = st.tabs([
+        "Home", "Company Research", "Industry Comparison", "Market Monitor", "Filings", "Learn"
+    ])
 
 with home_tab:
     st.markdown(
@@ -4942,52 +5017,6 @@ with company_tab:
         "Analyst Research, and Peers & ETFs without jumping between duplicate company pages."
     )
 
-    # Build a unified searchable universe from the 517-company Finviz list plus
-    # curated legacy research profiles that are not present in that CSV.
-    workspace_universe = company_universe.copy()
-    workspace_known_tickers = set(
-        workspace_universe["Ticker"].astype(str).str.upper().tolist()
-    )
-    workspace_extra_rows = []
-
-    for workspace_key, workspace_record in company_data.items():
-        extra_ticker = str(workspace_record.get("ticker", "")).upper().strip()
-        if not extra_ticker or extra_ticker in workspace_known_tickers:
-            continue
-
-        extra_industry = str(
-            workspace_record.get("industry", "Other")
-        ).strip() or "Other"
-        extra_sector = str(workspace_record.get("sector", "")).strip()
-
-        if not extra_sector:
-            if extra_industry in {
-                "Cloud & Data Infrastructure Software",
-                "Cybersecurity",
-            }:
-                extra_sector = "Technology"
-            elif extra_industry == "Fintech & Digital Finance":
-                extra_sector = "Financial"
-            else:
-                extra_sector = "Other"
-
-        workspace_extra_rows.append({
-            "Ticker": extra_ticker,
-            "Company": workspace_key.rsplit(" (", 1)[0],
-            "Sector": extra_sector,
-            "Industry": extra_industry,
-            "Country": str(workspace_record.get("country", "")).strip(),
-            "Coverage Key": workspace_key,
-        })
-        workspace_known_tickers.add(extra_ticker)
-
-    if workspace_extra_rows:
-        workspace_universe = pd.concat(
-            [workspace_universe, pd.DataFrame(workspace_extra_rows)],
-            ignore_index=True,
-            sort=False,
-        )
-
     workspace_sectors = sorted(
         [
             value
@@ -4996,7 +5025,7 @@ with company_tab:
         ]
     )
 
-    workspace_filters = st.columns([1, 1, 1.35])
+    workspace_filters = st.columns(2)
 
     with workspace_filters[0]:
         workspace_sector = st.selectbox(
@@ -5032,13 +5061,6 @@ with company_tab:
         workspace_filtered = workspace_filtered[
             workspace_filtered["Industry"] == workspace_industry
         ].copy()
-
-    with workspace_filters[2]:
-        workspace_search = st.text_input(
-            "Search company or ticker",
-            placeholder="e.g. MongoDB, MDB, Amazon, AAPL",
-            key="workspace_company_search",
-        )
 
     search_text = workspace_search.strip()
     search_pool = workspace_universe.copy() if search_text else workspace_filtered.copy()
