@@ -1952,6 +1952,181 @@ def get_company_analyst_data(symbol):
     }
 
 
+def _ticker_from_key_or_record(key, record):
+    """Resolve a ticker from a dataset record or a '(TICKER)' key suffix."""
+    if isinstance(record, dict):
+        ticker = str(record.get("ticker", "")).upper().strip()
+        if ticker:
+            return ticker
+
+    match = re.search(r"\(([^()]+)\)\s*$", str(key))
+    return match.group(1).upper().strip() if match else ""
+
+
+def _index_dataset_by_ticker(dataset):
+    """Index any EquityLens JSON dataset by ticker, independent of company-name spelling."""
+    indexed = {}
+    for key, record in (dataset or {}).items():
+        ticker = _ticker_from_key_or_record(key, record)
+        if ticker:
+            indexed[ticker] = record
+    return indexed
+
+
+def _statement_value(frame, row_names, column=None):
+    """Read a numeric value from a yfinance statement using common row labels."""
+    if not isinstance(frame, pd.DataFrame) or frame.empty:
+        return None
+
+    selected_column = column if column is not None else frame.columns[0]
+    lookup = {str(index).strip().lower(): index for index in frame.index}
+
+    for name in row_names:
+        match = lookup.get(str(name).strip().lower())
+        if match is None:
+            continue
+        try:
+            value = frame.loc[match, selected_column]
+            if isinstance(value, pd.Series):
+                value = value.iloc[0]
+            if pd.isna(value):
+                continue
+            return float(value)
+        except Exception:
+            continue
+
+    return None
+
+
+@st.cache_data(ttl=1800)
+def get_company_financial_snapshot(symbol):
+    """Supplement missing standardized financials with Yahoo Finance statement data."""
+    ticker = yf.Ticker(str(symbol).upper())
+
+    income = _yf_attribute(
+        ticker,
+        "income_stmt",
+        "financials",
+        "get_income_stmt",
+    )
+    balance = _yf_attribute(
+        ticker,
+        "balance_sheet",
+        "get_balance_sheet",
+    )
+
+    if not isinstance(income, pd.DataFrame):
+        income = pd.DataFrame()
+    if not isinstance(balance, pd.DataFrame):
+        balance = pd.DataFrame()
+
+    annual_history = []
+    for column in list(income.columns)[:4]:
+        try:
+            fiscal_year = pd.to_datetime(column).year
+        except Exception:
+            fiscal_year = str(column)
+
+        annual_history.append({
+            "fiscal_year": fiscal_year,
+            "revenue": _statement_value(
+                income,
+                ["Total Revenue", "Operating Revenue"],
+                column,
+            ),
+            "gross_profit": _statement_value(
+                income,
+                ["Gross Profit"],
+                column,
+            ),
+            "operating_income": _statement_value(
+                income,
+                ["Operating Income"],
+                column,
+            ),
+            "net_income": _statement_value(
+                income,
+                ["Net Income", "Net Income Common Stockholders"],
+                column,
+            ),
+        })
+
+    annual_history = [
+        row for row in annual_history
+        if any(
+            row.get(field) is not None
+            for field in [
+                "revenue",
+                "gross_profit",
+                "operating_income",
+                "net_income",
+            ]
+        )
+    ]
+    annual_history = sorted(
+        annual_history,
+        key=lambda row: str(row.get("fiscal_year", "")),
+    )
+
+    latest_income = annual_history[-1] if annual_history else {}
+    latest_balance_column = balance.columns[0] if not balance.empty else None
+
+    cash_and_investments = _statement_value(
+        balance,
+        [
+            "Cash Cash Equivalents And Short Term Investments",
+            "Cash And Short Term Investments",
+            "Cash Financial",
+            "Cash And Cash Equivalents",
+        ],
+        latest_balance_column,
+    )
+
+    total_debt = _statement_value(
+        balance,
+        [
+            "Total Debt",
+            "Long Term Debt And Capital Lease Obligation",
+        ],
+        latest_balance_column,
+    )
+
+    total_assets = _statement_value(
+        balance,
+        ["Total Assets"],
+        latest_balance_column,
+    )
+
+    shares_outstanding = _statement_value(
+        balance,
+        [
+            "Ordinary Shares Number",
+            "Share Issued",
+        ],
+        latest_balance_column,
+    )
+
+    balance_date = ""
+    if latest_balance_column is not None:
+        try:
+            balance_date = pd.to_datetime(latest_balance_column).date().isoformat()
+        except Exception:
+            balance_date = str(latest_balance_column)
+
+    return {
+        "latest": latest_income,
+        "history": annual_history,
+        "capital_structure": {
+            "shares_outstanding": shares_outstanding,
+            "total_debt": total_debt,
+            "cash_and_investments": cash_and_investments,
+            "total_assets": total_assets,
+            "balance_sheet_as_of": balance_date,
+        },
+        "source": "Yahoo Finance via yfinance",
+    }
+
+
 MAJOR_ETF_UNIVERSE = {
     "SPY": "SPDR S&P 500 ETF Trust",
     "QQQ": "Invesco QQQ Trust",
@@ -3818,6 +3993,12 @@ coverage_sectors = sorted(
     [value for value in company_universe["Sector"].dropna().unique().tolist() if value]
 )
 
+# Normalize research datasets by ticker so company-name capitalization or spelling
+# differences never disconnect research from the matching universe record.
+_analysis_by_ticker = _index_dataset_by_ticker(company_analysis)
+_quarterly_by_ticker = _index_dataset_by_ticker(company_quarterly)
+_s1_by_ticker = _index_dataset_by_ticker(company_s1)
+
 # Make all 517 companies available throughout the app immediately.
 # Generated SEC research fills these stubs over time.
 _company_key_by_ticker = {
@@ -3825,6 +4006,14 @@ _company_key_by_ticker = {
     for key, record in company_data.items()
     if record.get("ticker")
 }
+for _ticker, _key in list(_company_key_by_ticker.items()):
+    if _ticker in _analysis_by_ticker:
+        company_analysis[_key] = _analysis_by_ticker[_ticker]
+    if _ticker in _quarterly_by_ticker:
+        company_quarterly[_key] = _quarterly_by_ticker[_ticker]
+    if _ticker in _s1_by_ticker:
+        company_s1[_key] = _s1_by_ticker[_ticker]
+
 for _, _row in company_universe.iterrows():
     _ticker = str(_row.get("Ticker", "")).upper().strip()
     if not _ticker or _ticker in _company_key_by_ticker:
@@ -3856,8 +4045,9 @@ for _, _row in company_universe.iterrows():
             "source_filing": ""
         }
     }
-    company_analysis.setdefault(_key, {})
-    company_quarterly.setdefault(_key, {})
+    company_analysis[_key] = _analysis_by_ticker.get(_ticker, {})
+    company_quarterly[_key] = _quarterly_by_ticker.get(_ticker, {})
+    company_s1[_key] = _s1_by_ticker.get(_ticker, {})
     _company_key_by_ticker[_ticker] = _key
 
 public_market_data_enabled = True
