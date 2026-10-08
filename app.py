@@ -2200,6 +2200,15 @@ MAJOR_ETF_UNIVERSE = {
     "SOXX": "iShares Semiconductor ETF",
     "SMH": "VanEck Semiconductor ETF",
     "IGV": "iShares Expanded Tech-Software Sector ETF",
+    "XLC": "Communication Services Select Sector SPDR Fund",
+    "VOX": "Vanguard Communication Services ETF",
+    "FCOM": "Fidelity MSCI Communication Services Index ETF",
+    "VUG": "Vanguard Growth ETF",
+    "IWF": "iShares Russell 1000 Growth ETF",
+    "MGK": "Vanguard Mega Cap Growth ETF",
+    "SCHG": "Schwab U.S. Large-Cap Growth ETF",
+    "VGT": "Vanguard Information Technology ETF",
+    "ARKK": "ARK Innovation ETF",
 }
 
 
@@ -6198,10 +6207,10 @@ with company_tab:
             )
 
     with ownership_subtab:
-        section("Ownership", "Institutional, Fund & SEC Ownership Context")
+        section("Ownership", "Ownership & Major Holders")
         st.caption(
-            "Ownership combines supplemental market-data tables with SEC ownership filings when available. "
-            "Holder data can update on a different schedule from SEC filings."
+            "Ownership combines SEC beneficial-ownership filings with supplemental institutional and fund-holder data. "
+            "Percentages and holder tables can update on a different schedule from company filings."
         )
 
         try:
@@ -6213,58 +6222,217 @@ with company_tab:
                 "mutual_fund": pd.DataFrame(),
             }
 
-        ownership_cols = st.columns(2)
-        with ownership_cols[0]:
-            st.markdown("**Major ownership summary**")
-            major_table = ownership_data.get("major", pd.DataFrame())
-            if isinstance(major_table, pd.DataFrame) and not major_table.empty:
-                st.dataframe(major_table, use_container_width=True, hide_index=True)
-            else:
-                st.caption("Major-holder summary is unavailable from the supplemental feed.")
+        major_table = ownership_data.get("major", pd.DataFrame())
+        major_lookup = {}
+        if isinstance(major_table, pd.DataFrame) and not major_table.empty:
+            major_copy = major_table.copy()
+            key_column = next(
+                (
+                    column
+                    for column in ["index", "Breakdown", "Metric"]
+                    if column in major_copy.columns
+                ),
+                major_copy.columns[0],
+            )
+            value_column = next(
+                (
+                    column
+                    for column in ["Value", "value"]
+                    if column in major_copy.columns
+                ),
+                major_copy.columns[-1],
+            )
+            for _, row in major_copy.iterrows():
+                major_lookup[str(row.get(key_column, ""))] = row.get(value_column)
 
-        with ownership_cols[1]:
-            st.markdown("**SEC beneficial-ownership filings**")
-            ownership_forms = {"DEF 14A", "DEFA14A", "SC 13D", "SC 13D/A", "SC 13G", "SC 13G/A"}
-            sec_ownership_rows = [
-                {
-                    "Filed": filing.get("filing_date", ""),
-                    "Form": filing.get("form", ""),
-                    "Description": filing.get("description", "") or filing.get("primary_document", ""),
-                    "SEC Filing": filing.get("url", ""),
-                }
-                for filing in selected_filings
-                if filing.get("form") in ownership_forms
-            ][:15]
+        def _ownership_pct(value):
+            number = safe_float(value)
+            if number is None:
+                return "N/A"
+            if abs(number) <= 1:
+                number *= 100
+            return f"{number:.1f}%"
 
-            if sec_ownership_rows:
-                st.dataframe(
-                    pd.DataFrame(sec_ownership_rows),
-                    use_container_width=True,
-                    hide_index=True,
-                    column_config={
-                        "SEC Filing": st.column_config.LinkColumn("SEC Filing", display_text="Open")
-                    },
+        def _ownership_count(value):
+            number = safe_float(value)
+            return f"{int(number):,}" if number is not None else "N/A"
+
+        ownership_summary_cols = st.columns(4)
+        ownership_summary_cols[0].metric(
+            "Insider ownership",
+            _ownership_pct(
+                major_lookup.get(
+                    "insidersPercentHeld",
+                    major_lookup.get("% of Shares Held by All Insider", None),
                 )
-            else:
-                st.caption("No recent proxy or Schedule 13D/13G filing appeared in the currently loaded filing window.")
+            ),
+        )
+        ownership_summary_cols[1].metric(
+            "Institutional ownership",
+            _ownership_pct(
+                major_lookup.get(
+                    "institutionsPercentHeld",
+                    major_lookup.get("% of Shares Held by Institutions", None),
+                )
+            ),
+        )
+        ownership_summary_cols[2].metric(
+            "Institutional float",
+            _ownership_pct(
+                major_lookup.get(
+                    "institutionsFloatPercentHeld",
+                    major_lookup.get("% of Float Held by Institutions", None),
+                )
+            ),
+        )
+        ownership_summary_cols[3].metric(
+            "Institutional holders",
+            _ownership_count(
+                major_lookup.get(
+                    "institutionsCount",
+                    major_lookup.get("Number of Institutions Holding Shares", None),
+                )
+            ),
+        )
+
+        st.markdown("**SEC beneficial-ownership filings**")
+        ownership_forms = {
+            "DEF 14A",
+            "DEFA14A",
+            "SC 13D",
+            "SC 13D/A",
+            "SC 13G",
+            "SC 13G/A",
+        }
+        sec_ownership_rows = [
+            {
+                "Filed": filing.get("filing_date", ""),
+                "Form": filing.get("form", ""),
+                "Description": (
+                    filing.get("description", "")
+                    or filing.get("primary_document", "")
+                ),
+                "SEC Filing": filing.get("url", ""),
+            }
+            for filing in selected_filings
+            if filing.get("form") in ownership_forms
+        ][:20]
+
+        if sec_ownership_rows:
+            st.dataframe(
+                pd.DataFrame(sec_ownership_rows),
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "SEC Filing": st.column_config.LinkColumn(
+                        "SEC Filing",
+                        display_text="Open",
+                    )
+                },
+            )
+        else:
+            st.caption(
+                "No proxy or Schedule 13D/13G filing appeared in the currently loaded SEC history."
+            )
+
+        def _clean_holder_table(table):
+            if not isinstance(table, pd.DataFrame) or table.empty:
+                return pd.DataFrame()
+
+            cleaned = table.copy()
+            cleaned = cleaned.drop(
+                columns=[column for column in ["index"] if column in cleaned.columns],
+                errors="ignore",
+            )
+            cleaned = cleaned.rename(
+                columns={
+                    "Date Reported": "Reported",
+                    "pctHeld": "% Held",
+                    "pctChange": "% Change",
+                    "Value": "Position Value",
+                }
+            )
+
+            if "Reported" in cleaned.columns:
+                cleaned["Reported"] = pd.to_datetime(
+                    cleaned["Reported"],
+                    errors="coerce",
+                ).dt.date.astype(str)
+
+            if "% Held" in cleaned.columns:
+                cleaned["% Held"] = cleaned["% Held"].apply(
+                    lambda value: _ownership_pct(value)
+                )
+
+            if "% Change" in cleaned.columns:
+                cleaned["% Change"] = cleaned["% Change"].apply(
+                    lambda value: _ownership_pct(value)
+                )
+
+            if "Shares" in cleaned.columns:
+                cleaned["Shares"] = cleaned["Shares"].apply(
+                    lambda value: (
+                        f"{int(safe_float(value)):,}"
+                        if safe_float(value) is not None
+                        else "N/A"
+                    )
+                )
+
+            if "Position Value" in cleaned.columns:
+                cleaned["Position Value"] = cleaned["Position Value"].apply(
+                    lambda value: format_money(safe_float(value))
+                )
+
+            preferred = [
+                column
+                for column in [
+                    "Holder",
+                    "Reported",
+                    "% Held",
+                    "Shares",
+                    "Position Value",
+                    "% Change",
+                ]
+                if column in cleaned.columns
+            ]
+            remaining = [
+                column for column in cleaned.columns
+                if column not in preferred
+            ]
+            return cleaned[preferred + remaining]
 
         st.markdown("**Largest institutional holders**")
-        institutional_table = ownership_data.get("institutional", pd.DataFrame())
-        if isinstance(institutional_table, pd.DataFrame) and not institutional_table.empty:
-            st.dataframe(institutional_table.head(20), use_container_width=True, hide_index=True)
+        institutional_table = _clean_holder_table(
+            ownership_data.get("institutional", pd.DataFrame())
+        )
+        if not institutional_table.empty:
+            st.dataframe(
+                institutional_table.head(15),
+                use_container_width=True,
+                hide_index=True,
+            )
         else:
-            st.caption("Institutional-holder detail is unavailable from the supplemental feed.")
+            st.caption(
+                "Institutional-holder detail is unavailable from the supplemental feed."
+            )
 
         st.markdown("**Largest mutual-fund holders**")
-        mutual_table = ownership_data.get("mutual_fund", pd.DataFrame())
-        if isinstance(mutual_table, pd.DataFrame) and not mutual_table.empty:
-            st.dataframe(mutual_table.head(20), use_container_width=True, hide_index=True)
+        mutual_table = _clean_holder_table(
+            ownership_data.get("mutual_fund", pd.DataFrame())
+        )
+        if not mutual_table.empty:
+            st.dataframe(
+                mutual_table.head(15),
+                use_container_width=True,
+                hide_index=True,
+            )
         else:
-            st.caption("Mutual-fund holder detail is unavailable from the supplemental feed.")
+            st.caption(
+                "Mutual-fund holder detail is unavailable from the supplemental feed."
+            )
 
         st.caption(
-            "Supplemental ownership tables: Yahoo Finance via yfinance. "
-            "SEC ownership filings remain the primary source for disclosed beneficial ownership."
+            "SEC filings are the primary ownership source. Institutional and fund-holder tables are supplemental Yahoo Finance data via yfinance."
         )
 
     with analyst_subtab:
@@ -6377,7 +6545,7 @@ with company_tab:
 
         st.markdown("**Major ETF exposure**")
         st.caption(
-            "This scanner checks a curated set of large broad-market, sector, semiconductor, and software ETFs. "
+            "This scanner checks the published top-holdings lists for a curated set of major broad-market, growth, sector, semiconductor, communication-services, and software ETFs. "
             "It is useful context, not an exhaustive ETF-ownership database."
         )
 
@@ -6407,7 +6575,10 @@ with company_tab:
                     )
                 st.dataframe(etf_df, use_container_width=True, hide_index=True)
             else:
-                st.caption("The selected stock was not found in the currently scanned top-holdings lists.")
+                st.info(
+                    "No match was found in the published top-holdings sample for the ETFs scanned. "
+                    "This does not mean no ETF owns the stock; free fund feeds do not expose every holding for every ETF."
+                )
 
         st.caption(
             "Peer groups use the EquityLens industry classification. "
