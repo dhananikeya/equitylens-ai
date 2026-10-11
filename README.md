@@ -6,6 +6,8 @@ EquityLens AI is a public-company research platform that turns SEC filings and s
 
 The project is designed around a simple principle: **important research claims should stay connected to the underlying source.**
 
+**Always free and educational.** Users do not need to register, sign in, subscribe, or pay to explore the public research, SEC filings, comparisons, and market monitoring tools.
+
 ## What EquityLens Does
 
 - **Research public companies** through one unified workspace covering market snapshots, financials, filings, ownership, analyst context, peers, ETFs, capital structure, historical trends, and qualitative research.
@@ -20,8 +22,8 @@ The project is designed around a simple principle: **important research claims s
 
 The application is organized into six primary areas:
 
-1. **Home** — product overview and guided paths into research.
-2. **Company Research** — a Fidelity-inspired research workspace with one selected company and sub-tabs for Snapshot, Financials, Filings, Ownership, Analyst Research, and Peers & ETFs.
+1. **Home** — a guided company search, example research entry points, a session-only research list (with CSV export), public company coverage, and the original product overview.
+2. **Company Research** — a research overview, balanced evidence prompts, a free PDF research brief with SEC links, a session-only save control, and the original sections: Snapshot, Financials, Filings, Ownership, Analyst Research, and Peers & ETFs.
 3. **Industry Comparison** — side-by-side peer research and financial comparison.
 4. **Market Monitor** — NYSE market tape and heat map, Treasury yield curve, SOFR reference rates, macroeconomic indicators, economic/FOMC calendars, Bloomberg headline links, and market-wide movement.
 5. **Filings** — a monitored SEC filing feed and registration-filing history.
@@ -152,7 +154,7 @@ The platform distinguishes between broad market coverage and deeper research cov
 - GitHub
 - GitHub Actions
 - Streamlit Community Cloud
-- Supabase for optional account functionality
+- ReportLab for local PDF export (no external report service)
 
 ## Project Structure
 
@@ -195,7 +197,13 @@ Run the application:
 streamlit run app.py
 ```
 
-Some optional functionality requires Streamlit secrets for external services such as Supabase or a supported market-data provider. Filing-based public research remains the core of the application.
+Some optional market-data functionality requires Streamlit secrets for authorized external data providers. All available research pages remain accessible without login or payment. A research list is held only in the current Streamlit session; users can export a CSV to keep it.
+
+## Readability and Research Exports
+
+The readability layer in `research_experience.py` adds a guided homepage search, user-friendly growth and risk questions grounded in pre-existing disclosure fields, links to primary SEC sources, and a concise downloadable PDF brief. It never invents financial figures or automatically assigns risk or investment scores. The original detailed tabs and data views remain in place. PDF briefs are snapshots of available fields, not full exports of every filing.
+
+The optional visit-only research list uses Streamlit session state, not user accounts or persistent cloud storage. It is not stored between visits; the CSV export provides user-controlled portability.
 
 ## Design Principles
 
