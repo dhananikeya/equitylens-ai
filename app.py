@@ -26,6 +26,7 @@ from research_experience import (
     render_watchlist,
     toggle_watchlist,
     render_company_evidence,
+    render_quarterly_comparison,
     render_report_download,
 )
 
@@ -5532,6 +5533,7 @@ if active_destination == "Company Research":
         )
         st.button("Open Learn", key="summary_open_learn", on_click=navigate_to, args=("Learn",))
 
+    render_quarterly_comparison(st, selected_qdata)
     render_company_evidence(
         st, selected_ticker, selected_analysis, selected_filings,
         pct(workspace_growth), financial_period,
