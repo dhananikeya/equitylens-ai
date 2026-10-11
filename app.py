@@ -11,6 +11,7 @@ import io
 import html
 import re
 import xml.etree.ElementTree as ET
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from urllib.parse import urljoin, urlencode
 
@@ -20,6 +21,7 @@ import yfinance as yf
 import plotly.graph_objects as go
 import streamlit as st
 from bs4 import BeautifulSoup
+from market_tables import render_crisp_table
 from research_experience import (
     inject_readability_styles,
     render_home_discovery,
@@ -1703,24 +1705,24 @@ def get_finviz_screener_data(symbols=None, filters=None):
         )
     else:
         raise ValueError(
-            "Configure FINVIZ_API_KEY or FINVIZ_EXPORT_URL in Streamlit Secrets."
+            "The market-data connection has not been configured."
         )
 
     response.raise_for_status()
 
     payload = response.text.strip()
     if not payload:
-        raise ValueError("Finviz returned an empty response.")
+        raise ValueError("Market-data service returned an empty response.")
 
     payload_start = payload[:200].lower()
     if "<html" in payload_start or "<!doctype" in payload_start:
         raise ValueError(
-            "Finviz did not return CSV data. Check the Elite API token/export configuration."
+            "Market-data service returned an unexpected response format."
         )
 
     data = pd.read_csv(io.StringIO(payload))
     if data.empty:
-        raise ValueError("Finviz returned no screener rows.")
+        raise ValueError("Market-data service returned no screener rows.")
 
     return data
 
@@ -1766,7 +1768,7 @@ def normalize_finviz_screener(dataframe):
 
     if "Ticker" not in normalized.columns:
         raise ValueError(
-            "The Finviz export does not include a Ticker/Symbol column."
+            "The market-data response does not include a Ticker/Symbol column."
         )
 
     normalized["Ticker"] = normalized["Ticker"].astype(str).str.upper().str.strip()
@@ -1805,7 +1807,7 @@ def finviz_numeric(value):
 
 
 def finviz_market_cap_dollars(value):
-    """Finviz plain market-cap export numbers are millions; suffixed values carry their units."""
+    """Market-screener plain market-cap values are in millions unless suffixed."""
     parsed = finviz_numeric(value)
     if parsed is None:
         return None
@@ -2358,8 +2360,7 @@ def _numeric_text(value):
         return None
 
 
-@st.cache_data(ttl=1800)
-def get_treasury_yield_curve():
+def _fetch_treasury_yield_curve():
     """Load the latest official U.S. Treasury par yield curve observation."""
     year = datetime.now(timezone.utc).year
     source_url = (
@@ -2370,7 +2371,7 @@ def get_treasury_yield_curve():
     response = requests.get(
         source_url,
         headers=PUBLIC_DATA_HEADERS,
-        timeout=25
+        timeout=(5, 14),
     )
     response.raise_for_status()
 
@@ -2435,7 +2436,7 @@ def _find_html_data_row(url, required_header_terms):
                 "AppleWebKit/537.36 Safari/537.36 EquityLensAI/1.0"
             ),
         },
-        timeout=25,
+        timeout=(4, 7),
     )
     response.raise_for_status()
     soup = BeautifulSoup(response.text, "html.parser")
@@ -2475,8 +2476,7 @@ def _normalized_dict(record):
     }
 
 
-@st.cache_data(ttl=900)
-def get_sofr_reference_rates():
+def _fetch_sofr_reference_rates():
     """Load SOFR and published SOFR averages from the New York Fed."""
     sofr_url = "https://www.newyorkfed.org/markets/reference-rates/sofr"
     averages_url = (
@@ -2498,7 +2498,7 @@ def get_sofr_reference_rates():
         response = requests.get(
             "https://markets.newyorkfed.org/api/rates/secured/sofr/last/1.json",
             headers=PUBLIC_DATA_HEADERS,
-            timeout=20,
+            timeout=(4, 8),
         )
         if response.ok:
             for record in _walk_dicts(response.json()):
@@ -2529,7 +2529,7 @@ def get_sofr_reference_rates():
             "https://markets.newyorkfed.org/api/rates/secured/"
             "sofr-avg-ind/last/1.json",
             headers=PUBLIC_DATA_HEADERS,
-            timeout=20,
+            timeout=(4, 8),
         )
         if response.ok:
             for record in _walk_dicts(response.json()):
@@ -3455,8 +3455,7 @@ def render_market_news_cards(stories, market_context=None):
     )
 
 
-@st.cache_data(ttl=900)
-def get_optional_swap_rates():
+def _fetch_optional_swap_rates(configured_endpoint=''):
     """
     Load USD SOFR OIS curve data.
 
@@ -3468,9 +3467,7 @@ def get_optional_swap_rates():
     swap transaction reports. These are dated curve estimates, not executable
     dealer quotes.
     """
-    configured_endpoint = str(
-        st.secrets.get("SWAP_RATES_JSON_URL", "")
-    ).strip()
+    configured_endpoint = str(configured_endpoint or "").strip()
     endpoint = (
         configured_endpoint
         if configured_endpoint
@@ -3480,7 +3477,7 @@ def get_optional_swap_rates():
     response = requests.get(
         endpoint,
         headers=PUBLIC_DATA_HEADERS,
-        timeout=25,
+        timeout=(5, 12),
     )
     response.raise_for_status()
     payload = response.json()
@@ -3543,15 +3540,33 @@ def get_optional_swap_rates():
     return rows
 
 
+@st.cache_data(ttl=3600, show_spinner=False)
+def get_rates_bundle(swap_endpoint=""):
+    """Fetch independent official reference rates concurrently and cache for an hour."""
+    tasks = {
+        "treasury": _fetch_treasury_yield_curve,
+        "sofr": _fetch_sofr_reference_rates,
+        "swap": lambda: _fetch_optional_swap_rates(swap_endpoint),
+    }
+    result = {"treasury": {}, "sofr": {}, "swap": [], "errors": []}
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        futures = {name: executor.submit(task) for name, task in tasks.items()}
+        for name, future in futures.items():
+            try:
+                result[name] = future.result()
+            except Exception:
+                result["errors"].append(name)
+    return result
+
 
 def render_nyse_market_monitor(nyse_finviz):
-    """Render the Finviz-powered NYSE ticker and heat map."""
+    """Render the NYSE market ticker and heat map."""
     section("NYSE", "NYSE Market Ticker")
 
     if nyse_finviz is None or nyse_finviz.empty:
         st.info(
             "NYSE market data is not available right now. "
-            "Check the Finviz Elite connection and refresh the page."
+            "Check the market-data connection and refresh the page."
         )
         return
 
@@ -3627,13 +3642,13 @@ def render_nyse_market_monitor(nyse_finviz):
                 </div>
             </div>
             <div class="el-market-delay">
-                Finviz Elite · market timing follows your data entitlement · hover to pause
+                Market-data snapshot · quotes may be delayed · hover to pause
             </div>
             """,
             unsafe_allow_html=True
         )
     else:
-        st.caption("NYSE ticker data is not available in the current Finviz response.")
+        st.caption("NYSE ticker data is not available in the current market feed.")
 
     section("Market Map", "NYSE Heat Map")
 
@@ -3658,7 +3673,7 @@ def render_nyse_market_monitor(nyse_finviz):
     heatmap_required = {"Ticker", "Sector", "Market Cap", "Change"}
     if not heatmap_required.issubset(set(nyse_finviz.columns)):
         st.caption(
-            "The current Finviz response is missing one or more fields needed for the NYSE heat map."
+            "The current market feed is missing fields needed for the NYSE heat map."
         )
         return
 
@@ -4307,7 +4322,7 @@ SUBGROUPS = {
     ]
 }
 
-# Build a unified searchable universe from the 517-company Finviz list plus
+# Build a unified searchable universe from the 517-company market universe plus
 # curated legacy research profiles that are not present in that CSV.
 workspace_universe = company_universe.copy()
 workspace_known_tickers = set(
@@ -6377,19 +6392,17 @@ if active_destination == "Market Monitor":
             get_live_market_data.clear()
             get_market_history.clear()
             get_finviz_screener_data.clear()
-            get_treasury_yield_curve.clear()
-            get_sofr_reference_rates.clear()
+            get_rates_bundle.clear()
             get_bls_macro_snapshot.clear()
             get_bls_release_calendar.clear()
             get_fomc_calendar.clear()
             get_fed_monetary_updates.clear()
             get_bloomberg_market_news.clear()
-            get_optional_swap_rates.clear()
             st.rerun()
 
     with source_col:
         st.caption(
-            "NYSE ticker + heat map: Finviz Elite · quotes + charts: Yahoo Finance via yfinance"
+            "NYSE market tape and heat map: market-data feed · quotes and charts: Yahoo Finance"
         )
 
     nyse_finviz = pd.DataFrame()
@@ -6399,33 +6412,30 @@ if active_destination == "Market Monitor":
                 get_finviz_screener_data(filters="exch_nyse")
             )
         except Exception as exc:
-            st.warning(market_provider_error("NYSE Finviz data", exc))
+            st.warning(market_provider_error("NYSE market feed", exc))
     else:
         st.warning(
-            "Finviz is not configured. Add FINVIZ_API_KEY to Streamlit Secrets "
-            "to display the NYSE ticker and heat map."
+            "The NYSE market-data feed is not configured. The heat map and ticker "
+            "will appear when a supported connection is available."
         )
 
     render_nyse_market_monitor(nyse_finviz)
 
     section("Rates", "Treasury, SOFR & Swap Monitor")
 
-    treasury_curve = {}
-    sofr_reference = {}
-    try:
-        treasury_curve = get_treasury_yield_curve()
-    except Exception:
-        st.warning(
-            "U.S. Treasury yield-curve data is temporarily unavailable."
+    # Fetch all three public rates providers in parallel and cache the result.
+    with st.spinner("Loading public Treasury, SOFR and swap rates…"):
+        rates_bundle = get_rates_bundle(
+            str(st.secrets.get("SWAP_RATES_JSON_URL", "")).strip()
         )
-
-    try:
-        sofr_reference = get_sofr_reference_rates()
-    except Exception:
-        st.warning(
-            "New York Fed SOFR reference-rate data is temporarily unavailable."
-        )
-
+    treasury_curve = rates_bundle["treasury"]
+    sofr_reference = rates_bundle["sofr"]
+    swap_rates = rates_bundle["swap"]
+    rate_errors = set(rates_bundle["errors"])
+    if "treasury" in rate_errors:
+        st.warning("U.S. Treasury yield data is temporarily unavailable.")
+    if "sofr" in rate_errors:
+        st.warning("New York Fed reference rates are temporarily unavailable.")
     render_rates_ticker(treasury_curve, sofr_reference)
 
     treasury_rates = treasury_curve.get("rates", {}) if treasury_curve else {}
@@ -6474,12 +6484,6 @@ if active_destination == "Market Monitor":
             )
         )
 
-    swap_rates = []
-    try:
-        swap_rates = get_optional_swap_rates()
-    except Exception:
-        swap_rates = []
-
     if swap_rates:
         swap_df = pd.DataFrame(swap_rates)
         swap_df["Swap Rate"] = swap_df["Swap Rate"].map(
@@ -6492,11 +6496,7 @@ if active_destination == "Market Monitor":
             ]
             if column in swap_df.columns
         ]
-        st.dataframe(
-            swap_df[visible_swap_columns],
-            use_container_width=True,
-            hide_index=True,
-        )
+        render_crisp_table(st, swap_df[visible_swap_columns])
         st.caption(
             "Free public curve data: CheckMySwap, derived from DTCC public swap "
             "transaction reports. These are dated indicative OIS curve estimates, "
@@ -6596,16 +6596,9 @@ if active_destination == "Market Monitor":
             ["Date", "Agency"],
             ascending=True,
         ).head(16)
-        st.dataframe(
-            calendar_df,
-            use_container_width=True,
-            hide_index=True,
-            column_config={
-                "Source": st.column_config.LinkColumn(
-                    "Primary source",
-                    display_text="Open"
-                )
-            },
+        render_crisp_table(
+            st, calendar_df,
+            link_columns=("Source",), link_label="Primary source",
         )
         st.caption(
             "BLS dates come from its automatically updated online calendar. "
@@ -6619,16 +6612,9 @@ if active_destination == "Market Monitor":
         fed_updates = []
 
     if fed_updates:
-        st.dataframe(
-            pd.DataFrame(fed_updates),
-            use_container_width=True,
-            hide_index=True,
-            column_config={
-                "Source": st.column_config.LinkColumn(
-                    "Federal Reserve",
-                    display_text="Open"
-                )
-            },
+        render_crisp_table(
+            st, pd.DataFrame(fed_updates),
+            link_columns=("Source",), link_label="Federal Reserve",
         )
     else:
         st.link_button(
@@ -6806,7 +6792,7 @@ if active_destination == "Market Monitor":
     )
 
     st.caption(
-        "SPY and QQQ are shown as broad-market proxies. Quote and chart data are provided through Yahoo Finance; NYSE ticker and heat-map data come from Finviz Elite."
+        "SPY and QQQ are broad-market proxies. Quotes and charts come from Yahoo Finance; market tape and heat-map data may be delayed."
     )
 
     section("Coverage", f"{market_industry} Market Board")
@@ -6838,14 +6824,10 @@ if active_destination == "Market Monitor":
 
     board_df = pd.DataFrame(market_rows)
     if not board_df.empty:
-        st.dataframe(
-            board_df.drop(columns=["_change"]),
-            use_container_width=True,
-            hide_index=True
-        )
+        render_crisp_table(st, board_df.drop(columns=["_change"]))
 
     if public_finviz_data_enabled:
-        section("Screener", "Finviz Market Intelligence")
+        section("Screener", "Market Intelligence")
 
         if not finviz_market.empty:
             covered_finviz = finviz_market[
@@ -6901,23 +6883,19 @@ if active_destination == "Market Monitor":
             ]
 
             if not covered_finviz.empty:
-                st.dataframe(
-                    covered_finviz[visible_columns],
-                    use_container_width=True,
-                    hide_index=True
-                )
+                render_crisp_table(st, covered_finviz[visible_columns])
             else:
                 st.caption(
-                    "No covered companies match the current Finviz screener filters."
+                    "No covered companies match the current screening filters."
                 )
 
             st.caption(
-                "Finviz supplies the screener snapshot. EquityLens keeps SEC-reported fundamentals "
-                "and filing research separate from market-screening fields."
+                "This market snapshot highlights price and volume activity. "
+                "SEC-reported fundamentals and filing analysis stay separate from market screening data."
             )
         else:
             st.caption(
-                "Finviz is enabled, but the current export did not return usable screener rows."
+                "The market-data connection returned no usable screening rows."
             )
 
     notable_rows = [
@@ -6986,7 +6964,7 @@ if active_destination == "Market Monitor":
         )
 
     st.markdown(
-        '<div class="el-market-source">NYSE ticker, heat map, and screener: Finviz Elite · '
+        '<div class="el-market-source">NYSE ticker, heat map, and market screener: market-data feed · '
         'quotes and market movement: Yahoo Finance via yfinance · macro and rates: official public sources. '
         'Company-specific research now lives in the Company Research workspace.</div>',
         unsafe_allow_html=True

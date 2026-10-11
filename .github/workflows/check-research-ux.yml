@@ -4,18 +4,22 @@ on:
   pull_request:
     paths:
       - "app.py"
+      - "market_tables.py"
       - "research_experience.py"
       - "requirements.txt"
       - "tests/test_research_experience.py"
+      - "tests/test_market_tables.py"
       - ".github/workflows/check-research-ux.yml"
   push:
     branches:
       - "feature/free-research-ux"
     paths:
       - "app.py"
+      - "market_tables.py"
       - "research_experience.py"
       - "requirements.txt"
       - "tests/test_research_experience.py"
+      - "tests/test_market_tables.py"
       - ".github/workflows/check-research-ux.yml"
 
 permissions:
@@ -35,6 +39,6 @@ jobs:
       - name: Install PDF export dependency
         run: python -m pip install reportlab
       - name: Check Python compilation
-        run: python -m compileall -q app.py research_experience.py tests
+        run: python -m compileall -q app.py research_experience.py market_tables.py tests
       - name: Test research experience
-        run: python -m unittest discover -s tests -p "test_research_experience.py" -v
+        run: python -m unittest discover -s tests -p "test_*.py" -v

@@ -129,7 +129,7 @@ Each entry explains what the item means, why it matters, how to interpret it, wh
 
 EquityLens currently exposes a **517-company market universe** across multiple sectors and industries. SEC access is available throughout the expanded universe, while deeper structured research is built progressively as company filings are processed and standardized.
 
-The platform distinguishes between broad market coverage and deeper research coverage so that a company appearing in the universe is not mistaken for a fully completed analyst profile. Legacy curated profiles that fall outside the 517-row Finviz universe remain searchable in the unified Company Research workspace.
+The platform distinguishes between broad market coverage and deeper research coverage so that a company appearing in the universe is not mistaken for a fully completed analyst profile. Legacy curated profiles that fall outside the 517-row screener universe remain searchable in the unified Company Research workspace.
 
 ## Technology
 
@@ -144,7 +144,7 @@ The platform distinguishes between broad market coverage and deeper research cov
 - U.S. Treasury daily yield-curve feed
 - Federal Reserve / New York Fed reference-rate and calendar sources
 - Bloomberg headline metadata and outbound market-news links
-- Finviz Elite
+- Authorized market-screener data integration
 - Yahoo Finance via yfinance for supplemental quotes, ownership tables, analyst aggregates, and major ETF holdings checks
 - Structured JSON datasets
 - Requests
