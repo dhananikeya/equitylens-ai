@@ -2436,7 +2436,7 @@ def _find_html_data_row(url, required_header_terms):
                 "AppleWebKit/537.36 Safari/537.36 EquityLensAI/1.0"
             ),
         },
-        timeout=25,
+        timeout=(4, 7),
     )
     response.raise_for_status()
     soup = BeautifulSoup(response.text, "html.parser")
@@ -2498,7 +2498,7 @@ def _fetch_sofr_reference_rates():
         response = requests.get(
             "https://markets.newyorkfed.org/api/rates/secured/sofr/last/1.json",
             headers=PUBLIC_DATA_HEADERS,
-            timeout=20,
+            timeout=(4, 8),
         )
         if response.ok:
             for record in _walk_dicts(response.json()):
@@ -2529,7 +2529,7 @@ def _fetch_sofr_reference_rates():
             "https://markets.newyorkfed.org/api/rates/secured/"
             "sofr-avg-ind/last/1.json",
             headers=PUBLIC_DATA_HEADERS,
-            timeout=20,
+            timeout=(4, 8),
         )
         if response.ok:
             for record in _walk_dicts(response.json()):
