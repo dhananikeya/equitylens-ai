@@ -24,6 +24,9 @@ OUTPUT_PATH = ROOT / "data" / "sec_filings.json"
 
 USER_AGENT = "EquityLens AI research app dhananikeya@gmail.com"
 MAX_FILINGS_PER_COMPANY = 25
+# Stable SEC CIK fallback for recently renamed / delisted ticker symbols.
+# PSKY: SEC EDGAR filer Paramount Skydance Corp, CIK 0002041610.
+CIK_OVERRIDES = {"PSKY": {"cik": "0002041610", "title": "Paramount Skydance Corp"}}
 MAX_HISTORY_FILES_FOR_REGISTRATION = 2
 REGISTRATION_FORMS = {
     "S-1", "S-1/A",
@@ -253,7 +256,7 @@ def main() -> None:
         key = f"{company_name} ({ticker})"
 
         previous_company = previous_output.get(key, {})
-        ticker_record = ticker_map.get(ticker)
+        ticker_record = ticker_map.get(ticker) or CIK_OVERRIDES.get(ticker)
         if not ticker_record and previous_company.get("cik"):
             ticker_record = {
                 "cik": previous_company["cik"],
