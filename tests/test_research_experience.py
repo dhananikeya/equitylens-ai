@@ -7,6 +7,7 @@ from pathlib import Path
 
 from research_experience import (
     _filer_timeline,
+    _compact_dollars,
     _safe_sec_url,
     build_research_pdf,
 )
@@ -31,6 +32,11 @@ class ResearchExperienceTests(unittest.TestCase):
         timeline = _filer_timeline(rows, 2)
         self.assertEqual([f["form"] for f in timeline], ["10-Q", "10-K"])
         self.assertEqual(rows[0]["form"], "10-K")
+
+    def test_compact_money_formatting_and_missing_values(self):
+        self.assertEqual(_compact_dollars(3_200_000_000), "$3.20B")
+        self.assertEqual(_compact_dollars(-420_000_000), "-$420.0M")
+        self.assertEqual(_compact_dollars(None), "Not available")
 
     def test_export_handles_missing_analysis_without_fake_claims(self):
         pdf = build_research_pdf(
