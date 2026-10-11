@@ -201,7 +201,7 @@ Some optional market-data functionality requires Streamlit secrets for authorize
 
 ## Readability and Research Exports
 
-The readability layer in `research_experience.py` adds a guided homepage search, user-friendly growth and risk questions grounded in pre-existing disclosure fields, links to primary SEC sources, and a concise downloadable PDF brief. It never invents financial figures or automatically assigns risk or investment scores. The original detailed tabs and data views remain in place. PDF briefs are snapshots of available fields, not full exports of every filing.
+The readability layer in `research_experience.py` adds a guided homepage search, year-over-year quarterly metric cards where structured data exists, user-friendly growth and risk questions grounded in pre-existing disclosure fields, links to primary SEC sources, and a concise downloadable PDF brief. It never invents financial figures or automatically assigns risk or investment scores. The original detailed tabs and data views remain in place. PDF briefs are snapshots of available fields, not full exports of every filing.
 
 The optional visit-only research list uses Streamlit session state, not user accounts or persistent cloud storage. It is not stored between visits; the CSV export provides user-controlled portability.
 
