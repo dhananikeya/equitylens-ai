@@ -20,7 +20,15 @@ import yfinance as yf
 import plotly.graph_objects as go
 import streamlit as st
 from bs4 import BeautifulSoup
-from supabase import create_client
+from research_experience import (
+    inject_readability_styles,
+    render_home_discovery,
+    render_watchlist,
+    toggle_watchlist,
+    render_company_evidence,
+    render_quarterly_comparison,
+    render_report_download,
+)
 
 st.set_page_config(
     page_title="EquityLens AI",
@@ -1428,23 +1436,6 @@ hr {
     """,
     unsafe_allow_html=True
 )
-
-
-def get_supabase_client():
-    url = st.secrets.get("SUPABASE_URL")
-    anon_key = st.secrets.get("SUPABASE_ANON_KEY")
-    if not url or not anon_key:
-        return None
-    return create_client(url, anon_key)
-
-
-def get_public_app_url():
-    """Return the public URL users should land on after confirming their email."""
-    configured_url = st.secrets.get(
-        "PUBLIC_APP_URL",
-        "https://equitylens-ai-2h7rd8qluv3bc8sdqf5cu3.streamlit.app/"
-    )
-    return str(configured_url).rstrip("/") + "/"
 
 
 
@@ -4466,7 +4457,8 @@ if not st.session_state.get("shared_link_loaded"):
     st.session_state["shared_link_loaded"] = True
 
 st.session_state.setdefault("main_navigation", "Home")
-st.markdown('<div class="el-kicker">EquityLens AI · Research tool</div>', unsafe_allow_html=True)
+inject_readability_styles(st)
+st.markdown('<div class="el-kicker">EquityLens AI · Free educational research</div>', unsafe_allow_html=True)
 st.selectbox(
     "Search the website",
     options=list(navigation_labels),
@@ -4513,6 +4505,11 @@ if active_destination == "Home":
         """,
         unsafe_allow_html=True,
     )
+
+    render_home_discovery(
+        st, company_universe, open_company_research, sec_filings
+    )
+    render_watchlist(st, company_data, open_company_research)
 
     section("Start here", "What would you like to explore?")
     quick_actions = [
@@ -5357,8 +5354,16 @@ if active_destination == "Company Research":
             "The rest of the workspace will continue to load."
         )
 
-    selected_filings = selected_sec.get("filings", [])
-    selected_registrations = selected_sec.get("registration_filings", [])
+    # Keep the locally synced SEC feed visible if the live API is unavailable.
+    selected_local_sec = sec_filings.get(selected_company_key, {})
+    selected_filings = (
+        selected_sec.get("filings") or selected_local_sec.get("filings") or []
+    )
+    selected_registrations = (
+        selected_sec.get("registration_filings")
+        or selected_local_sec.get("registration_filings")
+        or []
+    )
 
     latest_annual = latest_filing_by_forms(
         selected_filings,
@@ -5414,7 +5419,7 @@ if active_destination == "Company Research":
         unsafe_allow_html=True,
     )
 
-    research_actions = st.columns(2)
+    research_actions = st.columns(3)
     with research_actions[0]:
         if selected_company_key in company_data and company_data[selected_company_key].get("industry", "Unclassified") in industries:
             st.button(
@@ -5430,6 +5435,18 @@ if active_destination == "Company Research":
         with st.expander("Share this research"):
             st.caption("Copy this link to open the same company. Data may change as sources update.")
             st.code(research_link(selected_ticker), language=None)
+
+    with research_actions[2]:
+        already_saved = selected_ticker in st.session_state.get(
+            "education_watchlist", []
+        )
+        st.button(
+            "Remove from research list" if already_saved else "Save to my research list",
+            key="company_watchlist_toggle_%s" % selected_ticker,
+            on_click=toggle_watchlist,
+            args=(st, selected_ticker),
+            use_container_width=True,
+        )
 
     if selected_sec_error or selected_price is None or not selected_financial_fallback:
         st.caption("Some source data is unavailable. You can retry without losing your selected company.")
@@ -5516,6 +5533,32 @@ if active_destination == "Company Research":
         )
         st.button("Open Learn", key="summary_open_learn", on_click=navigate_to, args=("Learn",))
 
+    render_quarterly_comparison(st, selected_qdata)
+    render_company_evidence(
+        st, selected_ticker, selected_analysis, selected_filings,
+        pct(workspace_growth), financial_period,
+    )
+    render_report_download(
+        st, selected_name, selected_ticker, selected_industry_name,
+        selected_sector_name, selected_analysis, selected_filings,
+        {
+            "Price (Yahoo Finance, may be delayed)": (
+                "$" + f"{selected_price:,.2f}"
+                if selected_price is not None else "Not available"
+            ),
+            "Revenue": format_money(workspace_revenue),
+            "Revenue growth": pct(workspace_growth),
+            "Reporting period": financial_period or "See Financials",
+            "Data source": revenue_source_label,
+            "Most recent filing": f"{filing_form} · {filing_date}",
+        },
+    )
+
+    st.markdown("### Explore the complete research workspace")
+    st.caption(
+        "The detailed data, filings, sources, ownership and peer research below "
+        "remain available in their original sections."
+    )
     company_section = st.radio(
         "Company sections",
         ["Snapshot", "Financials", "Filings", "Ownership", "Analyst Research", "Peers & ETFs"],
