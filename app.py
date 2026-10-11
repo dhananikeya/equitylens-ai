@@ -1807,7 +1807,7 @@ def finviz_numeric(value):
 
 
 def finviz_market_cap_dollars(value):
-    """Finviz plain market-cap export numbers are millions; suffixed values carry their units."""
+    """Market-screener plain market-cap values are in millions unless suffixed."""
     parsed = finviz_numeric(value)
     if parsed is None:
         return None
@@ -3560,7 +3560,7 @@ def get_rates_bundle(swap_endpoint=""):
 
 
 def render_nyse_market_monitor(nyse_finviz):
-    """Render the Finviz-powered NYSE ticker and heat map."""
+    """Render the NYSE market ticker and heat map."""
     section("NYSE", "NYSE Market Ticker")
 
     if nyse_finviz is None or nyse_finviz.empty:
@@ -4322,7 +4322,7 @@ SUBGROUPS = {
     ]
 }
 
-# Build a unified searchable universe from the 517-company Finviz list plus
+# Build a unified searchable universe from the 517-company market universe plus
 # curated legacy research profiles that are not present in that CSV.
 workspace_universe = company_universe.copy()
 workspace_known_tickers = set(
