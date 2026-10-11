@@ -11,7 +11,9 @@ from __future__ import annotations
 
 import csv
 import json
+import sys
 import time
+import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -31,6 +33,7 @@ REGISTRATION_FORMS = {
 
 
 def get_json(url: str) -> dict:
+    """Fetch SEC JSON, retrying temporary outages and rate limits."""
     request = urllib.request.Request(
         url,
         headers={
@@ -40,14 +43,35 @@ def get_json(url: str) -> dict:
         },
     )
     last_error = None
-    for attempt in range(3):
+    for attempt in range(4):
         try:
             with urllib.request.urlopen(request, timeout=30) as response:
                 return json.loads(response.read().decode("utf-8"))
         except Exception as exc:
             last_error = exc
-            if attempt < 2:
-                time.sleep(2 ** attempt)
+            # A missing resource is not fixed by retrying, but SEC blocks
+            # (403/429), server errors and network hiccups may be temporary.
+            if isinstance(exc, urllib.error.HTTPError) and exc.code not in (
+                403, 429, 500, 502, 503, 504
+            ):
+                raise
+            if attempt == 3:
+                break
+            delay = min(24, 3 * 2 ** attempt)
+            if isinstance(exc, urllib.error.HTTPError):
+                retry_after = exc.headers.get("Retry-After")
+                if retry_after:
+                    try:
+                        delay = max(delay, min(60, int(retry_after)))
+                    except ValueError:
+                        pass
+            print(
+                f"SEC request failed ({url}): {exc}; "
+                f"retrying in {delay}s (attempt {attempt + 1}/4)",
+                file=sys.stderr,
+                flush=True,
+            )
+            time.sleep(delay)
     raise last_error
 
 
@@ -194,23 +218,47 @@ def dedupe_filings(rows: list[dict]) -> list[dict]:
 
 def main() -> None:
     universe = load_universe()
-    ticker_map = load_ticker_map()
-
     previous_output = (
         json.loads(OUTPUT_PATH.read_text(encoding="utf-8"))
         if OUTPUT_PATH.exists()
         else {}
     )
+    try:
+        ticker_map = load_ticker_map()
+    except Exception as exc:
+        # A transient outage of the ticker reference should not discard
+        # existing CIK mappings for the entire company universe.
+        ticker_map = {
+            record["ticker"]: {
+                "cik": record["cik"],
+                "title": record.get("entity_name", ""),
+            }
+            for record in previous_output.values()
+            if record.get("ticker") and record.get("cik")
+        }
+        print(f"WARNING: SEC ticker list unavailable: {exc}", file=sys.stderr)
+        if not ticker_map:
+            raise RuntimeError(
+                "SEC ticker list failed and no cached CIK mappings exist"
+            ) from exc
 
     observed_at_utc = datetime.now(timezone.utc).isoformat(timespec="seconds")
     output = {}
+    successful_checks = 0
+    failed_checks = 0
 
     for company in universe:
         ticker = str(company.get("Ticker", "")).upper().strip()
         company_name = str(company.get("Company", "")).strip()
         key = f"{company_name} ({ticker})"
 
+        previous_company = previous_output.get(key, {})
         ticker_record = ticker_map.get(ticker)
+        if not ticker_record and previous_company.get("cik"):
+            ticker_record = {
+                "cik": previous_company["cik"],
+                "title": previous_company.get("entity_name", company_name),
+            }
         if not ticker_record:
             output[key] = {
                 "ticker": ticker,
@@ -229,11 +277,40 @@ def main() -> None:
             continue
 
         cik = ticker_record["cik"]
-        submissions = get_json(
-            f"https://data.sec.gov/submissions/CIK{cik}.json"
-        )
-
-        previous_company = previous_output.get(key, {})
+        try:
+            submissions = get_json(
+                f"https://data.sec.gov/submissions/CIK{cik}.json"
+            )
+        except Exception as exc:
+            failed_checks += 1
+            print(
+                f"WARNING: {ticker} SEC submissions unavailable: {exc}. "
+                "Preserving any previously saved filings.",
+                file=sys.stderr,
+                flush=True,
+            )
+            if previous_company:
+                output[key] = previous_company
+            else:
+                output[key] = {
+                    "ticker": ticker,
+                    "cik": cik,
+                    "entity_name": ticker_record.get("title") or company_name,
+                    "sector": company.get("Sector", ""),
+                    "industry": company.get("Industry", ""),
+                    "country": company.get("Country", ""),
+                    "last_checked_utc": "",
+                    "sec_status": "SEC temporarily unavailable; retry pending",
+                    "sec_company_url": (
+                        "https://www.sec.gov/edgar/browse/"
+                        f"?CIK={int(cik)}&owner=exclude&action=getcompany"
+                    ),
+                    "filings": [],
+                    "registration_filings": [],
+                    "registration_scan_complete": False,
+                }
+            continue
+        successful_checks += 1
         previous_first_seen = {
             filing.get("accession_number", ""): filing.get("first_seen_utc")
             for filing in previous_company.get("filings", [])
@@ -262,13 +339,23 @@ def main() -> None:
                 registration = previous_registration
 
         if not registration and not registration_scan_complete:
-            historical_registration, registration_scan_complete = (
-                scan_historical_registration_filings(
-                    submissions,
-                    cik,
+            try:
+                historical_registration, registration_scan_complete = (
+                    scan_historical_registration_filings(
+                        submissions,
+                        cik,
+                    )
                 )
-            )
-            registration.extend(historical_registration)
+                registration.extend(historical_registration)
+            except Exception as exc:
+                # Historical lookup is best-effort. Recent filings still
+                # deserve to be saved, and history is retried next run.
+                print(
+                    f"WARNING: {ticker} historical S-1 search failed: {exc}",
+                    file=sys.stderr,
+                    flush=True,
+                )
+                registration_scan_complete = False
 
         registration = dedupe_filings(registration)
 
@@ -294,7 +381,36 @@ def main() -> None:
         }
 
         # Keep requests comfortably below the SEC fair-access ceiling.
-        time.sleep(0.12)
+        time.sleep(0.20)
+
+    if failed_checks and not successful_checks:
+        raise RuntimeError(
+            f"All {failed_checks} SEC company lookups failed. "
+            "Leaving the published filing feed unchanged."
+        )
+    if failed_checks:
+        print(
+            f"WARNING: {failed_checks} company lookups failed; existing "
+            "filings were retained where available.",
+            file=sys.stderr,
+            flush=True,
+        )
+
+    # Do not commit a giant JSON file every 15 minutes merely because the
+    # check time changed. Preserve the last published check timestamp if
+    # the underlying filing data is identical.
+    for key, company_data in output.items():
+        previous_company = previous_output.get(key)
+        if not previous_company:
+            continue
+        before = {k: v for k, v in previous_company.items()
+                  if k != "last_checked_utc"}
+        after = {k: v for k, v in company_data.items()
+                 if k != "last_checked_utc"}
+        if before == after:
+            company_data["last_checked_utc"] = previous_company.get(
+                "last_checked_utc", observed_at_utc
+            )
 
     new_text = json.dumps(output, indent=2, sort_keys=False) + "\n"
     old_text = (
