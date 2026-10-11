@@ -240,6 +240,81 @@ def render_watchlist(st, company_data, open_company_research):
         )
 
 
+def _compact_dollars(value):
+    """Human-readable amount; preserve negatives and avoid fabricated zeros."""
+    try:
+        value = float(value)
+    except (TypeError, ValueError):
+        return "Not available"
+    if value != value or value in (float("inf"), float("-inf")):
+        return "Not available"
+    sign = "-" if value < 0 else ""
+    magnitude = abs(value)
+    if magnitude >= 1_000_000_000:
+        return "%s$%.2fB" % (sign, magnitude / 1_000_000_000)
+    if magnitude >= 1_000_000:
+        return "%s$%.1fM" % (sign, magnitude / 1_000_000)
+    return "%s$%s" % (sign, f"{magnitude:,.0f}")
+
+
+def render_quarterly_comparison(st, quarterly):
+    """Show actual reported current vs year-ago quarterly values when present.
+
+    No metrics are synthesized for companies missing structured quarter data.
+    """
+    if not isinstance(quarterly, dict):
+        return
+    current = quarterly.get("latest_quarter") or {}
+    year_ago = quarterly.get("prior_year_quarter") or {}
+    if not current or not year_ago:
+        return
+
+    rows = [
+        ("Revenue", "revenue"),
+        ("Operating income", "operating_income"),
+        ("Net income", "net_income"),
+    ]
+    available = [
+        (label, key) for label, key in rows
+        if current.get(key) is not None and year_ago.get(key) is not None
+    ]
+    if not available:
+        return
+
+    period = _clean(quarterly.get("quarter_label"), "latest reported quarter")
+    st.markdown(
+        '<div class="el-readable-section"><h3>What changed this quarter?</h3>'
+        '<p>Reported figures from %s compared with the year-ago quarter. '
+        'Review the financial statements for the full calculation and context.</p></div>'
+        % html.escape(period),
+        unsafe_allow_html=True,
+    )
+    cols = st.columns(len(available))
+    for col, (label, key) in zip(cols, available):
+        current_value = current[key]
+        prior_value = year_ago[key]
+        try:
+            difference = float(current_value) - float(prior_value)
+            delta = "%s YoY" % _compact_dollars(difference)
+        except (TypeError, ValueError):
+            delta = None
+        with col:
+            st.metric(
+                label,
+                _compact_dollars(current_value),
+                delta=delta,
+                delta_color="off",  # Profit/loss changes are not investment signals.
+                help="Difference from the same quarter one year earlier.",
+            )
+    sec_url = _safe_sec_url(quarterly.get("source_filing"))
+    if sec_url:
+        st.markdown("[Verify these figures in the original filing](%s)" % sec_url)
+    st.caption(
+        "A year-over-year comparison is not a forecast, rating, or investment recommendation. "
+        "Unavailable figures are not interpreted as zero."
+    )
+
+
 def render_company_evidence(st, ticker, analysis, filings, growth_label, period_label):
     """Balanced research prompts with named disclosure evidence, not model guesses."""
     analysis = analysis or {}
