@@ -24,15 +24,15 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
       - name: Refresh SEC filing feed
-        run: python scripts/update_sec_filings.py
+        run: python -u scripts/update_sec_filings.py
 
       - name: Commit new SEC filings
         run: |
@@ -46,4 +46,4 @@ jobs:
           git add data/sec_filings.json
           git commit -m "Auto-update SEC filing feed"
           git pull --rebase origin main
-          git push
+          git push origin HEAD:main
