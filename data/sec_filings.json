@@ -21696,10 +21696,24 @@
     "sector": "Financial",
     "industry": "Banks - Diversified",
     "country": "USA",
-    "last_checked_utc": "2026-10-13T16:57:40+00:00",
+    "last_checked_utc": "2026-10-13T17:11:38+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=70858&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "FWP",
+        "filing_date": "2026-10-13",
+        "acceptance_datetime": "2026-10-13T17:08:33.000Z",
+        "report_date": "",
+        "accession_number": "0001918704-26-031285",
+        "primary_document": "formfwp-bac.htm",
+        "description": "FWP",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-13T17:11:38+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/70858/000191870426031285/formfwp-bac.htm"
+      },
       {
         "form": "424B2",
         "filing_date": "2026-10-13",
@@ -22035,20 +22049,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-09T15:45:01+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/70858/000191870426031121/form424b2.htm"
-      },
-      {
-        "form": "424B2",
-        "filing_date": "2026-10-09",
-        "acceptance_datetime": "2026-10-09T19:06:37.000Z",
-        "report_date": "",
-        "accession_number": "0001918704-26-031119",
-        "primary_document": "form424b2.htm",
-        "description": "424B2",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-09T15:10:26+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/70858/000191870426031119/form424b2.htm"
       }
     ],
     "registration_filings": [],
