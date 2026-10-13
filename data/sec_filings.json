@@ -29883,10 +29883,38 @@
     "sector": "Financial",
     "industry": "Banks - Diversified",
     "country": "USA",
-    "last_checked_utc": "2026-10-13T10:57:43+00:00",
+    "last_checked_utc": "2026-10-13T12:40:45+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=831001&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "424B2",
+        "filing_date": "2026-10-13",
+        "acceptance_datetime": "2026-10-13T12:22:36.000Z",
+        "report_date": "",
+        "accession_number": "0001918704-26-031227",
+        "primary_document": "form424b2.htm",
+        "description": "PRELIMINARY PRICING SUPPLEMENT",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-13T12:40:45+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/831001/000191870426031227/form424b2.htm"
+      },
+      {
+        "form": "424B2",
+        "filing_date": "2026-10-13",
+        "acceptance_datetime": "2026-10-13T12:39:36.000Z",
+        "report_date": "",
+        "accession_number": "0000950103-26-015476",
+        "primary_document": "dp254911_424b2-us26s1831.htm",
+        "description": "PRICING SUPPLEMENT",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-13T12:40:45+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/831001/000095010326015476/dp254911_424b2-us26s1831.htm"
+      },
       {
         "form": "424B2",
         "filing_date": "2026-10-13",
@@ -30208,34 +30236,6 @@
         "is_inline_xbrl": 1,
         "first_seen_utc": "2026-10-13T10:11:05+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/831001/000191870426031184/form424b2.htm"
-      },
-      {
-        "form": "424B2",
-        "filing_date": "2026-10-13",
-        "acceptance_datetime": "2026-10-13T10:05:59.000Z",
-        "report_date": "",
-        "accession_number": "0001918704-26-031182",
-        "primary_document": "form424b2.htm",
-        "description": "PRICING SUPPLEMENT",
-        "items": "",
-        "is_xbrl": 1,
-        "is_inline_xbrl": 1,
-        "first_seen_utc": "2026-10-13T10:11:05+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/831001/000191870426031182/form424b2.htm"
-      },
-      {
-        "form": "424B2",
-        "filing_date": "2026-10-13",
-        "acceptance_datetime": "2026-10-13T10:02:26.000Z",
-        "report_date": "",
-        "accession_number": "0001918704-26-031180",
-        "primary_document": "form424b2.htm",
-        "description": "PRELIMINARY PRICING SUPPLEMENT",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-13T10:11:05+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/831001/000191870426031180/form424b2.htm"
       }
     ],
     "registration_filings": [],
@@ -47793,10 +47793,38 @@
     "sector": "Technology",
     "industry": "Software - Infrastructure",
     "country": "USA",
-    "last_checked_utc": "2026-10-11T09:06:01+00:00",
+    "last_checked_utc": "2026-10-13T12:40:45+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1769628&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "144",
+        "filing_date": "2026-10-13",
+        "acceptance_datetime": "2026-10-13T12:34:58.000Z",
+        "report_date": "",
+        "accession_number": "0001950047-26-010179",
+        "primary_document": "xsl144X01/primary_doc.xml",
+        "description": "",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-13T12:40:45+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1769628/000195004726010179/xsl144X01/primary_doc.xml"
+      },
+      {
+        "form": "144",
+        "filing_date": "2026-10-13",
+        "acceptance_datetime": "2026-10-13T12:21:58.000Z",
+        "report_date": "",
+        "accession_number": "0001950047-26-010166",
+        "primary_document": "xsl144X01/primary_doc.xml",
+        "description": "",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-13T12:40:45+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1769628/000195004726010166/xsl144X01/primary_doc.xml"
+      },
       {
         "form": "4",
         "filing_date": "2026-10-08",
@@ -48118,34 +48146,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000434/xslF345X06/form4.xml"
-      },
-      {
-        "form": "4",
-        "filing_date": "2026-09-22",
-        "acceptance_datetime": "2026-09-23T03:17:57.000Z",
-        "report_date": "2026-09-18",
-        "accession_number": "0001769628-26-000433",
-        "primary_document": "xslF345X06/form4.xml",
-        "description": "PRIMARY DOCUMENT",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000433/xslF345X06/form4.xml"
-      },
-      {
-        "form": "8-K",
-        "filing_date": "2026-09-22",
-        "acceptance_datetime": "2026-09-23T00:17:14.000Z",
-        "report_date": "2026-09-17",
-        "accession_number": "0001769628-26-000432",
-        "primary_document": "crwv-20260917.htm",
-        "description": "8-K",
-        "items": "1.01,3.02,8.01,9.01",
-        "is_xbrl": 1,
-        "is_inline_xbrl": 1,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000432/crwv-20260917.htm"
       }
     ],
     "registration_filings": [
@@ -50547,10 +50547,24 @@
     "sector": "Consumer Cyclical",
     "industry": "Auto & Truck Dealerships",
     "country": "USA",
-    "last_checked_utc": "2026-10-11T09:06:01+00:00",
+    "last_checked_utc": "2026-10-13T12:40:45+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1690820&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "144",
+        "filing_date": "2026-10-13",
+        "acceptance_datetime": "2026-10-13T12:23:38.000Z",
+        "report_date": "",
+        "accession_number": "0001950047-26-010173",
+        "primary_document": "xsl144X01/primary_doc.xml",
+        "description": "",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-13T12:40:45+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1690820/000195004726010173/xsl144X01/primary_doc.xml"
+      },
       {
         "form": "4",
         "filing_date": "2026-10-05",
@@ -50886,20 +50900,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1690820/000121041226000008/xslF345X06/wk-form4_1787005249.xml"
-      },
-      {
-        "form": "8-K",
-        "filing_date": "2026-08-14",
-        "acceptance_datetime": "2026-08-15T00:55:24.000Z",
-        "report_date": "2026-08-14",
-        "accession_number": "0001690820-26-000059",
-        "primary_document": "cvna-20260814.htm",
-        "description": "8-K",
-        "items": "1.01,2.03,9.01",
-        "is_xbrl": 1,
-        "is_inline_xbrl": 1,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1690820/000169082026000059/cvna-20260814.htm"
       }
     ],
     "registration_filings": [
@@ -75001,10 +75001,24 @@
     "sector": "Industrials",
     "industry": "Industrial Distribution",
     "country": "USA",
-    "last_checked_utc": "2026-10-13T12:12:58+00:00",
+    "last_checked_utc": "2026-10-13T12:40:45+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=2011641&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "144",
+        "filing_date": "2026-10-13",
+        "acceptance_datetime": "2026-10-13T12:20:27.000Z",
+        "report_date": "",
+        "accession_number": "0001959173-26-007340",
+        "primary_document": "xsl144X01/primary_doc.xml",
+        "description": "",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-13T12:40:45+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/2011641/000195917326007340/xsl144X01/primary_doc.xml"
+      },
       {
         "form": "144",
         "filing_date": "2026-10-13",
@@ -75340,20 +75354,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/2011641/000207430426000002/xslF345X06/wk-form4_1780346143.xml"
-      },
-      {
-        "form": "4",
-        "filing_date": "2026-06-01",
-        "acceptance_datetime": "2026-06-01T20:35:04.000Z",
-        "report_date": "2026-05-28",
-        "accession_number": "0001984142-26-000002",
-        "primary_document": "xslF345X06/wk-form4_1780346101.xml",
-        "description": "FORM 4",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/2011641/000198414226000002/xslF345X06/wk-form4_1780346101.xml"
       }
     ],
     "registration_filings": [],
@@ -117815,10 +117815,24 @@
     "sector": "Financial",
     "industry": "Credit Services",
     "country": "USA",
-    "last_checked_utc": "2026-10-11T09:06:01+00:00",
+    "last_checked_utc": "2026-10-13T12:40:45+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1141391&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "144",
+        "filing_date": "2026-10-13",
+        "acceptance_datetime": "2026-10-13T12:22:28.000Z",
+        "report_date": "",
+        "accession_number": "0001950047-26-010168",
+        "primary_document": "xsl144X01/primary_doc.xml",
+        "description": "",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-13T12:40:45+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1141391/000195004726010168/xsl144X01/primary_doc.xml"
+      },
       {
         "form": "144",
         "filing_date": "2026-10-09",
@@ -118154,20 +118168,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1141391/000114139126000094/xslF345X06/wk-form4_1785961107.xml"
-      },
-      {
-        "form": "4",
-        "filing_date": "2026-08-05",
-        "acceptance_datetime": "2026-08-06T00:16:56.000Z",
-        "report_date": "2026-08-03",
-        "accession_number": "0001141391-26-000093",
-        "primary_document": "xslF345X06/wk-form4_1785961013.xml",
-        "description": "FORM 4",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1141391/000114139126000093/xslF345X06/wk-form4_1785961013.xml"
       }
     ],
     "registration_filings": [
@@ -121326,10 +121326,24 @@
     "sector": "Healthcare",
     "industry": "Medical Devices",
     "country": "Ireland",
-    "last_checked_utc": "2026-10-13T12:12:58+00:00",
+    "last_checked_utc": "2026-10-13T12:40:45+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1613103&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "SC TO-I/A",
+        "filing_date": "2026-10-13",
+        "acceptance_datetime": "2026-10-13T12:18:41.000Z",
+        "report_date": "",
+        "accession_number": "0001628280-26-065599",
+        "primary_document": "mdt-amendedno3scheduleissu.htm",
+        "description": "SC TO-I/A",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-13T12:40:45+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1613103/000162828026065599/mdt-amendedno3scheduleissu.htm"
+      },
       {
         "form": "425",
         "filing_date": "2026-10-13",
@@ -121665,20 +121679,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1613103/000162828026062544/a425-mdtwebsitex91726.htm"
-      },
-      {
-        "form": "SC TO-I/A",
-        "filing_date": "2026-09-17",
-        "acceptance_datetime": "2026-09-18T00:20:33.000Z",
-        "report_date": "",
-        "accession_number": "0001628280-26-062507",
-        "primary_document": "mdt-amendedscheduleissuert.htm",
-        "description": "SC TO-I/A",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1613103/000162828026062507/mdt-amendedscheduleissuert.htm"
       }
     ],
     "registration_filings": [],
@@ -128321,10 +128321,24 @@
     "sector": "Financial",
     "industry": "Financial Data & Stock Exchanges",
     "country": "USA",
-    "last_checked_utc": "2026-10-11T09:06:01+00:00",
+    "last_checked_utc": "2026-10-13T12:40:45+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1408198&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "144",
+        "filing_date": "2026-10-13",
+        "acceptance_datetime": "2026-10-13T12:40:41.000Z",
+        "report_date": "",
+        "accession_number": "0001950047-26-010181",
+        "primary_document": "xsl144X01/primary_doc.xml",
+        "description": "",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-13T12:40:45+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1408198/000195004726010181/xsl144X01/primary_doc.xml"
+      },
       {
         "form": "4",
         "filing_date": "2026-09-04",
@@ -128660,20 +128674,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1408198/000141431026000005/xslF345X06/wk-form4_1778011522.xml"
-      },
-      {
-        "form": "4",
-        "filing_date": "2026-04-30",
-        "acceptance_datetime": "2026-04-30T20:05:20.000Z",
-        "report_date": "2026-04-28",
-        "accession_number": "0001416750-26-000009",
-        "primary_document": "xslF345X06/wk-form4_1777579518.xml",
-        "description": "FORM 4",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1408198/000141675026000009/xslF345X06/wk-form4_1777579518.xml"
       }
     ],
     "registration_filings": [
@@ -129571,10 +129571,24 @@
     "sector": "Technology",
     "industry": "Software - Application",
     "country": "USA",
-    "last_checked_utc": "2026-10-13T12:12:58+00:00",
+    "last_checked_utc": "2026-10-13T12:40:45+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1050446&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "DEFA14A",
+        "filing_date": "2026-10-13",
+        "acceptance_datetime": "2026-10-13T12:32:01.000Z",
+        "report_date": "",
+        "accession_number": "0001193125-26-419759",
+        "primary_document": "mstr-20261013.htm",
+        "description": "DEFA14A",
+        "items": "",
+        "is_xbrl": 1,
+        "is_inline_xbrl": 1,
+        "first_seen_utc": "2026-10-13T12:40:45+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526419759/mstr-20261013.htm"
+      },
       {
         "form": "8-K",
         "filing_date": "2026-10-13",
@@ -129910,20 +129924,6 @@
         "is_inline_xbrl": 1,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526396093/mstr-20260914.htm"
-      },
-      {
-        "form": "8-K",
-        "filing_date": "2026-09-14",
-        "acceptance_datetime": "2026-09-14T16:00:16.000Z",
-        "report_date": "2026-09-14",
-        "accession_number": "0001193125-26-389858",
-        "primary_document": "mstr-20260914.htm",
-        "description": "8-K",
-        "items": "7.01,8.01",
-        "is_xbrl": 1,
-        "is_inline_xbrl": 1,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526389858/mstr-20260914.htm"
       }
     ],
     "registration_filings": [
@@ -132129,10 +132129,24 @@
     "sector": "Financial",
     "industry": "Financial Data & Stock Exchanges",
     "country": "USA",
-    "last_checked_utc": "2026-10-11T09:06:01+00:00",
+    "last_checked_utc": "2026-10-13T12:40:45+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1120193&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "144",
+        "filing_date": "2026-10-13",
+        "acceptance_datetime": "2026-10-13T12:38:45.000Z",
+        "report_date": "",
+        "accession_number": "0001950047-26-010180",
+        "primary_document": "xsl144X01/primary_doc.xml",
+        "description": "",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-13T12:40:45+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1120193/000195004726010180/xsl144X01/primary_doc.xml"
+      },
       {
         "form": "4",
         "filing_date": "2026-10-05",
@@ -132468,20 +132482,6 @@
         "is_inline_xbrl": 1,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1120193/000112019326000011/ndaq-20260723.htm"
-      },
-      {
-        "form": "4",
-        "filing_date": "2026-07-02",
-        "acceptance_datetime": "2026-07-03T00:05:16.000Z",
-        "report_date": "2026-07-01",
-        "accession_number": "0001193125-26-294475",
-        "primary_document": "xslF345X06/ownership.xml",
-        "description": "4",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1120193/000119312526294475/xslF345X06/ownership.xml"
       }
     ],
     "registration_filings": [],
@@ -142873,10 +142873,52 @@
     "sector": "Technology",
     "industry": "Computer Hardware",
     "country": "USA",
-    "last_checked_utc": "2026-10-11T09:06:01+00:00",
+    "last_checked_utc": "2026-10-13T12:40:45+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1474432&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "144",
+        "filing_date": "2026-10-13",
+        "acceptance_datetime": "2026-10-13T12:24:22.000Z",
+        "report_date": "",
+        "accession_number": "0001950047-26-010176",
+        "primary_document": "xsl144X01/primary_doc.xml",
+        "description": "",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-13T12:40:45+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1474432/000195004726010176/xsl144X01/primary_doc.xml"
+      },
+      {
+        "form": "144",
+        "filing_date": "2026-10-13",
+        "acceptance_datetime": "2026-10-13T12:24:08.000Z",
+        "report_date": "",
+        "accession_number": "0001950047-26-010175",
+        "primary_document": "xsl144X01/primary_doc.xml",
+        "description": "",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-13T12:40:45+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1474432/000195004726010175/xsl144X01/primary_doc.xml"
+      },
+      {
+        "form": "144",
+        "filing_date": "2026-10-13",
+        "acceptance_datetime": "2026-10-13T12:22:13.000Z",
+        "report_date": "",
+        "accession_number": "0001950047-26-010167",
+        "primary_document": "xsl144X01/primary_doc.xml",
+        "description": "",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-13T12:40:45+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1474432/000195004726010167/xsl144X01/primary_doc.xml"
+      },
       {
         "form": "144",
         "filing_date": "2026-10-09",
@@ -143184,48 +143226,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1474432/000195004726009306/xsl144X01/primary_doc.xml"
-      },
-      {
-        "form": "144",
-        "filing_date": "2026-09-10",
-        "acceptance_datetime": "2026-09-11T00:38:41.000Z",
-        "report_date": "",
-        "accession_number": "0001950047-26-009294",
-        "primary_document": "xsl144X01/primary_doc.xml",
-        "description": "",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1474432/000195004726009294/xsl144X01/primary_doc.xml"
-      },
-      {
-        "form": "144",
-        "filing_date": "2026-09-10",
-        "acceptance_datetime": "2026-09-11T00:38:12.000Z",
-        "report_date": "",
-        "accession_number": "0001950047-26-009293",
-        "primary_document": "xsl144X01/primary_doc.xml",
-        "description": "",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1474432/000195004726009293/xsl144X01/primary_doc.xml"
-      },
-      {
-        "form": "10-Q",
-        "filing_date": "2026-09-04",
-        "acceptance_datetime": "2026-09-05T00:03:31.000Z",
-        "report_date": "2026-08-02",
-        "accession_number": "0001474432-26-000088",
-        "primary_document": "pstg-20260802.htm",
-        "description": "10-Q",
-        "items": "",
-        "is_xbrl": 1,
-        "is_inline_xbrl": 1,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1474432/000147443226000088/pstg-20260802.htm"
       }
     ],
     "registration_filings": [
@@ -153070,10 +153070,38 @@
     "sector": "Communication Services",
     "industry": "Entertainment",
     "country": "USA",
-    "last_checked_utc": "2026-10-13T10:11:05+00:00",
+    "last_checked_utc": "2026-10-13T12:40:45+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=2041610&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "FWP",
+        "filing_date": "2026-10-13",
+        "acceptance_datetime": "2026-10-13T12:23:27.000Z",
+        "report_date": "",
+        "accession_number": "0001104659-26-115295",
+        "primary_document": "tm2626659d13_fwp.htm",
+        "description": "FWP",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-13T12:40:45+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/2041610/000110465926115295/tm2626659d13_fwp.htm"
+      },
+      {
+        "form": "8-K",
+        "filing_date": "2026-10-13",
+        "acceptance_datetime": "2026-10-13T12:21:19.000Z",
+        "report_date": "2026-10-09",
+        "accession_number": "0001104659-26-115294",
+        "primary_document": "tm2626659d12_8k.htm",
+        "description": "FORM 8-K",
+        "items": "1.01,2.03,7.01,8.01,9.01",
+        "is_xbrl": 1,
+        "is_inline_xbrl": 1,
+        "first_seen_utc": "2026-10-13T12:40:45+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/2041610/000110465926115294/tm2626659d12_8k.htm"
+      },
       {
         "form": "FWP",
         "filing_date": "2026-10-13",
@@ -153395,34 +153423,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-11T09:31:49+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/2041610/000110465926113433/tm2626659d4_fwp.htm"
-      },
-      {
-        "form": "8-K",
-        "filing_date": "2026-10-02",
-        "acceptance_datetime": "2026-10-02T17:29:01.000Z",
-        "report_date": "2026-10-02",
-        "accession_number": "0001104659-26-113076",
-        "primary_document": "tm2626659d3_8k.htm",
-        "description": "FORM 8-K",
-        "items": "7.01",
-        "is_xbrl": 1,
-        "is_inline_xbrl": 1,
-        "first_seen_utc": "2026-10-11T09:31:49+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/2041610/000110465926113076/tm2626659d3_8k.htm"
-      },
-      {
-        "form": "8-K",
-        "filing_date": "2026-10-01",
-        "acceptance_datetime": "2026-10-02T00:06:09.000Z",
-        "report_date": "2026-09-27",
-        "accession_number": "0001104659-26-112829",
-        "primary_document": "tm2626659d2_8k.htm",
-        "description": "FORM 8-K",
-        "items": "5.02,7.01,8.01,9.01",
-        "is_xbrl": 1,
-        "is_inline_xbrl": 1,
-        "first_seen_utc": "2026-10-11T09:31:49+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/2041610/000110465926112829/tm2626659d2_8k.htm"
       }
     ],
     "registration_filings": [],
@@ -194443,10 +194443,24 @@
     "sector": "Technology",
     "industry": "Software - Application",
     "country": "USA",
-    "last_checked_utc": "2026-10-11T09:06:01+00:00",
+    "last_checked_utc": "2026-10-13T12:40:45+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1327811&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "144",
+        "filing_date": "2026-10-13",
+        "acceptance_datetime": "2026-10-13T12:21:42.000Z",
+        "report_date": "",
+        "accession_number": "0001950047-26-010165",
+        "primary_document": "xsl144X01/primary_doc.xml",
+        "description": "",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-13T12:40:45+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1327811/000195004726010165/xsl144X01/primary_doc.xml"
+      },
       {
         "form": "144",
         "filing_date": "2026-10-09",
@@ -194782,20 +194796,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1327811/000093807126000053/xslF345X06/wk-form4_1789418523.xml"
-      },
-      {
-        "form": "144",
-        "filing_date": "2026-09-10",
-        "acceptance_datetime": "2026-09-11T00:43:51.000Z",
-        "report_date": "",
-        "accession_number": "0001950047-26-009307",
-        "primary_document": "xsl144X01/primary_doc.xml",
-        "description": "",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1327811/000195004726009307/xsl144X01/primary_doc.xml"
       }
     ],
     "registration_filings": [
