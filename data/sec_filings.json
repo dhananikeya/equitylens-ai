@@ -45461,10 +45461,24 @@
     "sector": "Industrials",
     "industry": "Specialty Business Services",
     "country": "USA",
-    "last_checked_utc": "2026-10-11T09:06:01+00:00",
+    "last_checked_utc": "2026-10-14T12:23:19+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=900075&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "SC TO-T/A",
+        "filing_date": "2026-10-14",
+        "acceptance_datetime": "2026-10-14T12:05:30.000Z",
+        "report_date": "",
+        "accession_number": "0001193125-26-421044",
+        "primary_document": "d160128dsctota.htm",
+        "description": "SC TO-T/A",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-14T12:23:19+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/900075/000119312526421044/d160128dsctota.htm"
+      },
       {
         "form": "SC TO-T/A",
         "filing_date": "2026-10-08",
@@ -45800,20 +45814,6 @@
         "is_inline_xbrl": 1,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/900075/000119312526286982/d70617d8k.htm"
-      },
-      {
-        "form": "10-Q",
-        "filing_date": "2026-05-29",
-        "acceptance_datetime": "2026-05-29T01:34:00.000Z",
-        "report_date": "2026-04-30",
-        "accession_number": "0001193125-26-245578",
-        "primary_document": "cprt-20260430.htm",
-        "description": "10-Q",
-        "items": "",
-        "is_xbrl": 1,
-        "is_inline_xbrl": 1,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/900075/000119312526245578/cprt-20260430.htm"
       }
     ],
     "registration_filings": [],
@@ -77754,10 +77754,38 @@
     "sector": "Technology",
     "industry": "Electronic Components",
     "country": "USA",
-    "last_checked_utc": "2026-10-14T04:21:22+00:00",
+    "last_checked_utc": "2026-10-14T12:23:19+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=866374&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "DEFA14A",
+        "filing_date": "2026-10-14",
+        "acceptance_datetime": "2026-10-14T12:15:41.000Z",
+        "report_date": "",
+        "accession_number": "0001193125-26-421059",
+        "primary_document": "d147467ddefa14a.htm",
+        "description": "DEFA14A",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-14T12:23:19+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/866374/000119312526421059/d147467ddefa14a.htm"
+      },
+      {
+        "form": "8-K",
+        "filing_date": "2026-10-14",
+        "acceptance_datetime": "2026-10-14T12:13:15.000Z",
+        "report_date": "2026-10-09",
+        "accession_number": "0001193125-26-421058",
+        "primary_document": "d147467d8k.htm",
+        "description": "8-K",
+        "items": "1.01,2.01,2.03,8.01,9.01",
+        "is_xbrl": 1,
+        "is_inline_xbrl": 1,
+        "first_seen_utc": "2026-10-14T12:23:19+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/866374/000119312526421058/d147467d8k.htm"
+      },
       {
         "form": "DEFA14A",
         "filing_date": "2026-10-13",
@@ -78079,34 +78107,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/866374/000119312526382691/d105596ddefa14a.htm"
-      },
-      {
-        "form": "DEFA14A",
-        "filing_date": "2026-09-04",
-        "acceptance_datetime": "2026-09-04T14:01:32.000Z",
-        "report_date": "",
-        "accession_number": "0001193125-26-382685",
-        "primary_document": "d105596ddefa14a.htm",
-        "description": "DEFA14A",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/866374/000119312526382685/d105596ddefa14a.htm"
-      },
-      {
-        "form": "DEFA14A",
-        "filing_date": "2026-09-04",
-        "acceptance_datetime": "2026-09-04T05:45:11.000Z",
-        "report_date": "",
-        "accession_number": "0001193125-26-382496",
-        "primary_document": "d108491ddefa14a.htm",
-        "description": "DEFA14A",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/866374/000119312526382496/d108491ddefa14a.htm"
       }
     ],
     "registration_filings": [
@@ -121326,10 +121326,38 @@
     "sector": "Healthcare",
     "industry": "Medical Devices",
     "country": "Ireland",
-    "last_checked_utc": "2026-10-14T04:21:22+00:00",
+    "last_checked_utc": "2026-10-14T12:23:19+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1613103&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "SC TO-I/A",
+        "filing_date": "2026-10-14",
+        "acceptance_datetime": "2026-10-14T12:20:21.000Z",
+        "report_date": "",
+        "accession_number": "0001628280-26-065823",
+        "primary_document": "mdt-amendedno4scheduleissu.htm",
+        "description": "SC TO-I/A",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-14T12:23:19+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1613103/000162828026065823/mdt-amendedno4scheduleissu.htm"
+      },
+      {
+        "form": "425",
+        "filing_date": "2026-10-14",
+        "acceptance_datetime": "2026-10-14T12:05:46.000Z",
+        "report_date": "",
+        "accession_number": "0001628280-26-065819",
+        "primary_document": "a425-finalresultsofexchang.htm",
+        "description": "425",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-14T12:23:19+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1613103/000162828026065819/a425-finalresultsofexchang.htm"
+      },
       {
         "form": "SC TO-I/A",
         "filing_date": "2026-10-13",
@@ -121651,34 +121679,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1613103/000162828026062882/minimed-425splitxoff.htm"
-      },
-      {
-        "form": "425",
-        "filing_date": "2026-09-18",
-        "acceptance_datetime": "2026-09-19T00:41:35.000Z",
-        "report_date": "",
-        "accession_number": "0001628280-26-062753",
-        "primary_document": "a425-mdtwebsitex91826.htm",
-        "description": "425",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1613103/000162828026062753/a425-mdtwebsitex91826.htm"
-      },
-      {
-        "form": "425",
-        "filing_date": "2026-09-17",
-        "acceptance_datetime": "2026-09-18T00:44:47.000Z",
-        "report_date": "",
-        "accession_number": "0001628280-26-062544",
-        "primary_document": "a425-mdtwebsitex91726.htm",
-        "description": "425",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1613103/000162828026062544/a425-mdtwebsitex91726.htm"
       }
     ],
     "registration_filings": [],
