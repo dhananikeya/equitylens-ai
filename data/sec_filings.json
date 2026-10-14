@@ -1229,14 +1229,14 @@
     "sector": "Consumer Cyclical",
     "industry": "Travel Services",
     "country": "USA",
-    "last_checked_utc": "2026-10-13T12:12:58+00:00",
+    "last_checked_utc": "2026-10-14T04:57:21+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1559720&owner=exclude&action=getcompany",
     "filings": [
       {
         "form": "144",
         "filing_date": "2026-10-13",
-        "acceptance_datetime": "2026-10-13T12:02:39.000Z",
+        "acceptance_datetime": "2026-10-13T16:02:39.000Z",
         "report_date": "",
         "accession_number": "0001959173-26-007336",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1250,7 +1250,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-30",
-        "acceptance_datetime": "2026-09-30T20:43:43.000Z",
+        "acceptance_datetime": "2026-10-01T00:43:43.000Z",
         "report_date": "2026-09-28",
         "accession_number": "0001193125-26-409153",
         "primary_document": "xslF345X06/ownership.xml",
@@ -1264,7 +1264,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-30",
-        "acceptance_datetime": "2026-09-30T20:30:08.000Z",
+        "acceptance_datetime": "2026-10-01T00:30:08.000Z",
         "report_date": "2026-09-28",
         "accession_number": "0001193125-26-409120",
         "primary_document": "xslF345X06/ownership.xml",
@@ -1278,7 +1278,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-28",
-        "acceptance_datetime": "2026-09-28T20:10:53.000Z",
+        "acceptance_datetime": "2026-09-29T00:10:53.000Z",
         "report_date": "",
         "accession_number": "0001959173-26-007130",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1292,7 +1292,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-17",
-        "acceptance_datetime": "2026-09-17T20:30:15.000Z",
+        "acceptance_datetime": "2026-09-18T00:30:15.000Z",
         "report_date": "2026-09-15",
         "accession_number": "0001193125-26-394396",
         "primary_document": "xslF345X06/ownership.xml",
@@ -1306,7 +1306,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-16",
-        "acceptance_datetime": "2026-09-16T20:46:42.000Z",
+        "acceptance_datetime": "2026-09-17T00:46:42.000Z",
         "report_date": "2026-09-14",
         "accession_number": "0001193125-26-393171",
         "primary_document": "xslF345X06/ownership.xml",
@@ -1320,7 +1320,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-15",
-        "acceptance_datetime": "2026-09-15T14:34:58.000Z",
+        "acceptance_datetime": "2026-09-15T18:34:58.000Z",
         "report_date": "",
         "accession_number": "0001959173-26-006965",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1334,7 +1334,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-14",
-        "acceptance_datetime": "2026-09-14T20:39:09.000Z",
+        "acceptance_datetime": "2026-09-15T00:39:09.000Z",
         "report_date": "",
         "accession_number": "0001959173-26-006951",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1348,7 +1348,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-03",
-        "acceptance_datetime": "2026-09-03T21:24:23.000Z",
+        "acceptance_datetime": "2026-09-04T01:24:23.000Z",
         "report_date": "2026-09-01",
         "accession_number": "0001193125-26-382108",
         "primary_document": "xslF345X06/ownership.xml",
@@ -1362,7 +1362,7 @@
       {
         "form": "4/A",
         "filing_date": "2026-09-02",
-        "acceptance_datetime": "2026-09-02T11:51:51.000Z",
+        "acceptance_datetime": "2026-09-02T15:51:51.000Z",
         "report_date": "2026-08-28",
         "accession_number": "0001193125-26-379365",
         "primary_document": "xslF345X06/ownership.xml",
@@ -1376,7 +1376,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-01",
-        "acceptance_datetime": "2026-09-02T01:48:10.000Z",
+        "acceptance_datetime": "2026-09-02T05:48:10.000Z",
         "report_date": "2026-08-28",
         "accession_number": "0001193125-26-379115",
         "primary_document": "xslF345X06/ownership.xml",
@@ -1390,7 +1390,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-01",
-        "acceptance_datetime": "2026-09-01T23:40:32.000Z",
+        "acceptance_datetime": "2026-09-02T03:40:32.000Z",
         "report_date": "2026-08-28",
         "accession_number": "0001193125-26-379003",
         "primary_document": "xslF345X06/ownership.xml",
@@ -1404,7 +1404,7 @@
       {
         "form": "144",
         "filing_date": "2026-09-01",
-        "acceptance_datetime": "2026-09-01T18:11:45.000Z",
+        "acceptance_datetime": "2026-09-01T22:11:45.000Z",
         "report_date": "",
         "accession_number": "0001959173-26-006591",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1418,7 +1418,7 @@
       {
         "form": "144",
         "filing_date": "2026-08-31",
-        "acceptance_datetime": "2026-08-31T18:36:55.000Z",
+        "acceptance_datetime": "2026-08-31T22:36:55.000Z",
         "report_date": "",
         "accession_number": "0001959173-26-006546",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1432,7 +1432,7 @@
       {
         "form": "4",
         "filing_date": "2026-08-28",
-        "acceptance_datetime": "2026-08-28T21:22:50.000Z",
+        "acceptance_datetime": "2026-08-29T01:22:50.000Z",
         "report_date": "2026-08-26",
         "accession_number": "0001193125-26-374780",
         "primary_document": "xslF345X06/ownership.xml",
@@ -1446,7 +1446,7 @@
       {
         "form": "144",
         "filing_date": "2026-08-28",
-        "acceptance_datetime": "2026-08-28T20:49:34.000Z",
+        "acceptance_datetime": "2026-08-29T00:49:34.000Z",
         "report_date": "",
         "accession_number": "0001959173-26-006532",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1460,7 +1460,7 @@
       {
         "form": "4",
         "filing_date": "2026-08-26",
-        "acceptance_datetime": "2026-08-26T23:47:06.000Z",
+        "acceptance_datetime": "2026-08-27T03:47:06.000Z",
         "report_date": "2026-08-24",
         "accession_number": "0001193125-26-369145",
         "primary_document": "xslF345X06/ownership.xml",
@@ -1474,7 +1474,7 @@
       {
         "form": "4",
         "filing_date": "2026-08-26",
-        "acceptance_datetime": "2026-08-26T23:34:22.000Z",
+        "acceptance_datetime": "2026-08-27T03:34:22.000Z",
         "report_date": "2026-08-24",
         "accession_number": "0001193125-26-369139",
         "primary_document": "xslF345X06/ownership.xml",
@@ -1488,7 +1488,7 @@
       {
         "form": "144",
         "filing_date": "2026-08-26",
-        "acceptance_datetime": "2026-08-26T20:30:01.000Z",
+        "acceptance_datetime": "2026-08-27T00:30:01.000Z",
         "report_date": "",
         "accession_number": "0001959173-26-006475",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1502,7 +1502,7 @@
       {
         "form": "144",
         "filing_date": "2026-08-25",
-        "acceptance_datetime": "2026-08-25T21:10:38.000Z",
+        "acceptance_datetime": "2026-08-26T01:10:38.000Z",
         "report_date": "",
         "accession_number": "0001959173-26-006451",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1516,7 +1516,7 @@
       {
         "form": "144",
         "filing_date": "2026-08-24",
-        "acceptance_datetime": "2026-08-24T20:50:23.000Z",
+        "acceptance_datetime": "2026-08-25T00:50:23.000Z",
         "report_date": "",
         "accession_number": "0001959173-26-006405",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -1530,7 +1530,7 @@
       {
         "form": "4",
         "filing_date": "2026-08-21",
-        "acceptance_datetime": "2026-08-21T22:39:34.000Z",
+        "acceptance_datetime": "2026-08-22T02:39:34.000Z",
         "report_date": "2026-08-19",
         "accession_number": "0001193125-26-361412",
         "primary_document": "xslF345X06/ownership.xml",
@@ -1544,7 +1544,7 @@
       {
         "form": "4",
         "filing_date": "2026-08-21",
-        "acceptance_datetime": "2026-08-21T22:38:58.000Z",
+        "acceptance_datetime": "2026-08-22T02:38:58.000Z",
         "report_date": "2026-08-19",
         "accession_number": "0001193125-26-361410",
         "primary_document": "xslF345X06/ownership.xml",
@@ -1558,7 +1558,7 @@
       {
         "form": "4",
         "filing_date": "2026-08-21",
-        "acceptance_datetime": "2026-08-21T22:36:44.000Z",
+        "acceptance_datetime": "2026-08-22T02:36:44.000Z",
         "report_date": "2026-08-19",
         "accession_number": "0001193125-26-361408",
         "primary_document": "xslF345X06/ownership.xml",
@@ -1572,7 +1572,7 @@
       {
         "form": "144",
         "filing_date": "2026-08-20",
-        "acceptance_datetime": "2026-08-20T15:22:05.000Z",
+        "acceptance_datetime": "2026-08-20T19:22:05.000Z",
         "report_date": "",
         "accession_number": "0001959173-26-006255",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -2367,14 +2367,14 @@
     "sector": "Technology",
     "industry": "Information Technology Services",
     "country": "Ireland",
-    "last_checked_utc": "2026-10-13T22:04:49+00:00",
+    "last_checked_utc": "2026-10-14T04:57:21+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1467373&owner=exclude&action=getcompany",
     "filings": [
       {
         "form": "4",
         "filing_date": "2026-10-13",
-        "acceptance_datetime": "2026-10-13T21:48:31.000Z",
+        "acceptance_datetime": "2026-10-14T01:48:31.000Z",
         "report_date": "2026-10-12",
         "accession_number": "0002080406-26-000018",
         "primary_document": "xslF345X06/wk-form4_1791928108.xml",
@@ -2388,7 +2388,7 @@
       {
         "form": "144",
         "filing_date": "2026-10-13",
-        "acceptance_datetime": "2026-10-13T13:09:58.000Z",
+        "acceptance_datetime": "2026-10-13T17:09:58.000Z",
         "report_date": "",
         "accession_number": "0001969223-26-001071",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -6017,14 +6017,14 @@
     "sector": "Financial",
     "industry": "Insurance - Diversified",
     "country": "USA",
-    "last_checked_utc": "2026-10-13T20:40:34+00:00",
+    "last_checked_utc": "2026-10-14T04:57:21+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=5272&owner=exclude&action=getcompany",
     "filings": [
       {
         "form": "3",
         "filing_date": "2026-10-13",
-        "acceptance_datetime": "2026-10-13T20:06:16.000Z",
+        "acceptance_datetime": "2026-10-14T00:06:16.000Z",
         "report_date": "2026-10-12",
         "accession_number": "0002158436-26-000002",
         "primary_document": "xslF345X06/wk-form3_1791921973.xml",
@@ -6038,7 +6038,7 @@
       {
         "form": "4",
         "filing_date": "2026-10-01",
-        "acceptance_datetime": "2026-10-02T00:13:20.000Z",
+        "acceptance_datetime": "2026-10-02T04:13:20.000Z",
         "report_date": "2026-10-01",
         "accession_number": "0001229265-26-000026",
         "primary_document": "xslF345X06/wk-form4_1790899998.xml",
@@ -6052,7 +6052,7 @@
       {
         "form": "4",
         "filing_date": "2026-10-01",
-        "acceptance_datetime": "2026-10-02T00:12:59.000Z",
+        "acceptance_datetime": "2026-10-02T04:12:59.000Z",
         "report_date": "2026-10-01",
         "accession_number": "0001665986-26-000012",
         "primary_document": "xslF345X06/wk-form4_1790899976.xml",
@@ -6066,7 +6066,7 @@
       {
         "form": "4",
         "filing_date": "2026-10-01",
-        "acceptance_datetime": "2026-10-02T00:12:38.000Z",
+        "acceptance_datetime": "2026-10-02T04:12:38.000Z",
         "report_date": "2026-10-01",
         "accession_number": "0002076280-26-000009",
         "primary_document": "xslF345X06/wk-form4_1790899955.xml",
@@ -6080,7 +6080,7 @@
       {
         "form": "4",
         "filing_date": "2026-10-01",
-        "acceptance_datetime": "2026-10-02T00:12:18.000Z",
+        "acceptance_datetime": "2026-10-02T04:12:18.000Z",
         "report_date": "2026-10-01",
         "accession_number": "0001205378-26-000012",
         "primary_document": "xslF345X06/wk-form4_1790899935.xml",
@@ -6094,7 +6094,7 @@
       {
         "form": "4",
         "filing_date": "2026-10-01",
-        "acceptance_datetime": "2026-10-02T00:11:57.000Z",
+        "acceptance_datetime": "2026-10-02T04:11:57.000Z",
         "report_date": "2026-10-01",
         "accession_number": "0001849121-26-000011",
         "primary_document": "xslF345X06/wk-form4_1790899914.xml",
@@ -6108,7 +6108,7 @@
       {
         "form": "4",
         "filing_date": "2026-10-01",
-        "acceptance_datetime": "2026-10-02T00:11:36.000Z",
+        "acceptance_datetime": "2026-10-02T04:11:36.000Z",
         "report_date": "2026-10-01",
         "accession_number": "0001657175-26-000011",
         "primary_document": "xslF345X06/wk-form4_1790899894.xml",
@@ -6122,7 +6122,7 @@
       {
         "form": "4",
         "filing_date": "2026-10-01",
-        "acceptance_datetime": "2026-10-02T00:11:09.000Z",
+        "acceptance_datetime": "2026-10-02T04:11:09.000Z",
         "report_date": "2026-10-01",
         "accession_number": "0001851811-26-000011",
         "primary_document": "xslF345X06/wk-form4_1790899866.xml",
@@ -6136,7 +6136,7 @@
       {
         "form": "4",
         "filing_date": "2026-10-01",
-        "acceptance_datetime": "2026-10-02T00:10:46.000Z",
+        "acceptance_datetime": "2026-10-02T04:10:46.000Z",
         "report_date": "2026-10-01",
         "accession_number": "0001232377-26-000014",
         "primary_document": "xslF345X06/wk-form4_1790899843.xml",
@@ -6150,7 +6150,7 @@
       {
         "form": "4",
         "filing_date": "2026-10-01",
-        "acceptance_datetime": "2026-10-02T00:10:24.000Z",
+        "acceptance_datetime": "2026-10-02T04:10:24.000Z",
         "report_date": "2026-10-01",
         "accession_number": "0001528881-26-000012",
         "primary_document": "xslF345X06/wk-form4_1790899822.xml",
@@ -6164,7 +6164,7 @@
       {
         "form": "4",
         "filing_date": "2026-10-01",
-        "acceptance_datetime": "2026-10-02T00:10:03.000Z",
+        "acceptance_datetime": "2026-10-02T04:10:03.000Z",
         "report_date": "2026-10-01",
         "accession_number": "0001425725-26-000011",
         "primary_document": "xslF345X06/wk-form4_1790899800.xml",
@@ -6178,7 +6178,7 @@
       {
         "form": "4",
         "filing_date": "2026-10-01",
-        "acceptance_datetime": "2026-10-01T22:36:09.000Z",
+        "acceptance_datetime": "2026-10-02T02:36:09.000Z",
         "report_date": "2026-10-01",
         "accession_number": "0002034303-26-000006",
         "primary_document": "xslF345X06/wk-form4_1790894166.xml",
@@ -6192,7 +6192,7 @@
       {
         "form": "8-K",
         "filing_date": "2026-09-24",
-        "acceptance_datetime": "2026-09-24T20:44:43.000Z",
+        "acceptance_datetime": "2026-09-25T00:44:43.000Z",
         "report_date": "2026-09-24",
         "accession_number": "0001104659-26-110438",
         "primary_document": "tm2625844d1_8k.htm",
@@ -6206,7 +6206,7 @@
       {
         "form": "424B2",
         "filing_date": "2026-09-16",
-        "acceptance_datetime": "2026-09-16T21:26:41.000Z",
+        "acceptance_datetime": "2026-09-17T01:26:41.000Z",
         "report_date": "",
         "accession_number": "0001104659-26-108322",
         "primary_document": "tm2623943-3_424b2.htm",
@@ -6220,7 +6220,7 @@
       {
         "form": "8-K",
         "filing_date": "2026-09-16",
-        "acceptance_datetime": "2026-09-16T20:49:34.000Z",
+        "acceptance_datetime": "2026-09-17T00:49:34.000Z",
         "report_date": "2026-09-16",
         "accession_number": "0000005272-26-000091",
         "primary_document": "aig-20260916.htm",
@@ -6234,7 +6234,7 @@
       {
         "form": "FWP",
         "filing_date": "2026-09-15",
-        "acceptance_datetime": "2026-09-15T17:18:45.000Z",
+        "acceptance_datetime": "2026-09-15T21:18:45.000Z",
         "report_date": "",
         "accession_number": "0001104659-26-107858",
         "primary_document": "tm2623943d2_fwp.htm",
@@ -6248,7 +6248,7 @@
       {
         "form": "424B2",
         "filing_date": "2026-09-14",
-        "acceptance_datetime": "2026-09-14T10:21:37.000Z",
+        "acceptance_datetime": "2026-09-14T14:21:37.000Z",
         "report_date": "",
         "accession_number": "0001104659-26-107224",
         "primary_document": "tm2623943-1_424b2.htm",
@@ -6262,7 +6262,7 @@
       {
         "form": "4",
         "filing_date": "2026-09-08",
-        "acceptance_datetime": "2026-09-08T20:20:34.000Z",
+        "acceptance_datetime": "2026-09-09T00:20:34.000Z",
         "report_date": "2026-09-08",
         "accession_number": "0002149810-26-000004",
         "primary_document": "xslF345X06/wk-form4_1788898831.xml",
@@ -6276,7 +6276,7 @@
       {
         "form": "3",
         "filing_date": "2026-09-08",
-        "acceptance_datetime": "2026-09-08T20:15:33.000Z",
+        "acceptance_datetime": "2026-09-09T00:15:33.000Z",
         "report_date": "2026-09-08",
         "accession_number": "0002149810-26-000002",
         "primary_document": "xslF345X06/wk-form3_1788898529.xml",
@@ -6290,7 +6290,7 @@
       {
         "form": "8-K",
         "filing_date": "2026-09-02",
-        "acceptance_datetime": "2026-09-02T20:15:45.000Z",
+        "acceptance_datetime": "2026-09-03T00:15:45.000Z",
         "report_date": "2026-09-01",
         "accession_number": "0000005272-26-000088",
         "primary_document": "aig-20260901.htm",
@@ -6304,7 +6304,7 @@
       {
         "form": "N-PX",
         "filing_date": "2026-08-25",
-        "acceptance_datetime": "2026-08-25T20:33:42.000Z",
+        "acceptance_datetime": "2026-08-26T00:33:42.000Z",
         "report_date": "2026-06-30",
         "accession_number": "0000005272-26-000084",
         "primary_document": "xslN-PX_X01/primary_doc.xml",
@@ -6318,7 +6318,7 @@
       {
         "form": "4",
         "filing_date": "2026-08-13",
-        "acceptance_datetime": "2026-08-13T23:14:47.000Z",
+        "acceptance_datetime": "2026-08-14T03:14:47.000Z",
         "report_date": "2026-08-12",
         "accession_number": "0001428849-26-000011",
         "primary_document": "xslF345X06/wk-form4_1786662884.xml",
@@ -6332,7 +6332,7 @@
       {
         "form": "13F-HR",
         "filing_date": "2026-08-13",
-        "acceptance_datetime": "2026-08-13T21:05:49.000Z",
+        "acceptance_datetime": "2026-08-14T01:05:49.000Z",
         "report_date": "2026-06-30",
         "accession_number": "0000005272-26-000080",
         "primary_document": "xslForm13F_X02/primary_doc.xml",
@@ -6346,7 +6346,7 @@
       {
         "form": "144",
         "filing_date": "2026-08-12",
-        "acceptance_datetime": "2026-08-12T20:38:36.000Z",
+        "acceptance_datetime": "2026-08-13T00:38:36.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-008034",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -6360,7 +6360,7 @@
       {
         "form": "10-Q",
         "filing_date": "2026-08-07",
-        "acceptance_datetime": "2026-08-07T15:49:19.000Z",
+        "acceptance_datetime": "2026-08-07T19:49:19.000Z",
         "report_date": "2026-06-30",
         "accession_number": "0000005272-26-000076",
         "primary_document": "aig-20260630.htm",
@@ -32636,14 +32636,14 @@
     "sector": "Consumer Defensive",
     "industry": "Beverages - Non-Alcoholic",
     "country": "United Kingdom",
-    "last_checked_utc": "2026-10-13T10:31:24+00:00",
+    "last_checked_utc": "2026-10-14T04:57:21+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1650107&owner=exclude&action=getcompany",
     "filings": [
       {
         "form": "6-K",
         "filing_date": "2026-10-13",
-        "acceptance_datetime": "2026-10-13T10:10:04.000Z",
+        "acceptance_datetime": "2026-10-13T14:10:04.000Z",
         "report_date": "2026-10-13",
         "accession_number": "0001650107-26-000123",
         "primary_document": "a20261013ccepform6-kweekly.htm",
@@ -47793,14 +47793,14 @@
     "sector": "Technology",
     "industry": "Software - Infrastructure",
     "country": "USA",
-    "last_checked_utc": "2026-10-13T20:40:34+00:00",
+    "last_checked_utc": "2026-10-14T04:57:21+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1769628&owner=exclude&action=getcompany",
     "filings": [
       {
         "form": "144",
         "filing_date": "2026-10-13",
-        "acceptance_datetime": "2026-10-13T20:30:03.000Z",
+        "acceptance_datetime": "2026-10-14T00:30:03.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-010205",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -47814,7 +47814,7 @@
       {
         "form": "144",
         "filing_date": "2026-10-13",
-        "acceptance_datetime": "2026-10-13T12:34:58.000Z",
+        "acceptance_datetime": "2026-10-13T16:34:58.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-010179",
         "primary_document": "xsl144X01/primary_doc.xml",
@@ -47828,7 +47828,7 @@
       {
         "form": "144",
         "filing_date": "2026-10-13",
-        "acceptance_datetime": "2026-10-13T12:21:58.000Z",
+        "acceptance_datetime": "2026-10-13T16:21:58.000Z",
         "report_date": "",
         "accession_number": "0001950047-26-010166",
         "primary_document": "xsl144X01/primary_doc.xml",
