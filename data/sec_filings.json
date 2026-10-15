@@ -127226,10 +127226,24 @@
     "sector": "Financial",
     "industry": "Insurance Brokers",
     "country": "USA",
-    "last_checked_utc": "2026-10-15T12:08:13+00:00",
+    "last_checked_utc": "2026-10-15T12:49:00+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=62709&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "10-Q",
+        "filing_date": "2026-10-15",
+        "acceptance_datetime": "2026-10-15T12:16:49.000Z",
+        "report_date": "2026-09-30",
+        "accession_number": "0000062709-26-000258",
+        "primary_document": "mrsh-20260930.htm",
+        "description": "10-Q",
+        "items": "",
+        "is_xbrl": 1,
+        "is_inline_xbrl": 1,
+        "first_seen_utc": "2026-10-15T12:49:00+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/62709/000006270926000258/mrsh-20260930.htm"
+      },
       {
         "form": "8-K",
         "filing_date": "2026-10-15",
@@ -127565,20 +127579,6 @@
         "is_inline_xbrl": 1,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/62709/000006270926000195/mrsh-20260630.htm"
-      },
-      {
-        "form": "8-K",
-        "filing_date": "2026-07-21",
-        "acceptance_datetime": "2026-07-21T11:02:42.000Z",
-        "report_date": "2026-07-21",
-        "accession_number": "0000062709-26-000193",
-        "primary_document": "mmc-20260721.htm",
-        "description": "8-K",
-        "items": "2.02,9.01",
-        "is_xbrl": 1,
-        "is_inline_xbrl": 1,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/62709/000006270926000193/mmc-20260721.htm"
       }
     ],
     "registration_filings": [],
