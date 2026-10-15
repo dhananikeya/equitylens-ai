@@ -27004,10 +27004,24 @@
     "sector": "Financial",
     "industry": "Banks - Diversified",
     "country": "USA",
-    "last_checked_utc": "2026-10-11T09:06:01+00:00",
+    "last_checked_utc": "2026-10-15T10:42:16+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1390777&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "8-K",
+        "filing_date": "2026-10-15",
+        "acceptance_datetime": "2026-10-15T10:30:19.000Z",
+        "report_date": "2026-10-15",
+        "accession_number": "0001390777-26-000104",
+        "primary_document": "bk-20261015.htm",
+        "description": "FORM 8-K",
+        "items": "2.02,7.01,9.01",
+        "is_xbrl": 1,
+        "is_inline_xbrl": 1,
+        "first_seen_utc": "2026-10-15T10:42:16+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1390777/000139077726000104/bk-20261015.htm"
+      },
       {
         "form": "SCHEDULE 13G/A",
         "filing_date": "2026-10-07",
@@ -27343,20 +27357,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1390777/000119312526336037/d182815dfwp.htm"
-      },
-      {
-        "form": "FWP",
-        "filing_date": "2026-08-06",
-        "acceptance_datetime": "2026-08-06T03:59:30.000Z",
-        "report_date": "",
-        "accession_number": "0001193125-26-336026",
-        "primary_document": "d182828dfwp.htm",
-        "description": "FWP",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1390777/000119312526336026/d182828dfwp.htm"
       }
     ],
     "registration_filings": [],
@@ -74636,10 +74636,24 @@
     "sector": "Industrials",
     "industry": "Engineering & Construction",
     "country": "Netherlands",
-    "last_checked_utc": "2026-10-11T09:06:01+00:00",
+    "last_checked_utc": "2026-10-15T10:42:16+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1468522&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "6-K",
+        "filing_date": "2026-10-15",
+        "acceptance_datetime": "2026-10-15T10:34:44.000Z",
+        "report_date": "2026-10-15",
+        "accession_number": "0001468522-26-000073",
+        "primary_document": "a3q2026earningsreleasedate.htm",
+        "description": "6-K",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-15T10:42:16+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1468522/000146852226000073/a3q2026earningsreleasedate.htm"
+      },
       {
         "form": "6-K",
         "filing_date": "2026-10-05",
@@ -74975,20 +74989,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1468522/000162828026032253/a6k2026q1ferrovialnvfinanc.htm"
-      },
-      {
-        "form": "6-K",
-        "filing_date": "2026-04-30",
-        "acceptance_datetime": "2026-04-30T19:17:52.000Z",
-        "report_date": "2026-04-30",
-        "accession_number": "0001468522-26-000030",
-        "primary_document": "a6kamendmentconversionofle.htm",
-        "description": "6-K",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1468522/000146852226000030/a6kamendmentconversionofle.htm"
       }
     ],
     "registration_filings": [],
