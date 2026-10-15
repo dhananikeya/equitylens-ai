@@ -47793,10 +47793,24 @@
     "sector": "Technology",
     "industry": "Software - Infrastructure",
     "country": "USA",
-    "last_checked_utc": "2026-10-14T23:33:36+00:00",
+    "last_checked_utc": "2026-10-14T23:58:59+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1769628&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "4",
+        "filing_date": "2026-10-14",
+        "acceptance_datetime": "2026-10-14T23:34:13.000Z",
+        "report_date": "2026-10-12",
+        "accession_number": "0001769628-26-000449",
+        "primary_document": "xslF345X06/form4.xml",
+        "description": "PRIMARY DOCUMENT",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-14T23:58:59+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000449/xslF345X06/form4.xml"
+      },
       {
         "form": "4",
         "filing_date": "2026-10-14",
@@ -48132,20 +48146,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1769628/000195004726009860/xsl144X01/primary_doc.xml"
-      },
-      {
-        "form": "144",
-        "filing_date": "2026-09-29",
-        "acceptance_datetime": "2026-09-30T00:24:14.000Z",
-        "report_date": "",
-        "accession_number": "0001950047-26-009859",
-        "primary_document": "xsl144X01/primary_doc.xml",
-        "description": "",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1769628/000195004726009859/xsl144X01/primary_doc.xml"
       }
     ],
     "registration_filings": [
