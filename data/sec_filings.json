@@ -104035,10 +104035,24 @@
     "sector": "Technology",
     "industry": "Electronic Components",
     "country": "USA",
-    "last_checked_utc": "2026-10-11T09:06:01+00:00",
+    "last_checked_utc": "2026-10-15T01:37:02+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=898293&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "5",
+        "filing_date": "2026-10-14",
+        "acceptance_datetime": "2026-10-15T01:36:05.000Z",
+        "report_date": "2026-08-31",
+        "accession_number": "0001225208-26-008426",
+        "primary_document": "xslF345X06/doc5.xml",
+        "description": "",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-15T01:37:02+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/898293/000122520826008426/xslF345X06/doc5.xml"
+      },
       {
         "form": "8-K",
         "filing_date": "2026-09-30",
@@ -104374,20 +104388,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/898293/000196922326000455/xsl144X01/primary_doc.xml"
-      },
-      {
-        "form": "144",
-        "filing_date": "2026-04-17",
-        "acceptance_datetime": "2026-04-17T20:10:12.000Z",
-        "report_date": "",
-        "accession_number": "0001969223-26-000454",
-        "primary_document": "xsl144X01/primary_doc.xml",
-        "description": "",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/898293/000196922326000454/xsl144X01/primary_doc.xml"
       }
     ],
     "registration_filings": [],
