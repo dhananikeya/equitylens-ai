@@ -86183,10 +86183,24 @@
     "sector": "Consumer Cyclical",
     "industry": "Auto Parts",
     "country": "USA",
-    "last_checked_utc": "2026-10-11T09:06:01+00:00",
+    "last_checked_utc": "2026-10-16T11:38:15+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=40987&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "S-3ASR",
+        "filing_date": "2026-10-16",
+        "acceptance_datetime": "2026-10-16T11:22:39.000Z",
+        "report_date": "",
+        "accession_number": "0001628280-26-066043",
+        "primary_document": "genuinepartscompany-sx3asr.htm",
+        "description": "S-3ASR",
+        "items": "",
+        "is_xbrl": 1,
+        "is_inline_xbrl": 1,
+        "first_seen_utc": "2026-10-16T11:38:15+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/40987/000162828026066043/genuinepartscompany-sx3asr.htm"
+      },
       {
         "form": "4",
         "filing_date": "2026-10-05",
@@ -86522,20 +86536,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/40987/000202297726000006/xslF345X06/wk-form4_1778080417.xml"
-      },
-      {
-        "form": "4",
-        "filing_date": "2026-05-06",
-        "acceptance_datetime": "2026-05-06T19:11:40.000Z",
-        "report_date": "2026-05-03",
-        "accession_number": "0002075110-26-000004",
-        "primary_document": "xslF345X06/wk-form4_1778080297.xml",
-        "description": "FORM 4",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/40987/000207511026000004/xslF345X06/wk-form4_1778080297.xml"
       }
     ],
     "registration_filings": [],
@@ -175096,10 +175096,24 @@
     "sector": "Financial",
     "industry": "Banks - Regional",
     "country": "USA",
-    "last_checked_utc": "2026-10-16T10:39:37+00:00",
+    "last_checked_utc": "2026-10-16T11:38:15+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=92230&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "8-K",
+        "filing_date": "2026-10-16",
+        "acceptance_datetime": "2026-10-16T11:12:23.000Z",
+        "report_date": "2026-10-14",
+        "accession_number": "0001193125-26-423384",
+        "primary_document": "d186531d8k.htm",
+        "description": "8-K",
+        "items": "5.02,7.01,9.01",
+        "is_xbrl": 1,
+        "is_inline_xbrl": 1,
+        "first_seen_utc": "2026-10-16T11:38:15+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/92230/000119312526423384/d186531d8k.htm"
+      },
       {
         "form": "8-K",
         "filing_date": "2026-10-16",
@@ -175435,20 +175449,6 @@
         "is_inline_xbrl": 1,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/92230/000009223026000096/tfc-20260717.htm"
-      },
-      {
-        "form": "SCHEDULE 13G/A",
-        "filing_date": "2026-07-13",
-        "acceptance_datetime": "2026-07-13T17:15:30.000Z",
-        "report_date": "",
-        "accession_number": "0000092230-26-000093",
-        "primary_document": "xslSCHEDULE_13G_X02/primary_doc.xml",
-        "description": "",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/92230/000009223026000093/xslSCHEDULE_13G_X02/primary_doc.xml"
       }
     ],
     "registration_filings": [],
