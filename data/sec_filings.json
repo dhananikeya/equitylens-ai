@@ -69874,10 +69874,24 @@
     "sector": "Energy",
     "industry": "Oil & Gas E&P",
     "country": "USA",
-    "last_checked_utc": "2026-10-17T04:36:06+00:00",
+    "last_checked_utc": "2026-10-19T12:12:08+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=895126&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "8-K",
+        "filing_date": "2026-10-19",
+        "acceptance_datetime": "2026-10-19T12:09:38.000Z",
+        "report_date": "2026-10-16",
+        "accession_number": "0001104659-26-116739",
+        "primary_document": "tm2627775d1_8k.htm",
+        "description": "FORM 8-K",
+        "items": "5.02,7.01,9.01",
+        "is_xbrl": 1,
+        "is_inline_xbrl": 1,
+        "first_seen_utc": "2026-10-19T12:12:08+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/895126/000110465926116739/tm2627775d1_8k.htm"
+      },
       {
         "form": "3",
         "filing_date": "2026-10-16",
@@ -70213,20 +70227,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/895126/000184496326000002/xslF345X06/wk-form4_1780949467.xml"
-      },
-      {
-        "form": "4",
-        "filing_date": "2026-06-08",
-        "acceptance_datetime": "2026-06-09T00:06:57.000Z",
-        "report_date": "2026-06-04",
-        "accession_number": "0001313071-26-000004",
-        "primary_document": "xslF345X06/wk-form4_1780949213.xml",
-        "description": "FORM 4",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/895126/000131307126000004/xslF345X06/wk-form4_1780949213.xml"
       }
     ],
     "registration_filings": [
@@ -129571,10 +129571,38 @@
     "sector": "Technology",
     "industry": "Software - Application",
     "country": "USA",
-    "last_checked_utc": "2026-10-17T04:36:06+00:00",
+    "last_checked_utc": "2026-10-19T12:12:08+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1050446&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "DEFA14A",
+        "filing_date": "2026-10-19",
+        "acceptance_datetime": "2026-10-19T12:05:10.000Z",
+        "report_date": "",
+        "accession_number": "0001193125-26-424693",
+        "primary_document": "mstr-20261019.htm",
+        "description": "DEFA14A",
+        "items": "",
+        "is_xbrl": 1,
+        "is_inline_xbrl": 1,
+        "first_seen_utc": "2026-10-19T12:12:08+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526424693/mstr-20261019.htm"
+      },
+      {
+        "form": "8-K",
+        "filing_date": "2026-10-19",
+        "acceptance_datetime": "2026-10-19T12:00:13.000Z",
+        "report_date": "2026-10-19",
+        "accession_number": "0001193125-26-424688",
+        "primary_document": "mstr-20261019.htm",
+        "description": "8-K",
+        "items": "7.01,8.01",
+        "is_xbrl": 1,
+        "is_inline_xbrl": 1,
+        "first_seen_utc": "2026-10-19T12:12:08+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526424688/mstr-20261019.htm"
+      },
       {
         "form": "DEFA14A",
         "filing_date": "2026-10-16",
@@ -129896,34 +129924,6 @@
         "is_inline_xbrl": 1,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526403417/mstr-20260914.htm"
-      },
-      {
-        "form": "DEFA14A",
-        "filing_date": "2026-09-25",
-        "acceptance_datetime": "2026-09-26T00:46:27.000Z",
-        "report_date": "",
-        "accession_number": "0001193125-26-402937",
-        "primary_document": "mstr-20260925.htm",
-        "description": "DEFA14A",
-        "items": "",
-        "is_xbrl": 1,
-        "is_inline_xbrl": 1,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526402937/mstr-20260925.htm"
-      },
-      {
-        "form": "DEFA14A",
-        "filing_date": "2026-09-25",
-        "acceptance_datetime": "2026-09-26T00:01:20.000Z",
-        "report_date": "",
-        "accession_number": "0001193125-26-402802",
-        "primary_document": "mstr-20260925.htm",
-        "description": "DEFA14A",
-        "items": "",
-        "is_xbrl": 1,
-        "is_inline_xbrl": 1,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526402802/mstr-20260925.htm"
       }
     ],
     "registration_filings": [
