@@ -155359,7 +155359,7 @@
     "sector": "Technology",
     "industry": "Semiconductors",
     "country": "USA",
-    "last_checked_utc": "2026-10-20T21:55:19+00:00",
+    "last_checked_utc": "2026-10-20T23:48:43+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=804328&owner=exclude&action=getcompany",
     "filings": [
@@ -155376,6 +155376,20 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-20T21:55:19+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/804328/000195824426000666/xsl144X01/primary_doc.xml"
+      },
+      {
+        "form": "4",
+        "filing_date": "2026-10-20",
+        "acceptance_datetime": "2026-10-20T23:37:33.000Z",
+        "report_date": "2026-10-20",
+        "accession_number": "0000804328-26-000106",
+        "primary_document": "xslF345X06/edgardoc.xml",
+        "description": "PRIMARY DOCUMENT",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-20T23:48:43+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000106/xslF345X06/edgardoc.xml"
       },
       {
         "form": "4",
@@ -155698,20 +155712,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000092/xslF345X06/edgardoc.xml"
-      },
-      {
-        "form": "144",
-        "filing_date": "2026-08-21",
-        "acceptance_datetime": "2026-08-22T00:40:49.000Z",
-        "report_date": "",
-        "accession_number": "0001950047-26-008547",
-        "primary_document": "xsl144X01/primary_doc.xml",
-        "description": "",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/804328/000195004726008547/xsl144X01/primary_doc.xml"
       }
     ],
     "registration_filings": [],
