@@ -108712,7 +108712,7 @@
     "sector": "Consumer Defensive",
     "industry": "Household & Personal Products",
     "country": "USA",
-    "last_checked_utc": "2026-10-20T10:11:02+00:00",
+    "last_checked_utc": "2026-10-20T12:47:17+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=55785&owner=exclude&action=getcompany",
     "filings": [
@@ -108969,6 +108969,20 @@
         "url": "https://www.sec.gov/Archives/edgar/data/55785/000162828026030566/pre-20260501.htm"
       },
       {
+        "form": "UPLOAD",
+        "filing_date": "2026-05-05",
+        "acceptance_datetime": "2026-05-05T10:30:13.000Z",
+        "report_date": "",
+        "accession_number": "0000000000-26-004551",
+        "primary_document": "filename1.pdf",
+        "description": "",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-20T12:47:17+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/55785/000000000026004551/filename1.pdf"
+      },
+      {
         "form": "4",
         "filing_date": "2026-05-04",
         "acceptance_datetime": "2026-05-05T02:35:12.000Z",
@@ -109051,20 +109065,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/55785/000122520826004886/xslF345X06/doc4.xml"
-      },
-      {
-        "form": "4",
-        "filing_date": "2026-05-04",
-        "acceptance_datetime": "2026-05-05T01:10:30.000Z",
-        "report_date": "2026-05-01",
-        "accession_number": "0001225208-26-004885",
-        "primary_document": "xslF345X06/doc4.xml",
-        "description": "",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/55785/000122520826004885/xslF345X06/doc4.xml"
       }
     ],
     "registration_filings": [],
@@ -127956,10 +127956,24 @@
     "sector": "Financial",
     "industry": "Capital Markets",
     "country": "USA",
-    "last_checked_utc": "2026-10-20T05:09:03+00:00",
+    "last_checked_utc": "2026-10-20T12:47:17+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=895421&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "FWP",
+        "filing_date": "2026-10-20",
+        "acceptance_datetime": "2026-10-20T12:45:11.000Z",
+        "report_date": "",
+        "accession_number": "0001839882-26-051561",
+        "primary_document": "ms19575_fwp-35059.htm",
+        "description": "FREE WRITING PROSPECTUS TO PRELIMINARY PRICING SUPPLEMENT NO. 19,575",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-20T12:47:17+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/895421/000183988226051561/ms19575_fwp-35059.htm"
+      },
       {
         "form": "424B2",
         "filing_date": "2026-10-19",
@@ -128295,20 +128309,6 @@
         "is_inline_xbrl": 1,
         "first_seen_utc": "2026-10-19T20:23:02+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/895421/000183988226051475/ms19312_424b2-34915.htm"
-      },
-      {
-        "form": "424B2",
-        "filing_date": "2026-10-19",
-        "acceptance_datetime": "2026-10-20T00:15:47.000Z",
-        "report_date": "",
-        "accession_number": "0001839882-26-051473",
-        "primary_document": "ms19411_424b2-34895.htm",
-        "description": "PRICING SUPPLEMENT NO. 19,411",
-        "items": "",
-        "is_xbrl": 1,
-        "is_inline_xbrl": 1,
-        "first_seen_utc": "2026-10-19T20:23:02+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/895421/000183988226051473/ms19411_424b2-34895.htm"
       }
     ],
     "registration_filings": [],
