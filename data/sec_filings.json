@@ -130836,10 +130836,24 @@
     "sector": "Technology",
     "industry": "Semiconductors",
     "country": "USA",
-    "last_checked_utc": "2026-10-16T04:37:49+00:00",
+    "last_checked_utc": "2026-10-20T23:15:11+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=723125&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "4",
+        "filing_date": "2026-10-20",
+        "acceptance_datetime": "2026-10-20T23:03:21.000Z",
+        "report_date": "2026-10-16",
+        "accession_number": "0001568238-26-000003",
+        "primary_document": "xslF345X06/primarydocument.xml",
+        "description": "PRIMARY DOCUMENT",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-20T23:15:11+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/723125/000156823826000003/xslF345X06/primarydocument.xml"
+      },
       {
         "form": "4",
         "filing_date": "2026-10-15",
@@ -131175,20 +131189,6 @@
         "is_inline_xbrl": 1,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000018/mu-20260930.htm"
-      },
-      {
-        "form": "4",
-        "filing_date": "2026-08-28",
-        "acceptance_datetime": "2026-08-29T03:00:42.000Z",
-        "report_date": "2026-06-26",
-        "accession_number": "0001798757-26-000007",
-        "primary_document": "xslF345X06/primarydocument.xml",
-        "description": "PRIMARY DOCUMENT",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/723125/000179875726000007/xslF345X06/primarydocument.xml"
       }
     ],
     "registration_filings": [],
