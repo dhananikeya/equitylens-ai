@@ -109077,10 +109077,24 @@
     "sector": "Energy",
     "industry": "Oil & Gas Midstream",
     "country": "USA",
-    "last_checked_utc": "2026-10-11T09:06:01+00:00",
+    "last_checked_utc": "2026-10-20T22:17:36+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1506307&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "4",
+        "filing_date": "2026-10-20",
+        "acceptance_datetime": "2026-10-20T22:09:57.000Z",
+        "report_date": "2026-10-16",
+        "accession_number": "0001506307-26-000128",
+        "primary_document": "xslF345X06/wk-form4_1792534195.xml",
+        "description": "FORM 4",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-20T22:17:36+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630726000128/xslF345X06/wk-form4_1792534195.xml"
+      },
       {
         "form": "144",
         "filing_date": "2026-10-02",
@@ -109416,20 +109430,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630726000083/xslF345X06/wk-form4_1784845054.xml"
-      },
-      {
-        "form": "4",
-        "filing_date": "2026-07-23",
-        "acceptance_datetime": "2026-07-23T22:17:32.000Z",
-        "report_date": "2026-07-21",
-        "accession_number": "0001506307-26-000082",
-        "primary_document": "xslF345X06/wk-form4_1784845050.xml",
-        "description": "FORM 4",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630726000082/xslF345X06/wk-form4_1784845050.xml"
       }
     ],
     "registration_filings": [
@@ -153070,10 +153070,24 @@
     "sector": "Communication Services",
     "industry": "Entertainment",
     "country": "USA",
-    "last_checked_utc": "2026-10-20T05:09:03+00:00",
+    "last_checked_utc": "2026-10-20T22:17:36+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=2041610&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "4",
+        "filing_date": "2026-10-20",
+        "acceptance_datetime": "2026-10-20T22:00:20.000Z",
+        "report_date": "2026-10-16",
+        "accession_number": "0000895345-26-000470",
+        "primary_document": "xslF345X06/form4.xml",
+        "description": "FORM 4",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-20T22:17:36+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/2041610/000089534526000470/xslF345X06/form4.xml"
+      },
       {
         "form": "4",
         "filing_date": "2026-10-19",
@@ -153409,20 +153423,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-11T09:31:49+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/2041610/000110465926113696/tm2626659d6_25.htm"
-      },
-      {
-        "form": "CERT",
-        "filing_date": "2026-10-05",
-        "acceptance_datetime": "2026-10-05T17:58:24.000Z",
-        "report_date": "",
-        "accession_number": "0000876661-26-000817",
-        "primary_document": "PSKY100526.pdf",
-        "description": "NYSE CERTIFICATION",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-11T09:31:49+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/2041610/000087666126000817/PSKY100526.pdf"
       }
     ],
     "registration_filings": [],
