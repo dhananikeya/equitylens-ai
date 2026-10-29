@@ -135064,7 +135064,7 @@
     "sector": "Technology",
     "industry": "Software - Application",
     "country": "USA",
-    "last_checked_utc": "2026-10-29T02:53:24+00:00",
+    "last_checked_utc": "2026-10-29T09:06:09+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1373715&owner=exclude&action=getcompany",
     "filings": [
@@ -135109,6 +135109,20 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-29T02:53:24+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1373715/000166742226000038/xslF345X06/wk-form4_1793235971.xml"
+      },
+      {
+        "form": "4",
+        "filing_date": "2026-10-28",
+        "acceptance_datetime": "2026-10-29T01:06:07.000Z",
+        "report_date": "2026-10-26",
+        "accession_number": "0002103469-26-000014",
+        "primary_document": "xslF345X06/wk-form4_1793235965.xml",
+        "description": "FORM 4",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-10-29T02:53:24+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1373715/000210346926000014/xslF345X06/wk-form4_1793235965.xml"
       },
       {
         "form": "4",
@@ -135165,20 +135179,6 @@
         "is_inline_xbrl": 1,
         "first_seen_utc": "2026-10-28T23:42:57+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000095/now-20261028.htm"
-      },
-      {
-        "form": "4",
-        "filing_date": "2026-10-28",
-        "acceptance_datetime": "2026-10-28T21:06:07.000Z",
-        "report_date": "2026-10-26",
-        "accession_number": "0002103469-26-000014",
-        "primary_document": "xslF345X06/wk-form4_1793235965.xml",
-        "description": "FORM 4",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-29T02:53:24+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1373715/000210346926000014/xslF345X06/wk-form4_1793235965.xml"
       },
       {
         "form": "8-K",
