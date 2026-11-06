@@ -21,6 +21,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 UNIVERSE_PATH = ROOT / "data" / "finviz_universe.csv"
 OUTPUT_PATH = ROOT / "data" / "sec_filings.json"
+SUMMARY_PATH = ROOT / "data" / "sec_summary.json"
 
 USER_AGENT = "EquityLens AI research app dhananikeya@gmail.com"
 MAX_FILINGS_PER_COMPANY = 25
@@ -32,6 +33,15 @@ REGISTRATION_FORMS = {
     "S-1", "S-1/A",
     "F-1", "F-1/A",
     "S-11", "S-11/A",
+}
+MATERIAL_HOME_FORMS = {
+    "10-K", "10-K/A",
+    "10-Q", "10-Q/A",
+    "8-K", "8-K/A",
+    "20-F", "20-F/A",
+    "40-F", "40-F/A",
+    "6-K", "6-K/A",
+    *REGISTRATION_FORMS,
 }
 
 
@@ -217,6 +227,84 @@ def dedupe_filings(rows: list[dict]) -> list[dict]:
         key=lambda row: row.get("filing_date", ""),
         reverse=True,
     )
+
+
+def build_summary(output: dict, generated_at_utc: str) -> dict:
+    """Build a lightweight SEC index for startup/home/market views."""
+    companies = {}
+    recent_rows = []
+    synced_companies = 0
+
+    for key, feed in output.items():
+        ticker = str(feed.get("ticker", "")).upper().strip()
+        filings = feed.get("filings", []) or []
+        registration = feed.get("registration_filings", []) or []
+
+        if feed.get("cik") and filings:
+            synced_companies += 1
+
+        latest = filings[0] if filings else {}
+        companies[ticker or key] = {
+            "ticker": ticker,
+            "cik": feed.get("cik", ""),
+            "entity_name": feed.get(
+                "entity_name",
+                key.rsplit(" (", 1)[0],
+            ),
+            "has_filings": bool(filings),
+            "latest_filing": {
+                "form": latest.get("form", ""),
+                "filing_date": latest.get("filing_date", ""),
+                "report_date": latest.get("report_date", ""),
+                "description": (
+                    latest.get("description", "")
+                    or latest.get("primary_document", "")
+                ),
+                "url": latest.get("url", ""),
+            } if latest else {},
+            "registration_count": len(registration),
+            "registration_scan_complete": bool(
+                feed.get("registration_scan_complete", False)
+            ),
+            "sec_status": feed.get("sec_status", ""),
+            "last_checked_utc": feed.get("last_checked_utc", ""),
+        }
+
+        for filing in filings[:5]:
+            if filing.get("form") not in MATERIAL_HOME_FORMS:
+                continue
+            filing_date = filing.get("filing_date", "")
+            if not filing_date:
+                continue
+            recent_rows.append({
+                "ticker": ticker,
+                "company": feed.get(
+                    "entity_name",
+                    key.rsplit(" (", 1)[0],
+                ),
+                "form": filing.get("form", ""),
+                "filing_date": filing_date,
+                "report_date": filing.get("report_date", ""),
+                "description": (
+                    filing.get("description", "")
+                    or filing.get("primary_document", "")
+                ),
+                "url": filing.get("url", ""),
+            })
+
+    recent_rows = sorted(
+        recent_rows,
+        key=lambda row: row.get("filing_date", ""),
+        reverse=True,
+    )[:25]
+
+    return {
+        "generated_at_utc": generated_at_utc,
+        "company_count": len(output),
+        "synced_companies": synced_companies,
+        "companies": companies,
+        "recent_filings": recent_rows,
+    }
 
 
 def main() -> None:
@@ -422,13 +510,49 @@ def main() -> None:
         else ""
     )
 
-    if new_text != old_text:
+    feed_changed = new_text != old_text
+    if feed_changed:
         OUTPUT_PATH.write_text(new_text, encoding="utf-8")
         print(
             f"SEC filing feed updated for {len(output)} covered companies."
         )
     else:
         print("No SEC filing changes detected.")
+
+    summary_generated_at = observed_at_utc
+    if not feed_changed and SUMMARY_PATH.exists():
+        try:
+            previous_summary = json.loads(
+                SUMMARY_PATH.read_text(encoding="utf-8")
+            )
+            summary_generated_at = previous_summary.get(
+                "generated_at_utc",
+                observed_at_utc,
+            )
+        except Exception:
+            pass
+
+    summary = build_summary(output, summary_generated_at)
+    summary_text = json.dumps(
+        summary,
+        indent=2,
+        sort_keys=False,
+    ) + "\n"
+    old_summary_text = (
+        SUMMARY_PATH.read_text(encoding="utf-8")
+        if SUMMARY_PATH.exists()
+        else ""
+    )
+
+    if summary_text != old_summary_text:
+        SUMMARY_PATH.write_text(summary_text, encoding="utf-8")
+        print(
+            "SEC summary updated: "
+            f"{summary['synced_companies']} synced companies, "
+            f"{len(summary['recent_filings'])} recent material filings."
+        )
+    else:
+        print("No SEC summary changes detected.")
 
 
 if __name__ == "__main__":
