@@ -1,9 +1,14 @@
 import { notFound } from "next/navigation";
 import { loadCompanyUniverse } from "@/lib/companies";
-import { loadCompanyResearch } from "@/lib/research";
 import CompanyResearch from "@/components/CompanyResearch";
 
-export const revalidate = 3600;
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return loadCompanyUniverse().map((company) => ({
+    ticker: company.ticker,
+  }));
+}
 
 export async function generateMetadata({ params }) {
   const { ticker } = await params;
@@ -29,13 +34,10 @@ export default async function CompanyPage({ params }) {
 
   if (!company) notFound();
 
-  const research = loadCompanyResearch(normalized);
-
   return (
     <CompanyResearch
       company={company}
-      research={research}
-      companies={companies}
+      researchUrl={"/research/" + normalized + ".json"}
     />
   );
 }
