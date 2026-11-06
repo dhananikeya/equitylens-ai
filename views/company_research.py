@@ -371,7 +371,111 @@ def render_company_research(
     )
     selected_pe = finviz_numeric(selected_workspace_row.get("P/E"))
 
-    filing_badge = "SEC filings available" if selected_filings else "SEC filings unavailable"
+    structured_financial_values = [
+        selected_data.get("revenue"),
+        selected_data.get("gross_profit"),
+        selected_data.get("operating_income"),
+        selected_data.get("net_income"),
+    ]
+    has_structured_financials = (
+        bool(selected_qdata.get("latest_quarter"))
+        or any(value is not None for value in structured_financial_values)
+    )
+    has_supplemental_financials = bool(
+        selected_financial_fallback.get("latest")
+        or selected_financial_fallback.get("quarterly_history")
+    )
+
+    if has_structured_financials:
+        financial_status = (
+            "Available",
+            "SEC-linked structured financial data",
+            "available",
+        )
+    elif has_supplemental_financials:
+        financial_status = (
+            "Supplemental",
+            "Yahoo Finance statements available",
+            "partial",
+        )
+    else:
+        financial_status = (
+            "Not found",
+            "No financial dataset available yet",
+            "missing",
+        )
+
+    if selected_filings:
+        sec_status = (
+            "Available",
+            f"{len(selected_filings):,} recent filings loaded",
+            "available",
+        )
+    elif selected_sec_error:
+        sec_status = (
+            "Refresh unavailable",
+            "SEC source could not be reached",
+            "partial",
+        )
+    else:
+        sec_status = (
+            "Not found",
+            "No filing history loaded",
+            "missing",
+        )
+
+    has_registration = bool(
+        selected_s1.get("source_url")
+        or selected_registrations
+    )
+    registration_status = (
+        (
+            "Available",
+            (
+                f"{len(selected_registrations):,} registration filing"
+                + ("s" if len(selected_registrations) != 1 else "")
+                + " indexed"
+                if selected_registrations
+                else "Structured registration research available"
+            ),
+            "available",
+        )
+        if has_registration
+        else (
+            "Not found",
+            "No S-1, F-1, or S-11 found in indexed history",
+            "missing",
+        )
+    )
+
+    research_fields = [
+        selected_analysis.get("business_model"),
+        selected_analysis.get("primary_revenue_source"),
+        selected_analysis.get("customer_type"),
+        selected_analysis.get("competitive_risk"),
+        selected_analysis.get("operational_risk"),
+        selected_analysis.get("profitability_history"),
+        selected_analysis.get("key_risk_themes"),
+    ]
+    research_field_count = sum(bool(value) for value in research_fields)
+    if selected_analysis.get("business_model") and research_field_count >= 4:
+        research_status = (
+            "Available",
+            f"{research_field_count} structured research fields",
+            "available",
+        )
+    elif research_field_count:
+        research_status = (
+            "Partial",
+            f"{research_field_count} structured research fields",
+            "partial",
+        )
+    else:
+        research_status = (
+            "Not yet available",
+            "Primary filings remain accessible",
+            "missing",
+        )
 
     business_summary = selected_analysis.get(
         "business_model",
@@ -389,12 +493,39 @@ def render_company_research(
             <p class="el-subtitle">{html.escape(str(business_summary))}</p>
             <div class="el-badges">
                 <span class="el-badge">{html.escape(selected_country or "Global")}</span>
-                <span class="el-badge">{html.escape(filing_badge)}</span>
-                <span class="el-badge">Research only</span>
+                <span class="el-badge">Primary-source research</span>
+                <span class="el-badge">Educational · not investment advice</span>
             </div>
         </div>
         """,
         unsafe_allow_html=True,
+    )
+
+    availability_cards = [
+        ("SEC filings", *sec_status),
+        ("Financials", *financial_status),
+        ("Registration filing", *registration_status),
+        ("Structured research", *research_status),
+    ]
+    availability_html = "".join(
+        (
+            f'<div class="el-availability-card {status_class}">'
+            f'<div class="el-availability-label">{html.escape(label)}</div>'
+            f'<div class="el-availability-status">{html.escape(status)}</div>'
+            f'<div class="el-availability-detail">{html.escape(detail)}</div>'
+            '</div>'
+        )
+        for label, status, detail, status_class in availability_cards
+    )
+    st.markdown(
+        '<div class="el-availability-grid">'
+        + availability_html
+        + '</div>',
+        unsafe_allow_html=True,
+    )
+    st.caption(
+        "Availability reflects the sources currently loaded for this company. "
+        "“Not found” is different from a reported value of zero."
     )
 
     research_actions = st.columns(3)
