@@ -1975,6 +1975,7 @@ if active_destination == "Company Research":
         retry_company_data=retry_company_data,
         research_link=research_link,
         save_rendered_choices=save_rendered_choices,
+        navigate_to=navigate_to,
     )
 
 
