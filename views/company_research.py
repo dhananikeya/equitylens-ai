@@ -1127,6 +1127,86 @@ def render_company_research(
                 "Review the Risk Factors section in the original SEC filing."
             )
 
+        filing_changes = selected_analysis.get(
+            "filing_changes",
+            {},
+        )
+        section(
+            "Filing changes",
+            "What changed from the prior annual filing?",
+        )
+        if filing_changes.get("comparison_available"):
+            current_label = filing_changes.get(
+                "current_filing_label",
+                "Current annual filing",
+            )
+            prior_label = filing_changes.get(
+                "prior_filing_label",
+                "Prior annual filing",
+            )
+            st.caption(
+                f"Comparison: {prior_label} → {current_label}. "
+                "This section summarizes changes in supplied SEC filing evidence; it does not predict their impact."
+            )
+
+            change_cols = st.columns(2)
+            change_groups = [
+                (
+                    "Added or more prominent",
+                    filing_changes.get(
+                        "added_or_increased_themes",
+                        [],
+                    ),
+                ),
+                (
+                    "Reduced or removed",
+                    filing_changes.get(
+                        "reduced_or_removed_themes",
+                        [],
+                    ),
+                ),
+                (
+                    "Notable language changes",
+                    filing_changes.get(
+                        "notable_language_changes",
+                        [],
+                    ),
+                ),
+                (
+                    "Core themes that remained",
+                    filing_changes.get(
+                        "unchanged_core_themes",
+                        [],
+                    ),
+                ),
+            ]
+            for index, (label, items) in enumerate(change_groups):
+                with change_cols[index % 2]:
+                    st.markdown(f"**{label}**")
+                    if items:
+                        for item in items:
+                            st.markdown(f"- {item}")
+                    else:
+                        st.caption(
+                            "No supported change was identified in the supplied excerpts."
+                        )
+
+            comparison_notes = filing_changes.get(
+                "confidence_notes",
+                [],
+            )
+            if comparison_notes:
+                with st.expander(
+                    "Comparison limitations"
+                ):
+                    for note in comparison_notes:
+                        st.markdown(f"- {note}")
+        else:
+            st.info(
+                "Prior-vs-current annual filing comparison has not been generated for this company yet. "
+                "The local deep-research worker now supports this comparison and will add it when the company is refreshed."
+            )
+
         source_filing = selected_analysis.get("source_filing", "")
         if source_filing:
             st.link_button(
