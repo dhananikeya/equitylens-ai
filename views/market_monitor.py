@@ -512,11 +512,12 @@ def render_market_monitor(
                     )
                 )
             except Exception as exc:
-                st.warning(
+                st.info(
                     market_provider_error(
                         "NYSE market feed",
                         exc,
                     )
+                    + " Broad-market proxies and linked news remain available."
                 )
         else:
             st.info(
@@ -1073,8 +1074,9 @@ def render_market_monitor(
                 "or the FRED fallback. Other rate data remains available."
             )
         if "sofr" in rate_errors:
-            st.warning(
-                "New York Fed reference rates are temporarily unavailable."
+            st.info(
+                "New York Fed SOFR reference rates are temporarily unavailable. "
+                "Treasury and any available swap context remain separate."
             )
 
         render_rates_ticker(
