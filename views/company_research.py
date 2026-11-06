@@ -654,57 +654,161 @@ def render_company_research(
     )
 
     if company_section == "Overview":
-        section("At a glance", "Research summary")
+        section("Overview", "Understand the company in 60 seconds")
+
+        overview_record = income_selection["record"]
+        overview_revenue = overview_record.get("revenue")
+        overview_operating_margin = calc_margin(
+            overview_record.get("operating_income"),
+            overview_revenue,
+        )
+        overview_net_margin = calc_margin(
+            overview_record.get("net_income"),
+            overview_revenue,
+        )
+
+        growth_copy = (
+            f"Revenue growth: {pct(workspace_growth)} ({income_selection['growth_basis'].lower()})."
+            if workspace_growth is not None
+            else "Comparable revenue growth is not available for the current reporting period."
+        )
+        profitability_copy = (
+            f" Operating margin: {pct(overview_operating_margin)}."
+            if overview_operating_margin is not None
+            else ""
+        )
+        net_copy = (
+            f" Net margin: {pct(overview_net_margin)}."
+            if overview_net_margin is not None
+            else ""
+        )
+
+        overview_cards = [
+            (
+                "What does it do?",
+                selected_analysis.get(
+                    "business_model",
+                    "Structured business-model research is still being added. "
+                    "Use the Business & Risks section and original filings for source context.",
+                ),
+            ),
+            (
+                "How does it make money?",
+                selected_analysis.get(
+                    "primary_revenue_source",
+                    "The primary revenue source has not been structured yet.",
+                ),
+            ),
+            (
+                "Who buys?",
+                selected_analysis.get(
+                    "customer_type",
+                    "Customer-type research has not been structured yet.",
+                ),
+            ),
+            (
+                "Growth & profitability",
+                growth_copy + profitability_copy + net_copy,
+            ),
+        ]
+
+        overview_html = "".join(
+            (
+                '<div class="el-overview-card">'
+                f'<div class="el-overview-question">{html.escape(label)}</div>'
+                f'<div class="el-overview-answer">{html.escape(str(answer))}</div>'
+                '</div>'
+            )
+            for label, answer in overview_cards
+        )
+        st.markdown(
+            '<div class="el-overview-grid">' + overview_html + '</div>',
+            unsafe_allow_html=True,
+        )
+        st.caption(
+            f"Financial snapshot period: {financial_period or 'period unavailable'} · "
+            f"Financial source: {revenue_source_label}."
+        )
+
+        research_path_cols = st.columns(4)
+        research_path = [
+            (
+                "1 · Understand",
+                "Business & Risks",
+                "Business model, revenue engine, customers, and disclosed risks.",
+            ),
+            (
+                "2 · Measure",
+                "Financials",
+                "Growth, margins, profitability, cash, debt, and reported periods.",
+            ),
+            (
+                "3 · Verify",
+                "SEC Filings",
+                "Read the original 10-K, 10-Q, 8-K, and registration documents.",
+            ),
+            (
+                "4 · Compare",
+                "Peers & ETFs",
+                "Put the company beside others in the same industry.",
+            ),
+        ]
+        for col, (step, destination, description) in zip(
+            research_path_cols,
+            research_path,
+        ):
+            with col:
+                st.markdown(f"**{step}**")
+                st.caption(description)
+                st.caption(f"Workspace section: {destination}")
+
         summary_columns = st.columns(2)
         with summary_columns[0]:
-            st.markdown("**Key risks to explore**")
+            st.markdown("**Key disclosed risks to investigate**")
             summary_risks = selected_analysis.get("key_risk_themes", [])
             if summary_risks:
-                for risk in summary_risks[:3]:
+                for risk in summary_risks[:4]:
                     st.write(f"• {risk}")
             else:
-                st.caption("Risk summary is still being added. Review Risk Factors in the original filings.")
+                st.caption(
+                    "Structured risk themes are still being added. "
+                    "Review Risk Factors in the original filing."
+                )
+
         with summary_columns[1]:
-            st.markdown("**Latest filing available**")
+            st.markdown("**Latest source filing**")
             if latest_available_filing:
                 st.write(f"{filing_form} · Filed {filing_date}")
+                filing_description = (
+                    latest_available_filing.get("description")
+                    or latest_available_filing.get("primary_document")
+                )
+                if filing_description:
+                    st.caption(str(filing_description))
                 if latest_available_filing.get("url"):
-                    st.link_button("Read the original filing", latest_available_filing["url"])
+                    st.link_button(
+                        "Open original SEC filing",
+                        latest_available_filing["url"],
+                        key=f"overview_latest_filing_{selected_ticker}",
+                    )
             else:
-                st.caption("No filing is available in this feed yet.")
-            st.caption("This is the latest filing returned by the source feed.")
+                st.caption("No filing is available in the current feed yet.")
 
         with st.expander("Need help reading these numbers?"):
             st.markdown(
                 "**Revenue:** sales before expenses.\n\n"
                 "**Operating margin:** operating profit as a percentage of revenue.\n\n"
+                "**Net margin:** final profit or loss as a percentage of revenue.\n\n"
                 "**LTM:** the most recent twelve months of results.\n\n"
                 "**YoY:** comparison with the same period one year earlier.\n\n"
                 "**10-K / 10-Q:** annual / quarterly SEC reports."
             )
-            st.button("Open Learn", key="summary_open_learn", on_click=navigate_to, args=("Learn",))
-
-        render_quarterly_comparison(st, selected_qdata)
-        render_company_evidence(
-            st, selected_ticker, selected_analysis, selected_filings,
-            pct(workspace_growth), financial_period,
-        )
-        render_report_download(
-            st, selected_name, selected_ticker, selected_industry_name,
-            selected_sector_name, selected_analysis, selected_filings,
-            {
-                "Price (Yahoo Finance, may be delayed)": (
-                    "$" + f"{selected_price:,.2f}"
-                    if selected_price is not None else "Not available"
-                ),
-                "Revenue": format_money(workspace_revenue),
-                "Revenue growth": pct(workspace_growth),
-                "Reporting period": financial_period or "See Financials",
-                "Data source": revenue_source_label,
-                "Most recent filing": f"{filing_form} · {filing_date}",
-            },
-        )
-
+            st.button(
+                "Open Learn",
+                key="summary_open_learn",
+                on_click=navigate_to,
+                args=("Learn",),
+            )
 
         snapshot_chart_col, snapshot_context_col = st.columns([1.65, 1])
 
@@ -834,6 +938,16 @@ def render_company_research(
             st.warning(selected_sec_error)
         else:
             st.caption("Recent filing metadata is not available yet.")
+
+        section("Evidence", "Verify the research")
+        render_company_evidence(
+            st,
+            selected_ticker,
+            selected_analysis,
+            selected_filings,
+            pct(workspace_growth),
+            financial_period,
+        )
 
     if company_section == "Business & Risks":
         section("Business & Risks", "How the Business Works & What to Watch")
