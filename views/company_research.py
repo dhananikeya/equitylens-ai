@@ -1079,16 +1079,154 @@ def render_company_research(
         section("Financials", "Income Statement & Balance Sheet")
 
         latest_financial_period = income_selection["record"]
-        st.caption(
-            f"Income statement: {income_selection['period']} · {income_selection['source']}. "
-            "Unavailable fields stay unavailable rather than being filled from another period."
+        financial_period_label = (
+            income_selection.get("period")
+            or "Reporting period unavailable"
+        )
+        financial_source_label = (
+            income_selection.get("source")
+            or "Source unavailable"
         )
 
-        financial_metric_cols = st.columns(4)
-        financial_metric_cols[0].metric("Revenue", format_money(latest_financial_period.get("revenue")))
-        financial_metric_cols[1].metric("Gross Profit", format_money(latest_financial_period.get("gross_profit")))
-        financial_metric_cols[2].metric("Operating Income", format_money(latest_financial_period.get("operating_income")))
-        financial_metric_cols[3].metric("Net Income", format_money(latest_financial_period.get("net_income")))
+        period_revenue = latest_financial_period.get("revenue")
+        period_gross_profit = latest_financial_period.get("gross_profit")
+        period_operating_income = latest_financial_period.get("operating_income")
+        period_net_income = latest_financial_period.get("net_income")
+
+        gross_margin_value = calc_margin(
+            period_gross_profit,
+            period_revenue,
+        )
+        operating_margin_value = calc_margin(
+            period_operating_income,
+            period_revenue,
+        )
+        net_margin_value = calc_margin(
+            period_net_income,
+            period_revenue,
+        )
+
+        st.caption(
+            f"Reporting period: {financial_period_label} · "
+            f"Source: {financial_source_label}. "
+            "Reported values come from the selected source record; margins and growth are calculated by EquityLens."
+        )
+
+        primary_financial_cols = st.columns(4)
+        primary_financial_cols[0].metric(
+            "Revenue · Reported",
+            format_money(period_revenue),
+            help=f"Reported revenue for {financial_period_label}.",
+        )
+        primary_financial_cols[1].metric(
+            "Revenue Growth · Calculated",
+            pct(workspace_growth),
+            help=income_selection.get(
+                "growth_basis",
+                "Comparable-period revenue growth.",
+            ),
+        )
+        primary_financial_cols[2].metric(
+            "Operating Margin · Calculated",
+            pct(operating_margin_value),
+            help="Operating income divided by revenue for the same reporting period.",
+        )
+        primary_financial_cols[3].metric(
+            "Net Income · Reported",
+            format_money(period_net_income),
+            help=f"Reported net income or loss for {financial_period_label}.",
+        )
+
+        secondary_financial_cols = st.columns(4)
+        secondary_financial_cols[0].metric(
+            "Gross Profit · Reported",
+            format_money(period_gross_profit),
+        )
+        secondary_financial_cols[1].metric(
+            "Gross Margin · Calculated",
+            pct(gross_margin_value),
+            help="Gross profit divided by revenue for the same reporting period.",
+        )
+        secondary_financial_cols[2].metric(
+            "Operating Income · Reported",
+            format_money(period_operating_income),
+        )
+        secondary_financial_cols[3].metric(
+            "Net Margin · Calculated",
+            pct(net_margin_value),
+            help="Net income divided by revenue for the same reporting period.",
+        )
+
+        st.caption(
+            "Reported = taken from the selected financial source. "
+            "Calculated = derived by EquityLens from reported figures in the same period. "
+            "Unavailable values are not treated as zero."
+        )
+
+        exact_financial_rows = [
+            {
+                "Metric": "Revenue",
+                "Value": format_money(period_revenue),
+                "Type": "Reported",
+                "Period": financial_period_label,
+                "Source": financial_source_label,
+            },
+            {
+                "Metric": "Gross Profit",
+                "Value": format_money(period_gross_profit),
+                "Type": "Reported",
+                "Period": financial_period_label,
+                "Source": financial_source_label,
+            },
+            {
+                "Metric": "Operating Income",
+                "Value": format_money(period_operating_income),
+                "Type": "Reported",
+                "Period": financial_period_label,
+                "Source": financial_source_label,
+            },
+            {
+                "Metric": "Net Income",
+                "Value": format_money(period_net_income),
+                "Type": "Reported",
+                "Period": financial_period_label,
+                "Source": financial_source_label,
+            },
+            {
+                "Metric": "Revenue Growth",
+                "Value": pct(workspace_growth),
+                "Type": "Calculated",
+                "Period": financial_period_label,
+                "Source": income_selection.get("growth_basis", ""),
+            },
+            {
+                "Metric": "Gross Margin",
+                "Value": pct(gross_margin_value),
+                "Type": "Calculated",
+                "Period": financial_period_label,
+                "Source": "Gross profit ÷ revenue",
+            },
+            {
+                "Metric": "Operating Margin",
+                "Value": pct(operating_margin_value),
+                "Type": "Calculated",
+                "Period": financial_period_label,
+                "Source": "Operating income ÷ revenue",
+            },
+            {
+                "Metric": "Net Margin",
+                "Value": pct(net_margin_value),
+                "Type": "Calculated",
+                "Period": financial_period_label,
+                "Source": "Net income ÷ revenue",
+            },
+        ]
+        with st.expander("Show exact values, periods & calculation labels"):
+            st.dataframe(
+                pd.DataFrame(exact_financial_rows),
+                use_container_width=True,
+                hide_index=True,
+            )
 
         annual_history = income_selection["annual_history"]
         st.caption(f"Annual trend source: {income_selection['annual_source']}")
@@ -1210,16 +1348,45 @@ def render_company_research(
         capital_structure = selected_data.get("capital_structure", {})
         fallback_capital = selected_financial_fallback.get("capital_structure", {})
 
-        balance_fields = ["cash_and_investments", "total_debt", "total_assets", "cash"]
-        use_structured_balance = any(capital_structure.get(field) is not None for field in balance_fields)
-        balance_record = capital_structure if use_structured_balance else fallback_capital
-        balance_source = "Structured company balance sheet" if use_structured_balance else "Yahoo Finance balance sheet"
-        cash_value = balance_record.get("cash")
-        cash_investments_value = balance_record.get("cash_and_investments")
+        structured_balance_values = [
+            capital_structure.get("cash_and_investments"),
+            capital_structure.get("total_debt"),
+            selected_data.get("cash"),
+            selected_data.get("assets"),
+        ]
+        use_structured_balance = any(
+            value is not None
+            for value in structured_balance_values
+        )
+        balance_record = (
+            capital_structure
+            if use_structured_balance
+            else fallback_capital
+        )
+        balance_source = (
+            "Structured company balance sheet"
+            if use_structured_balance
+            else "Yahoo Finance balance sheet"
+        )
+        cash_value = (
+            selected_data.get("cash")
+            if use_structured_balance
+            else balance_record.get("cash")
+        )
+        cash_investments_value = balance_record.get(
+            "cash_and_investments"
+        )
         debt_value = balance_record.get("total_debt")
-        assets_value = balance_record.get("total_assets")
+        assets_value = (
+            selected_data.get("assets")
+            if use_structured_balance
+            else (
+                balance_record.get("total_assets")
+                or balance_record.get("assets")
+            )
+        )
         st.caption(
-            f"Balance sheet: {balance_record.get('balance_sheet_as_of') or 'Date unavailable'} · {balance_source}. "
+            f"Balance sheet: {balance_record.get('balance_sheet_as_of') or selected_data.get('fiscal_year_end') or 'Date unavailable'} · {balance_source}. "
             "Its reporting date may differ from the income statement."
         )
 
