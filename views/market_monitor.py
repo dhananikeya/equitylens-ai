@@ -214,6 +214,52 @@ def render_nyse_market_monitor(nyse_finviz, workspace_known_tickers, research_li
             ].astype(str).tolist()
         )
 
+    if heatmap_search and matching_tickers:
+        matched_rows = heatmap_df[
+            heatmap_df["Ticker"].astype(str).isin(
+                matching_tickers
+            )
+        ].copy()
+        matched_display = pd.DataFrame([
+            {
+                "Ticker": str(row.get("Ticker", "")),
+                "Company": str(row.get("Company", "")),
+                "Sector": str(row.get("Sector", "")),
+                "Price": (
+                    "$" + f"{finviz_numeric(row.get('Price')):,.2f}"
+                    if finviz_numeric(row.get("Price")) is not None
+                    else "N/A"
+                ),
+                "Daily Move": (
+                    f"{float(row['_change_num']):+.2f}%"
+                ),
+                "Market Cap": (
+                    "$" + f"{float(row['_market_cap_num']):,.0f}"
+                ),
+                "Research": (
+                    research_link(
+                        str(row.get("Ticker", ""))
+                    )
+                    if str(row.get("Ticker", "")).upper()
+                    in workspace_known_tickers
+                    else ""
+                ),
+            }
+            for _, row in matched_rows.iterrows()
+        ])
+        st.markdown("**Ticker search result**")
+        st.dataframe(
+            matched_display,
+            hide_index=True,
+            use_container_width=True,
+            column_config={
+                "Research": st.column_config.LinkColumn(
+                    "Research",
+                    display_text="Open research",
+                )
+            },
+        )
+
     sector_rows = (
         heatmap_df.groupby("Sector", dropna=False)
         .apply(
@@ -344,7 +390,8 @@ def render_nyse_market_monitor(nyse_finviz, workspace_known_tickers, research_li
     )
     st.caption(
         "Click a sector to drill into it, then use the breadcrumb above the map to return. "
-        "Tile size represents market capitalization and color represents daily price change."
+        "Tile size represents market capitalization. Color and the printed percentage both represent the daily price move, "
+        "so the map does not rely on red/green color alone. This is market context, not a recommendation."
     )
 
     with st.expander("Open research for a company on this map"):
