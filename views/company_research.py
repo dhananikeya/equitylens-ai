@@ -948,6 +948,33 @@ def render_company_research(
             financial_period,
         )
 
+        with st.expander("Export this research"):
+            st.caption(
+                "Download a dated EquityLens research summary for offline review. "
+                "Primary filings remain the authoritative source."
+            )
+            render_report_download(
+                st,
+                selected_name,
+                selected_ticker,
+                selected_industry_name,
+                selected_sector_name,
+                selected_analysis,
+                selected_filings,
+                {
+                    "Price (Yahoo Finance, may be delayed)": (
+                        "$" + f"{selected_price:,.2f}"
+                        if selected_price is not None
+                        else "Not available"
+                    ),
+                    "Revenue": format_money(workspace_revenue),
+                    "Revenue growth": pct(workspace_growth),
+                    "Reporting period": financial_period or "See Financials",
+                    "Data source": revenue_source_label,
+                    "Most recent filing": f"{filing_form} · {filing_date}",
+                },
+            )
+
     if company_section == "Business & Risks":
         section("Business & Risks", "How the Business Works & What to Watch")
         st.caption(
