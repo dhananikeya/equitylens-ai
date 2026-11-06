@@ -2097,6 +2097,7 @@ if active_destination == "Home":
         company_data=company_data,
         open_company_research=open_company_research,
         navigate_to=navigate_to,
+        research_link=research_link,
     )
 
 
