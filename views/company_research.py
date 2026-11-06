@@ -62,6 +62,7 @@ def render_company_research(
     retry_company_data,
     research_link,
     save_rendered_choices,
+    navigate_to,
 ):
     section("Company Research", "Company Research Workspace")
 
