@@ -4557,14 +4557,49 @@ deep_research_tickers.discard("")
 
 if active_destination == "Home":
     st.markdown(
-        """
+        f"""
         <div class="el-product-hero el-tool-hero">
-            <div class="el-eyebrow">A research tool created by Keya Dhanani</div>
-            <h1 class="el-product-title">Explore. Understand. Compare.</h1>
-            <p class="el-product-subtitle">Explore public companies, compare industries, and follow markets with financial data and original SEC sources in one place.</p>
+            <div class="el-eyebrow">Public-company research, made easier to navigate</div>
+            <h1 class="el-product-title">
+                Research public companies.<br>
+                <span>Without digging through hundreds of pages.</span>
+            </h1>
+            <p class="el-product-subtitle">
+                EquityLens brings SEC filings, financial performance, business context,
+                market data, and source-linked research into one workspace so you can
+                understand a company faster and verify the original evidence yourself.
+            </p>
+            <div class="el-badges">
+                <span class="el-badge">{len(company_universe):,}-company universe</span>
+                <span class="el-badge">{company_universe['Industry'].nunique():,} industries</span>
+                <span class="el-badge">SEC EDGAR sourced</span>
+                <span class="el-badge">Direct filing links</span>
+            </div>
+            <div style="margin-top:1rem;color:#8F9CA6;font-size:.88rem;">
+                Independently created by Keya Dhanani · Educational research, not investment advice.
+            </div>
         </div>
         """,
         unsafe_allow_html=True,
+    )
+
+    homepage_proof = st.columns(4)
+    homepage_proof[0].metric("Companies", f"{len(company_universe):,}")
+    homepage_proof[1].metric(
+        "Industries",
+        f"{company_universe['Industry'].nunique():,}"
+    )
+    homepage_proof[2].metric(
+        "SEC filing feeds",
+        f"{sec_synced_companies:,}"
+    )
+    homepage_proof[3].metric(
+        "Structured research",
+        f"{len(deep_research_tickers):,}"
+    )
+    st.caption(
+        "Coverage universe and completed structured research are tracked separately. "
+        "Primary-source SEC filings remain accessible even while deeper research is being expanded."
     )
 
     render_home_discovery(
