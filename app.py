@@ -2110,6 +2110,8 @@ if active_destination == "Industry Comparison":
         analysis_by_ticker=_analysis_by_ticker,
         company_analysis=company_analysis,
         remember_choice=remember_choice,
+        company_universe=company_universe,
+        research_link=research_link,
     )
 
 
