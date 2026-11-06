@@ -1441,10 +1441,21 @@ hr {
 
 
 
-@st.cache_data(ttl=60)
+@st.cache_data(show_spinner=False)
 def load_json(path):
+    """Load repository-backed JSON once per app process.
+
+    Git-backed data changes arrive through a Streamlit redeploy, so repeatedly
+    re-reading large static files every 60 seconds only adds startup/rerun cost.
+    """
     with open(path, "r") as file:
         return json.load(file)
+
+
+@st.cache_data(show_spinner=False)
+def load_sec_filings():
+    """Load the full SEC filing archive only on pages that truly need it."""
+    return load_json("data/sec_filings.json")
 
 
 SEC_REQUEST_HEADERS = {
@@ -4511,7 +4522,19 @@ company_quarterly = {
     **hand_company_quarterly
 }
 company_s1 = {**generated_company_s1, **hand_company_s1}
-sec_filings = load_json("data/sec_filings.json")
+
+try:
+    sec_summary = load_json("data/sec_summary.json")
+except (FileNotFoundError, json.JSONDecodeError):
+    # The summary is produced by the SEC refresh workflow. Do not fall back to
+    # the giant filing archive during startup; keeping the homepage lightweight
+    # is more important than a temporary coverage counter during deployment.
+    sec_summary = {
+        "company_count": 0,
+        "synced_companies": 0,
+        "companies": {},
+        "recent_filings": [],
+    }
 
 try:
     company_universe = pd.read_csv("data/finviz_universe.csv")
@@ -4889,11 +4912,8 @@ workspace_search = ""
 
 
 
-sec_synced_companies = sum(
-    1
-    for _company_feed in sec_filings.values()
-    if _company_feed.get("cik")
-    and _company_feed.get("filings")
+sec_synced_companies = int(
+    sec_summary.get("synced_companies", 0) or 0
 )
 
 deep_research_tickers = {
@@ -4951,7 +4971,7 @@ if active_destination == "Home":
     )
 
     render_home_discovery(
-        st, company_universe, open_company_research, sec_filings
+        st, company_universe, open_company_research, sec_summary
     )
     render_watchlist(st, company_data, open_company_research)
 
@@ -4992,26 +5012,21 @@ if active_destination == "Home":
         st.caption("Primary sources: SEC EDGAR and company disclosures. Market-data sources are identified in each view.")
 
     section("Recently updated", "Latest SEC filings detected")
-    recent_filing_rows = []
-    for company_name, feed in sec_filings.items():
-        ticker = company_data.get(company_name, {}).get("ticker", feed.get("ticker", ""))
-        for filing in feed.get("filings", [])[:3]:
-            filing_date = filing.get("filing_date", "")
-            if filing_date:
-                recent_filing_rows.append({
-                    "Company": f"{ticker} · {company_name.split(' (')[0]}",
-                    "Filed": filing_date,
-                    "Form": filing.get("form", ""),
-                    "Description": filing.get("description", "") or filing.get("primary_document", ""),
-                    "SEC Filing": filing.get("url", "")
-                })
+    recent_filing_rows = [
+        {
+            "Company": (
+                f"{row.get('ticker', '')} · {row.get('company', '')}"
+            ).strip(" ·"),
+            "Filed": row.get("filing_date", ""),
+            "Form": row.get("form", ""),
+            "Description": row.get("description", ""),
+            "SEC Filing": row.get("url", ""),
+        }
+        for row in sec_summary.get("recent_filings", [])[:5]
+        if row.get("filing_date")
+    ]
 
     if recent_filing_rows:
-        recent_filing_rows = sorted(
-            recent_filing_rows,
-            key=lambda row: row["Filed"],
-            reverse=True
-        )[:5]
         st.dataframe(
             pd.DataFrame(recent_filing_rows),
             use_container_width=True,
@@ -5798,10 +5813,22 @@ if active_destination == "Company Research":
             "The rest of the workspace will continue to load."
         )
 
-    # Keep the locally synced SEC feed visible if the live API is unavailable.
-    selected_local_sec = sec_filings.get(selected_company_key, {})
+    # The full local SEC archive is intentionally lazy-loaded. Most company
+    # sessions use the live per-company SEC request and never touch the large file.
+    selected_local_sec = {}
+    if not selected_sec.get("filings"):
+        try:
+            selected_local_sec = load_sec_filings().get(
+                selected_company_key,
+                {},
+            )
+        except (FileNotFoundError, json.JSONDecodeError):
+            selected_local_sec = {}
+
     selected_filings = (
-        selected_sec.get("filings") or selected_local_sec.get("filings") or []
+        selected_sec.get("filings")
+        or selected_local_sec.get("filings")
+        or []
     )
     selected_registrations = (
         selected_sec.get("registration_filings")
@@ -7357,9 +7384,16 @@ if active_destination == "Market Monitor":
 
             latest_filing = {}
             if company_key:
-                filings = sec_filings.get(company_key, {}).get("filings", [])
-                if filings:
-                    latest_filing = filings[0]
+                summary_company = (
+                    sec_summary.get("companies", {}).get(
+                        row["Ticker"],
+                        {},
+                    )
+                )
+                latest_filing = (
+                    summary_company.get("latest_filing", {})
+                    or {}
+                )
 
             filing_label = "No recent filing loaded"
             if latest_filing:
@@ -7406,6 +7440,11 @@ if active_destination == "Market Monitor":
 
 if active_destination == "Filings":
     section("SEC Monitor", "Filing Tracker")
+
+    try:
+        sec_filings = load_sec_filings()
+    except (FileNotFoundError, json.JSONDecodeError):
+        sec_filings = {}
 
     st.write(
         "This tracker combines the recent SEC filings collected for every company covered by EquityLens. "
