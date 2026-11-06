@@ -29,7 +29,6 @@ from market_data import (
 )
 from research_experience import (
     render_company_evidence,
-    render_quarterly_comparison,
     render_report_download,
     toggle_watchlist,
 )
