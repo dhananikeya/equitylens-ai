@@ -47385,7 +47385,7 @@
     "sector": "Technology",
     "industry": "Software - Infrastructure",
     "country": "USA",
-    "last_checked_utc": "2026-11-05T01:50:12+00:00",
+    "last_checked_utc": "2026-11-06T06:55:42+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1535527&owner=exclude&action=getcompany",
     "filings": [
@@ -47406,7 +47406,21 @@
       {
         "form": "4",
         "filing_date": "2026-11-04",
-        "acceptance_datetime": "2026-11-04T20:00:10.000Z",
+        "acceptance_datetime": "2026-11-05T01:00:13.000Z",
+        "report_date": "2026-11-02",
+        "accession_number": "0001778564-26-000202",
+        "primary_document": "xslF345X06/form4-11042026_081107.xml",
+        "description": "",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-11-05T01:50:12+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1535527/000177856426000202/xslF345X06/form4-11042026_081107.xml"
+      },
+      {
+        "form": "4",
+        "filing_date": "2026-11-04",
+        "acceptance_datetime": "2026-11-05T01:00:10.000Z",
         "report_date": "2026-11-02",
         "accession_number": "0001201326-26-000029",
         "primary_document": "xslF345X06/form4-11042026_081104.xml",
@@ -47420,7 +47434,7 @@
       {
         "form": "4",
         "filing_date": "2026-11-04",
-        "acceptance_datetime": "2026-11-04T20:00:07.000Z",
+        "acceptance_datetime": "2026-11-05T01:00:07.000Z",
         "report_date": "2026-11-02",
         "accession_number": "0001778610-26-000026",
         "primary_document": "xslF345X06/form4-11042026_081102.xml",
@@ -47430,20 +47444,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-11-05T01:50:12+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1535527/000177861026000026/xslF345X06/form4-11042026_081102.xml"
-      },
-      {
-        "form": "4",
-        "filing_date": "2026-11-04",
-        "acceptance_datetime": "2026-11-05T01:00:13.000Z",
-        "report_date": "2026-11-02",
-        "accession_number": "0001778564-26-000202",
-        "primary_document": "xslF345X06/form4-11042026_081107.xml",
-        "description": "",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-11-05T01:50:12+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1535527/000177856426000202/xslF345X06/form4-11042026_081107.xml"
       },
       {
         "form": "4",
@@ -133589,14 +133589,14 @@
     "sector": "Communication Services",
     "industry": "Entertainment",
     "country": "USA",
-    "last_checked_utc": "2026-11-06T02:41:02+00:00",
+    "last_checked_utc": "2026-11-06T06:55:42+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1065280&owner=exclude&action=getcompany",
     "filings": [
       {
         "form": "4",
         "filing_date": "2026-11-05",
-        "acceptance_datetime": "2026-11-05T20:24:32.000Z",
+        "acceptance_datetime": "2026-11-06T01:24:32.000Z",
         "report_date": "2026-11-03",
         "accession_number": "0001065280-26-000322",
         "primary_document": "xslF345X06/wk-form4_1793928269.xml",
