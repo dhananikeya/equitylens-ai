@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const NAV = [
   "Home",
@@ -16,6 +17,7 @@ function normalize(value) {
 }
 
 export default function EquityLensShell({ companies, industryCount }) {
+  const router = useRouter();
   const [active, setActive] = useState("Home");
   const [query, setQuery] = useState("");
   const [selectedCompany, setSelectedCompany] = useState(null);
@@ -49,9 +51,7 @@ export default function EquityLensShell({ companies, industryCount }) {
 
   function selectSearchResult(result) {
     if (result.type === "company") {
-      setSelectedCompany(result.value);
-      setActive("Company Research");
-      setQuery(result.value.ticker);
+      router.push("/company/" + result.value.ticker);
       return;
     }
 
@@ -174,26 +174,23 @@ export default function EquityLensShell({ companies, industryCount }) {
         <section className="section-block">
           <div className="section-label">COMPANY RESEARCH</div>
           <h2>{selectedCompany ? selectedCompany.company : "Choose a company"}</h2>
-          {selectedCompany ? (
-            <div className="company-preview">
-              <div>
-                <small>{selectedCompany.ticker} · {selectedCompany.industry}</small>
-                <h3>{selectedCompany.company}</h3>
-                <p>{selectedCompany.sector} · {selectedCompany.country}</p>
-              </div>
-              <div className="company-stats">
-                <span><small>Price</small><strong>{selectedCompany.price || "N/A"}</strong></span>
-                <span><small>Change</small><strong>{selectedCompany.change || "N/A"}</strong></span>
-                <span><small>P/E</small><strong>{selectedCompany.pe || "N/A"}</strong></span>
-              </div>
-            </div>
-          ) : (
-            <p className="muted">
-              Use the global search above to open any company in the 517-company universe.
-            </p>
-          )}
-          <div className="migration-note">
-            The full SEC-linked company workspace is the next section being ported from Streamlit.
+          <p className="muted">
+            Use the global search above to open any company in the 517-company universe.
+            Each company now has its own shareable research page with financials, business
+            context, risks, SEC filings, registration research, and capital-structure evidence.
+          </p>
+          <div className="company-directory-grid">
+            {companies.slice(0, 12).map((company) => (
+              <button
+                key={company.ticker}
+                className="directory-card"
+                onClick={() => router.push("/company/" + company.ticker)}
+              >
+                <strong>{company.ticker}</strong>
+                <span>{company.company}</span>
+                <small>{company.industry}</small>
+              </button>
+            ))}
           </div>
         </section>
       )}
