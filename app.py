@@ -1455,7 +1455,61 @@ div[data-testid="stAlert"] {
     padding:.75rem !important;
 }
 
-.stCaption,small { color:var(--el-muted) !important; }
+.stCaption,small {
+    color:var(--el-muted) !important;
+    font-size:.76rem !important;
+    line-height:1.45 !important;
+}
+
+div[data-baseweb="select"] > div,
+div[data-baseweb="base-input"],
+textarea,
+input {
+    min-height:2.75rem !important;
+}
+
+div[role="radiogroup"] {
+    gap:.35rem !important;
+}
+
+@media (max-width: 700px) {
+    .block-container {
+        padding-left:.75rem !important;
+        padding-right:.75rem !important;
+    }
+
+    .stButton > button,
+    .stLinkButton > a,
+    .stDownloadButton > button {
+        min-height:2.95rem !important;
+        padding:.6rem .8rem !important;
+    }
+
+    div[role="radiogroup"] {
+        display:flex !important;
+        flex-wrap:wrap !important;
+        align-items:stretch !important;
+    }
+
+    div[role="radiogroup"] label {
+        min-height:2.6rem !important;
+        display:flex !important;
+        align-items:center !important;
+    }
+
+    div[data-testid="stDataFrame"] {
+        max-width:100% !important;
+        overflow-x:auto !important;
+    }
+
+    .el-section-title {
+        font-size:clamp(1.45rem,8vw,2rem) !important;
+    }
+
+    .el-company-title {
+        font-size:clamp(1.7rem,9vw,2.3rem) !important;
+    }
+}
 
 hr {
     border-color:var(--el-border) !important;
