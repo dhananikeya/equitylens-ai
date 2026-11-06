@@ -625,71 +625,87 @@ def render_company_research(
         "Market quotes may be delayed. Unavailable figures are not zero."
     )
 
-    section("At a glance", "Research summary")
-    summary_columns = st.columns(2)
-    with summary_columns[0]:
-        st.markdown("**Key risks to explore**")
-        summary_risks = selected_analysis.get("key_risk_themes", [])
-        if summary_risks:
-            for risk in summary_risks[:3]:
-                st.write(f"• {risk}")
-        else:
-            st.caption("Risk summary is still being added. Review Risk Factors in the original filings.")
-    with summary_columns[1]:
-        st.markdown("**Latest filing available**")
-        if latest_available_filing:
-            st.write(f"{filing_form} · Filed {filing_date}")
-            if latest_available_filing.get("url"):
-                st.link_button("Read the original filing", latest_available_filing["url"])
-        else:
-            st.caption("No filing is available in this feed yet.")
-        st.caption("This is the latest filing returned by the source feed.")
+    workspace_section_key = f"workspace_section_{selected_ticker}"
+    legacy_section = st.session_state.get(workspace_section_key)
+    if legacy_section == "Snapshot":
+        st.session_state[workspace_section_key] = "Overview"
+    elif legacy_section == "Filings":
+        st.session_state[workspace_section_key] = "SEC Filings"
 
-    with st.expander("Need help reading these numbers?"):
-        st.markdown(
-            "**Revenue:** sales before expenses.\n\n"
-            "**Operating margin:** operating profit as a percentage of revenue.\n\n"
-            "**LTM:** the most recent twelve months of results.\n\n"
-            "**YoY:** comparison with the same period one year earlier.\n\n"
-            "**10-K / 10-Q:** annual / quarterly SEC reports."
-        )
-        st.button("Open Learn", key="summary_open_learn", on_click=navigate_to, args=("Learn",))
-
-    render_quarterly_comparison(st, selected_qdata)
-    render_company_evidence(
-        st, selected_ticker, selected_analysis, selected_filings,
-        pct(workspace_growth), financial_period,
-    )
-    render_report_download(
-        st, selected_name, selected_ticker, selected_industry_name,
-        selected_sector_name, selected_analysis, selected_filings,
-        {
-            "Price (Yahoo Finance, may be delayed)": (
-                "$" + f"{selected_price:,.2f}"
-                if selected_price is not None else "Not available"
-            ),
-            "Revenue": format_money(workspace_revenue),
-            "Revenue growth": pct(workspace_growth),
-            "Reporting period": financial_period or "See Financials",
-            "Data source": revenue_source_label,
-            "Most recent filing": f"{filing_form} · {filing_date}",
-        },
-    )
-
-    st.markdown("### Explore the complete research workspace")
+    st.markdown("### Research workspace")
     st.caption(
-        "The detailed data, filings, sources, ownership and peer research below "
-        "remain available in their original sections."
+        "Choose one research area at a time. EquityLens keeps the original "
+        "filings and source context available inside each section."
     )
     company_section = st.radio(
         "Company sections",
-        ["Snapshot", "Financials", "Filings", "Ownership", "Analyst Research", "Peers & ETFs"],
+        [
+            "Overview",
+            "Financials",
+            "Business & Risks",
+            "SEC Filings",
+            "Ownership",
+            "Analyst Research",
+            "Peers & ETFs",
+        ],
         horizontal=True,
-        key=f"workspace_section_{selected_ticker}",
+        key=workspace_section_key,
         label_visibility="collapsed",
     )
 
-    if company_section == "Snapshot":
+    if company_section == "Overview":
+        section("At a glance", "Research summary")
+        summary_columns = st.columns(2)
+        with summary_columns[0]:
+            st.markdown("**Key risks to explore**")
+            summary_risks = selected_analysis.get("key_risk_themes", [])
+            if summary_risks:
+                for risk in summary_risks[:3]:
+                    st.write(f"• {risk}")
+            else:
+                st.caption("Risk summary is still being added. Review Risk Factors in the original filings.")
+        with summary_columns[1]:
+            st.markdown("**Latest filing available**")
+            if latest_available_filing:
+                st.write(f"{filing_form} · Filed {filing_date}")
+                if latest_available_filing.get("url"):
+                    st.link_button("Read the original filing", latest_available_filing["url"])
+            else:
+                st.caption("No filing is available in this feed yet.")
+            st.caption("This is the latest filing returned by the source feed.")
+
+        with st.expander("Need help reading these numbers?"):
+            st.markdown(
+                "**Revenue:** sales before expenses.\n\n"
+                "**Operating margin:** operating profit as a percentage of revenue.\n\n"
+                "**LTM:** the most recent twelve months of results.\n\n"
+                "**YoY:** comparison with the same period one year earlier.\n\n"
+                "**10-K / 10-Q:** annual / quarterly SEC reports."
+            )
+            st.button("Open Learn", key="summary_open_learn", on_click=navigate_to, args=("Learn",))
+
+        render_quarterly_comparison(st, selected_qdata)
+        render_company_evidence(
+            st, selected_ticker, selected_analysis, selected_filings,
+            pct(workspace_growth), financial_period,
+        )
+        render_report_download(
+            st, selected_name, selected_ticker, selected_industry_name,
+            selected_sector_name, selected_analysis, selected_filings,
+            {
+                "Price (Yahoo Finance, may be delayed)": (
+                    "$" + f"{selected_price:,.2f}"
+                    if selected_price is not None else "Not available"
+                ),
+                "Revenue": format_money(workspace_revenue),
+                "Revenue growth": pct(workspace_growth),
+                "Reporting period": financial_period or "See Financials",
+                "Data source": revenue_source_label,
+                "Most recent filing": f"{filing_form} · {filing_date}",
+            },
+        )
+
+
         snapshot_chart_col, snapshot_context_col = st.columns([1.65, 1])
 
         with snapshot_chart_col:
@@ -818,6 +834,106 @@ def render_company_research(
             st.warning(selected_sec_error)
         else:
             st.caption("Recent filing metadata is not available yet.")
+
+    if company_section == "Business & Risks":
+        section("Business & Risks", "How the Business Works & What to Watch")
+        st.caption(
+            "These are structured research summaries based on available company disclosures. "
+            "Use the linked source filing to verify material details."
+        )
+
+        business_cols = st.columns(2)
+        with business_cols[0]:
+            st.markdown("**Business model**")
+            st.write(
+                selected_analysis.get(
+                    "business_model",
+                    "Structured business-model research is not available yet.",
+                )
+            )
+            st.markdown("**Primary revenue source**")
+            st.write(
+                selected_analysis.get(
+                    "primary_revenue_source",
+                    "Structured revenue-source research is not available yet.",
+                )
+            )
+            st.markdown("**Customer type**")
+            st.write(
+                selected_analysis.get(
+                    "customer_type",
+                    "Structured customer research is not available yet.",
+                )
+            )
+
+        with business_cols[1]:
+            st.markdown("**Platform / operating dependency**")
+            st.write(
+                selected_analysis.get(
+                    "platform_dependency",
+                    "Structured dependency research is not available yet.",
+                )
+            )
+            st.markdown("**Profitability history**")
+            st.write(
+                selected_analysis.get(
+                    "profitability_history",
+                    "Structured profitability history is not available yet.",
+                )
+            )
+            st.markdown("**International exposure**")
+            st.write(
+                selected_analysis.get(
+                    "international_exposure",
+                    "Structured international-exposure research is not available yet.",
+                )
+            )
+
+        st.markdown("---")
+        risk_cols = st.columns(2)
+        with risk_cols[0]:
+            st.markdown("**Competitive risk**")
+            st.write(
+                selected_analysis.get(
+                    "competitive_risk",
+                    "Structured competitive-risk research is not available yet.",
+                )
+            )
+            st.markdown("**Operational risk**")
+            st.write(
+                selected_analysis.get(
+                    "operational_risk",
+                    "Structured operational-risk research is not available yet.",
+                )
+            )
+            st.markdown("**Customer concentration**")
+            st.write(
+                selected_analysis.get(
+                    "customer_concentration",
+                    "Structured customer-concentration research is not available yet.",
+                )
+            )
+
+        with risk_cols[1]:
+            st.markdown("**Key disclosed risk themes**")
+            risk_themes = selected_analysis.get("key_risk_themes", [])
+            if risk_themes:
+                for risk in risk_themes:
+                    st.markdown(f"- {risk}")
+            else:
+                st.caption(
+                    "Structured risk themes are not available yet. "
+                    "Review Risk Factors in the original SEC filing."
+                )
+
+        source_filing = selected_analysis.get("source_filing", "")
+        if source_filing:
+            st.link_button(
+                "Open source filing",
+                source_filing,
+                key=f"business_risk_source_{selected_ticker}",
+            )
+
 
     if company_section == "Financials":
         section("Financials", "Income Statement & Balance Sheet")
@@ -988,7 +1104,7 @@ def render_company_research(
             "Market values and financial statement periods update on different schedules."
         )
 
-    if company_section == "Filings":
+    if company_section == "SEC Filings":
         section("Filings", "SEC Filing History & Deep Filing Research")
 
         filing_metric_cols = st.columns(4)
