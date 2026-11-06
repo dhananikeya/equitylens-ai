@@ -1937,11 +1937,10 @@ def format_global_search_option(option):
 
 def navigate_to(destination):
     st.session_state["main_navigation"] = destination
-    st.session_state["toolbar_destination"] = destination
 
 
-def navigate_from_toolbar():
-    selected = st.session_state.get("toolbar_destination")
+def navigate_from_global_search():
+    selected = st.session_state.get("global_search_choice")
 
     if selected in navigation_labels:
         navigate_to(selected)
@@ -1951,10 +1950,6 @@ def navigate_from_toolbar():
     ticker = company.get("ticker")
     if ticker:
         open_company_research(ticker)
-
-
-def sync_navigation_search():
-    st.session_state["toolbar_destination"] = st.session_state["main_navigation"]
 
 
 if not st.session_state.get("shared_link_loaded"):
@@ -1975,8 +1970,8 @@ st.selectbox(
     index=None,
     format_func=format_global_search_option,
     placeholder="Search companies, tickers, filings, markets, or sections…",
-    key="toolbar_destination",
-    on_change=navigate_from_toolbar,
+    key="global_search_choice",
+    on_change=navigate_from_global_search,
 )
 active_destination = st.radio(
     "Explore EquityLens",
@@ -1984,7 +1979,6 @@ active_destination = st.radio(
     horizontal=True,
     key="main_navigation",
     label_visibility="collapsed",
-    on_change=sync_navigation_search,
 )
 workspace_search = ""
 
