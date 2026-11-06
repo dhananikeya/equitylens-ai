@@ -254,3 +254,441 @@ button, input { font: inherit; }
   .hero h1 { font-size: 2.65rem; }
   .company-stats { flex-wrap: wrap; }
 }
+
+
+.brand-link {
+  display: inline-block;
+  color: var(--teal);
+  text-decoration: none;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.company-search-wrap {
+  position: relative;
+  z-index: 20;
+  margin-bottom: 10px;
+}
+
+.compact-nav a {
+  text-decoration: none;
+}
+
+.company-hero-full {
+  border: 1px solid rgba(38,54,64,.82);
+  background:
+    radial-gradient(circle at 88% 15%, rgba(22,199,178,.08), transparent 25%),
+    linear-gradient(180deg, rgba(9,18,23,.96), rgba(5,11,14,.96));
+  border-radius: 14px;
+  padding: clamp(26px, 4vw, 46px);
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  align-items: end;
+}
+
+.company-hero-full h1 {
+  margin: 8px 0 8px;
+  font-size: clamp(2.6rem, 5vw, 5rem);
+  line-height: 1;
+  letter-spacing: -.055em;
+}
+
+.company-hero-full p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.market-snapshot {
+  display: flex;
+  gap: 26px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.market-snapshot span,
+.company-stats span {
+  min-width: 95px;
+}
+
+.market-snapshot small,
+.market-snapshot strong {
+  display: block;
+}
+
+.market-snapshot small {
+  color: var(--muted);
+  font-size: .78rem;
+  margin-bottom: 6px;
+}
+
+.market-snapshot strong {
+  font-size: 1.25rem;
+}
+
+.positive-text { color: var(--teal); }
+.negative-text { color: var(--red); }
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.status-chip {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(9,18,23,.72);
+  padding: 13px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.status-chip strong,
+.status-chip small {
+  display: block;
+}
+
+.status-chip strong {
+  font-size: .9rem;
+}
+
+.status-chip small {
+  color: var(--muted);
+  margin-top: 4px;
+  line-height: 1.35;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  margin-top: 5px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+.status-chip.available .status-dot {
+  background: var(--teal);
+  box-shadow: 0 0 0 4px rgba(22,199,178,.08);
+}
+
+.status-chip.pending .status-dot {
+  background: #65737d;
+}
+
+.headline-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0 26px;
+}
+
+.headline-metrics article {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(9,18,23,.6);
+  padding: 16px;
+}
+
+.headline-metrics small,
+.headline-metrics strong,
+.headline-metrics span {
+  display: block;
+}
+
+.headline-metrics small {
+  color: var(--muted);
+  font-size: .78rem;
+}
+
+.headline-metrics strong {
+  margin: 8px 0;
+  font-size: 1.42rem;
+}
+
+.headline-metrics span {
+  color: var(--muted-2);
+  font-size: .78rem;
+}
+
+.research-tabs {
+  display: flex;
+  overflow-x: auto;
+  gap: 4px;
+  border-bottom: 1px solid var(--border);
+  margin: 18px 0 28px;
+}
+
+.research-tab {
+  background: transparent;
+  color: var(--muted);
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: 12px 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.research-tab:hover {
+  color: var(--text);
+}
+
+.research-tab.active {
+  color: var(--text);
+  border-bottom-color: var(--teal);
+}
+
+.research-panel {
+  margin-top: 18px;
+}
+
+.research-panel > h2 {
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  letter-spacing: -.035em;
+  margin: 8px 0 22px;
+}
+
+.panel-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.panel-grid.two-col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.research-card {
+  border: 1px solid var(--border);
+  background: rgba(9,18,23,.68);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.research-card.featured-card {
+  background:
+    linear-gradient(145deg, rgba(22,199,178,.055), rgba(9,18,23,.8));
+}
+
+.research-card h2,
+.research-card h3 {
+  margin: 7px 0 12px;
+  letter-spacing: -.02em;
+}
+
+.research-card p {
+  color: #c7d1d6;
+  line-height: 1.68;
+  margin-bottom: 0;
+}
+
+.research-card > small,
+.research-card > span {
+  color: var(--muted);
+  display: block;
+}
+
+.research-card > strong {
+  display: block;
+  font-size: 1.35rem;
+  margin: 8px 0;
+}
+
+.risk-card {
+  margin-top: 12px;
+}
+
+.research-list {
+  color: #c7d1d6;
+  padding-left: 20px;
+  line-height: 1.65;
+}
+
+.research-list li + li {
+  margin-top: 8px;
+}
+
+.source-note,
+.empty-state {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  color: var(--muted);
+  background: rgba(9,18,23,.55);
+  margin-top: 12px;
+}
+
+.source-button {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 16px;
+  padding: 10px 13px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+  background: var(--surface-2);
+}
+
+.source-button:hover {
+  border-color: var(--teal);
+}
+
+.financial-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(9,18,23,.55);
+}
+
+.financial-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+}
+
+.financial-table th,
+.financial-table td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(38,54,64,.55);
+  vertical-align: top;
+}
+
+.financial-table th {
+  color: var(--muted);
+  font-size: .78rem;
+  font-family: "IBM Plex Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.financial-table td {
+  color: #d9e0e3;
+}
+
+.financial-table a {
+  color: var(--teal);
+  text-decoration: none;
+}
+
+.section-spacer {
+  margin-top: 28px;
+  margin-bottom: 10px;
+}
+
+.history-grid,
+.filing-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.history-grid .research-card {
+  min-height: 145px;
+}
+
+.mini-separator {
+  height: 1px;
+  background: rgba(38,54,64,.8);
+  margin: 16px 0;
+}
+
+.ownership-metrics {
+  margin-top: 0;
+}
+
+.research-footer {
+  border-top: 1px solid var(--border);
+  color: var(--muted-2);
+  font-size: .78rem;
+  margin-top: 56px;
+  padding-top: 20px;
+}
+
+.company-directory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.directory-card {
+  border: 1px solid var(--border);
+  background: rgba(9,18,23,.7);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 16px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.directory-card:hover {
+  border-color: var(--teal);
+  transform: translateY(-1px);
+}
+
+.directory-card strong,
+.directory-card span,
+.directory-card small {
+  display: block;
+}
+
+.directory-card strong {
+  color: var(--teal);
+  font-family: "IBM Plex Mono", monospace;
+  margin-bottom: 5px;
+}
+
+.directory-card span {
+  font-weight: 600;
+}
+
+.directory-card small {
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+@media (max-width: 980px) {
+  .status-grid,
+  .headline-metrics,
+  .history-grid,
+  .filing-summary-grid,
+  .company-directory-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .company-hero-full {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .market-snapshot {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 700px) {
+  .panel-grid.two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .status-grid,
+  .headline-metrics,
+  .history-grid,
+  .filing-summary-grid,
+  .company-directory-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .company-hero-full h1 {
+    font-size: 2.6rem;
+  }
+}
