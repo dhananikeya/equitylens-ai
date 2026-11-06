@@ -173,14 +173,20 @@ def render_home_discovery(st, universe, open_company_research, sec_summary):
                     )
     with right:
         total = len(universe)
+        summary_ready = bool((sec_summary or {}).get("_ready", False))
         synced = int((sec_summary or {}).get("synced_companies", 0) or 0)
+        sec_copy = (
+            f"{synced:,} with available SEC filing records."
+            if summary_ready
+            else "SEC filing coverage index is refreshing."
+        )
         st.markdown(
             '<div class="el-evidence-card">'
             '<div class="el-quicklabel">Research coverage</div>'
             '<h4>%s public companies</h4>'
-            '<p>%s with available SEC filing records.</p>'
+            '<p>%s</p>'
             '<p>Coverage does not imply that every company has a completed deep-dive.</p>'
-            '</div>' % (f"{total:,}", f"{synced:,}"),
+            '</div>' % (f"{total:,}", sec_copy),
             unsafe_allow_html=True,
         )
     st.caption("Educational research only. No sign-in, subscription, paywall, or personalized investment recommendations.")
