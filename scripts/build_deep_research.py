@@ -137,6 +137,50 @@ RESEARCH_SCHEMA = {
                 "proceeds_management_ownership",
             ],
         },
+        "filing_changes": {
+            "type": "object",
+            "additionalProperties": False,
+            "properties": {
+                "comparison_available": {"type": "boolean"},
+                "current_filing_label": {"type": "string"},
+                "prior_filing_label": {"type": "string"},
+                "added_or_increased_themes": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "maxItems": 8,
+                },
+                "reduced_or_removed_themes": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "maxItems": 8,
+                },
+                "notable_language_changes": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "maxItems": 10,
+                },
+                "unchanged_core_themes": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "maxItems": 8,
+                },
+                "confidence_notes": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "maxItems": 6,
+                },
+            },
+            "required": [
+                "comparison_available",
+                "current_filing_label",
+                "prior_filing_label",
+                "added_or_increased_themes",
+                "reduced_or_removed_themes",
+                "notable_language_changes",
+                "unchanged_core_themes",
+                "confidence_notes",
+            ],
+        },
         "confidence_notes": {
             "type": "array",
             "items": {"type": "string"},
@@ -158,6 +202,7 @@ RESEARCH_SCHEMA = {
         "historical_context",
         "what_to_learn",
         "filing_details",
+        "filing_changes",
         "confidence_notes",
     ],
 }
@@ -813,9 +858,11 @@ def research_prompt(
     company: dict,
     financial_context: dict,
     annual_filing: dict,
+    prior_annual_filing: dict,
     quarterly_filing: dict,
     registration_filing: dict,
     annual_excerpt: str,
+    prior_annual_excerpt: str,
     quarterly_excerpt: str,
     registration_excerpt: str,
 ) -> str:
@@ -833,6 +880,12 @@ def research_prompt(
             "filed": annual_filing.get("filing_date", ""),
             "report_date": annual_filing.get("report_date", ""),
             "url": annual_filing.get("url", ""),
+        },
+        "prior_annual_filing": {
+            "form": prior_annual_filing.get("form", ""),
+            "filed": prior_annual_filing.get("filing_date", ""),
+            "report_date": prior_annual_filing.get("report_date", ""),
+            "url": prior_annual_filing.get("url", ""),
         },
         "quarterly_filing": {
             "form": quarterly_filing.get("form", ""),
@@ -857,8 +910,19 @@ def research_prompt(
         "but substantive enough to be useful to a research user.\n\n"
         "SEC/XBRL CONTEXT:\n"
         + json.dumps(evidence, indent=2)
-        + "\n\nANNUAL FILING EXCERPT:\n"
+        + "\n\nLATEST ANNUAL FILING EXCERPT:\n"
         + (annual_excerpt or "[not available]")
+        + "\n\nPRIOR ANNUAL FILING EXCERPT:\n"
+        + (prior_annual_excerpt or "[not available]")
+        + "\n\nFILING CHANGE INSTRUCTIONS:\n"
+        + (
+            "When both annual filing excerpts are available, compare them conservatively. "
+            "Populate filing_changes with material differences in disclosed business, competition, "
+            "customers, operations, international exposure, liquidity/profitability context, and risk themes. "
+            "Do not claim a theme was added, removed, or intensified unless the supplied excerpts support that comparison. "
+            "If either annual excerpt is unavailable, set comparison_available to false and return empty change arrays. "
+            "Use the filing dates/forms for current_filing_label and prior_filing_label."
+        )
         + "\n\nLATEST QUARTERLY FILING EXCERPT:\n"
         + (quarterly_excerpt or "[not available]")
         + "\n\nREGISTRATION FILING EXCERPT:\n"
@@ -955,6 +1019,19 @@ def validate_research_payload(payload: dict) -> dict:
         raise ValueError(
             "Local LLM response is missing filing-detail fields: "
             + ", ".join(missing_details)
+        )
+
+    filing_changes = payload.get("filing_changes", {})
+    required_changes = set(
+        RESEARCH_SCHEMA["properties"]["filing_changes"]["required"]
+    )
+    missing_changes = sorted(
+        required_changes - set(filing_changes.keys())
+    )
+    if missing_changes:
+        raise ValueError(
+            "Local LLM response is missing filing-change fields: "
+            + ", ".join(missing_changes)
         )
 
     return payload
@@ -1078,7 +1155,11 @@ def main() -> None:
         ticker = str(company.get("Ticker", "")).upper().strip()
         key = canonical_key(company)
         ticker_state = state.get(ticker, {})
-        if key in generated_analysis:
+        existing_analysis = generated_analysis.get(key, {})
+        if (
+            existing_analysis
+            and "filing_changes" in existing_analysis
+        ):
             continue
         if int(ticker_state.get("attempts", 0)) >= MAX_ATTEMPTS:
             continue
@@ -1116,7 +1197,21 @@ def main() -> None:
             )
             recent_rows = rows_from_submission_arrays(submissions, cik)
 
-            annual_filing = latest_filing(recent_rows, ANNUAL_FORMS)
+            annual_filings = [
+                row
+                for row in recent_rows
+                if row.get("form") in ANNUAL_FORMS
+            ]
+            annual_filing = (
+                annual_filings[0]
+                if annual_filings
+                else {}
+            )
+            prior_annual_filing = (
+                annual_filings[1]
+                if len(annual_filings) > 1
+                else {}
+            )
             quarterly_filing = latest_filing(recent_rows, QUARTERLY_FORMS)
             current_filing = latest_filing(recent_rows, CURRENT_FORMS)
             registrations = registration_filings(submissions, cik)
@@ -1142,6 +1237,7 @@ def main() -> None:
             )
 
             annual_excerpt = ""
+            prior_annual_excerpt = ""
             quarterly_excerpt = ""
             registration_excerpt = ""
 
@@ -1153,6 +1249,18 @@ def main() -> None:
                     )
                 except Exception as exc:
                     print(f"  annual filing text unavailable: {exc}")
+
+            if prior_annual_filing:
+                try:
+                    prior_annual_excerpt = focused_excerpt(
+                        filing_text(prior_annual_filing),
+                        max_chars=120_000,
+                    )
+                except Exception as exc:
+                    print(
+                        "  prior annual filing text unavailable: "
+                        + str(exc)
+                    )
 
             if quarterly_filing:
                 try:
@@ -1176,9 +1284,11 @@ def main() -> None:
                 company,
                 financial_context,
                 annual_filing,
+                prior_annual_filing,
                 quarterly_filing,
                 registration_filing,
                 annual_excerpt,
+                prior_annual_excerpt,
                 quarterly_excerpt,
                 registration_excerpt,
             )
@@ -1200,6 +1310,7 @@ def main() -> None:
                 "recent_performance_summary": research[
                     "recent_performance_summary"
                 ],
+                "filing_changes": research["filing_changes"],
                 "confidence_notes": research["confidence_notes"],
                 "source_filing": (
                     annual_filing.get("url")
@@ -1241,6 +1352,9 @@ def main() -> None:
                 "key": key,
                 "cik": cik,
                 "annual_accession": annual_filing.get(
+                    "accession_number", ""
+                ),
+                "prior_annual_accession": prior_annual_filing.get(
                     "accession_number", ""
                 ),
                 "quarterly_accession": quarterly_filing.get(
