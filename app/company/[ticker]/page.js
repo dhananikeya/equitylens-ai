@@ -3,13 +3,7 @@ import { loadCompanyUniverse } from "@/lib/companies";
 import { loadCompanyResearch } from "@/lib/research";
 import CompanyResearch from "@/components/CompanyResearch";
 
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return loadCompanyUniverse().map((company) => ({
-    ticker: company.ticker,
-  }));
-}
+export const revalidate = 3600;
 
 export async function generateMetadata({ params }) {
   const { ticker } = await params;
