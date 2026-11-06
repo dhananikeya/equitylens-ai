@@ -3889,7 +3889,7 @@ def _fetch_optional_swap_rates(configured_endpoint=''):
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
-def get_rates_bundle(swap_endpoint=""):
+def get_rates_bundle(swap_endpoint="", cache_version="rates-v3"):
     """Fetch independent official reference rates concurrently and cache for an hour."""
     tasks = {
         "treasury": _fetch_treasury_yield_curve,
@@ -6855,7 +6855,8 @@ if active_destination == "Market Monitor":
     # Fetch all three public rates providers in parallel and cache the result.
     with st.spinner("Loading public Treasury, SOFR and swap rates…"):
         rates_bundle = get_rates_bundle(
-            str(st.secrets.get("SWAP_RATES_JSON_URL", "")).strip()
+            str(st.secrets.get("SWAP_RATES_JSON_URL", "")).strip(),
+            "rates-v3",
         )
     treasury_curve = rates_bundle["treasury"]
     sofr_reference = rates_bundle["sofr"]
