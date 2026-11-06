@@ -414,6 +414,62 @@ p,li,label,input,textarea,button,
     line-height: 1.62;
 }
 
+.el-framework-grid {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: .75rem;
+    margin: .8rem 0 1rem;
+}
+
+.el-framework-card {
+    padding: 1.15rem 1.2rem;
+    border: 1px solid var(--el-border);
+    border-radius: 9px;
+    background: #091217;
+}
+
+.el-framework-card.risk {
+    border-top-color: rgba(255,107,114,.42);
+}
+
+.el-framework-label {
+    color: var(--el-teal);
+    font-family: var(--el-mono);
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.el-framework-question {
+    margin-top: .45rem;
+    color: var(--el-text);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.el-framework-answer {
+    margin-top: .55rem;
+    color: #D5DEE2;
+    font-size: .9rem;
+    line-height: 1.62;
+}
+
+.el-framework-why {
+    margin-top: .75rem;
+    padding-top: .7rem;
+    border-top: 1px solid var(--el-border-soft);
+    color: var(--el-muted);
+    font-size: .78rem;
+    line-height: 1.52;
+}
+
+@media (max-width: 760px) {
+    .el-framework-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 700px) {
     .el-overview-grid {
         grid-template-columns: 1fr;
