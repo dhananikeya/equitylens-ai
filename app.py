@@ -4449,13 +4449,59 @@ def research_link(ticker=None, destination="Company Research"):
     return "https://equitylens-ai-2h7rd8qluv3bc8sdqf5cu3.streamlit.app/?" + urlencode(params)
 
 
+global_company_lookup = {}
+for _, _search_row in company_universe.iterrows():
+    _search_ticker = str(_search_row.get("Ticker", "")).upper().strip()
+    _search_company = str(_search_row.get("Company", "")).strip()
+    _search_industry = str(_search_row.get("Industry", "")).strip()
+    if not _search_ticker:
+        continue
+    global_company_lookup[f"ticker::{_search_ticker}"] = {
+        "ticker": _search_ticker,
+        "company": _search_company,
+        "industry": _search_industry,
+    }
+
+global_search_options = (
+    list(navigation_labels)
+    + sorted(
+        global_company_lookup,
+        key=lambda option: (
+            global_company_lookup[option]["company"].lower(),
+            global_company_lookup[option]["ticker"].lower(),
+        ),
+    )
+)
+
+
+def format_global_search_option(option):
+    if option in navigation_labels:
+        return navigation_labels[option]
+
+    company = global_company_lookup.get(option, {})
+    ticker = company.get("ticker", "")
+    name = company.get("company", ticker)
+    industry = company.get("industry", "")
+    suffix = f" · {industry}" if industry else ""
+    return f"{ticker} · {name}{suffix}"
+
+
 def navigate_to(destination):
     st.session_state["main_navigation"] = destination
     st.session_state["toolbar_destination"] = destination
 
 
 def navigate_from_toolbar():
-    navigate_to(st.session_state.get("toolbar_destination") or "Home")
+    selected = st.session_state.get("toolbar_destination")
+
+    if selected in navigation_labels:
+        navigate_to(selected)
+        return
+
+    company = global_company_lookup.get(selected, {})
+    ticker = company.get("ticker")
+    if ticker:
+        open_company_research(ticker)
 
 
 def sync_navigation_search():
@@ -4475,11 +4521,11 @@ st.session_state.setdefault("main_navigation", "Home")
 inject_readability_styles(st)
 st.markdown('<div class="el-kicker">EquityLens AI · Free educational research</div>', unsafe_allow_html=True)
 st.selectbox(
-    "Search the website",
-    options=list(navigation_labels),
+    "Search EquityLens",
+    options=global_search_options,
     index=None,
-    format_func=lambda destination: navigation_labels[destination],
-    placeholder="Search Learn, Company Research, Market Monitor…",
+    format_func=format_global_search_option,
+    placeholder="Search companies, tickers, filings, markets, or sections…",
     key="toolbar_destination",
     on_change=navigate_from_toolbar,
 )
