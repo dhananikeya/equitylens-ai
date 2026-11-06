@@ -762,6 +762,62 @@ def render_company_research(
                 st.caption(description)
                 st.caption(f"Workspace section: {destination}")
 
+        checklist_items = [
+            "I understand what the company sells and how it makes money.",
+            "I reviewed the latest revenue growth and profitability.",
+            "I checked cash, investments, debt, and the balance-sheet date.",
+            "I reviewed the latest 10-K or annual filing.",
+            "I reviewed the latest 10-Q / interim filing when available.",
+            "I reviewed the major disclosed risk themes.",
+            "I compared the company with relevant peers.",
+            "I verified at least one important conclusion in a primary filing.",
+        ]
+        checklist_keys = [
+            f"research_check_{selected_ticker}_{index}"
+            for index in range(len(checklist_items))
+        ]
+
+        def clear_research_checklist():
+            for checklist_key in checklist_keys:
+                st.session_state.pop(
+                    checklist_key,
+                    None,
+                )
+
+        with st.expander("Research checklist"):
+            completed = sum(
+                bool(
+                    st.session_state.get(
+                        checklist_key,
+                        False,
+                    )
+                )
+                for checklist_key in checklist_keys
+            )
+            st.progress(
+                completed
+                / len(checklist_items)
+            )
+            st.caption(
+                f"{completed} of {len(checklist_items)} research steps completed during this visit."
+            )
+            for item, checklist_key in zip(
+                checklist_items,
+                checklist_keys,
+            ):
+                st.checkbox(
+                    item,
+                    key=checklist_key,
+                )
+            st.button(
+                "Clear research checklist",
+                key=f"clear_research_checklist_{selected_ticker}",
+                on_click=clear_research_checklist,
+            )
+            st.caption(
+                "This checklist is a research workflow aid, not a score and not an investment recommendation."
+            )
+
         summary_columns = st.columns(2)
         with summary_columns[0]:
             st.markdown("**Key disclosed risks to investigate**")
