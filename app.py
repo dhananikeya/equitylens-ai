@@ -2394,6 +2394,163 @@ def _treasury_header_key(value):
     return aliases.get(text)
 
 
+def _fetch_treasury_yield_curve_csv():
+    """Read Treasury's official downloadable daily par-yield CSV."""
+    year = datetime.now(timezone.utc).year
+    source_url = (
+        "https://home.treasury.gov/resource-center/data-chart-center/"
+        f"interest-rates/daily-treasury-rates.csv/{year}/all"
+        f"?_format=csv&field_tdr_date_value={year}"
+        "&page=&type=daily_treasury_yield_curve"
+    )
+
+    response = requests.get(
+        source_url,
+        headers={
+            **PUBLIC_DATA_HEADERS,
+            "Accept": "text/csv,text/plain;q=0.9,*/*;q=0.8",
+            "User-Agent": (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/130.0 Safari/537.36 EquityLensAI/1.0"
+            ),
+        },
+        timeout=(5, 15),
+    )
+    response.raise_for_status()
+
+    frame = pd.read_csv(io.StringIO(response.text))
+    if frame.empty:
+        raise ValueError("Treasury CSV returned no observations.")
+
+    date_column = next(
+        (
+            column for column in frame.columns
+            if re.sub(r"[^a-z0-9]", "", str(column).lower()) == "date"
+        ),
+        None,
+    )
+    if date_column is None:
+        raise ValueError("Treasury CSV did not include a Date column.")
+
+    frame["_parsed_date"] = pd.to_datetime(
+        frame[date_column],
+        errors="coerce",
+    )
+    frame = frame[frame["_parsed_date"].notna()].copy()
+    if frame.empty:
+        raise ValueError("Treasury CSV contained no parseable dates.")
+
+    latest = frame.sort_values("_parsed_date").iloc[-1]
+
+    rates = {}
+    for column in frame.columns:
+        tenor = _treasury_header_key(column)
+        if tenor:
+            rates[tenor] = _numeric_text(latest.get(column))
+
+    if not any(
+        rates.get(tenor) is not None
+        for tenor in ("2Y", "5Y", "10Y", "30Y")
+    ):
+        raise ValueError("Treasury CSV contained no usable core yields.")
+
+    return {
+        "date": latest["_parsed_date"].strftime("%Y-%m-%d"),
+        "rates": rates,
+        "source_url": source_url,
+        "source_format": "Treasury official CSV",
+    }
+
+
+def _fetch_fred_treasury_yield_curve():
+    """Fallback to public FRED constant-maturity Treasury series."""
+    source_url = (
+        "https://fred.stlouisfed.org/graph/fredgraph.csv"
+        "?id=DGS1MO,DGS3MO,DGS6MO,DGS1,DGS2,DGS3,DGS5,DGS7,DGS10,DGS20,DGS30"
+    )
+    response = requests.get(
+        source_url,
+        headers={
+            **PUBLIC_DATA_HEADERS,
+            "Accept": "text/csv,text/plain;q=0.9,*/*;q=0.8",
+        },
+        timeout=(5, 15),
+    )
+    response.raise_for_status()
+
+    frame = pd.read_csv(io.StringIO(response.text))
+    if frame.empty or "DATE" not in frame.columns:
+        raise ValueError("FRED Treasury series returned no usable observations.")
+
+    frame["_parsed_date"] = pd.to_datetime(
+        frame["DATE"],
+        errors="coerce",
+    )
+
+    series_map = {
+        "1M": "DGS1MO",
+        "3M": "DGS3MO",
+        "6M": "DGS6MO",
+        "1Y": "DGS1",
+        "2Y": "DGS2",
+        "3Y": "DGS3",
+        "5Y": "DGS5",
+        "7Y": "DGS7",
+        "10Y": "DGS10",
+        "20Y": "DGS20",
+        "30Y": "DGS30",
+    }
+
+    # FRED may publish different maturities on slightly different timestamps.
+    # Use the most recent available observation for each tenor.
+    rates = {}
+    latest_dates = []
+
+    for tenor, series in series_map.items():
+        if series not in frame.columns:
+            rates[tenor] = None
+            continue
+
+        numeric_series = pd.to_numeric(
+            frame[series],
+            errors="coerce",
+        )
+        valid = frame[
+            frame["_parsed_date"].notna()
+            & numeric_series.notna()
+        ].copy()
+
+        if valid.empty:
+            rates[tenor] = None
+            continue
+
+        latest_row = valid.sort_values("_parsed_date").iloc[-1]
+        rates[tenor] = float(
+            pd.to_numeric(latest_row[series], errors="coerce")
+        )
+        latest_dates.append(latest_row["_parsed_date"])
+
+    if not any(
+        rates.get(tenor) is not None
+        for tenor in ("2Y", "5Y", "10Y", "30Y")
+    ):
+        raise ValueError("FRED returned no usable Treasury yields.")
+
+    latest_date = max(latest_dates) if latest_dates else pd.NaT
+
+    return {
+        "date": (
+            latest_date.strftime("%Y-%m-%d")
+            if pd.notna(latest_date)
+            else ""
+        ),
+        "rates": rates,
+        "source_url": source_url,
+        "source_format": "FRED Treasury constant-maturity series",
+    }
+
+
 def _fetch_treasury_yield_curve_html():
     """Read the latest official Treasury par-yield row from the current HTML table."""
     year = datetime.now(timezone.utc).year
@@ -2593,8 +2750,10 @@ def _fetch_treasury_yield_curve():
     errors = []
 
     for fetcher in (
+        _fetch_treasury_yield_curve_csv,
         _fetch_treasury_yield_curve_html,
         _fetch_treasury_yield_curve_xml,
+        _fetch_fred_treasury_yield_curve,
     ):
         try:
             result = fetcher()
@@ -6703,7 +6862,10 @@ if active_destination == "Market Monitor":
     swap_rates = rates_bundle["swap"]
     rate_errors = set(rates_bundle["errors"])
     if "treasury" in rate_errors:
-        st.warning("U.S. Treasury yield data is temporarily unavailable.")
+        st.warning(
+            "Treasury yield data could not be refreshed from the official feed "
+            "or the FRED fallback. Other rate data remains available."
+        )
     if "sofr" in rate_errors:
         st.warning("New York Fed reference rates are temporarily unavailable.")
     render_rates_ticker(treasury_curve, sofr_reference)
