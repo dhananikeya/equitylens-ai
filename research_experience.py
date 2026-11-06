@@ -118,7 +118,7 @@ def _analysis_sources(analysis, filings):
     return sources[:6]
 
 
-def render_home_discovery(st, universe, open_company_research, sec_filings):
+def render_home_discovery(st, universe, open_company_research, sec_summary):
     """Guided first interaction without replacing the original landing page."""
     st.markdown(
         '<div class="el-readability-intro"><strong>Start with a question, not a spreadsheet.</strong>'
@@ -173,10 +173,7 @@ def render_home_discovery(st, universe, open_company_research, sec_filings):
                     )
     with right:
         total = len(universe)
-        synced = sum(
-            bool(value.get("cik") and value.get("filings"))
-            for value in sec_filings.values() if isinstance(value, dict)
-        )
+        synced = int((sec_summary or {}).get("synced_companies", 0) or 0)
         st.markdown(
             '<div class="el-evidence-card">'
             '<div class="el-quicklabel">Research coverage</div>'
