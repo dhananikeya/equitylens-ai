@@ -29,7 +29,7 @@ from market_data import (
     normalize_finviz_screener,
 )
 from market_tables import render_crisp_table
-from ui_components import section
+from ui_components import format_utc_timestamp, section
 
 
 def render_nyse_market_monitor(nyse_finviz, workspace_known_tickers, research_link):
@@ -545,6 +545,17 @@ def render_market_monitor(
             "USO": "Oil proxy",
             "UUP": "U.S. dollar proxy",
         }
+        overview_retrieval_times = [
+            quote.get("retrieved_at")
+            for quote in overview_quotes.values()
+            if quote.get("retrieved_at")
+        ]
+        overview_latest_retrieval = (
+            max(overview_retrieval_times)
+            if overview_retrieval_times
+            else ""
+        )
+
         proxy_cols = st.columns(len(proxy_labels))
         for col, (symbol, label) in zip(
             proxy_cols,
@@ -568,6 +579,15 @@ def render_market_monitor(
             session = quote.get("quote_session")
             if session:
                 col.caption(str(session))
+
+        st.caption(
+            "Quote snapshot retrieved: "
+            + format_utc_timestamp(
+                overview_latest_retrieval,
+                fallback="Unavailable",
+            )
+            + ". Individual proxy cards show the trading session represented."
+        )
 
         section("News", "Linked Market Headlines")
         try:
@@ -738,6 +758,25 @@ def render_market_monitor(
                 if median_change is not None
                 else "N/A"
             ),
+        )
+
+        stock_retrieval_times = [
+            quote.get("retrieved_at")
+            for quote in stock_quotes.values()
+            if quote.get("retrieved_at")
+        ]
+        stock_latest_retrieval = (
+            max(stock_retrieval_times)
+            if stock_retrieval_times
+            else ""
+        )
+        st.caption(
+            "Stock quote snapshot retrieved: "
+            + format_utc_timestamp(
+                stock_latest_retrieval,
+                fallback="Unavailable",
+            )
+            + ". Quotes may be delayed."
         )
 
         market_rows = []
