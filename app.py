@@ -1422,6 +1422,17 @@ textarea,input {
     color:var(--el-text) !important;
 }
 
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[role="radio"]:focus-visible,
+[role="option"]:focus-visible {
+    outline:2px solid var(--el-teal) !important;
+    outline-offset:2px !important;
+    box-shadow:0 0 0 3px rgba(22,199,178,.10) !important;
+}
+
 .stButton > button[kind="primary"] {
     background:var(--el-teal) !important;
     border-color:var(--el-teal) !important;
