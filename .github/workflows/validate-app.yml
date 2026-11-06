@@ -4,12 +4,16 @@ on:
   push:
     branches: [main]
     paths:
-      - "app.py"
+      - "*.py"
+      - "views/**"
+      - "scripts/**"
       - "data/**"
       - ".github/workflows/validate-app.yml"
   pull_request:
     paths:
-      - "app.py"
+      - "*.py"
+      - "views/**"
+      - "scripts/**"
       - "data/**"
       - ".github/workflows/validate-app.yml"
 
@@ -25,8 +29,25 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Compile app.py
-        run: python -m py_compile app.py
+      - name: Compile Python source
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          paths = [
+              path
+              for path in Path(".").rglob("*.py")
+              if not any(
+                  part.startswith(".") or part in {"venv", ".venv"}
+                  for part in path.parts
+              )
+          ]
+
+          for path in paths:
+              source = path.read_text(encoding="utf-8")
+              compile(source, str(path), "exec")
+              print(f"compiled {path}")
+          PY
 
       - name: Validate JSON datasets
         run: |
