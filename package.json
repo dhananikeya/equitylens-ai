@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "prebuild": "node scripts/build_web_data.mjs"
   },
   "dependencies": {
     "csv-parse": "latest",
