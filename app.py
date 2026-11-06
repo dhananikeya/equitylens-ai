@@ -51,6 +51,7 @@ from macro_data import (
     render_market_news_cards,
     render_rates_ticker,
 )
+from ui_components import render_summary_cards, section
 from research_experience import (
     inject_readability_styles,
     render_home_discovery,
@@ -1904,33 +1905,6 @@ def calc_margin(profit, revenue):
     if profit is None or revenue in (None, 0):
         return None
     return (profit / revenue) * 100
-
-
-def section(label, title):
-    st.markdown(
-        f"""
-        <div class="el-section">
-            <div class="el-section-label">{label}</div>
-            <div class="el-section-title">{title}</div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-
-def render_summary_cards(cards):
-    cols = st.columns(len(cards))
-    for col, (label, value) in zip(cols, cards):
-        with col:
-            st.markdown(
-                f"""
-                <div class="el-summary-card">
-                    <div class="el-summary-label">{label}</div>
-                    <div class="el-summary-value">{value}</div>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
 
 
 def financial_period_label(record, default="Period unavailable"):
