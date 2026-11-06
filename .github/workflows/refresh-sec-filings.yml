@@ -43,7 +43,7 @@ jobs:
 
       - name: Commit new SEC filings
         run: |
-          if git diff --quiet -- data/sec_filings.json data/sec_summary.json; then
+          if [ -z "$(git status --porcelain -- data/sec_filings.json data/sec_summary.json)" ]; then
             echo "No SEC filing or summary changes."
             exit 0
           fi
