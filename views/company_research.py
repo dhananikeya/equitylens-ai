@@ -1854,12 +1854,101 @@ def render_company_research(
             )
 
     if company_section == "Ownership":
-        section("Ownership", "Ownership & Major Holders")
+        section("Ownership", "Capital Structure, Control & Major Holders")
         st.caption(
-            "Ownership combines SEC beneficial-ownership filings with supplemental institutional and fund-holder data. "
-            "Percentages and holder tables can update on a different schedule from company filings."
+            "Start with issuer-reported capital structure and SEC ownership disclosures. "
+            "Institutional and mutual-fund holder tables are supplemental market data and can update on a different schedule."
         )
 
+        ownership_capital = selected_data.get(
+            "capital_structure",
+            {},
+        )
+        ownership_shares = ownership_capital.get(
+            "shares_outstanding"
+        )
+        ownership_debt = ownership_capital.get(
+            "total_debt"
+        )
+        ownership_cash_investments = ownership_capital.get(
+            "cash_and_investments"
+        )
+        ownership_balance_date = (
+            ownership_capital.get("balance_sheet_as_of")
+            or selected_data.get("fiscal_year_end")
+            or "Date unavailable"
+        )
+        ownership_share_date = (
+            ownership_capital.get("shares_as_of")
+            or "Date unavailable"
+        )
+
+        capital_cols = st.columns(4)
+        capital_cols[0].metric(
+            "Shares Outstanding · Reported",
+            (
+                f"{int(ownership_shares):,}"
+                if ownership_shares is not None
+                else "N/A"
+            ),
+            ownership_share_date
+            if ownership_shares is not None
+            else None,
+        )
+        capital_cols[1].metric(
+            "Total Debt · Reported",
+            format_money(ownership_debt),
+        )
+        capital_cols[2].metric(
+            "Cash + Investments · Reported",
+            format_money(ownership_cash_investments),
+        )
+        capital_cols[3].metric(
+            "Balance Sheet Date",
+            ownership_balance_date,
+        )
+
+        capital_source = ownership_capital.get(
+            "source_filing",
+            "",
+        )
+        if capital_source:
+            st.link_button(
+                "Open capital-structure source filing",
+                capital_source,
+                key=f"ownership_capital_source_{selected_ticker}",
+            )
+
+        ipo_ownership_points = (
+            selected_s1.get("filing_details", {})
+            .get("ipo_capitalization_dilution", [])
+        )
+        ipo_control_points = (
+            selected_s1.get("filing_details", {})
+            .get("proceeds_management_ownership", [])
+        )
+        if ipo_ownership_points or ipo_control_points:
+            with st.expander(
+                "Historical IPO-era control & dilution context"
+            ):
+                st.caption(
+                    "Historical registration context only. Voting rights, ownership, share classes, "
+                    "and capitalization may have changed since the offering."
+                )
+                if ipo_ownership_points:
+                    st.markdown(
+                        "**Capitalization & dilution disclosed at registration**"
+                    )
+                    for point in ipo_ownership_points:
+                        st.markdown(f"- {point}")
+                if ipo_control_points:
+                    st.markdown(
+                        "**Management / ownership context disclosed at registration**"
+                    )
+                    for point in ipo_control_points:
+                        st.markdown(f"- {point}")
+
+        st.markdown("**Supplemental ownership snapshot**")
         try:
             ownership_data = get_company_ownership_data(selected_ticker)
         except Exception:
@@ -2079,7 +2168,9 @@ def render_company_research(
             )
 
         st.caption(
-            "SEC filings are the primary ownership source. Institutional and fund-holder tables are supplemental Yahoo Finance data via yfinance."
+            "Source hierarchy: company/SEC filings for capital structure and beneficial-ownership disclosures; "
+            "Yahoo Finance via yfinance for supplemental institutional and fund-holder tables. "
+            "A 13D/13G, proxy filing, and third-party holder table can represent different dates and ownership concepts."
         )
 
     if company_section == "Analyst Research":
