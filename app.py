@@ -2464,7 +2464,9 @@ def _fetch_treasury_yield_curve_html():
         tenor_columns = {}
         for index, header in enumerate(headers):
             tenor = _treasury_header_key(header)
-            if tenor and tenor not in tenor_columns:
+            if tenor:
+                # Treasury's combined table can repeat 20Y/30Y columns.
+                # Prefer the later par-yield-curve columns.
                 tenor_columns[tenor] = index
 
         for row in rows[header_index + 1:]:
