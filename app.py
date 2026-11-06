@@ -383,6 +383,43 @@ p,li,label,input,textarea,button,
     color: #A7B2B8;
 }
 
+.el-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: .75rem;
+    margin: .7rem 0 .6rem;
+}
+
+.el-overview-card {
+    min-height: 150px;
+    padding: 1.15rem 1.2rem;
+    border: 1px solid var(--el-border);
+    border-radius: 9px;
+    background: #091217;
+}
+
+.el-overview-question {
+    color: var(--el-teal);
+    font-family: var(--el-mono);
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .035em;
+    text-transform: uppercase;
+}
+
+.el-overview-answer {
+    margin-top: .65rem;
+    color: #D5DEE2;
+    font-size: .92rem;
+    line-height: 1.62;
+}
+
+@media (max-width: 700px) {
+    .el-overview-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 900px) {
     .el-availability-grid {
         grid-template-columns: repeat(2,minmax(0,1fr));
