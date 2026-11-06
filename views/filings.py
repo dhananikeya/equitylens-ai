@@ -6,6 +6,31 @@ import streamlit as st
 from ui_components import section
 
 
+FINANCIAL_FORMS = {
+    "10-K", "10-K/A", "10-Q", "10-Q/A",
+    "20-F", "20-F/A", "40-F", "40-F/A",
+}
+CURRENT_FORMS = {"8-K", "8-K/A", "6-K", "6-K/A"}
+REGISTRATION_FORMS = {
+    "S-1", "S-1/A", "F-1", "F-1/A", "S-11", "S-11/A",
+}
+OWNERSHIP_FORMS = {
+    "3", "3/A", "4", "4/A", "5", "5/A",
+    "SC 13D", "SC 13D/A", "SC 13G", "SC 13G/A",
+    "DEF 14A", "DEFA14A", "144", "144/A",
+}
+MATERIAL_FORMS = FINANCIAL_FORMS | CURRENT_FORMS | REGISTRATION_FORMS
+
+FORM_CATEGORIES = {
+    "Material reports": MATERIAL_FORMS,
+    "Financial reports": FINANCIAL_FORMS,
+    "Current events": CURRENT_FORMS,
+    "Registration": REGISTRATION_FORMS,
+    "Ownership / insiders": OWNERSHIP_FORMS,
+    "All filings": None,
+}
+
+
 def render_filings(
     company_universe,
     load_sec_filings,
@@ -101,71 +126,295 @@ def render_filings(
             na_position="last",
         )
 
-        filter_cols = st.columns(2)
-        with filter_cols[0]:
-            tracker_company = st.selectbox(
-                "Company",
-                ["All companies"]
-                + sorted(
-                    tracker_df["Company"]
-                    .dropna()
-                    .unique()
-                    .tolist()
+        filed_dt = pd.to_datetime(
+            tracker_df["SEC Filed Date"],
+            errors="coerce",
+        )
+        tracker_df["_FiledDate"] = filed_dt
+
+        valid_dates = filed_dt.dropna()
+        if not valid_dates.empty:
+            latest_date = valid_dates.max().date()
+            earliest_date = valid_dates.min().date()
+            default_start = max(
+                earliest_date,
+                (
+                    valid_dates.max()
+                    - pd.Timedelta(days=90)
+                ).date(),
+            )
+        else:
+            latest_date = pd.Timestamp.today().date()
+            earliest_date = latest_date
+            default_start = latest_date
+
+        primary_filters = st.columns([1.6, 1, .75])
+        with primary_filters[0]:
+            tracker_search = st.text_input(
+                "Search company or ticker",
+                placeholder="e.g. Amazon or AMZN",
+                key="sec_tracker_search",
+            ).strip()
+        with primary_filters[1]:
+            tracker_category = st.selectbox(
+                "Filing category",
+                list(FORM_CATEGORIES),
+                index=0,
+                key="sec_tracker_category",
+                help=(
+                    "Material reports emphasizes periodic financial reports, current reports, "
+                    "and registration statements. All other SEC forms remain available."
                 ),
+            )
+        with primary_filters[2]:
+            display_limit = st.selectbox(
+                "Rows shown",
+                [100, 250, 500],
+                index=0,
+                key="sec_tracker_display_limit",
+            )
+
+        date_cols = st.columns(2)
+        with date_cols[0]:
+            tracker_start_date = st.date_input(
+                "Filed on or after",
+                value=default_start,
+                min_value=earliest_date,
+                max_value=latest_date,
+                key="sec_tracker_start_date",
+            )
+        with date_cols[1]:
+            tracker_end_date = st.date_input(
+                "Filed on or before",
+                value=latest_date,
+                min_value=earliest_date,
+                max_value=latest_date,
+                key="sec_tracker_end_date",
+            )
+
+        form_options = sorted(
+            [
+                form
+                for form in tracker_df["Form"]
+                .dropna()
+                .unique()
+                .tolist()
+                if form
+            ]
+        )
+        company_options = [
+            "All companies"
+        ] + sorted(
+            tracker_df["Company"]
+            .dropna()
+            .unique()
+            .tolist()
+        )
+
+        with st.expander("Advanced filing filters"):
+            tracker_company = st.selectbox(
+                "Exact company",
+                company_options,
                 key="sec_tracker_company",
             )
-        with filter_cols[1]:
-            form_options = sorted(
-                [
-                    form
-                    for form in tracker_df["Form"]
-                    .dropna()
-                    .unique()
-                    .tolist()
-                    if form
-                ]
-            )
             tracker_forms = st.multiselect(
-                "Filing type",
+                "Exact SEC forms",
                 form_options,
                 default=[],
                 key="sec_tracker_forms",
+                help=(
+                    "Exact-form selections are applied in addition to the filing category above."
+                ),
             )
 
         filtered_tracker = tracker_df.copy()
+
+        category_forms = FORM_CATEGORIES.get(
+            tracker_category
+        )
+        if category_forms is not None:
+            filtered_tracker = filtered_tracker[
+                filtered_tracker["Form"].isin(
+                    category_forms
+                )
+            ]
+
+        if tracker_search:
+            search_lower = tracker_search.lower()
+            search_mask = (
+                filtered_tracker["Company"]
+                .fillna("")
+                .astype(str)
+                .str.lower()
+                .str.contains(
+                    search_lower,
+                    regex=False,
+                )
+                |
+                filtered_tracker["Ticker"]
+                .fillna("")
+                .astype(str)
+                .str.lower()
+                .str.contains(
+                    search_lower,
+                    regex=False,
+                )
+            )
+            filtered_tracker = (
+                filtered_tracker[
+                    search_mask
+                ]
+            )
+
         if tracker_company != "All companies":
             filtered_tracker = filtered_tracker[
-                filtered_tracker["Company"] == tracker_company
+                filtered_tracker["Company"]
+                == tracker_company
             ]
+
         if tracker_forms:
             filtered_tracker = filtered_tracker[
-                filtered_tracker["Form"].isin(tracker_forms)
+                filtered_tracker["Form"].isin(
+                    tracker_forms
+                )
             ]
 
-        st.dataframe(
-            filtered_tracker,
-            use_container_width=True,
-            hide_index=True,
-            column_config={
-                "SEC Filing": st.column_config.LinkColumn(
-                    "SEC Filing",
-                    display_text="Open filing",
+        if tracker_start_date > tracker_end_date:
+            st.warning(
+                "The start date is after the end date. Adjust the filing date range."
+            )
+            filtered_tracker = filtered_tracker.iloc[0:0]
+        else:
+            filtered_tracker = filtered_tracker[
+                filtered_tracker["_FiledDate"].between(
+                    pd.Timestamp(
+                        tracker_start_date
+                    ),
+                    pd.Timestamp(
+                        tracker_end_date
+                    )
+                    + pd.Timedelta(
+                        days=1
+                    )
+                    - pd.Timedelta(
+                        microseconds=1
+                    ),
+                    inclusive="both",
                 )
-            },
+            ]
+
+        filtered_tracker = (
+            filtered_tracker.sort_values(
+                by=[
+                    "SEC Filed Date",
+                    "SEC Accepted (ET)",
+                ],
+                ascending=False,
+                na_position="last",
+            )
         )
 
+        display_columns = [
+            "Company",
+            "Ticker",
+            "Form",
+            "SEC Filed Date",
+            "SEC Accepted (ET)",
+            "Report Period",
+            "Description",
+            "SEC Filing",
+        ]
+        visible_tracker = (
+            filtered_tracker[
+                display_columns
+            ].head(display_limit)
+        )
+
+        if visible_tracker.empty:
+            st.info(
+                "No filings match the current filters."
+            )
+        else:
+            st.dataframe(
+                visible_tracker,
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "SEC Filing": st.column_config.LinkColumn(
+                        "SEC Filing",
+                        display_text="Open filing",
+                    )
+                },
+            )
+
+        st.caption(
+            f"Showing {min(len(filtered_tracker), display_limit):,} of "
+            f"{len(filtered_tracker):,} matching records · "
+            f"category: {tracker_category} · automated monitor checks approximately every 15 minutes."
+        )
+
+        download_df = filtered_tracker.drop(
+            columns=["_FiledDate"],
+            errors="ignore",
+        )
         st.download_button(
-            "Download filing tracker as CSV",
-            data=filtered_tracker.to_csv(index=False).encode("utf-8"),
-            file_name="equitylens_sec_filing_tracker.csv",
+            "Download all filtered filings as CSV",
+            data=download_df.to_csv(
+                index=False
+            ).encode("utf-8"),
+            file_name=(
+                "equitylens_sec_filing_tracker.csv"
+            ),
             mime="text/csv",
             use_container_width=True,
         )
 
-        st.caption(
-            f"Showing {len(filtered_tracker):,} filing records from the current monitored set. "
-            "The monitor checks for new SEC submissions every 15 minutes."
-        )
+        with st.expander("What do these SEC forms mean?"):
+            form_guide = pd.DataFrame([
+                {
+                    "Form": "10-K",
+                    "Meaning": "Annual report",
+                    "Use it for": "Business, risks, audited annual financials, MD&A",
+                },
+                {
+                    "Form": "10-Q",
+                    "Meaning": "Quarterly report",
+                    "Use it for": "Quarterly financials, updates, MD&A, changing risks",
+                },
+                {
+                    "Form": "8-K",
+                    "Meaning": "Current report",
+                    "Use it for": "Specified material events and attached exhibits",
+                },
+                {
+                    "Form": "20-F / 6-K",
+                    "Meaning": "Foreign private issuer annual / current reporting",
+                    "Use it for": "Comparable foreign-issuer disclosure context",
+                },
+                {
+                    "Form": "S-1 / F-1 / S-11",
+                    "Meaning": "Registration statement",
+                    "Use it for": "IPO/offering business, risks, financials, ownership, dilution",
+                },
+                {
+                    "Form": "3 / 4 / 5",
+                    "Meaning": "Insider ownership / transaction filings",
+                    "Use it for": "Reported insider positions and transactions",
+                },
+                {
+                    "Form": "13D / 13G",
+                    "Meaning": "Beneficial ownership disclosure",
+                    "Use it for": "Certain holders crossing reporting thresholds",
+                },
+            ])
+            st.dataframe(
+                form_guide,
+                use_container_width=True,
+                hide_index=True,
+            )
+            st.caption(
+                "Form descriptions are educational summaries. The SEC form and the filed document are authoritative."
+            )
 
     section(
         "Registration Filings",
