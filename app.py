@@ -2360,8 +2360,156 @@ def _numeric_text(value):
         return None
 
 
-def _fetch_treasury_yield_curve():
-    """Load the latest official U.S. Treasury par yield curve observation."""
+def _treasury_header_key(value):
+    """Normalize Treasury table headers to the tenors EquityLens displays."""
+    text = re.sub(
+        r"[^a-z0-9.]",
+        "",
+        str(value or "").lower()
+    )
+    aliases = {
+        "1mo": "1M",
+        "1month": "1M",
+        "3mo": "3M",
+        "3month": "3M",
+        "6mo": "6M",
+        "6month": "6M",
+        "1yr": "1Y",
+        "1year": "1Y",
+        "2yr": "2Y",
+        "2year": "2Y",
+        "3yr": "3Y",
+        "3year": "3Y",
+        "5yr": "5Y",
+        "5year": "5Y",
+        "7yr": "7Y",
+        "7year": "7Y",
+        "10yr": "10Y",
+        "10year": "10Y",
+        "20yr": "20Y",
+        "20year": "20Y",
+        "30yr": "30Y",
+        "30year": "30Y",
+    }
+    return aliases.get(text)
+
+
+def _fetch_treasury_yield_curve_html():
+    """Read the latest official Treasury par-yield row from the current HTML table."""
+    year = datetime.now(timezone.utc).year
+    source_url = (
+        "https://home.treasury.gov/resource-center/data-chart-center/"
+        "interest-rates/TextView"
+        f"?field_tdr_date_value={year}&type=daily_treasury_yield_curve"
+    )
+    response = requests.get(
+        source_url,
+        headers={
+            **PUBLIC_DATA_HEADERS,
+            "User-Agent": (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/130.0 Safari/537.36 EquityLensAI/1.0"
+            ),
+        },
+        timeout=(5, 14),
+    )
+    response.raise_for_status()
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    observations = []
+
+    for table in soup.find_all("table"):
+        rows = table.find_all("tr")
+        header_index = None
+        headers = []
+
+        for index, row in enumerate(rows):
+            cells = row.find_all(["th", "td"])
+            candidate_headers = [
+                cell.get_text(" ", strip=True)
+                for cell in cells
+            ]
+            normalized = [
+                re.sub(r"[^a-z0-9.]", "", header.lower())
+                for header in candidate_headers
+            ]
+
+            has_date = any(header == "date" for header in normalized)
+            tenor_count = sum(
+                1
+                for header in candidate_headers
+                if _treasury_header_key(header)
+            )
+
+            if has_date and tenor_count >= 5:
+                header_index = index
+                headers = candidate_headers
+                break
+
+        if header_index is None:
+            continue
+
+        date_column = next(
+            (
+                index
+                for index, header in enumerate(headers)
+                if re.sub(r"[^a-z0-9.]", "", header.lower()) == "date"
+            ),
+            None,
+        )
+        if date_column is None:
+            continue
+
+        tenor_columns = {}
+        for index, header in enumerate(headers):
+            tenor = _treasury_header_key(header)
+            if tenor and tenor not in tenor_columns:
+                tenor_columns[tenor] = index
+
+        for row in rows[header_index + 1:]:
+            cells = [
+                cell.get_text(" ", strip=True)
+                for cell in row.find_all("td")
+            ]
+            if not cells or date_column >= len(cells):
+                continue
+
+            raw_date = cells[date_column]
+            parsed_date = pd.to_datetime(raw_date, errors="coerce")
+            if pd.isna(parsed_date):
+                continue
+
+            rates = {}
+            for tenor, column_index in tenor_columns.items():
+                rates[tenor] = (
+                    _numeric_text(cells[column_index])
+                    if column_index < len(cells)
+                    else None
+                )
+
+            if any(value is not None for value in rates.values()):
+                observations.append({
+                    "date": parsed_date,
+                    "rates": rates,
+                })
+
+    if not observations:
+        raise ValueError(
+            "Treasury HTML table returned no usable yield-curve observations."
+        )
+
+    latest = max(observations, key=lambda item: item["date"])
+    return {
+        "date": latest["date"].strftime("%Y-%m-%d"),
+        "rates": latest["rates"],
+        "source_url": source_url,
+        "source_format": "Treasury daily rates table",
+    }
+
+
+def _fetch_treasury_yield_curve_xml():
+    """Fallback parser for Treasury's official XML yield-curve feed."""
     year = datetime.now(timezone.utc).year
     source_url = (
         "https://home.treasury.gov/resource-center/data-chart-center/"
@@ -2370,7 +2518,10 @@ def _fetch_treasury_yield_curve():
     )
     response = requests.get(
         source_url,
-        headers=PUBLIC_DATA_HEADERS,
+        headers={
+            **PUBLIC_DATA_HEADERS,
+            "Accept": "application/xml,text/xml;q=0.9,*/*;q=0.8",
+        },
         timeout=(5, 14),
     )
     response.raise_for_status()
@@ -2388,7 +2539,9 @@ def _fetch_treasury_yield_curve():
             records.append(record)
 
     if not records:
-        raise ValueError("Treasury returned no yield-curve observations.")
+        raise ValueError(
+            "Treasury XML feed returned no yield-curve observations."
+        )
 
     def record_date(record):
         raw = record.get("NEW_DATE") or record.get("Date") or ""
@@ -2416,14 +2569,48 @@ def _fetch_treasury_yield_curve():
         for tenor, field in field_map.items()
     }
 
+    if not any(value is not None for value in rates.values()):
+        raise ValueError(
+            "Treasury XML feed returned a row without usable yields."
+        )
+
     return {
         "date": (
             latest_date.strftime("%Y-%m-%d")
-            if latest_date != pd.Timestamp.min else ""
+            if latest_date != pd.Timestamp.min
+            else ""
         ),
         "rates": rates,
         "source_url": source_url,
+        "source_format": "Treasury XML feed",
     }
+
+
+def _fetch_treasury_yield_curve():
+    """Load the latest official U.S. Treasury par yield curve with format fallback."""
+    errors = []
+
+    for fetcher in (
+        _fetch_treasury_yield_curve_html,
+        _fetch_treasury_yield_curve_xml,
+    ):
+        try:
+            result = fetcher()
+            rates = result.get("rates", {})
+            required_tenors = ("2Y", "5Y", "10Y", "30Y")
+            if not any(rates.get(tenor) is not None for tenor in required_tenors):
+                raise ValueError(
+                    "Treasury response did not include core curve tenors."
+                )
+            return result
+        except Exception as exc:
+            errors.append(str(exc))
+
+    raise RuntimeError(
+        "Treasury yield-curve sources failed: "
+        + " | ".join(errors)
+    )
+
 
 
 def _find_html_data_row(url, required_header_terms):
