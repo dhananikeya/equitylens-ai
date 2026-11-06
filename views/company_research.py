@@ -1404,6 +1404,69 @@ def render_company_research(
                 key=f"workspace_financial_source_{selected_ticker}",
             )
 
+        with st.expander("Sources & formulas"):
+            source_rows = [
+                {
+                    "Dataset": "Income statement",
+                    "Period / date": financial_period_label,
+                    "Source": financial_source_label,
+                    "Original source": financial_source or "No direct filing link for this fallback source",
+                },
+                {
+                    "Dataset": "Balance sheet",
+                    "Period / date": (
+                        balance_record.get("balance_sheet_as_of")
+                        or selected_data.get("fiscal_year_end")
+                        or "Date unavailable"
+                    ),
+                    "Source": balance_source,
+                    "Original source": (
+                        capital_structure.get("source_filing")
+                        if use_structured_balance
+                        else "Supplemental Yahoo Finance statement"
+                    ) or "Source link unavailable",
+                },
+            ]
+            source_display = pd.DataFrame(source_rows)
+            st.dataframe(
+                source_display,
+                use_container_width=True,
+                hide_index=True,
+            )
+            balance_source_url = (
+                capital_structure.get("source_filing")
+                if use_structured_balance
+                else ""
+            )
+            source_link_cols = st.columns(2)
+            with source_link_cols[0]:
+                if financial_source:
+                    st.link_button(
+                        "Open income-statement source",
+                        financial_source,
+                        key=f"financial_provenance_income_{selected_ticker}",
+                        use_container_width=True,
+                    )
+            with source_link_cols[1]:
+                if balance_source_url:
+                    st.link_button(
+                        "Open balance-sheet source",
+                        balance_source_url,
+                        key=f"financial_provenance_balance_{selected_ticker}",
+                        use_container_width=True,
+                    )
+            st.markdown(
+                "**Calculated metrics**\n\n"
+                "- Revenue growth = (current revenue − comparable prior revenue) ÷ comparable prior revenue × 100.\n"
+                "- Gross margin = gross profit ÷ revenue × 100.\n"
+                "- Operating margin = operating income ÷ revenue × 100.\n"
+                "- Net margin = net income ÷ revenue × 100."
+            )
+            st.caption(
+                "EquityLens does not replace a missing reported figure with zero. "
+                "Calculations are shown only when the required source values exist."
+            )
+
         st.caption(
             "EquityLens uses standardized SEC-reported figures when available. "
              "Income statements and balance sheets each use a single source record; "
