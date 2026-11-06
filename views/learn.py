@@ -165,7 +165,148 @@ def render_learn():
         }
     ]
 
-    for item in learning_items:
+    path_terms = {
+        "Start Here": {
+            "Revenue",
+            "Year-over-Year (YoY) Growth",
+            "Operating Margin",
+            "Net Income",
+            "10-K",
+            "10-Q",
+        },
+        "Financial Statements": {
+            "Revenue",
+            "Year-over-Year (YoY) Growth",
+            "Gross Margin",
+            "Operating Margin",
+            "Net Income",
+            "LTM / Trailing Twelve Months",
+            "Cash + Investments",
+            "Debt",
+        },
+        "SEC Filings": {
+            "S-1 Registration Statement",
+            "8-K Current Report",
+            "10-K",
+            "10-Q",
+        },
+        "Research a Business": {
+            "S-1 Registration Statement",
+            "10-K",
+            "10-Q",
+            "Revenue",
+            "Operating Margin",
+            "Cash + Investments",
+            "Debt",
+        },
+        "Markets & Rates": {
+            "Consumer Price Index (CPI)",
+            "Producer Price Index (PPI)",
+            "Employment Situation",
+            "JOLTS",
+            "Employment Cost Index (ECI)",
+            "10-Year Treasury Yield",
+            "SOFR",
+            "Interest-Rate Swap",
+        },
+        "All Concepts": None,
+    }
+
+    path_descriptions = {
+        "Start Here": (
+            "Build the minimum vocabulary needed to open a company page and understand "
+            "the basic financial and filing context."
+        ),
+        "Financial Statements": (
+            "Learn how revenue, margins, profitability, liquidity, and debt fit together."
+        ),
+        "SEC Filings": (
+            "Learn what the major SEC forms are and where each one fits in a research process."
+        ),
+        "Research a Business": (
+            "Use filings and financial statements together to understand the business model, "
+            "growth, profitability, balance sheet, and risks."
+        ),
+        "Markets & Rates": (
+            "Understand the macro and rates indicators shown in Market Monitor without treating "
+            "a single release as a market forecast."
+        ),
+        "All Concepts": (
+            "Browse every concept currently included in the EquityLens learning library."
+        ),
+    }
+
+    path_steps = {
+        "Start Here": [
+            "Understand what revenue measures.",
+            "Learn the difference between growth and profitability.",
+            "Know what a 10-K and 10-Q are.",
+            "Open a Company Research page and verify one number in the original filing.",
+        ],
+        "Financial Statements": [
+            "Start with revenue and comparable-period growth.",
+            "Read gross margin and operating margin together.",
+            "Check whether net income is positive or negative.",
+            "Review cash, investments, and debt before judging financial flexibility.",
+        ],
+        "SEC Filings": [
+            "Use the 10-K for the annual business, risk, and audited financial picture.",
+            "Use the 10-Q for the latest quarterly financial and risk updates.",
+            "Use 8-K for specified material events between periodic reports.",
+            "Use S-1/F-1/S-11 for registration-era business, ownership, and offering context.",
+        ],
+        "Research a Business": [
+            "Understand what the company sells and who pays.",
+            "Identify the primary revenue engine.",
+            "Measure growth and operating profitability.",
+            "Review liquidity, debt, and major disclosed risks.",
+            "Compare peers, then verify conclusions in primary filings.",
+        ],
+        "Markets & Rates": [
+            "Separate inflation, labor, and interest-rate indicators.",
+            "Read the observation period before comparing releases.",
+            "Distinguish Treasury yields, SOFR, and swap rates.",
+            "Use macro data as context, not as an automatic explanation for every market move.",
+        ],
+        "All Concepts": [
+            "Choose any concept below and use the source link when one is available.",
+        ],
+    }
+
+    learning_path = st.radio(
+        "Learning path",
+        list(path_terms),
+        horizontal=True,
+        key="learning_path",
+    )
+    st.markdown(f"### {learning_path}")
+    st.write(path_descriptions[learning_path])
+
+    step_cols = st.columns(
+        min(len(path_steps[learning_path]), 4)
+    )
+    for index, step in enumerate(
+        path_steps[learning_path],
+        start=1,
+    ):
+        with step_cols[(index - 1) % len(step_cols)]:
+            st.markdown(f"**{index}**")
+            st.caption(step)
+
+    selected_terms = path_terms[learning_path]
+    display_items = (
+        learning_items
+        if selected_terms is None
+        else [
+            item
+            for item in learning_items
+            if item["term"] in selected_terms
+        ]
+    )
+
+    st.markdown("### Concepts in this path")
+
+    for item in display_items:
         with st.expander(item["term"]):
             st.markdown("**What it means**")
             st.write(item["definition"])
