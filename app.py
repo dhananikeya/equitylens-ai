@@ -36,6 +36,7 @@ from market_data import (
     get_market_history,
     normalize_finviz_screener,
 )
+from research_data import index_dataset_by_ticker as _index_dataset_by_ticker
 from research_experience import (
     inject_readability_styles,
     render_home_discovery,
@@ -1470,27 +1471,6 @@ def load_json(path):
 def load_sec_filings():
     """Load the full SEC filing archive only on pages that truly need it."""
     return load_json("data/sec_filings.json")
-
-
-def _ticker_from_key_or_record(key, record):
-    """Resolve a ticker from a dataset record or a '(TICKER)' key suffix."""
-    if isinstance(record, dict):
-        ticker = str(record.get("ticker", "")).upper().strip()
-        if ticker:
-            return ticker
-
-    match = re.search(r"\(([^()]+)\)\s*$", str(key))
-    return match.group(1).upper().strip() if match else ""
-
-
-def _index_dataset_by_ticker(dataset):
-    """Index any EquityLens JSON dataset by ticker, independent of company-name spelling."""
-    indexed = {}
-    for key, record in (dataset or {}).items():
-        ticker = _ticker_from_key_or_record(key, record)
-        if ticker:
-            indexed[ticker] = record
-    return indexed
 
 
 def _statement_value(frame, row_names, column=None):
