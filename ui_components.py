@@ -1,3 +1,4 @@
+import pandas as pd
 import streamlit as st
 
 
@@ -26,3 +27,18 @@ def render_summary_cards(cards):
                 """,
                 unsafe_allow_html=True,
             )
+
+
+def format_utc_timestamp(value, fallback="Unavailable"):
+    if not value:
+        return fallback
+    parsed = pd.to_datetime(
+        value,
+        errors="coerce",
+        utc=True,
+    )
+    if pd.isna(parsed):
+        return str(value)
+    return parsed.strftime(
+        "%Y-%m-%d %H:%M UTC"
+    )
