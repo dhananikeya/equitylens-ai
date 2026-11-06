@@ -324,6 +324,77 @@ p,li,label,input,textarea,button,
     font-weight: 500;
 }
 
+.el-availability-grid {
+    display: grid;
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: .7rem;
+    margin: -.35rem 0 .55rem;
+}
+
+.el-availability-card {
+    min-height: 104px;
+    padding: .95rem 1rem;
+    border: 1px solid var(--el-border);
+    border-radius: 9px;
+    background: #071014;
+}
+
+.el-availability-label {
+    color: var(--el-muted);
+    font-family: var(--el-mono);
+    font-size: .69rem;
+    font-weight: 600;
+    letter-spacing: .035em;
+    text-transform: uppercase;
+}
+
+.el-availability-status {
+    margin-top: .45rem;
+    color: var(--el-text);
+    font-size: .98rem;
+    font-weight: 600;
+}
+
+.el-availability-detail {
+    margin-top: .3rem;
+    color: var(--el-muted-2);
+    font-size: .76rem;
+    line-height: 1.4;
+}
+
+.el-availability-card.available {
+    border-top-color: rgba(22,199,178,.7);
+}
+.el-availability-card.available .el-availability-status {
+    color: var(--el-teal);
+}
+
+.el-availability-card.partial {
+    border-top-color: rgba(125,211,252,.58);
+}
+.el-availability-card.partial .el-availability-status {
+    color: var(--el-blue);
+}
+
+.el-availability-card.missing {
+    border-top-color: rgba(101,115,125,.65);
+}
+.el-availability-card.missing .el-availability-status {
+    color: #A7B2B8;
+}
+
+@media (max-width: 900px) {
+    .el-availability-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+}
+
+@media (max-width: 560px) {
+    .el-availability-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* One bordered trust rail instead of floating cards. */
 .el-trust-strip {
     display: grid;
