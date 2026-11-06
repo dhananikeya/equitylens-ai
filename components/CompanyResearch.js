@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const TABS = [
@@ -75,10 +75,65 @@ function DataStatus({ label, available, detail }) {
   );
 }
 
-export default function CompanyResearch({ company, research, companies }) {
+export default function CompanyResearch({ company, researchUrl }) {
   const router = useRouter();
   const [tab, setTab] = useState("Overview");
   const [query, setQuery] = useState("");
+  const [research, setResearch] = useState(null);
+  const [companies, setCompanies] = useState([]);
+  const [loadError, setLoadError] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+
+    Promise.all([
+      fetch(researchUrl).then((response) => {
+        if (!response.ok) throw new Error("Research bundle unavailable");
+        return response.json();
+      }),
+      fetch("/companies.json").then((response) => {
+        if (!response.ok) throw new Error("Company index unavailable");
+        return response.json();
+      }),
+    ])
+      .then(([researchPayload, companyIndex]) => {
+        if (cancelled) return;
+        setResearch(researchPayload);
+        setCompanies(companyIndex);
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setLoadError(
+            "Research data could not be loaded for this company."
+          );
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [researchUrl]);
+
+  if (!research && !loadError) {
+    return (
+      <main className="app-shell company-page">
+        <a className="brand-link" href="/">EquityLens AI</a>
+        <div className="research-loading">
+          <span className="loading-dot" />
+          Loading {company.ticker} research…
+        </div>
+      </main>
+    );
+  }
+
+  if (loadError) {
+    return (
+      <main className="app-shell company-page">
+        <a className="brand-link" href="/">EquityLens AI</a>
+        <div className="empty-state">{loadError}</div>
+      </main>
+    );
+  }
 
   const { metrics, quarterly, analysis, registration, sec, provenance } = research;
   const filings = sec?.filings || [];
