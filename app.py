@@ -4525,11 +4525,13 @@ company_s1 = {**generated_company_s1, **hand_company_s1}
 
 try:
     sec_summary = load_json("data/sec_summary.json")
+    sec_summary["_ready"] = True
 except (FileNotFoundError, json.JSONDecodeError):
     # The summary is produced by the SEC refresh workflow. Do not fall back to
     # the giant filing archive during startup; keeping the homepage lightweight
     # is more important than a temporary coverage counter during deployment.
     sec_summary = {
+        "_ready": False,
         "company_count": 0,
         "synced_companies": 0,
         "companies": {},
@@ -4959,7 +4961,11 @@ if active_destination == "Home":
     )
     homepage_proof[2].metric(
         "SEC filing feeds",
-        f"{sec_synced_companies:,}"
+        (
+            f"{sec_synced_companies:,}"
+            if sec_summary.get("_ready")
+            else "Updating"
+        )
     )
     homepage_proof[3].metric(
         "Structured research",
@@ -4998,7 +5004,11 @@ if active_destination == "Home":
         st.caption(
             f"{len(company_universe):,} companies · "
             f"{company_universe['Industry'].nunique():,} industries · "
-            f"{sec_synced_companies:,} companies with synced SEC filings"
+            (
+                f"{sec_synced_companies:,} companies with synced SEC filings"
+                if sec_summary.get("_ready")
+                else "SEC filing coverage index refreshing"
+            )
         )
         st.write(
             "Company coverage and completed research are different. "
