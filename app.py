@@ -52,6 +52,21 @@ from macro_data import (
     render_rates_ticker,
 )
 from ui_components import render_summary_cards, section
+from financial_utils import (
+    build_change_notes,
+    calc_growth,
+    calc_margin,
+    choose_income_period,
+    financial_period_label,
+    format_market_price,
+    format_market_volume,
+    format_money,
+    format_multiple,
+    market_return,
+    pct,
+    quarterly_metrics,
+    safe_float,
+)
 from views.home import render_home
 from views.filings import render_filings
 from views.learn import render_learn
@@ -1836,218 +1851,6 @@ def render_nyse_market_monitor(nyse_finviz):
             st.caption(
                 f'No displayed ticker matches "{heatmap_search}". Try a broader search or show more companies.'
             )
-
-
-def safe_float(value):
-    try:
-        if value in (None, ""):
-            return None
-        return float(value)
-    except (TypeError, ValueError):
-        return None
-
-
-def market_return(history, sessions):
-    if history is None or history.empty or len(history) <= sessions:
-        return None
-
-    latest = safe_float(history.iloc[-1].get("close"))
-    prior = safe_float(history.iloc[-(sessions + 1)].get("close"))
-
-    if latest is None or prior in (None, 0):
-        return None
-
-    return ((latest - prior) / prior) * 100
-
-
-def format_market_price(value):
-    number = safe_float(value)
-    return "$" + f"{number:,.2f}" if number is not None else "N/A"
-
-
-def format_market_volume(value):
-    number = safe_float(value)
-    if number is None:
-        return "N/A"
-    if number >= 1_000_000_000:
-        return f"{number / 1_000_000_000:.2f}B"
-    if number >= 1_000_000:
-        return f"{number / 1_000_000:.2f}M"
-    if number >= 1_000:
-        return f"{number / 1_000:.1f}K"
-    return f"{number:,.0f}"
-
-
-def format_money(value):
-    if value is None:
-        return "N/A"
-    sign = "-" if value < 0 else ""
-    value = abs(value)
-    if value >= 1_000_000_000:
-        return f"{sign}${value / 1_000_000_000:.2f}B"
-    if value >= 1_000_000:
-        return f"{sign}${value / 1_000_000:.1f}M"
-    return f"{sign}${value:,.0f}"
-
-
-def pct(value):
-    return f"{value:.1f}%" if value is not None else "N/A"
-
-
-def format_multiple(value):
-    return f"{value:.2f}x" if value is not None else "N/A"
-
-
-def calc_growth(current, prior):
-    if current is None or prior in (None, 0):
-        return None
-    return ((current - prior) / prior) * 100
-
-
-def calc_margin(profit, revenue):
-    if profit is None or revenue in (None, 0):
-        return None
-    return (profit / revenue) * 100
-
-
-def financial_period_label(record, default="Period unavailable"):
-    for field in ("period", "quarter_label", "period_end", "fiscal_year", "year", "quarter", "label"):
-        value = record.get(field)
-        if value not in (None, ""):
-            return str(value)
-    return default
-
-
-def choose_income_period(company, quarterly, fallback):
-    """Choose one income-statement record; never fill it from another period."""
-    latest_quarter = quarterly.get("latest_quarter", {})
-    structured_history = sorted(
-        [row for row in company.get("history", []) if row.get("fiscal_year") is not None],
-        key=lambda row: str(row["fiscal_year"]),
-    )
-    fallback_history = sorted(
-        [row for row in fallback.get("history", []) if row.get("fiscal_year") is not None],
-        key=lambda row: str(row["fiscal_year"]),
-    )
-    annual_history = structured_history or fallback_history
-    annual_source = "Structured annual company dataset" if structured_history else "Yahoo Finance annual statements"
-    if latest_quarter.get("revenue") is not None:
-        return {
-            "record": latest_quarter,
-            "period": quarterly.get("quarter_label") or quarterly.get("period_end") or financial_period_label(latest_quarter),
-            "source": "Structured quarterly company dataset",
-            "source_url": quarterly.get("source_filing"),
-            "growth": calc_growth(latest_quarter.get("revenue"), quarterly.get("prior_year_quarter", {}).get("revenue")),
-            "growth_basis": "Same quarter one year earlier",
-            "annual_history": annual_history,
-            "annual_source": annual_source,
-        }
-    if annual_history:
-        current = annual_history[-1]
-        prior = annual_history[-2] if len(annual_history) > 1 else {}
-        try:
-            consecutive = int(current["fiscal_year"]) - int(prior.get("fiscal_year")) == 1
-        except (TypeError, ValueError):
-            consecutive = False
-        return {
-            "record": current,
-            "period": financial_period_label(current),
-            "source": annual_source,
-            "source_url": company.get("filing_url") if structured_history else None,
-            "growth": calc_growth(current.get("revenue"), prior.get("revenue")) if consecutive else None,
-            "growth_basis": "Previous fiscal year" if consecutive else "Comparable prior year unavailable",
-            "annual_history": annual_history,
-            "annual_source": annual_source,
-        }
-    record = fallback.get("latest") or company
-    return {
-        "record": record,
-        "period": financial_period_label(record),
-        "source": "Yahoo Finance annual statements" if fallback.get("latest") else "Structured company dataset",
-        "source_url": None,
-        "growth": None,
-        "growth_basis": "Comparable prior period unavailable",
-        "annual_history": [],
-        "annual_source": annual_source,
-    }
-
-
-def quarterly_metrics(qdata):
-    latest = qdata.get("latest_quarter", {})
-    prior_q = qdata.get("prior_quarter", {})
-    prior_y = qdata.get("prior_year_quarter", {})
-
-    revenue = latest.get("revenue")
-    prior_q_revenue = prior_q.get("revenue")
-    prior_y_revenue = prior_y.get("revenue")
-
-    return {
-        "revenue": revenue,
-        "yoy_growth": calc_growth(revenue, prior_y_revenue),
-        "qoq_growth": calc_growth(revenue, prior_q_revenue),
-        "gross_margin": calc_margin(latest.get("gross_profit"), revenue),
-        "operating_margin": calc_margin(latest.get("operating_income"), revenue),
-        "net_margin": calc_margin(latest.get("net_income"), revenue),
-        "prior_q_operating_margin": calc_margin(
-            prior_q.get("operating_income"), prior_q_revenue
-        ),
-        "prior_y_operating_margin": calc_margin(
-            prior_y.get("operating_income"), prior_y_revenue
-        )
-    }
-
-
-def build_change_notes(qdata):
-    latest = qdata.get("latest_quarter", {})
-    prior_q = qdata.get("prior_quarter", {})
-    prior_y = qdata.get("prior_year_quarter", {})
-    m = quarterly_metrics(qdata)
-
-    notes = []
-
-    if m["qoq_growth"] is not None:
-        notes.append((
-            "Sequential revenue",
-            f"Revenue changed {m['qoq_growth']:+.1f}% from the prior quarter, "
-            f"from {format_money(prior_q.get('revenue'))} to {format_money(latest.get('revenue'))}."
-        ))
-
-    if m["yoy_growth"] is not None:
-        notes.append((
-            "Year-over-year revenue",
-            f"Revenue changed {m['yoy_growth']:+.1f}% from the same quarter a year earlier, "
-            f"from {format_money(prior_y.get('revenue'))} to {format_money(latest.get('revenue'))}."
-        ))
-
-    if m["operating_margin"] is not None and m["prior_q_operating_margin"] is not None:
-        delta = m["operating_margin"] - m["prior_q_operating_margin"]
-        notes.append((
-            "Operating margin",
-            f"Operating margin changed {delta:+.1f} percentage points sequentially, "
-            f"from {m['prior_q_operating_margin']:.1f}% to {m['operating_margin']:.1f}%."
-        ))
-
-    current_net = latest.get("net_income")
-    prior_net = prior_q.get("net_income")
-    if current_net is not None and prior_net is not None:
-        if prior_net < 0 <= current_net:
-            copy = (
-                f"Net income moved from a loss of {format_money(prior_net)} "
-                f"to profit of {format_money(current_net)}."
-            )
-        elif prior_net >= 0 > current_net:
-            copy = (
-                f"Net income moved from profit of {format_money(prior_net)} "
-                f"to a loss of {format_money(current_net)}."
-            )
-        else:
-            copy = (
-                f"Net income changed from {format_money(prior_net)} "
-                f"to {format_money(current_net)}."
-            )
-        notes.append(("Net income", copy))
-
-    return notes
 
 
 hand_company_data = load_json("data/company_metrics.json")
