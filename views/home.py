@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 
 from research_experience import render_home_discovery, render_watchlist
-from ui_components import section
+from ui_components import format_utc_timestamp, section
 
 
 def render_home(
@@ -118,10 +118,14 @@ def render_home(
             if sec_summary.get("_ready")
             else "SEC filing coverage index refreshing"
         )
+        sec_index_updated = format_utc_timestamp(
+            sec_summary.get("generated_at_utc"),
+            fallback="Refresh in progress",
+        )
         st.caption(
             f"{len(company_universe):,} companies · "
             f"{company_universe['Industry'].nunique():,} industries · "
-            f"{coverage_sec_copy}"
+            f"{coverage_sec_copy} · SEC index: {sec_index_updated}"
         )
         st.write(
             "Company coverage and completed research are different. "
@@ -174,8 +178,9 @@ def render_home(
             },
         )
         st.caption(
-            "The filing monitor checks covered companies automatically. Newly detected filings may appear "
-            "before EquityLens has standardized every financial or qualitative field from that filing."
+            "The filing monitor checks covered companies automatically. "
+            f"Coverage index generated: {format_utc_timestamp(sec_summary.get('generated_at_utc'))}. "
+            "Newly detected filings may appear before EquityLens has standardized every financial or qualitative field."
         )
     else:
         st.caption(
