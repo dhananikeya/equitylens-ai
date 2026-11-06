@@ -5001,14 +5001,15 @@ if active_destination == "Home":
             st.caption(description)
 
     with st.expander("Coverage & sources"):
+        coverage_sec_copy = (
+            f"{sec_synced_companies:,} companies with synced SEC filings"
+            if sec_summary.get("_ready")
+            else "SEC filing coverage index refreshing"
+        )
         st.caption(
             f"{len(company_universe):,} companies · "
             f"{company_universe['Industry'].nunique():,} industries · "
-            (
-                f"{sec_synced_companies:,} companies with synced SEC filings"
-                if sec_summary.get("_ready")
-                else "SEC filing coverage index refreshing"
-            )
+            f"{coverage_sec_copy}"
         )
         st.write(
             "Company coverage and completed research are different. "
