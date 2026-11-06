@@ -451,7 +451,10 @@ def render_filings(
         )
 
     if registration_error:
-        st.warning(registration_error)
+        st.info(
+            registration_error
+            + " The filing tracker above remains available from the synced archive."
+        )
         return
 
     registration_rows = registration_feed.get(
