@@ -52,6 +52,20 @@ const handS1 = indexByTicker(readJson("company_s1.json"));
 const generatedS1 = indexByTicker(readJson("generated_company_s1.json"));
 const sec = indexByTicker(readJson("sec_filings.json"));
 
+fs.writeFileSync(
+  path.join(root, "public", "companies.json"),
+  JSON.stringify(
+    universe
+      .map((row) => ({
+        ticker: String(row.Ticker || "").trim().toUpperCase(),
+        company: String(row.Company || "").trim(),
+        industry: String(row.Industry || "").trim(),
+      }))
+      .filter((row) => row.ticker && row.company)
+  ),
+  "utf8"
+);
+
 let written = 0;
 
 for (const row of universe) {
