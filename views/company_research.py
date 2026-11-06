@@ -141,9 +141,18 @@ def render_company_research(
         ].copy()
 
     search_text = workspace_search.strip()
-    search_pool = workspace_filtered.copy()
-    st.caption("Company search uses the sector and industry filters above.")
-    st.button("Reset filters", key="research_reset_filters", on_click=clear_company_filters)
+    # Text search always covers the full company universe. Sector/industry
+    # filters are browse controls and should never hide an exact ticker match.
+    search_pool = workspace_universe.copy()
+    st.caption(
+        "Company and ticker search checks the full EquityLens universe. "
+        "Sector and industry filters only narrow the browse list."
+    )
+    st.button(
+        "Reset filters",
+        key="research_reset_filters",
+        on_click=clear_company_filters,
+    )
     selected_workspace_row = None
 
     if search_text:
@@ -180,8 +189,12 @@ def render_company_research(
                     f"({selected_workspace_row['Ticker']}). Keep typing to narrow the result."
                 )
         else:
-            st.info(f'No company or ticker matched "{search_text}" within the current filters.')
-            st.caption("Check the spelling, try a ticker, or reset the filters to search all companies.")
+            st.info(
+                f'No company or ticker matched "{search_text}" in the current company universe.'
+            )
+            st.caption(
+                "Check the spelling or try the company ticker."
+            )
             save_rendered_choices()
             st.stop()
 
