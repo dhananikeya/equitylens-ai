@@ -13,6 +13,7 @@ def render_home(
     company_data,
     open_company_research,
     navigate_to,
+    research_link,
 ):
     st.markdown(
         f"""
@@ -146,6 +147,11 @@ def render_home(
             "Form": row.get("form", ""),
             "Description": row.get("description", ""),
             "SEC Filing": row.get("url", ""),
+            "Research": (
+                research_link(row.get("ticker", ""))
+                if row.get("ticker")
+                else ""
+            ),
         }
         for row in sec_summary.get("recent_filings", [])[:5]
         if row.get("filing_date")
@@ -160,6 +166,10 @@ def render_home(
                 "SEC Filing": st.column_config.LinkColumn(
                     "SEC Filing",
                     display_text="Open filing",
+                ),
+                "Research": st.column_config.LinkColumn(
+                    "Research",
+                    display_text="Open company research",
                 )
             },
         )
