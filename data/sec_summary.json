@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-07T01:53:09+00:00",
+  "generated_at_utc": "2026-11-07T07:59:34+00:00",
   "company_count": 517,
   "synced_companies": 517,
   "companies": {
@@ -2381,7 +2381,7 @@
       "registration_count": 3,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-06T02:41:02+00:00"
+      "last_checked_utc": "2026-11-07T07:59:34+00:00"
     },
     "DHI": {
       "ticker": "DHI",
@@ -3750,15 +3750,15 @@
       "has_filings": true,
       "latest_filing": {
         "form": "4",
-        "filing_date": "2026-11-03",
-        "report_date": "2026-11-03",
+        "filing_date": "2026-11-06",
+        "report_date": "2026-11-05",
         "description": "4",
-        "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526445964/xslF345X06/ownership.xml"
+        "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526452288/xslF345X06/ownership.xml"
       },
       "registration_count": 7,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-04T07:59:17+00:00"
+      "last_checked_utc": "2026-11-07T07:59:34+00:00"
     },
     "GS": {
       "ticker": "GS",

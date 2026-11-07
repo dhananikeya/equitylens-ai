@@ -55240,7 +55240,7 @@
     "sector": "Healthcare",
     "industry": "Diagnostics & Research",
     "country": "USA",
-    "last_checked_utc": "2026-11-06T02:41:02+00:00",
+    "last_checked_utc": "2026-11-07T07:59:34+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1022079&owner=exclude&action=getcompany",
     "filings": [
@@ -55261,7 +55261,7 @@
       {
         "form": "4",
         "filing_date": "2026-11-05",
-        "acceptance_datetime": "2026-11-05T19:05:25.000Z",
+        "acceptance_datetime": "2026-11-06T00:05:25.000Z",
         "report_date": "2026-11-03",
         "accession_number": "0001022079-26-000122",
         "primary_document": "xslF345X06/wk-form4_1793923522.xml",
@@ -86913,10 +86913,24 @@
     "sector": "Technology",
     "industry": "Scientific & Technical Instruments",
     "country": "Switzerland",
-    "last_checked_utc": "2026-11-04T07:59:17+00:00",
+    "last_checked_utc": "2026-11-07T07:59:34+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1121788&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "4",
+        "filing_date": "2026-11-06",
+        "acceptance_datetime": "2026-11-07T02:55:03.000Z",
+        "report_date": "2026-11-05",
+        "accession_number": "0001193125-26-452288",
+        "primary_document": "xslF345X06/ownership.xml",
+        "description": "4",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-11-07T07:59:34+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526452288/xslF345X06/ownership.xml"
+      },
       {
         "form": "4",
         "filing_date": "2026-11-03",
@@ -87252,20 +87266,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1121788/000101410826000035/xslF345X06/primary_doc.xml"
-      },
-      {
-        "form": "4/A",
-        "filing_date": "2026-06-09",
-        "acceptance_datetime": "2026-06-09T18:16:13.000Z",
-        "report_date": "2026-06-09",
-        "accession_number": "0001193125-26-263486",
-        "primary_document": "xslF345X06/ownership.xml",
-        "description": "4/A",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526263486/xslF345X06/ownership.xml"
       }
     ],
     "registration_filings": [
