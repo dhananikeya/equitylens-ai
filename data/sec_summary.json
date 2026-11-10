@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-10T03:30:32+00:00",
+  "generated_at_utc": "2026-11-10T11:44:56+00:00",
   "company_count": 517,
   "synced_companies": 517,
   "companies": {
@@ -111,16 +111,16 @@
       "entity_name": "Accenture plc",
       "has_filings": true,
       "latest_filing": {
-        "form": "4",
-        "filing_date": "2026-11-09",
-        "report_date": "2026-11-05",
-        "description": "FORM 4",
-        "url": "https://www.sec.gov/Archives/edgar/data/1467373/000191110926000020/xslF345X06/wk-form4_1794259178.xml"
+        "form": "SCHEDULE 13G",
+        "filing_date": "2026-11-10",
+        "report_date": "",
+        "description": "xslSCHEDULE_13G_X02/primary_doc.xml",
+        "url": "https://www.sec.gov/Archives/edgar/data/1467373/000009375126000604/xslSCHEDULE_13G_X02/primary_doc.xml"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-10T03:30:32+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "ADBE": {
       "ticker": "ADBE",
@@ -179,16 +179,16 @@
       "entity_name": "AUTOMATIC DATA PROCESSING INC",
       "has_filings": true,
       "latest_filing": {
-        "form": "4",
-        "filing_date": "2026-11-09",
-        "report_date": "2026-11-06",
-        "description": "xslF345X06/doc4.xml",
-        "url": "https://www.sec.gov/Archives/edgar/data/8670/000122520826008778/xslF345X06/doc4.xml"
+        "form": "SCHEDULE 13G",
+        "filing_date": "2026-11-10",
+        "report_date": "",
+        "description": "xslSCHEDULE_13G_X02/primary_doc.xml",
+        "url": "https://www.sec.gov/Archives/edgar/data/8670/000009375126000619/xslSCHEDULE_13G_X02/primary_doc.xml"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-10T03:30:32+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "ADSK": {
       "ticker": "ADSK",
@@ -366,16 +366,16 @@
       "entity_name": "ALBEMARLE CORP",
       "has_filings": true,
       "latest_filing": {
-        "form": "10-Q",
-        "filing_date": "2026-11-04",
-        "report_date": "2026-09-30",
-        "description": "10-Q",
-        "url": "https://www.sec.gov/Archives/edgar/data/915913/000091591326000129/alb-20260930.htm"
+        "form": "SCHEDULE 13G",
+        "filing_date": "2026-11-10",
+        "report_date": "",
+        "description": "xslSCHEDULE_13G_X02/primary_doc.xml",
+        "url": "https://www.sec.gov/Archives/edgar/data/915913/000009375126000606/xslSCHEDULE_13G_X02/primary_doc.xml"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-04T21:44:37+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "ALGN": {
       "ticker": "ALGN",
@@ -417,16 +417,16 @@
       "entity_name": "Allegion plc",
       "has_filings": true,
       "latest_filing": {
-        "form": "SCHEDULE 13G/A",
-        "filing_date": "2026-10-27",
+        "form": "SCHEDULE 13G",
+        "filing_date": "2026-11-10",
         "report_date": "",
         "description": "xslSCHEDULE_13G_X02/primary_doc.xml",
-        "url": "https://www.sec.gov/Archives/edgar/data/1579241/000201238326003728/xslSCHEDULE_13G_X02/primary_doc.xml"
+        "url": "https://www.sec.gov/Archives/edgar/data/1579241/000009375126000607/xslSCHEDULE_13G_X02/primary_doc.xml"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-10-27T22:56:04+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "ALNY": {
       "ticker": "ALNY",
@@ -842,16 +842,16 @@
       "entity_name": "Avery Dennison Corp",
       "has_filings": true,
       "latest_filing": {
-        "form": "4",
-        "filing_date": "2026-11-06",
-        "report_date": "2026-11-05",
-        "description": "PRIMARY DOCUMENT",
-        "url": "https://www.sec.gov/Archives/edgar/data/8818/000000881826000172/xslF345X06/form4.xml"
+        "form": "SCHEDULE 13G",
+        "filing_date": "2026-11-10",
+        "report_date": "",
+        "description": "xslSCHEDULE_13G_X02/primary_doc.xml",
+        "url": "https://www.sec.gov/Archives/edgar/data/8818/000009375126000621/xslSCHEDULE_13G_X02/primary_doc.xml"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-07T01:53:09+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "AWK": {
       "ticker": "AWK",
@@ -945,15 +945,15 @@
       "has_filings": true,
       "latest_filing": {
         "form": "424B2",
-        "filing_date": "2026-11-09",
+        "filing_date": "2026-11-10",
         "report_date": "",
         "description": "424B2",
-        "url": "https://www.sec.gov/Archives/edgar/data/70858/000191870426035123/form424b2.htm"
+        "url": "https://www.sec.gov/Archives/edgar/data/70858/000191870426035126/form424b2.htm"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-10T03:30:32+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "BALL": {
       "ticker": "BALL",
@@ -1097,16 +1097,16 @@
       "entity_name": "BIOGEN INC.",
       "has_filings": true,
       "latest_filing": {
-        "form": "4",
-        "filing_date": "2026-11-02",
-        "report_date": "2026-10-30",
-        "description": "PRIMARY DOCUMENT",
-        "url": "https://www.sec.gov/Archives/edgar/data/875045/000087504526000098/xslF345X06/form4.xml"
+        "form": "SCHEDULE 13G",
+        "filing_date": "2026-11-10",
+        "report_date": "",
+        "description": "xslSCHEDULE_13G_X02/primary_doc.xml",
+        "url": "https://www.sec.gov/Archives/edgar/data/875045/000009375126000623/xslSCHEDULE_13G_X02/primary_doc.xml"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-03T01:14:57+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "BKNG": {
       "ticker": "BKNG",
@@ -1301,16 +1301,16 @@
       "entity_name": "CITIGROUP INC",
       "has_filings": true,
       "latest_filing": {
-        "form": "8-A12B",
-        "filing_date": "2026-11-09",
+        "form": "424B2",
+        "filing_date": "2026-11-10",
         "report_date": "",
-        "description": "FORM 8-A12B",
-        "url": "https://www.sec.gov/Archives/edgar/data/831001/000095010326017175/dp256578_8a12b.htm"
+        "description": "PRELIMINARY PRICING SUPPLEMENT",
+        "url": "https://www.sec.gov/Archives/edgar/data/831001/000095010326017178/dp256539_424b2-us26s9781d.htm"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-10T03:30:32+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "CAH": {
       "ticker": "CAH",
@@ -2576,16 +2576,16 @@
       "entity_name": "Duke Energy CORP",
       "has_filings": true,
       "latest_filing": {
-        "form": "10-Q",
-        "filing_date": "2026-11-05",
-        "report_date": "2026-09-30",
-        "description": "FORM 10-Q",
-        "url": "https://www.sec.gov/Archives/edgar/data/1326160/000132616026000051/duk-20260930.htm"
+        "form": "8-K",
+        "filing_date": "2026-11-10",
+        "report_date": "2026-11-09",
+        "description": "FORM 8-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/1326160/000110465926124699/tm2629239d1_8k.htm"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-05T22:27:05+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "DVA": {
       "ticker": "DVA",
@@ -2814,16 +2814,16 @@
       "entity_name": "EMERSON ELECTRIC CO",
       "has_filings": true,
       "latest_filing": {
-        "form": "S-3ASR",
-        "filing_date": "2026-11-09",
+        "form": "424B5",
+        "filing_date": "2026-11-10",
         "report_date": "",
-        "description": "S-3ASR",
-        "url": "https://www.sec.gov/Archives/edgar/data/32604/000114036126042816/ny20084788x1_s3asr.htm"
+        "description": "424B5",
+        "url": "https://www.sec.gov/Archives/edgar/data/32604/000114036126042860/ny20084788x2_424b5.htm"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-10T03:30:32+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "EOG": {
       "ticker": "EOG",
@@ -2848,16 +2848,16 @@
       "entity_name": "EQUINIX INC",
       "has_filings": true,
       "latest_filing": {
-        "form": "4",
-        "filing_date": "2026-11-09",
-        "report_date": "2026-11-06",
-        "description": "PRIMARY DOCUMENT",
-        "url": "https://www.sec.gov/Archives/edgar/data/1101239/000110123926000181/xslF345X06/form4.xml"
+        "form": "8-A12B",
+        "filing_date": "2026-11-10",
+        "report_date": "",
+        "description": "FORM 8-A12B",
+        "url": "https://www.sec.gov/Archives/edgar/data/1101239/000110465926124628/tm2628000d10_8a12b.htm"
       },
       "registration_count": 3,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-10T03:30:32+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "EQT": {
       "ticker": "EQT",
@@ -3766,16 +3766,16 @@
       "entity_name": "GOLDMAN SACHS GROUP INC",
       "has_filings": true,
       "latest_filing": {
-        "form": "SCHEDULE 13G/A",
-        "filing_date": "2026-11-09",
+        "form": "424B2",
+        "filing_date": "2026-11-10",
         "report_date": "",
-        "description": "xslSCHEDULE_13G_X02/primary_doc.xml",
-        "url": "https://www.sec.gov/Archives/edgar/data/886982/000088698226000597/xslSCHEDULE_13G_X02/primary_doc.xml"
+        "description": "424B2",
+        "url": "https://www.sec.gov/Archives/edgar/data/886982/000119312526454150/bske0034_prelim.htm"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-10T03:30:32+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "GWW": {
       "ticker": "GWW",
@@ -4566,15 +4566,15 @@
       "has_filings": true,
       "latest_filing": {
         "form": "424B2",
-        "filing_date": "2026-11-09",
+        "filing_date": "2026-11-10",
         "report_date": "",
         "description": "PRELIMINARY PRICING SUPPLEMENT",
-        "url": "https://www.sec.gov/Archives/edgar/data/19617/000121390026117630/ea0311518-01_424b2.htm"
+        "url": "https://www.sec.gov/Archives/edgar/data/19617/000121390026117685/ea0311606-01_424b2.htm"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-10T03:30:32+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "KDP": {
       "ticker": "KDP",
@@ -5279,16 +5279,16 @@
       "entity_name": "METLIFE INC",
       "has_filings": true,
       "latest_filing": {
-        "form": "10-Q",
-        "filing_date": "2026-11-06",
-        "report_date": "2026-09-30",
-        "description": "10-Q",
-        "url": "https://www.sec.gov/Archives/edgar/data/1099219/000109921926000062/met-20260930.htm"
+        "form": "8-K",
+        "filing_date": "2026-11-10",
+        "report_date": "2026-11-09",
+        "description": "8-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/1099219/000119312526454038/d155870d8k.htm"
       },
       "registration_count": 9,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-06T17:01:22+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "META": {
       "ticker": "META",
@@ -5535,15 +5535,15 @@
       "has_filings": true,
       "latest_filing": {
         "form": "424B2",
-        "filing_date": "2026-11-09",
+        "filing_date": "2026-11-10",
         "report_date": "",
-        "description": "PRICING SUPPLEMENT NO. 19,900",
-        "url": "https://www.sec.gov/Archives/edgar/data/895421/000183988226055774/ms19900_424b2-37930.htm"
+        "description": "AMENDMENT NO. 1 DATED NOVEMBER 9, 2026 RELATING TO PRELIMINARY PRICING SUPPLEMEN",
+        "url": "https://www.sec.gov/Archives/edgar/data/895421/000183988226055793/ms19949_424b2-38098.htm"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-10T03:30:32+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "MSCI": {
       "ticker": "MSCI",
@@ -5977,15 +5977,15 @@
       "has_filings": true,
       "latest_filing": {
         "form": "8-K",
-        "filing_date": "2026-11-09",
-        "report_date": "2026-11-06",
+        "filing_date": "2026-11-10",
+        "report_date": "2026-11-09",
         "description": "8-K",
-        "url": "https://www.sec.gov/Archives/edgar/data/1564708/000156470826000256/nws-20261106.htm"
+        "url": "https://www.sec.gov/Archives/edgar/data/1564708/000156470826000257/nws-20261109.htm"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-09T21:03:53+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "NWSA": {
       "ticker": "NWSA",
@@ -5994,15 +5994,15 @@
       "has_filings": true,
       "latest_filing": {
         "form": "8-K",
-        "filing_date": "2026-11-09",
-        "report_date": "2026-11-06",
+        "filing_date": "2026-11-10",
+        "report_date": "2026-11-09",
         "description": "8-K",
-        "url": "https://www.sec.gov/Archives/edgar/data/1564708/000156470826000256/nws-20261106.htm"
+        "url": "https://www.sec.gov/Archives/edgar/data/1564708/000156470826000257/nws-20261109.htm"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-09T21:03:53+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "NXPI": {
       "ticker": "NXPI",
@@ -7047,16 +7047,16 @@
       "entity_name": "SCHWAB CHARLES CORP",
       "has_filings": true,
       "latest_filing": {
-        "form": "144",
-        "filing_date": "2026-11-09",
+        "form": "FWP",
+        "filing_date": "2026-11-10",
         "report_date": "",
-        "description": "xsl144X01/primary_doc.xml",
-        "url": "https://www.sec.gov/Archives/edgar/data/316709/000194984626000647/xsl144X01/primary_doc.xml"
+        "description": "FWP",
+        "url": "https://www.sec.gov/Archives/edgar/data/316709/000119312526454139/d149523dfwp.htm"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-09T21:03:53+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "SHOP": {
       "ticker": "SHOP",
@@ -7336,16 +7336,16 @@
       "entity_name": "STATE STREET CORP",
       "has_filings": true,
       "latest_filing": {
-        "form": "10-Q",
-        "filing_date": "2026-10-28",
-        "report_date": "2026-09-30",
-        "description": "10-Q",
-        "url": "https://www.sec.gov/Archives/edgar/data/93751/000009375126000600/stt-20260930.htm"
+        "form": "SCHEDULE 13G",
+        "filing_date": "2026-11-10",
+        "report_date": "",
+        "description": "xslSCHEDULE_13G_X02/primary_doc.xml",
+        "url": "https://www.sec.gov/Archives/edgar/data/93751/000009375126000624/xslSCHEDULE_13G_X02/primary_doc.xml"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-10-28T23:42:57+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "STX": {
       "ticker": "STX",
@@ -7438,16 +7438,16 @@
       "entity_name": "Synchrony Financial",
       "has_filings": true,
       "latest_filing": {
-        "form": "10-Q",
-        "filing_date": "2026-10-22",
-        "report_date": "2026-09-30",
-        "description": "10-Q",
-        "url": "https://www.sec.gov/Archives/edgar/data/1601712/000160171226000043/syf-20260930.htm"
+        "form": "8-K",
+        "filing_date": "2026-11-10",
+        "report_date": "2026-11-10",
+        "description": "8-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/1601712/000160171226000045/syf-20261110.htm"
       },
       "registration_count": 9,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-10-24T19:12:37+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "SYK": {
       "ticker": "SYK",
@@ -7506,16 +7506,16 @@
       "entity_name": "TransDigm Group INC",
       "has_filings": true,
       "latest_filing": {
-        "form": "4",
-        "filing_date": "2026-11-05",
-        "report_date": "2026-11-03",
-        "description": "PRIMARY DOCUMENT",
-        "url": "https://www.sec.gov/Archives/edgar/data/1260221/000174827526000001/xslF345X06/primarydocument.xml"
+        "form": "8-K",
+        "filing_date": "2026-11-10",
+        "report_date": "2026-11-10",
+        "description": "8-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/1260221/000126022126000073/tdg-20261110.htm"
       },
       "registration_count": 4,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-05T22:27:05+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "TDY": {
       "ticker": "TDY",
@@ -8492,16 +8492,16 @@
       "entity_name": "WELLS FARGO & COMPANY/MN",
       "has_filings": true,
       "latest_filing": {
-        "form": "FWP",
-        "filing_date": "2026-11-09",
+        "form": "424B2",
+        "filing_date": "2026-11-10",
         "report_date": "",
-        "description": "TERM SHEET TO PRELIMINARY PRICING SUPPLEMENT NO. 385",
-        "url": "https://www.sec.gov/Archives/edgar/data/72971/000183988226055781/r10951wfc_fwp-38076.htm"
+        "description": "PRELIMINARY PRICING SUPPLEMENT NO. 387",
+        "url": "https://www.sec.gov/Archives/edgar/data/72971/000183988226055795/r10953wfc_424b2-38094.htm"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-10T03:30:32+00:00"
+      "last_checked_utc": "2026-11-10T11:44:56+00:00"
     },
     "WM": {
       "ticker": "WM",
@@ -8795,6 +8795,60 @@
   },
   "recent_filings": [
     {
+      "ticker": "DUK",
+      "company": "Duke Energy CORP",
+      "form": "8-K",
+      "filing_date": "2026-11-10",
+      "report_date": "2026-11-09",
+      "description": "FORM 8-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1326160/000110465926124699/tm2629239d1_8k.htm"
+    },
+    {
+      "ticker": "MET",
+      "company": "METLIFE INC",
+      "form": "8-K",
+      "filing_date": "2026-11-10",
+      "report_date": "2026-11-09",
+      "description": "8-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1099219/000119312526454038/d155870d8k.htm"
+    },
+    {
+      "ticker": "NWS",
+      "company": "NEWS CORP",
+      "form": "8-K",
+      "filing_date": "2026-11-10",
+      "report_date": "2026-11-09",
+      "description": "8-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1564708/000156470826000257/nws-20261109.htm"
+    },
+    {
+      "ticker": "NWSA",
+      "company": "NEWS CORP",
+      "form": "8-K",
+      "filing_date": "2026-11-10",
+      "report_date": "2026-11-09",
+      "description": "8-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1564708/000156470826000257/nws-20261109.htm"
+    },
+    {
+      "ticker": "SYF",
+      "company": "Synchrony Financial",
+      "form": "8-K",
+      "filing_date": "2026-11-10",
+      "report_date": "2026-11-10",
+      "description": "8-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1601712/000160171226000045/syf-20261110.htm"
+    },
+    {
+      "ticker": "TDG",
+      "company": "TransDigm Group INC",
+      "form": "8-K",
+      "filing_date": "2026-11-10",
+      "report_date": "2026-11-10",
+      "description": "8-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1260221/000126022126000073/tdg-20261110.htm"
+    },
+    {
       "ticker": "AAPL",
       "company": "Apple Inc.",
       "form": "8-K",
@@ -8964,60 +9018,6 @@
       "report_date": "2026-11-06",
       "description": "8-K/A",
       "url": "https://www.sec.gov/Archives/edgar/data/1754301/000119312526452778/d85827d8ka.htm"
-    },
-    {
-      "ticker": "GPC",
-      "company": "GENUINE PARTS CO",
-      "form": "8-K",
-      "filing_date": "2026-11-09",
-      "report_date": "2026-11-09",
-      "description": "8-K",
-      "url": "https://www.sec.gov/Archives/edgar/data/40987/000004098726000043/gpc-20261109.htm"
-    },
-    {
-      "ticker": "HUM",
-      "company": "HUMANA INC",
-      "form": "8-K",
-      "filing_date": "2026-11-09",
-      "report_date": "2026-11-09",
-      "description": "8-K",
-      "url": "https://www.sec.gov/Archives/edgar/data/49071/000004907126000068/hum-20261109.htm"
-    },
-    {
-      "ticker": "KDP",
-      "company": "Keurig Dr Pepper Inc.",
-      "form": "10-Q",
-      "filing_date": "2026-11-09",
-      "report_date": "2026-09-30",
-      "description": "10-Q",
-      "url": "https://www.sec.gov/Archives/edgar/data/1418135/000141813526000066/kdp-20260930.htm"
-    },
-    {
-      "ticker": "KKR",
-      "company": "KKR & Co. Inc.",
-      "form": "10-Q",
-      "filing_date": "2026-11-09",
-      "report_date": "2026-09-30",
-      "description": "10-Q",
-      "url": "https://www.sec.gov/Archives/edgar/data/1404912/000140491226000034/kkr-20260930.htm"
-    },
-    {
-      "ticker": "KKR",
-      "company": "KKR & Co. Inc.",
-      "form": "8-K",
-      "filing_date": "2026-11-09",
-      "report_date": "2026-11-09",
-      "description": "8-K",
-      "url": "https://www.sec.gov/Archives/edgar/data/1404912/000140491226000030/kkr-20261109.htm"
-    },
-    {
-      "ticker": "MSTR",
-      "company": "Strategy Inc",
-      "form": "8-K",
-      "filing_date": "2026-11-09",
-      "report_date": "2026-11-09",
-      "description": "8-K",
-      "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526452693/mstr-20261109.htm"
     }
   ]
 }
