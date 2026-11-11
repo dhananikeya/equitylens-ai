@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-11T03:45:05+00:00",
+  "generated_at_utc": "2026-11-11T11:28:07+00:00",
   "company_count": 517,
   "synced_companies": 517,
   "companies": {
@@ -5849,7 +5849,7 @@
       "registration_count": 7,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-11T03:45:05+00:00"
+      "last_checked_utc": "2026-11-11T11:28:07+00:00"
     },
     "NRG": {
       "ticker": "NRG",
@@ -7957,7 +7957,7 @@
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-11T03:45:05+00:00"
+      "last_checked_utc": "2026-11-11T11:28:07+00:00"
     },
     "UBER": {
       "ticker": "UBER",

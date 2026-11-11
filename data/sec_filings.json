@@ -135064,7 +135064,7 @@
     "sector": "Technology",
     "industry": "Software - Application",
     "country": "USA",
-    "last_checked_utc": "2026-11-11T03:45:05+00:00",
+    "last_checked_utc": "2026-11-11T11:28:07+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1373715&owner=exclude&action=getcompany",
     "filings": [
@@ -135085,7 +135085,7 @@
       {
         "form": "4",
         "filing_date": "2026-11-10",
-        "acceptance_datetime": "2026-11-10T19:53:26.000Z",
+        "acceptance_datetime": "2026-11-11T00:53:26.000Z",
         "report_date": "2026-11-06",
         "accession_number": "0001667422-26-000040",
         "primary_document": "xslF345X06/wk-form4_1794358403.xml",
@@ -135099,7 +135099,7 @@
       {
         "form": "4",
         "filing_date": "2026-11-10",
-        "acceptance_datetime": "2026-11-10T19:53:20.000Z",
+        "acceptance_datetime": "2026-11-11T00:53:20.000Z",
         "report_date": "2026-11-06",
         "accession_number": "0001781064-26-000022",
         "primary_document": "xslF345X06/wk-form4_1794358398.xml",
@@ -135109,6 +135109,20 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-11-11T03:45:05+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1373715/000178106426000022/xslF345X06/wk-form4_1794358398.xml"
+      },
+      {
+        "form": "4",
+        "filing_date": "2026-11-10",
+        "acceptance_datetime": "2026-11-11T00:53:13.000Z",
+        "report_date": "2026-11-06",
+        "accession_number": "0001465391-26-000034",
+        "primary_document": "xslF345X06/wk-form4_1794358391.xml",
+        "description": "FORM 4",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-11-11T03:45:05+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1373715/000146539126000034/xslF345X06/wk-form4_1794358391.xml"
       },
       {
         "form": "4",
@@ -135137,20 +135151,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-11-11T03:45:05+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1373715/000133494426000038/xslF345X06/wk-form4_1794358379.xml"
-      },
-      {
-        "form": "4",
-        "filing_date": "2026-11-10",
-        "acceptance_datetime": "2026-11-10T19:53:13.000Z",
-        "report_date": "2026-11-06",
-        "accession_number": "0001465391-26-000034",
-        "primary_document": "xslF345X06/wk-form4_1794358391.xml",
-        "description": "FORM 4",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-11-11T03:45:05+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1373715/000146539126000034/xslF345X06/wk-form4_1794358391.xml"
       },
       {
         "form": "144",
@@ -183244,7 +183244,7 @@
     "sector": "Industrials",
     "industry": "Airlines",
     "country": "USA",
-    "last_checked_utc": "2026-11-11T03:45:05+00:00",
+    "last_checked_utc": "2026-11-11T11:28:07+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=100517&owner=exclude&action=getcompany",
     "filings": [
@@ -183293,7 +183293,7 @@
       {
         "form": "4",
         "filing_date": "2026-11-10",
-        "acceptance_datetime": "2026-11-10T21:45:31.000Z",
+        "acceptance_datetime": "2026-11-11T02:45:31.000Z",
         "report_date": "2026-11-09",
         "accession_number": "0000100517-26-000200",
         "primary_document": "xslF345X06/wk-form4_1794365128.xml",
