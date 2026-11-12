@@ -46,6 +46,26 @@ export default async function CompanyResearchPage({
   const risks: string[] = Array.isArray(analysis?.key_risk_themes)
     ? analysis.key_risk_themes
     : [];
+  const annualHistory = Array.isArray(metrics?.history) ? metrics.history : [];
+  const completenessChecks = [
+    Boolean(metrics?.revenue),
+    Boolean(quarterly?.latest_quarter),
+    Boolean(analysis?.business_model),
+    risks.length > 0,
+    Boolean(sec?.has_filings),
+    Boolean(cap?.shares_outstanding || cap?.total_debt || cap?.cash_and_investments)
+  ];
+  const completeness = Math.round(
+    (completenessChecks.filter(Boolean).length / completenessChecks.length) * 100
+  );
+  const revenueMax = Math.max(
+    1,
+    ...annualHistory.map((item: any) => Math.abs(Number(item?.revenue) || 0))
+  );
+  const operatingMax = Math.max(
+    1,
+    ...annualHistory.map((item: any) => Math.abs(Number(item?.operating_income) || 0))
+  );
 
   return (
     <main className="shell research-page">
@@ -72,6 +92,28 @@ export default async function CompanyResearchPage({
         </div>
       </section>
 
+      <nav className="research-jumps" aria-label="Company research sections">
+        <a href="#overview">Overview</a>
+        <a href="#business">Business</a>
+        <a href="#financials">Financials</a>
+        <a href="#risks">Risks</a>
+        <a href="#filings">SEC evidence</a>
+      </nav>
+
+      <section className="coverage-strip" id="overview">
+        <div>
+          <span>Research completeness</span>
+          <strong>{completeness}%</strong>
+        </div>
+        <div className="coverage-meter" aria-label={`${completeness}% research completeness`}>
+          <span style={{ width: `${completeness}%` }} />
+        </div>
+        <p>
+          Completeness reflects currently available structured financials, business context,
+          risks, SEC evidence, and capital-structure coverage. Missing data is shown explicitly.
+        </p>
+      </section>
+
       <section className="metric-grid">
         <article className="metric-card">
           <span>Annual revenue</span>
@@ -96,7 +138,7 @@ export default async function CompanyResearchPage({
       </section>
 
       <div className="research-grid">
-        <section className="research-panel wide">
+        <section className="research-panel wide" id="business">
           <div className="panel-heading">
             <div>
               <p className="eyebrow">BUSINESS</p>
@@ -112,7 +154,7 @@ export default async function CompanyResearchPage({
           </div>
         </section>
 
-        <section className="research-panel">
+        <section className="research-panel" id="financials">
           <div className="panel-heading">
             <div><p className="eyebrow">FINANCIALS</p><h2>Reported performance</h2></div>
             {sourceLink(quarterly?.source_filing || metrics?.filing_url)}
@@ -127,7 +169,7 @@ export default async function CompanyResearchPage({
           </dl>
         </section>
 
-        <section className="research-panel">
+        <section className="research-panel" id="risks">
           <div className="panel-heading">
             <div><p className="eyebrow">RISK</p><h2>Key filing themes</h2></div>
             {sourceLink(analysis?.source_filing)}
@@ -141,7 +183,42 @@ export default async function CompanyResearchPage({
           {analysis?.operational_risk && <div className="research-note"><strong>Operations</strong><p>{analysis.operational_risk}</p></div>}
         </section>
 
-        <section className="research-panel wide">
+        {annualHistory.length > 1 && (
+          <section className="research-panel wide">
+            <div className="panel-heading">
+              <div><p className="eyebrow">TREND</p><h2>Annual operating history</h2></div>
+              {sourceLink(metrics?.filing_url)}
+            </div>
+            <div className="trend-grid">
+              <div>
+                <h3>Revenue</h3>
+                <div className="trend-bars">
+                  {annualHistory.map((item: any) => (
+                    <div className="trend-row" key={`revenue-${item.fiscal_year}`}>
+                      <span>FY {item.fiscal_year}</span>
+                      <div><i style={{ width: `${Math.max(3, Math.abs(Number(item.revenue) || 0) / revenueMax * 100)}%` }} /></div>
+                      <strong>{money(item.revenue)}</strong>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h3>Operating income</h3>
+                <div className="trend-bars">
+                  {annualHistory.map((item: any) => (
+                    <div className="trend-row" key={`operating-${item.fiscal_year}`}>
+                      <span>FY {item.fiscal_year}</span>
+                      <div><i className={Number(item.operating_income) < 0 ? "negative" : ""} style={{ width: `${Math.max(3, Math.abs(Number(item.operating_income) || 0) / operatingMax * 100)}%` }} /></div>
+                      <strong>{money(item.operating_income)}</strong>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        <section className="research-panel wide" id="filings">
           <div className="panel-heading">
             <div><p className="eyebrow">SEC EVIDENCE</p><h2>Latest filing record</h2></div>
             {sourceLink(sec?.latest_filing?.url, "Open latest SEC filing")}
