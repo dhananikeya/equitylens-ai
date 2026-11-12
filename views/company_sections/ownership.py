@@ -3,6 +3,7 @@ import streamlit as st
 
 from financial_utils import format_money, safe_float
 from market_data import get_company_ownership_data
+from sources import source_label
 from ui_components import section
 
 
@@ -400,7 +401,10 @@ def render_ownership(
         )
 
     st.caption(
-        "Source hierarchy: company/SEC filings for capital structure and beneficial-ownership disclosures; "
-        "Yahoo Finance via yfinance for supplemental institutional and fund-holder tables. "
+        "Source hierarchy: "
+        + source_label("SEC")
+        + " for capital structure and beneficial-ownership disclosures; "
+        + source_label("Yahoo")
+        + " for supplemental institutional and fund-holder tables. "
         "A 13D/13G, proxy filing, and third-party holder table can represent different dates and ownership concepts."
     )
