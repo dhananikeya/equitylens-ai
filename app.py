@@ -7,6 +7,7 @@
 # company names, and trademarks remain subject to their respective rights and terms.
 
 import json
+import time
 from urllib.parse import urlencode
 
 import pandas as pd
@@ -22,6 +23,29 @@ st.set_page_config(
     page_icon="📊",
     layout="wide"
 )
+
+_app_run_started = time.perf_counter()
+
+
+def _timed_render(page_name, render_callable):
+    """Record server-side render duration for one top-level destination."""
+    started = time.perf_counter()
+    try:
+        return render_callable()
+    finally:
+        elapsed_ms = (time.perf_counter() - started) * 1000
+        timings = st.session_state.setdefault(
+            "equitylens_page_timings",
+            {},
+        )
+        history = list(timings.get(page_name, []))
+        history.append(round(elapsed_ms, 1))
+        timings[page_name] = history[-20:]
+        st.session_state["equitylens_page_timings"] = timings
+        st.session_state["equitylens_last_page_timing"] = {
+            "page": page_name,
+            "milliseconds": round(elapsed_ms, 1),
+        }
 
 st.markdown(
     """
@@ -2265,7 +2289,9 @@ deep_research_tickers = {
 deep_research_tickers.discard("")
 
 if active_destination == "Home":
-    render_home(
+    _timed_render(
+        "Home",
+        lambda: render_home(
         company_universe=company_universe,
         sec_synced_companies=sec_synced_companies,
         sec_summary=sec_summary,
@@ -2274,13 +2300,16 @@ if active_destination == "Home":
         open_company_research=open_company_research,
         navigate_to=navigate_to,
         research_link=research_link,
+        ),
     )
 
 
 if active_destination == "Industry Comparison":
     from views.industry_comparison import render_industry_comparison
 
-    render_industry_comparison(
+    _timed_render(
+        "Industry Comparison",
+        lambda: render_industry_comparison(
         industries=industries,
         company_data=company_data,
         subgroups=SUBGROUPS,
@@ -2291,13 +2320,16 @@ if active_destination == "Industry Comparison":
         remember_choice=remember_choice,
         company_universe=company_universe,
         research_link=research_link,
+        ),
     )
 
 
 if active_destination == "Company Research":
     from views.company_research import render_company_research
 
-    render_company_research(
+    _timed_render(
+        "Company Research",
+        lambda: render_company_research(
         workspace_universe=workspace_universe,
         company_data=company_data,
         company_analysis=company_analysis,
@@ -2317,19 +2349,23 @@ if active_destination == "Company Research":
         research_link=research_link,
         save_rendered_choices=save_rendered_choices,
         navigate_to=navigate_to,
+        ),
     )
 
 
 if active_destination == "Market Monitor":
     from views.market_monitor import render_market_monitor
 
-    render_market_monitor(
+    _timed_render(
+        "Market Monitor",
+        lambda: render_market_monitor(
         public_finviz_data_enabled=public_finviz_data_enabled,
         industries=industries,
         company_data=company_data,
         sec_summary=sec_summary,
         workspace_known_tickers=workspace_known_tickers,
         research_link=research_link,
+        ),
     )
 
 
@@ -2337,10 +2373,13 @@ if active_destination == "Filings":
     from sec_data import get_sec_company_research
     from views.filings import render_filings
 
-    render_filings(
+    _timed_render(
+        "Filings",
+        lambda: render_filings(
         company_universe=company_universe,
         load_sec_filings=load_sec_filings,
         get_sec_company_research=get_sec_company_research,
+        ),
     )
 
 
@@ -2351,6 +2390,52 @@ if active_destination == "Learn":
 
 
 save_rendered_choices()
+
+_app_run_elapsed_ms = round(
+    (time.perf_counter() - _app_run_started) * 1000,
+    1,
+)
+st.session_state["equitylens_last_rerun_ms"] = _app_run_elapsed_ms
+
+_debug_flag = str(
+    st.query_params.get("debug", "")
+).strip().lower()
+if _debug_flag in {"1", "true", "yes"}:
+    with st.expander("Developer performance diagnostics"):
+        timings = st.session_state.get(
+            "equitylens_page_timings",
+            {},
+        )
+        rows = []
+        for page_name, samples in sorted(timings.items()):
+            if not samples:
+                continue
+            rows.append({
+                "Page": page_name,
+                "Last render (ms)": samples[-1],
+                "Average (ms)": round(
+                    sum(samples) / len(samples),
+                    1,
+                ),
+                "Fastest (ms)": min(samples),
+                "Slowest (ms)": max(samples),
+                "Samples": len(samples),
+            })
+        if rows:
+            st.dataframe(
+                pd.DataFrame(rows),
+                use_container_width=True,
+                hide_index=True,
+            )
+        else:
+            st.caption(
+                "Navigate to a page to collect timing samples."
+            )
+        st.caption(
+            f"Current full Streamlit rerun: {_app_run_elapsed_ms:,.1f} ms · "
+            "Server-side timing only; browser/network paint time is not included."
+        )
+
 
 st.markdown(
     """
