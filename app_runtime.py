@@ -5,7 +5,10 @@ import re
 import pandas as pd
 import streamlit as st
 
-from research_data import index_dataset_by_ticker
+from research_data import (
+    index_dataset_by_ticker,
+    merge_research_records,
+)
 
 
 @st.cache_data(show_spinner=False)
@@ -69,9 +72,43 @@ def load_research_datasets():
         "data/generated_company_s1.json"
     )
 
-    analysis = {**generated_analysis, **hand_analysis}
-    quarterly = {**generated_quarterly, **hand_quarterly}
-    s1 = {**generated_s1, **hand_s1}
+    def merge_keyed(generated, curated):
+        merged = {
+            key: (
+                dict(value)
+                if isinstance(value, dict)
+                else value
+            )
+            for key, value in generated.items()
+        }
+        for key, value in curated.items():
+            if (
+                key in merged
+                and isinstance(merged[key], dict)
+                and isinstance(value, dict)
+            ):
+                merged[key] = (
+                    merge_research_records(
+                        merged[key],
+                        value,
+                    )
+                )
+            else:
+                merged[key] = value
+        return merged
+
+    analysis = merge_keyed(
+        generated_analysis,
+        hand_analysis,
+    )
+    quarterly = merge_keyed(
+        generated_quarterly,
+        hand_quarterly,
+    )
+    s1 = merge_keyed(
+        generated_s1,
+        hand_s1,
+    )
 
     return {
         "analysis": analysis,
@@ -94,7 +131,22 @@ def load_startup_company_data():
     generated = load_json(
         "data/generated_company_metrics.json"
     )
-    return {**generated, **hand}
+    merged = dict(generated)
+    for key, value in hand.items():
+        if (
+            key in merged
+            and isinstance(merged[key], dict)
+            and isinstance(value, dict)
+        ):
+            merged[key] = (
+                merge_research_records(
+                    merged[key],
+                    value,
+                )
+            )
+        else:
+            merged[key] = value
+    return merged
 
 
 @st.cache_data(show_spinner=False)
