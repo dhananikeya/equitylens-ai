@@ -1778,6 +1778,32 @@ def load_sec_filings():
     return load_json("data/sec_filings.json")
 
 
+@st.cache_data(show_spinner=False)
+def load_sec_company(ticker, company_key=""):
+    """Load one company's local SEC shard without opening the full archive.
+
+    During the migration window, fall back to the legacy monolithic archive if
+    the per-company shard has not been generated yet.
+    """
+    safe_ticker = re.sub(
+        r"[^A-Z0-9.\-]",
+        "",
+        str(ticker or "").upper().strip(),
+    )
+    if safe_ticker:
+        try:
+            return load_json(f"data/sec_companies/{safe_ticker}.json")
+        except (FileNotFoundError, json.JSONDecodeError):
+            pass
+
+    if company_key:
+        try:
+            return load_sec_filings().get(company_key, {})
+        except (FileNotFoundError, json.JSONDecodeError):
+            return {}
+    return {}
+
+
 hand_company_data = load_json("data/company_metrics.json")
 hand_company_analysis = load_json("data/company_analysis.json")
 hand_company_quarterly = load_json("data/company_quarterly.json")
@@ -2242,7 +2268,7 @@ if active_destination == "Company Research":
         _quarterly_by_ticker=_quarterly_by_ticker,
         _s1_by_ticker=_s1_by_ticker,
         industries=industries,
-        load_sec_filings=load_sec_filings,
+        load_sec_company=load_sec_company,
         open_company_research=open_company_research,
         reset_coverage_selection=reset_coverage_selection,
         remember_choice=remember_choice,
