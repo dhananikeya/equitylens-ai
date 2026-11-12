@@ -2443,6 +2443,7 @@ if active_destination == "Filings":
         company_universe=company_universe,
         load_sec_filings=load_sec_filings,
         get_sec_company_research=get_sec_company_research,
+        sec_summary=sec_summary,
         ),
     )
 
