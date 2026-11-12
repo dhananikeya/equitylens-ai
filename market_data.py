@@ -7,57 +7,137 @@ import streamlit as st
 import yfinance as yf
 
 
+def _quote_from_history(symbol, history, retrieved_at):
+    """Normalize one symbol's OHLCV history into the EquityLens quote shape."""
+    if history is None or history.empty or "Close" not in history.columns:
+        return None
+
+    usable = history.dropna(subset=["Close"])
+    if usable.empty:
+        return None
+
+    latest = usable.iloc[-1]
+    previous_close = (
+        float(usable.iloc[-2]["Close"])
+        if len(usable) >= 2 and pd.notna(usable.iloc[-2]["Close"])
+        else None
+    )
+    close = (
+        float(latest["Close"])
+        if pd.notna(latest.get("Close"))
+        else None
+    )
+    open_price = (
+        float(latest["Open"])
+        if pd.notna(latest.get("Open"))
+        else None
+    )
+    volume = (
+        float(latest["Volume"])
+        if pd.notna(latest.get("Volume"))
+        else None
+    )
+
+    percent_change = None
+    if close is not None and previous_close not in (None, 0):
+        percent_change = (
+            (close - previous_close) / previous_close
+        ) * 100
+
+    return {
+        "symbol": symbol,
+        "close": close,
+        "open": open_price,
+        "previous_close": previous_close,
+        "percent_change": percent_change,
+        "quote_session": pd.Timestamp(
+            usable.index[-1]
+        ).date().isoformat(),
+        "retrieved_at": retrieved_at,
+        "volume": volume,
+    }
+
+
 @st.cache_data(ttl=300)
-def get_live_market_data(symbols):
-    """Fetch current-ish quote data from Yahoo Finance via yfinance."""
-    symbols = [str(symbol).strip().upper() for symbol in symbols if symbol]
+def _get_live_market_data_cached(symbols):
+    """Fetch one canonical symbol tuple in a single Yahoo request when possible."""
+    symbols = tuple(symbols)
     if not symbols:
         return {}
 
+    retrieved_at = datetime.now(timezone.utc).isoformat()
     quotes = {}
-    for symbol in symbols:
+
+    try:
+        downloaded = yf.download(
+            tickers=list(symbols),
+            period="5d",
+            interval="1d",
+            auto_adjust=False,
+            group_by="ticker",
+            threads=True,
+            progress=False,
+        )
+
+        if isinstance(downloaded, pd.DataFrame) and not downloaded.empty:
+            for symbol in symbols:
+                history = None
+                if isinstance(downloaded.columns, pd.MultiIndex):
+                    level_zero = downloaded.columns.get_level_values(0)
+                    level_one = downloaded.columns.get_level_values(1)
+                    if symbol in level_zero:
+                        history = downloaded[symbol].copy()
+                    elif symbol in level_one:
+                        history = downloaded.xs(
+                            symbol,
+                            axis=1,
+                            level=1,
+                        ).copy()
+                elif len(symbols) == 1:
+                    history = downloaded.copy()
+
+                quote = _quote_from_history(
+                    symbol,
+                    history,
+                    retrieved_at,
+                )
+                if quote:
+                    quotes[symbol] = quote
+    except Exception:
+        quotes = {}
+
+    missing = [
+        symbol for symbol in symbols
+        if symbol not in quotes
+    ]
+    for symbol in missing:
         try:
             history = yf.Ticker(symbol).history(
                 period="5d",
                 interval="1d",
-                auto_adjust=False
+                auto_adjust=False,
             )
+            quote = _quote_from_history(
+                symbol,
+                history,
+                retrieved_at,
+            )
+            if quote:
+                quotes[symbol] = quote
         except Exception:
             continue
 
-        if history is None or history.empty:
-            continue
-
-        history = history.dropna(subset=["Close"])
-        if history.empty:
-            continue
-
-        latest = history.iloc[-1]
-        previous_close = (
-            float(history.iloc[-2]["Close"])
-            if len(history) >= 2 and pd.notna(history.iloc[-2]["Close"])
-            else None
-        )
-        close = float(latest["Close"]) if pd.notna(latest.get("Close")) else None
-        open_price = float(latest["Open"]) if pd.notna(latest.get("Open")) else None
-        volume = float(latest["Volume"]) if pd.notna(latest.get("Volume")) else None
-
-        percent_change = None
-        if close is not None and previous_close not in (None, 0):
-            percent_change = ((close - previous_close) / previous_close) * 100
-
-        quotes[symbol] = {
-            "symbol": symbol,
-            "close": close,
-            "open": open_price,
-            "previous_close": previous_close,
-            "percent_change": percent_change,
-            "quote_session": pd.Timestamp(history.index[-1]).date().isoformat(),
-            "retrieved_at": datetime.now(timezone.utc).isoformat(),
-            "volume": volume
-        }
-
     return quotes
+
+
+def get_live_market_data(symbols):
+    """Fetch current-ish quote data using canonicalized, batched Yahoo requests."""
+    canonical_symbols = tuple(sorted({
+        str(symbol).strip().upper()
+        for symbol in symbols
+        if str(symbol).strip()
+    }))
+    return _get_live_market_data_cached(canonical_symbols)
 
 
 @st.cache_data(ttl=120)
