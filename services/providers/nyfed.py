@@ -16,6 +16,7 @@ def fetch_sofr(headers):
         SOFR_URL,
         headers=headers,
         timeout=(4, 8),
+        provider="NYFed",
     )
 
 
@@ -24,4 +25,5 @@ def fetch_sofr_averages(headers):
         SOFR_AVERAGES_URL,
         headers=headers,
         timeout=(4, 8),
+        provider="NYFed",
     )
