@@ -49,6 +49,12 @@ from views.company_sections.analyst import (
 from views.company_sections.ownership import (
     render_ownership,
 )
+from views.company_sections.filings import (
+    render_sec_filings,
+)
+from views.company_sections.ipo import (
+    render_ipo_registration,
+)
 from views.company_sections.peers import (
     render_peers_and_etfs,
 )
@@ -1743,231 +1749,23 @@ def render_company_research(
         )
 
     if company_section == "SEC Filings":
-        section("SEC Filings", "Current & Periodic Filing History")
-        st.caption(
-            "Use this section for ongoing public-company disclosures. "
-            "IPO-era registration statements live in the separate IPO / Registration section."
+        render_sec_filings(
+            selected_ticker=selected_ticker,
+            selected_filings=selected_filings,
+            selected_sec=selected_sec,
+            selected_sec_error=selected_sec_error,
+            latest_annual=latest_annual,
+            latest_quarter=latest_quarter,
+            latest_current=latest_current,
+            primary_registration=primary_registration,
         )
-
-        filing_metric_cols = st.columns(4)
-        filing_metric_cols[0].metric(
-            "Annual",
-            latest_annual.get("form", "N/A"),
-            latest_annual.get("filing_date") or None,
-        )
-        filing_metric_cols[1].metric(
-            "Quarterly",
-            latest_quarter.get("form", "N/A"),
-            latest_quarter.get("filing_date") or None,
-        )
-        filing_metric_cols[2].metric(
-            "Current Report",
-            latest_current.get("form", "N/A"),
-            latest_current.get("filing_date") or None,
-        )
-        filing_metric_cols[3].metric(
-            "Registration",
-            primary_registration.get("form", "Not found"),
-            primary_registration.get("filing_date") or None,
-            help="Registration filings are analyzed separately because they describe IPO-era or offering-era context.",
-        )
-
-        if selected_sec_error:
-            st.warning(selected_sec_error)
-
-        if selected_filings:
-            filing_table = pd.DataFrame([
-                {
-                    "Filed": filing.get("filing_date", ""),
-                    "Form": filing.get("form", ""),
-                    "Report Period": filing.get("report_date", ""),
-                    "Description": (
-                        filing.get("description", "")
-                        or filing.get("primary_document", "")
-                    ),
-                    "SEC Filing": filing.get("url", ""),
-                }
-                for filing in selected_filings[:25]
-            ])
-            st.dataframe(
-                filing_table,
-                use_container_width=True,
-                hide_index=True,
-                column_config={
-                    "SEC Filing": st.column_config.LinkColumn(
-                        "SEC Filing",
-                        display_text="Open filing",
-                    )
-                },
-            )
-            st.caption(
-                "Showing the 25 most recent filings returned by the current company feed. "
-                "Use the complete SEC history link for older documents."
-            )
-        else:
-            st.info(
-                "Recent SEC filing metadata is not available for this company right now."
-            )
-
-        if selected_sec.get("sec_company_url"):
-            st.link_button(
-                "Open complete SEC company history",
-                selected_sec.get("sec_company_url"),
-                key=f"workspace_sec_history_{selected_ticker}",
-            )
 
     if company_section == "IPO / Registration":
-        section(
-            "IPO / Registration",
-            "How the Company Described Itself Before or During the Offering",
+        render_ipo_registration(
+            selected_ticker=selected_ticker,
+            selected_registrations=selected_registrations,
+            selected_s1=selected_s1,
         )
-        st.caption(
-            "Registration filings are historical documents. They can explain the company's original "
-            "business model, ownership, risks, capitalization, and offering structure, but they should "
-            "not be treated as current company facts without checking newer filings."
-        )
-
-        if selected_registrations:
-            st.markdown("**Registration filing timeline**")
-            registration_table = pd.DataFrame([
-                {
-                    "Filed": filing.get("filing_date", ""),
-                    "Form": filing.get("form", ""),
-                    "Description": (
-                        filing.get("description", "")
-                        or filing.get("primary_document", "")
-                    ),
-                    "SEC Filing": filing.get("url", ""),
-                }
-                for filing in selected_registrations
-            ])
-            st.dataframe(
-                registration_table,
-                use_container_width=True,
-                hide_index=True,
-                column_config={
-                    "SEC Filing": st.column_config.LinkColumn(
-                        "SEC Filing",
-                        display_text="Open filing",
-                    )
-                },
-            )
-            st.caption(
-                "Amendments such as S-1/A or F-1/A can update financials, pricing, share counts, "
-                "ownership, risk disclosure, or other offering terms."
-            )
-
-        if selected_s1:
-            ipo_header_cols = st.columns(3)
-            ipo_header_cols[0].metric(
-                "Form",
-                selected_s1.get("form", "Registration"),
-            )
-            ipo_header_cols[1].metric(
-                "Filed",
-                selected_s1.get("filed_date", "Date unavailable"),
-            )
-            ipo_header_cols[2].metric(
-                "Context",
-                "Historical",
-                help="This research describes registration-era disclosures, not necessarily the company's current business.",
-            )
-
-            st.markdown("**Historical context**")
-            st.write(
-                selected_s1.get(
-                    "historical_context",
-                    "Historical registration context is available.",
-                )
-            )
-            st.markdown("**What this filing can teach you**")
-            st.write(
-                selected_s1.get(
-                    "what_to_learn",
-                    "Review the original registration filing for business, risk, ownership, and financial context.",
-                )
-            )
-
-            detail_map = selected_s1.get("filing_details", {})
-            detail_sections = [
-                (
-                    "Business & Revenue Model",
-                    "business_revenue_model",
-                    "How the company described what it sold and how revenue was generated at the time of registration.",
-                ),
-                (
-                    "Customers & Go-to-Market",
-                    "customers_go_to_market",
-                    "Customer base, sales motion, retention, expansion, and distribution context disclosed before the offering.",
-                ),
-                (
-                    "Growth & Market Opportunity",
-                    "growth_market_opportunity",
-                    "Management's historical description of expansion opportunities and growth vectors.",
-                ),
-                (
-                    "Competition & Differentiation",
-                    "competition_differentiation",
-                    "How management positioned the company against alternatives at the time.",
-                ),
-                (
-                    "Risk Factors",
-                    "risk_factors",
-                    "Major offering-era risks disclosed to prospective investors.",
-                ),
-                (
-                    "Financial History",
-                    "financial_history",
-                    "Pre-offering revenue, profitability, cash-flow, and other financial context captured in the filing.",
-                ),
-                (
-                    "Capitalization & Dilution",
-                    "ipo_capitalization_dilution",
-                    "Share classes, voting structure, offering capitalization, and dilution context.",
-                ),
-                (
-                    "Proceeds, Management & Ownership",
-                    "proceeds_management_ownership",
-                    "Use of proceeds and the management / ownership structure around the offering.",
-                ),
-            ]
-
-            for label, field, explanation in detail_sections:
-                with st.expander(label, expanded=(label == "Business & Revenue Model")):
-                    st.caption(explanation)
-                    points = detail_map.get(field, [])
-                    if points:
-                        for point in points:
-                            st.markdown(f"- {point}")
-                    else:
-                        st.caption(
-                            "Structured detail is not available for this part of the registration filing yet."
-                        )
-
-            if selected_s1.get("source_url"):
-                st.link_button(
-                    f"Open original {selected_s1.get('form', 'registration filing')} on SEC EDGAR",
-                    selected_s1.get("source_url"),
-                    key=f"workspace_s1_source_{selected_ticker}",
-                )
-        elif selected_registrations:
-            st.info(
-                "EquityLens has indexed the registration filing history, but the deep structured "
-                "registration analysis has not been generated for this company yet."
-            )
-            first_registration = selected_registrations[0]
-            if first_registration.get("url"):
-                st.link_button(
-                    f"Open {first_registration.get('form', 'registration filing')} on SEC EDGAR",
-                    first_registration["url"],
-                    key=f"workspace_registration_direct_{selected_ticker}",
-                )
-        else:
-            st.info(
-                "No S-1, F-1, or S-11 registration statement was found in the indexed SEC history. "
-                "Some older issuers, foreign issuers, reorganizations, or companies with limited electronic filing history "
-                "may not have a registration statement available in the current feed."
-            )
 
     if company_section == "Ownership":
         render_ownership(
