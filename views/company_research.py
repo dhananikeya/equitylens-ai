@@ -37,6 +37,7 @@ from sec_data import (
     latest_filing_by_forms,
 )
 from ui_components import (
+    loading_panel,
     render_summary_cards,
     section,
 )
@@ -308,7 +309,10 @@ def render_company_research(
 
     if core_snapshot is None:
         try:
-            with st.spinner("Loading financial statements from Yahoo Finance…"):
+            with loading_panel(
+                "Loading financial statements",
+                "Retrieving the latest available supplemental company financials."
+            ):
                 core_financial_fallback = get_company_financial_snapshot(
                     selected_ticker
                 )
@@ -316,7 +320,10 @@ def render_company_research(
             core_financial_fallback = {}
 
         try:
-            with st.spinner("Loading company filings from SEC EDGAR…"):
+            with loading_panel(
+                "Loading SEC filings",
+                "Retrieving recent company filings and registration history from SEC EDGAR."
+            ):
                 core_sec = get_sec_company_research(selected_ticker)
             core_sec_error = None
         except Exception:
@@ -336,7 +343,10 @@ def render_company_research(
             )
 
         try:
-            with st.spinner("Loading the latest available Yahoo Finance price…"):
+            with loading_panel(
+                "Retrieving latest market quote",
+                "Loading the most recent available daily price snapshot."
+            ):
                 core_quote = get_live_market_data(
                     [selected_ticker]
                 ).get(selected_ticker, {})
