@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
+import SiteHeader from "@/components/site-header";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "EquityLens AI",
+  title: {
+    default: "EquityLens AI",
+    template: "%s | EquityLens AI"
+  },
   description:
     "Source-linked public-company research using SEC filings, financial data, peer comparisons, and market context."
 };
@@ -14,7 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <SiteHeader />
+        {children}
+      </body>
     </html>
   );
 }
