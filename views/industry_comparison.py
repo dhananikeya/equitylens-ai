@@ -12,6 +12,7 @@ from financial_utils import (
     quarterly_metrics,
     safe_float,
 )
+from models.context import IndustryComparisonContext
 from market_data import (
     get_company_financial_snapshot,
     get_live_market_data,
@@ -133,17 +134,20 @@ def _quarter_snapshot(company, company_quarterly, supplemental):
 
 
 def render_industry_comparison(
-    industries,
-    company_data,
-    subgroups,
-    public_market_data_enabled,
-    company_quarterly,
-    analysis_by_ticker,
-    company_analysis,
-    remember_choice,
-    company_universe,
-    research_link,
+    context: IndustryComparisonContext,
 ):
+    industries = context.industries
+    company_data = context.company_data
+    subgroups = context.subgroups
+    public_market_data_enabled = (
+        context.public_market_data_enabled
+    )
+    company_quarterly = context.company_quarterly
+    analysis_by_ticker = context.analysis_by_ticker
+    company_analysis = context.company_analysis
+    remember_choice = context.remember_choice
+    company_universe = context.company_universe
+    research_link = context.research_link
     section("Peer Research", "Industry Comparison")
     st.caption(
         "Compare 2–6 companies using clearly labeled periods and sources. "
