@@ -18,6 +18,7 @@ from financial_utils import (
     quarterly_metrics,
     safe_float,
 )
+from models.context import CompanyResearchContext
 from market_data import (
     finviz_numeric,
     get_company_analyst_data,
@@ -54,26 +55,27 @@ from views.company_sections.peers import (
 
 
 def render_company_research(
-    workspace_universe,
-    company_data,
-    company_analysis,
-    company_quarterly,
-    company_s1,
-    _analysis_by_ticker,
-    _quarterly_by_ticker,
-    _s1_by_ticker,
-    industries,
-    load_sec_company,
-    open_company_research,
-    reset_coverage_selection,
-    remember_choice,
-    clear_company_filters,
-    compare_company,
-    retry_company_data,
-    research_link,
-    save_rendered_choices,
-    navigate_to,
+    context: CompanyResearchContext,
 ):
+    workspace_universe = context.workspace_universe
+    company_data = context.company_data
+    company_analysis = context.company_analysis
+    company_quarterly = context.company_quarterly
+    company_s1 = context.company_s1
+    _analysis_by_ticker = context.analysis_by_ticker
+    _quarterly_by_ticker = context.quarterly_by_ticker
+    _s1_by_ticker = context.s1_by_ticker
+    industries = context.industries
+    load_sec_company = context.load_sec_company
+    open_company_research = context.open_company_research
+    reset_coverage_selection = context.reset_coverage_selection
+    remember_choice = context.remember_choice
+    clear_company_filters = context.clear_company_filters
+    compare_company = context.compare_company
+    retry_company_data = context.retry_company_data
+    research_link = context.research_link
+    save_rendered_choices = context.save_rendered_choices
+    navigate_to = context.navigate_to
     section("Company Research", "Company Research Workspace")
 
     st.caption(
