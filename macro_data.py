@@ -276,9 +276,9 @@ def _fetch_treasury_yield_curve_html():
         "interest-rates/TextView"
         f"?field_tdr_date_value={year}&type=daily_treasury_yield_curve"
     )
-    response = requests.get(
+    response = fetch_treasury_html(
         source_url,
-        headers={
+        {
             **PUBLIC_DATA_HEADERS,
             "User-Agent": (
                 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
@@ -286,9 +286,7 @@ def _fetch_treasury_yield_curve_html():
                 "Chrome/130.0 Safari/537.36 EquityLensAI/1.0"
             ),
         },
-        timeout=(5, 14),
     )
-    response.raise_for_status()
 
     soup = BeautifulSoup(response.text, "html.parser")
     observations = []
@@ -392,15 +390,13 @@ def _fetch_treasury_yield_curve_xml():
         "interest-rates/pages/xml"
         f"?data=daily_treasury_yield_curve&field_tdr_date_value={year}"
     )
-    response = requests.get(
+    response = fetch_treasury_xml(
         source_url,
-        headers={
+        {
             **PUBLIC_DATA_HEADERS,
             "Accept": "application/xml,text/xml;q=0.9,*/*;q=0.8",
         },
-        timeout=(5, 14),
     )
-    response.raise_for_status()
 
     root = ET.fromstring(response.content)
     records = []
