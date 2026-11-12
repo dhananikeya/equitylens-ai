@@ -1,6 +1,7 @@
 from contextlib import contextmanager
-import pandas as pd
 import streamlit as st
+
+from formatting import format_utc_timestamp
 
 
 def section(label, title):
@@ -28,47 +29,6 @@ def render_summary_cards(cards):
                 """,
                 unsafe_allow_html=True,
             )
-
-
-def format_utc_timestamp(value, fallback="Unavailable"):
-    if not value:
-        return fallback
-    parsed = pd.to_datetime(
-        value,
-        errors="coerce",
-        utc=True,
-    )
-    if pd.isna(parsed):
-        return str(value)
-    return parsed.strftime(
-        "%Y-%m-%d %H:%M UTC"
-    )
-
-
-@contextmanager
-def loading_panel(label, detail=""):
-    """Show a branded, descriptive loading placeholder during slow operations."""
-    placeholder = st.empty()
-    detail_html = (
-        f'<div class="el-loading-detail">{detail}</div>'
-        if detail else ""
-    )
-    placeholder.markdown(
-        f"""
-        <div class="el-loading-panel" role="status" aria-live="polite">
-            <div class="el-loading-dot"></div>
-            <div>
-                <div class="el-loading-label">{label}</div>
-                {detail_html}
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-    try:
-        yield
-    finally:
-        placeholder.empty()
 
 
 def render_refresh_indicator(label, timestamp, detail=""):
