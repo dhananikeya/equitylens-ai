@@ -29,7 +29,7 @@ from market_data import (
     normalize_finviz_screener,
 )
 from market_tables import render_crisp_table
-from ui_components import format_utc_timestamp, section
+from ui_components import format_utc_timestamp, loading_panel, section
 
 
 def render_nyse_market_monitor(nyse_finviz, workspace_known_tickers, research_link):
