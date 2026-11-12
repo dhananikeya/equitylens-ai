@@ -488,7 +488,7 @@ def _fetch_treasury_yield_curve():
 
 
 def _find_html_data_row(url, required_header_terms):
-    response = requests.get(
+    response = service_get(
         url,
         headers={
             **PUBLIC_DATA_HEADERS,
@@ -498,8 +498,8 @@ def _find_html_data_row(url, required_header_terms):
             ),
         },
         timeout=(4, 7),
+        provider="MacroHTML",
     )
-    response.raise_for_status()
     soup = BeautifulSoup(response.text, "html.parser")
 
     for table in soup.find_all("table"):
