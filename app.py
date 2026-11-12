@@ -23,23 +23,29 @@ from app_runtime import (
     load_sec_summary,
     load_startup_company_data,
 )
+from config import (
+    APP_LAYOUT,
+    APP_PAGE_ICON,
+    APP_TITLE,
+    NAVIGATION_RERUN_BUDGET_MS,
+    PERFORMANCE_BUDGET_MS,
+    PUBLIC_APP_URL,
+)
+from models.context import (
+    CompanyResearchContext,
+    IndustryComparisonContext,
+)
 from ui_components import section
 from views.home import render_home
 from research_experience import inject_readability_styles
 
 st.set_page_config(
-    page_title="EquityLens AI",
-    page_icon="📊",
-    layout="wide"
+    page_title=APP_TITLE,
+    page_icon=APP_PAGE_ICON,
+    layout=APP_LAYOUT,
 )
 
 _app_run_started = time.perf_counter()
-
-PERFORMANCE_BUDGET_MS = {
-    "Home": 2000,
-    "Company Research": 3000,
-}
-NAVIGATION_RERUN_BUDGET_MS = 1000
 
 
 def _timed_render(page_name, render_callable):
@@ -2085,7 +2091,7 @@ def research_link(ticker=None, destination="Company Research"):
     params = {"section": destination}
     if ticker:
         params["ticker"] = ticker
-    return "https://equitylens-ai-2h7rd8qluv3bc8sdqf5cu3.streamlit.app/?" + urlencode(params)
+    return PUBLIC_APP_URL + "?" + urlencode(params)
 
 
 global_company_lookup = {}
@@ -2218,9 +2224,7 @@ if active_destination == "Industry Comparison":
     company_quarterly = _research["quarterly"]
     _analysis_by_ticker = _research["analysis_by_ticker"]
 
-    _timed_render(
-        "Industry Comparison",
-        lambda: render_industry_comparison(
+    comparison_context = IndustryComparisonContext(
         industries=industries,
         company_data=company_data,
         subgroups=SUBGROUPS,
@@ -2231,6 +2235,11 @@ if active_destination == "Industry Comparison":
         remember_choice=remember_choice,
         company_universe=company_universe,
         research_link=research_link,
+    )
+    _timed_render(
+        "Industry Comparison",
+        lambda: render_industry_comparison(
+            comparison_context
         ),
     )
 
@@ -2256,17 +2265,15 @@ if active_destination == "Company Research":
         if _ticker in _s1_by_ticker:
             company_s1[_key] = _s1_by_ticker[_ticker]
 
-    _timed_render(
-        "Company Research",
-        lambda: render_company_research(
+    research_context = CompanyResearchContext(
         workspace_universe=workspace_universe,
         company_data=company_data,
         company_analysis=company_analysis,
         company_quarterly=company_quarterly,
         company_s1=company_s1,
-        _analysis_by_ticker=_analysis_by_ticker,
-        _quarterly_by_ticker=_quarterly_by_ticker,
-        _s1_by_ticker=_s1_by_ticker,
+        analysis_by_ticker=_analysis_by_ticker,
+        quarterly_by_ticker=_quarterly_by_ticker,
+        s1_by_ticker=_s1_by_ticker,
         industries=industries,
         load_sec_company=load_sec_company,
         open_company_research=open_company_research,
@@ -2278,6 +2285,11 @@ if active_destination == "Company Research":
         research_link=research_link,
         save_rendered_choices=save_rendered_choices,
         navigate_to=navigate_to,
+    )
+    _timed_render(
+        "Company Research",
+        lambda: render_company_research(
+            research_context
         ),
     )
 
