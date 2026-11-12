@@ -45,10 +45,6 @@ jobs:
         run: |
           python scripts/build_financial_coverage.py
 
-      - name: Rebuild research coverage index
-        run: |
-          python scripts/build_research_coverage.py
-
       - name: Validate generated JSON
         run: |
           python - <<'PY'
@@ -59,8 +55,6 @@ jobs:
               "data/generated_company_metrics.json",
               "data/generated_company_quarterly.json",
               "data/financial_pipeline_state.json",
-              "data/research_coverage.json",
-              "data/research_index.json",
           ]
           for filename in files:
               payload = json.loads(
@@ -77,13 +71,15 @@ jobs:
 
       - name: Commit refreshed coverage
         run: |
-          if [ -z "$(git status --porcelain -- data/generated_company_metrics.json data/generated_company_quarterly.json data/financial_pipeline_state.json data/research_coverage.json data/research_index.json)" ]; then
+          if [ -z "$(git status --porcelain -- data/generated_company_metrics.json data/generated_company_quarterly.json data/financial_pipeline_state.json)" ]; then
             echo "No financial coverage changes."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add             data/generated_company_metrics.json             data/generated_company_quarterly.json             data/financial_pipeline_state.json             data/research_coverage.json             data/research_index.json
+          git add             data/generated_company_metrics.json             data/generated_company_quarterly.json             data/financial_pipeline_state.json
           git commit -m "Refresh deterministic financial research coverage"
+          git fetch origin perf/sec-company-shards
+          git rebase origin/perf/sec-company-shards
           git push origin HEAD:perf/sec-company-shards
