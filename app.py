@@ -1772,6 +1772,38 @@ except (FileNotFoundError, json.JSONDecodeError):
         "recent_filings": [],
     }
 
+def _market_cap_dollars(value):
+    """Normalize screener market-cap values without importing market_data/yfinance."""
+    if value is None or pd.isna(value):
+        return None
+
+    text = str(value).strip().replace(",", "").replace("%", "")
+    if not text or text in {"-", "N/A", "nan"}:
+        return None
+
+    multiplier = 1.0
+    suffix = text[-1:].upper()
+    if suffix == "K":
+        multiplier = 1_000.0
+        text = text[:-1]
+    elif suffix == "M":
+        multiplier = 1_000_000.0
+        text = text[:-1]
+    elif suffix == "B":
+        multiplier = 1_000_000_000.0
+        text = text[:-1]
+    elif suffix == "T":
+        multiplier = 1_000_000_000_000.0
+        text = text[:-1]
+
+    try:
+        parsed = float(text) * multiplier
+    except ValueError:
+        return None
+
+    return parsed if suffix in {"K", "M", "B", "T"} else parsed * 1_000_000
+
+
 try:
     company_universe = pd.read_csv("data/finviz_universe.csv")
 except pd.errors.ParserError:
@@ -1799,7 +1831,7 @@ for _column in ["Ticker", "Company", "Sector", "Industry", "Country"]:
         company_universe[_column].fillna("").astype(str).str.strip()
     )
 if "Market Cap" in company_universe.columns:
-    company_universe["Market Cap"] = company_universe["Market Cap"].apply(finviz_market_cap_dollars)
+    company_universe["Market Cap"] = company_universe["Market Cap"].apply(_market_cap_dollars)
 company_universe["Ticker"] = company_universe["Ticker"].str.upper()
 company_universe["Coverage Key"] = (
     company_universe["Company"]
@@ -2046,6 +2078,14 @@ def compare_company(company_key):
 
 
 def retry_company_data(ticker):
+    # Import network-heavy modules only when the user explicitly requests a refresh.
+    from sec_data import get_sec_company_research
+    from market_data import (
+        get_company_financial_snapshot,
+        get_live_market_data,
+        get_market_history,
+    )
+
     get_sec_company_research.clear(ticker)
     get_live_market_data.clear([ticker])
     get_company_financial_snapshot.clear(ticker)
@@ -2181,6 +2221,8 @@ if active_destination == "Home":
 
 
 if active_destination == "Industry Comparison":
+    from views.industry_comparison import render_industry_comparison
+
     render_industry_comparison(
         industries=industries,
         company_data=company_data,
@@ -2196,6 +2238,8 @@ if active_destination == "Industry Comparison":
 
 
 if active_destination == "Company Research":
+    from views.company_research import render_company_research
+
     render_company_research(
         workspace_universe=workspace_universe,
         company_data=company_data,
@@ -2220,6 +2264,8 @@ if active_destination == "Company Research":
 
 
 if active_destination == "Market Monitor":
+    from views.market_monitor import render_market_monitor
+
     render_market_monitor(
         public_finviz_data_enabled=public_finviz_data_enabled,
         industries=industries,
@@ -2231,6 +2277,9 @@ if active_destination == "Market Monitor":
 
 
 if active_destination == "Filings":
+    from sec_data import get_sec_company_research
+    from views.filings import render_filings
+
     render_filings(
         company_universe=company_universe,
         load_sec_filings=load_sec_filings,
@@ -2239,6 +2288,8 @@ if active_destination == "Filings":
 
 
 if active_destination == "Learn":
+    from views.learn import render_learn
+
     render_learn()
 
 
