@@ -150,8 +150,8 @@ export default async function CompanyResearchPage({
         </div>
         <div className="market-snapshot-meta">
           <div><span>Previous close</span><strong>{market?.previousClose !== null && market?.previousClose !== undefined ? price(market.previousClose) : "N/A"}</strong></div>
-          <div><span>Universe market cap</span><strong>{company["Market Cap"] ? `${(Number(company["Market Cap"]) / 1000).toFixed(1)}B` : "N/A"}</strong></div>
-          <div><span>P/E</span><strong>{company["P/E"] || "N/A"}</strong></div>
+          <div><span>Universe market cap</span><strong>{Number.isFinite(screenerMarketCap) && screenerMarketCap > 0 ? `${(screenerMarketCap / 1000).toFixed(1)}B` : "N/A"}</strong></div>
+          <div><span>P/E</span><strong>{screenerPE || "N/A"}</strong></div>
         </div>
       </section>
 
