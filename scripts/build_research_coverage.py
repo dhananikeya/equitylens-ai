@@ -38,6 +38,26 @@ DATASETS = {
     ),
 }
 
+QUALITATIVE_FIELDS = [
+    "business_model",
+    "primary_revenue_source",
+    "customer_type",
+    "platform_dependency",
+    "competitive_risk",
+    "operational_risk",
+    "profitability_history",
+    "customer_concentration",
+    "international_exposure",
+    "business_segments",
+    "geographic_exposure",
+    "competitive_positioning",
+    "capital_allocation",
+    "dilution_stock_comp",
+    "debt_liquidity",
+    "profitability_cash_flow",
+    "key_risk_themes",
+]
+
 
 def read_json(path: Path) -> dict:
     if not path.exists():
@@ -100,15 +120,33 @@ def has_quarterly(record: dict) -> bool:
     )
 
 
-def has_analysis(record: dict) -> bool:
-    return bool(
-        record
-        and (
-            record.get("business_model")
-            or record.get("primary_revenue_source")
-            or record.get("key_risk_themes")
-        )
+def qualitative_depth(record: dict) -> float:
+    if not record:
+        return 0.0
+
+    populated = 0
+    for field in QUALITATIVE_FIELDS:
+        value = record.get(field)
+        if isinstance(value, list):
+            present = any(
+                str(item).strip()
+                for item in value
+            )
+        else:
+            present = bool(
+                str(value or "").strip()
+            )
+        if present:
+            populated += 1
+
+    return round(
+        (populated / len(QUALITATIVE_FIELDS)) * 100,
+        1,
     )
+
+
+def has_analysis(record: dict) -> bool:
+    return qualitative_depth(record) > 0
 
 
 def has_registration(record: dict) -> bool:
@@ -122,19 +160,32 @@ def has_registration(record: dict) -> bool:
     )
 
 
-def completeness_score(flags: dict[str, bool]) -> int:
-    weighted = {
-        "sec_filings": 20,
-        "annual_financials": 25,
-        "quarterly_financials": 20,
-        "qualitative_analysis": 25,
-        "registration_research": 10,
-    }
-    return sum(
-        weight
-        for key, weight in weighted.items()
-        if flags.get(key)
+def completeness_score(
+    flags: dict[str, bool],
+    qualitative_depth_percent: float,
+) -> int:
+    score = 0
+    if flags.get("sec_filings"):
+        score += 20
+    if flags.get("annual_financials"):
+        score += 25
+    if flags.get("quarterly_financials"):
+        score += 20
+    if flags.get("registration_research"):
+        score += 10
+
+    score += round(
+        25
+        * max(
+            0.0,
+            min(
+                100.0,
+                qualitative_depth_percent,
+            ),
+        )
+        / 100
     )
+    return int(score)
 
 
 def completion_label(score: int, flags: dict[str, bool]) -> str:
@@ -183,6 +234,15 @@ def main() -> None:
             continue
 
         sec = sec_companies.get(ticker, {}) or {}
+        analysis_record = datasets[
+            "analysis"
+        ].get(ticker, {})
+        qualitative_depth_percent = (
+            qualitative_depth(
+                analysis_record
+            )
+        )
+
         flags = {
             "sec_filings": bool(
                 sec.get("has_filings")
@@ -194,15 +254,18 @@ def main() -> None:
             "quarterly_financials": has_quarterly(
                 datasets["quarterly"].get(ticker, {})
             ),
-            "qualitative_analysis": has_analysis(
-                datasets["analysis"].get(ticker, {})
+            "qualitative_analysis": (
+                qualitative_depth_percent > 0
             ),
             "registration_research": has_registration(
                 datasets["registration"].get(ticker, {})
             ),
         }
 
-        score = completeness_score(flags)
+        score = completeness_score(
+            flags,
+            qualitative_depth_percent,
+        )
         label = completion_label(score, flags)
 
         for key, present in flags.items():
@@ -213,7 +276,6 @@ def main() -> None:
             totals["deep_research"] += 1
             deep_tickers.append(ticker)
 
-        analysis_record = datasets["analysis"].get(ticker, {})
         metrics_record = datasets["metrics"].get(ticker, {})
         quarterly_record = datasets["quarterly"].get(ticker, {})
         registration_record = datasets["registration"].get(ticker, {})
@@ -240,6 +302,9 @@ def main() -> None:
             "industry": str(row.get("Industry", "")).strip(),
             "country": str(row.get("Country", "")).strip(),
             **flags,
+            "qualitative_depth_percent": (
+                qualitative_depth_percent
+            ),
             "completeness_percent": score,
             "completion_status": label,
             "source_urls": source_urls,
@@ -268,9 +333,11 @@ def main() -> None:
                 "Company appears in the 517-company EquityLens universe."
             ),
             "deep_research": (
-                "Ticker has SEC filings, annual and quarterly financial coverage, "
-                "qualitative analysis, and registration research where represented "
-                "by the weighted completeness model."
+                "Ticker reaches at least 90% weighted completeness across SEC filing coverage, "
+                "annual and quarterly financials, qualitative research depth, and registration research."
+            ),
+            "qualitative_depth": (
+                "Percentage of the required structured qualitative fields that are populated."
             ),
         },
     }
