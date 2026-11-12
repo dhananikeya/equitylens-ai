@@ -20,6 +20,7 @@ from build_deep_research import (
     get_json,
     latest_filing,
     read_json,
+    rows_from_submission_arrays,
     write_json,
 )
 
@@ -27,7 +28,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 
 UNIVERSE_PATH = DATA / "finviz_universe.csv"
-SEC_SHARD_DIR = DATA / "sec_companies"
+SEC_SUMMARY_PATH = DATA / "sec_summary.json"
 METRICS_PATH = DATA / "generated_company_metrics.json"
 QUARTERLY_PATH = DATA / "generated_company_quarterly.json"
 HAND_METRICS_PATH = DATA / "company_metrics.json"
@@ -79,11 +80,6 @@ def canonical_key(
     )
 
 
-def load_sec_shard(ticker: str) -> dict:
-    path = SEC_SHARD_DIR / f"{ticker}.json"
-    return read_json(path, {})
-
-
 def main() -> None:
     universe = load_universe()
     generated_metrics = read_json(
@@ -99,6 +95,14 @@ def main() -> None:
         {},
     )
     state = read_json(STATE_PATH, {})
+    sec_summary = read_json(
+        SEC_SUMMARY_PATH,
+        {},
+    )
+    sec_companies = (
+        sec_summary.get("companies", {})
+        or {}
+    )
 
     hand_key_by_ticker = ticker_index(
         hand_metrics
@@ -129,12 +133,15 @@ def main() -> None:
         ):
             continue
 
-        shard = load_sec_shard(ticker)
-        if not shard.get("cik"):
+        sec_company = (
+            sec_companies.get(ticker, {})
+            or {}
+        )
+        if not sec_company.get("cik"):
             continue
 
         candidates.append(
-            (company, shard)
+            (company, sec_company)
         )
         if len(candidates) >= BATCH_SIZE:
             break
@@ -150,7 +157,7 @@ def main() -> None:
         f"{len(candidates)} companies."
     )
 
-    for index, (company, shard) in enumerate(
+    for index, (company, sec_company) in enumerate(
         candidates,
         start=1,
     ):
@@ -162,7 +169,7 @@ def main() -> None:
             hand_key_by_ticker,
         )
         cik = str(
-            shard.get("cik", "")
+            sec_company.get("cik", "")
         ).zfill(10)
 
         print(
@@ -172,9 +179,13 @@ def main() -> None:
         )
 
         try:
-            filings = (
-                shard.get("filings", [])
-                or []
+            submissions = get_json(
+                "https://data.sec.gov/submissions/"
+                f"CIK{cik}.json"
+            )
+            filings = rows_from_submission_arrays(
+                submissions,
+                cik,
             )
             annual_filing = latest_filing(
                 filings,
