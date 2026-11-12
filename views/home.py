@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 
 from research_experience import render_home_discovery, render_watchlist
-from ui_components import format_utc_timestamp, section
+from ui_components import format_utc_timestamp, render_refresh_indicator, section
 
 
 def render_home(
@@ -142,6 +142,11 @@ def render_home(
         )
 
     section("Recently updated", "Latest SEC filings detected")
+    render_refresh_indicator(
+        "SEC coverage refreshed",
+        sec_summary.get("generated_at_utc"),
+        "automated filing monitor",
+    )
     recent_filing_rows = [
         {
             "Company": (
