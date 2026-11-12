@@ -16,6 +16,7 @@ def fetch_fomc_calendar(headers):
         FOMC_CALENDAR_URL,
         headers=headers,
         timeout=(5, 25),
+        provider="FederalReserve",
     )
 
 
@@ -24,4 +25,5 @@ def fetch_monetary_feed(headers):
         MONETARY_FEED_URL,
         headers=headers,
         timeout=(5, 25),
+        provider="FederalReserve",
     )
