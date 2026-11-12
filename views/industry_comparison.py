@@ -14,7 +14,7 @@ from market_data import (
     get_company_financial_snapshot,
     get_live_market_data,
 )
-from ui_components import section
+from ui_components import loading_panel, section
 
 
 def _annual_snapshot(company, company_data, supplemental):
@@ -286,8 +286,9 @@ def render_industry_comparison(
         or comparison_snapshot.get("signature") != signature
     ):
         peer_financial_cache = {}
-        with st.spinner(
-            "Loading supplemental peer financial statements…"
+        with loading_panel(
+            "Loading peer financial statements",
+            "Retrieving supplemental statements for the selected comparison set."
         ):
             for company in selected_companies:
                 ticker = str(
