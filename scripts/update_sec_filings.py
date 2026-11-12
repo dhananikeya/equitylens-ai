@@ -281,16 +281,50 @@ def build_summary(output: dict, generated_at_utc: str) -> dict:
     companies = {}
     recent_rows = []
     synced_companies = 0
+    companies_with_material_filings = 0
+    indexed_filing_count = 0
+    indexed_material_filing_count = 0
+
+    def filing_summary(row: dict) -> dict:
+        if not row:
+            return {}
+        return {
+            "form": row.get("form", ""),
+            "filing_date": row.get("filing_date", ""),
+            "report_date": row.get("report_date", ""),
+            "description": (
+                row.get("description", "")
+                or row.get("primary_document", "")
+            ),
+            "url": row.get("url", ""),
+        }
 
     for key, feed in output.items():
         ticker = str(feed.get("ticker", "")).upper().strip()
         filings = feed.get("filings", []) or []
         registration = feed.get("registration_filings", []) or []
+        material_filings = [
+            filing for filing in filings
+            if filing.get("form") in MATERIAL_HOME_FORMS
+        ]
+
+        indexed_filing_count += len(filings)
+        indexed_material_filing_count += len(material_filings)
 
         if feed.get("cik") and filings:
             synced_companies += 1
+        if material_filings:
+            companies_with_material_filings += 1
 
         latest = filings[0] if filings else {}
+        latest_material = material_filings[0] if material_filings else {}
+
+        form_counts = {}
+        for filing in material_filings:
+            form = str(filing.get("form", "")).strip()
+            if form:
+                form_counts[form] = form_counts.get(form, 0) + 1
+
         companies[ticker or key] = {
             "ticker": ticker,
             "cik": feed.get("cik", ""),
@@ -299,16 +333,12 @@ def build_summary(output: dict, generated_at_utc: str) -> dict:
                 key.rsplit(" (", 1)[0],
             ),
             "has_filings": bool(filings),
-            "latest_filing": {
-                "form": latest.get("form", ""),
-                "filing_date": latest.get("filing_date", ""),
-                "report_date": latest.get("report_date", ""),
-                "description": (
-                    latest.get("description", "")
-                    or latest.get("primary_document", "")
-                ),
-                "url": latest.get("url", ""),
-            } if latest else {},
+            "has_material_filings": bool(material_filings),
+            "filing_count": len(filings),
+            "material_filing_count": len(material_filings),
+            "material_form_counts": form_counts,
+            "latest_filing": filing_summary(latest),
+            "latest_material_filing": filing_summary(latest_material),
             "registration_count": len(registration),
             "registration_scan_complete": bool(
                 feed.get("registration_scan_complete", False)
@@ -317,9 +347,7 @@ def build_summary(output: dict, generated_at_utc: str) -> dict:
             "last_checked_utc": feed.get("last_checked_utc", ""),
         }
 
-        for filing in filings[:5]:
-            if filing.get("form") not in MATERIAL_HOME_FORMS:
-                continue
+        for filing in material_filings[:5]:
             filing_date = filing.get("filing_date", "")
             if not filing_date:
                 continue
@@ -349,6 +377,9 @@ def build_summary(output: dict, generated_at_utc: str) -> dict:
         "generated_at_utc": generated_at_utc,
         "company_count": len(output),
         "synced_companies": synced_companies,
+        "companies_with_material_filings": companies_with_material_filings,
+        "indexed_filing_count": indexed_filing_count,
+        "indexed_material_filing_count": indexed_material_filing_count,
         "companies": companies,
         "recent_filings": recent_rows,
     }
