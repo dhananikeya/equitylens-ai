@@ -69,3 +69,22 @@ def loading_panel(label, detail=""):
         yield
     finally:
         placeholder.empty()
+
+
+def render_refresh_indicator(label, timestamp, detail=""):
+    """Render a compact source-freshness indicator without overstating recency."""
+    formatted = format_utc_timestamp(
+        timestamp,
+        fallback="Unavailable",
+    )
+    detail_text = f" · {detail}" if detail else ""
+    st.markdown(
+        f"""
+        <div class="el-refresh-indicator">
+            <span class="el-refresh-dot"></span>
+            <strong>{label}:</strong>
+            <span>{formatted}{detail_text}</span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
