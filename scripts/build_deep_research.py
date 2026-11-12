@@ -73,6 +73,13 @@ RESEARCH_SCHEMA = {
         "profitability_history": {"type": "string"},
         "customer_concentration": {"type": "string"},
         "international_exposure": {"type": "string"},
+        "business_segments": {"type": "string"},
+        "geographic_exposure": {"type": "string"},
+        "competitive_positioning": {"type": "string"},
+        "capital_allocation": {"type": "string"},
+        "dilution_stock_comp": {"type": "string"},
+        "debt_liquidity": {"type": "string"},
+        "profitability_cash_flow": {"type": "string"},
         "key_risk_themes": {
             "type": "array",
             "items": {"type": "string"},
@@ -186,6 +193,33 @@ RESEARCH_SCHEMA = {
             "items": {"type": "string"},
             "maxItems": 6,
         },
+        "source_provenance": {
+            "type": "array",
+            "maxItems": 30,
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "properties": {
+                    "field": {"type": "string"},
+                    "source_type": {
+                        "type": "string",
+                        "enum": [
+                            "annual_filing",
+                            "quarterly_filing",
+                            "registration_filing",
+                            "current_filing",
+                            "company_facts"
+                        ]
+                    },
+                    "note": {"type": "string"}
+                },
+                "required": [
+                    "field",
+                    "source_type",
+                    "note"
+                ]
+            }
+        },
     },
     "required": [
         "business_model",
@@ -197,6 +231,13 @@ RESEARCH_SCHEMA = {
         "profitability_history",
         "customer_concentration",
         "international_exposure",
+        "business_segments",
+        "geographic_exposure",
+        "competitive_positioning",
+        "capital_allocation",
+        "dilution_stock_comp",
+        "debt_liquidity",
+        "profitability_cash_flow",
         "key_risk_themes",
         "recent_performance_summary",
         "historical_context",
@@ -204,6 +245,7 @@ RESEARCH_SCHEMA = {
         "filing_details",
         "filing_changes",
         "confidence_notes",
+        "source_provenance",
     ],
 }
 
@@ -907,7 +949,14 @@ def research_prompt(
         "supported by the supplied evidence, write 'Not disclosed in the supplied filing.' "
         "Treat risk factors as company disclosures, not predictions. Distinguish current "
         "annual/quarterly context from IPO-era registration context. Keep each field concise "
-        "but substantive enough to be useful to a research user.\n\n"
+        "but substantive enough to be useful to a research user. "
+        "For business_segments, geographic_exposure, competitive_positioning, "
+        "capital_allocation, dilution_stock_comp, debt_liquidity, and "
+        "profitability_cash_flow, summarize only what the supplied evidence supports. "
+        "Populate source_provenance with one or more evidence records for every "
+        "non-empty narrative field, identifying whether the evidence came from the "
+        "annual filing, quarterly filing, registration filing, current filing, or "
+        "company facts.\n\n"
         "SEC/XBRL CONTEXT:\n"
         + json.dumps(evidence, indent=2)
         + "\n\nLATEST ANNUAL FILING EXCERPT:\n"
@@ -1306,12 +1355,20 @@ def main() -> None:
                 "profitability_history": research["profitability_history"],
                 "customer_concentration": research["customer_concentration"],
                 "international_exposure": research["international_exposure"],
+                "business_segments": research["business_segments"],
+                "geographic_exposure": research["geographic_exposure"],
+                "competitive_positioning": research["competitive_positioning"],
+                "capital_allocation": research["capital_allocation"],
+                "dilution_stock_comp": research["dilution_stock_comp"],
+                "debt_liquidity": research["debt_liquidity"],
+                "profitability_cash_flow": research["profitability_cash_flow"],
                 "key_risk_themes": research["key_risk_themes"],
                 "recent_performance_summary": research[
                     "recent_performance_summary"
                 ],
                 "filing_changes": research["filing_changes"],
                 "confidence_notes": research["confidence_notes"],
+                "source_provenance": research["source_provenance"],
                 "source_filing": (
                     annual_filing.get("url")
                     or quarterly_filing.get("url", "")
