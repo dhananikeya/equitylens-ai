@@ -899,15 +899,21 @@ def render_company_research(
                 key=f"workspace_chart_range_{selected_ticker}",
                 label_visibility="collapsed",
             )
-            try:
-                selected_history = get_market_history(
-                    selected_ticker,
-                    interval="1day",
-                    outputsize=None,
-                    calendar_range=chart_range,
-                )
-            except Exception:
-                selected_history = pd.DataFrame()
+            history_snapshot_key = (
+                f"company_history::{selected_ticker}::{chart_range}"
+            )
+            selected_history = st.session_state.get(history_snapshot_key)
+            if not isinstance(selected_history, pd.DataFrame):
+                try:
+                    selected_history = get_market_history(
+                        selected_ticker,
+                        interval="1day",
+                        outputsize=None,
+                        calendar_range=chart_range,
+                    )
+                except Exception:
+                    selected_history = pd.DataFrame()
+                st.session_state[history_snapshot_key] = selected_history
 
             if not selected_history.empty:
                 price_fig = go.Figure(
@@ -2026,14 +2032,26 @@ def render_company_research(
                         st.markdown(f"- {point}")
 
         st.markdown("**Supplemental ownership snapshot**")
-        try:
-            ownership_data = get_company_ownership_data(selected_ticker)
-        except Exception:
-            ownership_data = {
-                "major": pd.DataFrame(),
-                "institutional": pd.DataFrame(),
-                "mutual_fund": pd.DataFrame(),
-            }
+        ownership_snapshot_key = (
+            f"company_ownership::{selected_ticker}"
+        )
+        ownership_data = st.session_state.get(
+            ownership_snapshot_key
+        )
+        if not isinstance(ownership_data, dict):
+            try:
+                ownership_data = get_company_ownership_data(
+                    selected_ticker
+                )
+            except Exception:
+                ownership_data = {
+                    "major": pd.DataFrame(),
+                    "institutional": pd.DataFrame(),
+                    "mutual_fund": pd.DataFrame(),
+                }
+            st.session_state[
+                ownership_snapshot_key
+            ] = ownership_data
 
         major_table = ownership_data.get("major", pd.DataFrame())
         major_lookup = {}
@@ -2257,14 +2275,26 @@ def render_company_research(
             "They are not EquityLens ratings, recommendations, or price forecasts."
         )
 
-        try:
-            analyst_data = get_company_analyst_data(selected_ticker)
-        except Exception:
-            analyst_data = {
-                "targets": {},
-                "recommendations": pd.DataFrame(),
-                "upgrades": pd.DataFrame(),
-            }
+        analyst_snapshot_key = (
+            f"company_analyst::{selected_ticker}"
+        )
+        analyst_data = st.session_state.get(
+            analyst_snapshot_key
+        )
+        if not isinstance(analyst_data, dict):
+            try:
+                analyst_data = get_company_analyst_data(
+                    selected_ticker
+                )
+            except Exception:
+                analyst_data = {
+                    "targets": {},
+                    "recommendations": pd.DataFrame(),
+                    "upgrades": pd.DataFrame(),
+                }
+            st.session_state[
+                analyst_snapshot_key
+            ] = analyst_data
 
         targets = analyst_data.get("targets", {}) or {}
 
@@ -2365,14 +2395,26 @@ def render_company_research(
         )
 
         etf_state_key = f"workspace_etf_scan_{selected_ticker}"
-        if st.button("Scan major ETFs", key=f"workspace_etf_button_{selected_ticker}"):
+        etf_snapshot_key = f"company_etf_exposure::{selected_ticker}"
+        if st.button(
+            "Scan major ETFs",
+            key=f"workspace_etf_button_{selected_ticker}",
+        ):
             st.session_state[etf_state_key] = True
+            st.session_state.pop(etf_snapshot_key, None)
 
         if st.session_state.get(etf_state_key, False):
-            try:
-                etf_matches = get_major_etf_exposure(selected_ticker)
-            except Exception:
-                etf_matches = []
+            etf_matches = st.session_state.get(etf_snapshot_key)
+            if not isinstance(etf_matches, list):
+                try:
+                    etf_matches = get_major_etf_exposure(
+                        selected_ticker
+                    )
+                except Exception:
+                    etf_matches = []
+                st.session_state[
+                    etf_snapshot_key
+                ] = etf_matches
 
             if etf_matches:
                 etf_df = pd.DataFrame(etf_matches)
