@@ -1091,8 +1091,9 @@ def render_market_monitor(
             "Rates",
             "Treasury, SOFR & Swap Monitor",
         )
-        with st.spinner(
-            "Loading public Treasury, SOFR and swap rates…"
+        with loading_panel(
+            "Loading rates and liquidity data",
+            "Retrieving U.S. Treasury, New York Fed SOFR, and swap-curve context."
         ):
             rates_bundle = get_rates_bundle(
                 str(
