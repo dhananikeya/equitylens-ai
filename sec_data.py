@@ -1,5 +1,11 @@
-import requests
 import streamlit as st
+
+from services.providers.sec import (
+    fetch_company_facts,
+    fetch_submission_history,
+    fetch_submissions,
+    fetch_ticker_directory,
+)
 
 from models.context import CompanyIdentifier
 
@@ -19,24 +25,14 @@ def get_company_facts(cik):
     cik = str(cik).zfill(10)
     url = f"https://data.sec.gov/api/xbrl/companyfacts/CIK{cik}.json"
 
-    response = requests.get(
-        url,
-        headers=SEC_REQUEST_HEADERS,
-        timeout=20,
-    )
-    response.raise_for_status()
-    return response.json()
+    return fetch_company_facts(
+        cik
+    ).json()
 
 
 @st.cache_data(ttl=86400)
 def get_sec_ticker_directory():
-    response = requests.get(
-        "https://www.sec.gov/files/company_tickers.json",
-        headers=SEC_REQUEST_HEADERS,
-        timeout=30,
-    )
-    response.raise_for_status()
-    payload = response.json()
+    payload = fetch_ticker_directory().json()
 
     directory = {}
     for row in payload.values():
@@ -105,13 +101,9 @@ def get_sec_company_research(ticker):
         }
 
     cik = ticker_record["cik"]
-    response = requests.get(
-        f"https://data.sec.gov/submissions/CIK{cik}.json",
-        headers=SEC_REQUEST_HEADERS,
-        timeout=30,
-    )
-    response.raise_for_status()
-    submissions = response.json()
+    submissions = fetch_submissions(
+        cik
+    ).json()
 
     recent = submissions.get("filings", {}).get("recent", {})
     recent_rows = sec_rows_from_recent(recent, cik)
@@ -132,14 +124,10 @@ def get_sec_company_research(ticker):
             history_name = history_file.get("name")
             if not history_name:
                 continue
-            history_response = requests.get(
-                "https://data.sec.gov/submissions/" + history_name,
-                headers=SEC_REQUEST_HEADERS,
-                timeout=30,
-            )
-            history_response.raise_for_status()
             historical_rows = sec_rows_from_recent(
-                history_response.json(),
+                fetch_submission_history(
+                    history_name
+                ).json(),
                 cik,
             )
             registration_rows.extend(
