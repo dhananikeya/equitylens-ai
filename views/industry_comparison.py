@@ -268,8 +268,10 @@ def render_industry_comparison(
         selected_peer_set,
         tuple(selected_companies),
     )
+    comparison_snapshot_key = "peer_financial_snapshot"
     if compare_button:
         st.session_state["completed_comparison"] = signature
+        st.session_state.pop(comparison_snapshot_key, None)
 
     if st.session_state.get("completed_comparison") != signature:
         st.info(
@@ -278,20 +280,36 @@ def render_industry_comparison(
         )
         return
 
-    peer_financial_cache = {}
-    with st.spinner(
-        "Loading supplemental peer financial statements…"
+    comparison_snapshot = st.session_state.get(comparison_snapshot_key)
+    if (
+        not isinstance(comparison_snapshot, dict)
+        or comparison_snapshot.get("signature") != signature
     ):
-        for company in selected_companies:
-            ticker = str(
-                company_data[company].get("ticker", "")
-            ).upper()
-            try:
-                peer_financial_cache[company] = (
-                    get_company_financial_snapshot(ticker)
-                )
-            except Exception:
-                peer_financial_cache[company] = {}
+        peer_financial_cache = {}
+        with st.spinner(
+            "Loading supplemental peer financial statements…"
+        ):
+            for company in selected_companies:
+                ticker = str(
+                    company_data[company].get("ticker", "")
+                ).upper()
+                try:
+                    peer_financial_cache[company] = (
+                        get_company_financial_snapshot(ticker)
+                    )
+                except Exception:
+                    peer_financial_cache[company] = {}
+
+        comparison_snapshot = {
+            "signature": signature,
+            "financials": peer_financial_cache,
+        }
+        st.session_state[comparison_snapshot_key] = comparison_snapshot
+    else:
+        peer_financial_cache = comparison_snapshot.get(
+            "financials",
+            {},
+        )
 
     annual_by_company = {
         company: _annual_snapshot(
