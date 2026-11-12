@@ -2081,19 +2081,36 @@ def retry_company_data(ticker):
     # Import network-heavy modules only when the user explicitly requests a refresh.
     from sec_data import get_sec_company_research
     from market_data import (
+        get_company_analyst_data,
         get_company_financial_snapshot,
+        get_company_ownership_data,
         get_live_market_data,
+        get_major_etf_exposure,
         get_market_history,
     )
 
+    normalized_ticker = str(ticker).upper().strip()
     get_sec_company_research.clear(ticker)
     get_live_market_data.clear([ticker])
     get_company_financial_snapshot.clear(ticker)
+    get_company_ownership_data.clear(ticker)
+    get_company_analyst_data.clear(ticker)
+    get_major_etf_exposure.clear(ticker)
     get_market_history.clear()
-    st.session_state.pop(
-        f"company_core_snapshot::{str(ticker).upper().strip()}",
-        None,
+
+    snapshot_prefixes = (
+        f"company_core_snapshot::{normalized_ticker}",
+        f"company_ownership::{normalized_ticker}",
+        f"company_analyst::{normalized_ticker}",
+        f"company_etf_exposure::{normalized_ticker}",
+        f"company_history::{normalized_ticker}::",
     )
+    for key in list(st.session_state):
+        if any(
+            key == prefix or key.startswith(prefix)
+            for prefix in snapshot_prefixes
+        ):
+            st.session_state.pop(key, None)
 
 
 def research_link(ticker=None, destination="Company Research"):
