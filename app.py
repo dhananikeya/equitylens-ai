@@ -102,12 +102,52 @@ st.markdown(
     border: 1px solid var(--el-border); border-radius: 9px; background: var(--el-surface);
 }
 .st-key-main_navigation label { padding: .3rem .45rem; }
+
+.st-key-top_command_bar {
+    position: sticky;
+    top: 3.15rem;
+    z-index: 950;
+    margin: 0 0 1.05rem;
+    padding: .72rem .8rem .66rem;
+    border: 1px solid rgba(38,54,64,.9);
+    border-radius: 10px;
+    background: rgba(5,11,14,.94);
+    box-shadow: 0 14px 34px rgba(0,0,0,.22);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.st-key-top_command_bar .el-kicker {
+    margin: 0 0 .42rem;
+    font-size: .69rem;
+}
+
+.st-key-top_command_bar [data-testid="stSelectbox"] {
+    margin-bottom: .2rem;
+}
+
+.st-key-top_command_bar [data-testid="stSelectbox"] > label {
+    display: none;
+}
+
+.st-key-top_command_bar .st-key-main_navigation [role="radiogroup"] {
+    margin-top: .15rem;
+    padding: .35rem .4rem;
+    background: rgba(9,18,23,.72);
+}
+
 @media (max-width: 640px) {
     .block-container { padding-left: 1rem !important; padding-right: 1rem !important; }
     .el-tool-hero { padding: 1.3rem; }
     [data-testid="stHorizontalBlock"] { flex-wrap: wrap !important; gap: .8rem !important; }
     [data-testid="stColumn"] { width: 100% !important; flex: 1 1 100% !important; min-width: 0 !important; }
     .st-key-main_navigation [role="radiogroup"] { gap: .2rem; }
+    .st-key-top_command_bar {
+        top: 2.8rem;
+        padding: .58rem .62rem .52rem;
+        border-radius: 8px;
+    }
+    .st-key-top_command_bar .el-kicker { display: none; }
     [data-testid="stDataFrame"] { max-width: 100%; overflow-x: auto; }
 }
 
@@ -2124,23 +2164,30 @@ if not st.session_state.get("shared_link_loaded"):
 
 st.session_state.setdefault("main_navigation", "Home")
 inject_readability_styles(st)
-st.markdown('<div class="el-kicker">EquityLens AI · Free educational research</div>', unsafe_allow_html=True)
-st.selectbox(
-    "Search EquityLens",
-    options=global_search_options,
-    index=None,
-    format_func=format_global_search_option,
-    placeholder="Search companies, tickers, filings, markets, or sections…",
-    key="global_search_choice",
-    on_change=navigate_from_global_search,
-)
-active_destination = st.radio(
-    "Explore EquityLens",
-    options=list(navigation_labels),
-    horizontal=True,
-    key="main_navigation",
-    label_visibility="collapsed",
-)
+
+with st.container(key="top_command_bar"):
+    st.markdown(
+        '<div class="el-kicker">EquityLens AI · Search and navigate</div>',
+        unsafe_allow_html=True,
+    )
+    st.selectbox(
+        "Search EquityLens",
+        options=global_search_options,
+        index=None,
+        format_func=format_global_search_option,
+        placeholder="Search a company, ticker, filing area, market view, or section…",
+        key="global_search_choice",
+        on_change=navigate_from_global_search,
+        label_visibility="collapsed",
+    )
+    active_destination = st.radio(
+        "Explore EquityLens",
+        options=list(navigation_labels),
+        horizontal=True,
+        key="main_navigation",
+        label_visibility="collapsed",
+    )
+
 workspace_search = ""
 
 
