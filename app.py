@@ -6,6 +6,7 @@
 # or applicable platform terms. Third-party libraries, public filings, factual source data,
 # company names, and trademarks remain subject to their respective rights and terms.
 
+import gzip
 import json
 import time
 from urllib.parse import urlencode
@@ -1773,7 +1774,17 @@ def load_json(path):
 @st.cache_data(show_spinner=False)
 def load_sec_filings():
     """Load the full SEC filing archive only on pages that truly need it."""
-    return load_json("data/sec_filings.json")
+    try:
+        with gzip.open(
+            "data/sec_filings.json.gz",
+            "rt",
+            encoding="utf-8",
+        ) as archive_file:
+            return json.load(archive_file)
+    except (FileNotFoundError, OSError, json.JSONDecodeError):
+        # Transitional fallback until the next SEC refresh writes the compressed
+        # archive and removes the legacy plain JSON file.
+        return load_json("data/sec_filings.json")
 
 
 @st.cache_data(show_spinner=False)
