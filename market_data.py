@@ -2,8 +2,9 @@ import io
 from datetime import datetime, timezone
 
 import pandas as pd
-import requests
 import streamlit as st
+
+from services.providers.finviz import fetch_screener
 import yfinance as yf
 
 
@@ -176,17 +177,15 @@ def get_finviz_screener_data(symbols=None, filters=None):
         if filters:
             params["f"] = str(filters)
 
-        response = requests.get(
-            str(api_url),
+        response = fetch_screener(
+            api_url,
             params=params,
             headers=headers,
-            timeout=30
         )
     elif export_url:
-        response = requests.get(
-            str(export_url),
+        response = fetch_screener(
+            export_url,
             headers=headers,
-            timeout=30
         )
     else:
         raise ValueError(
