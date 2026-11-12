@@ -27,6 +27,12 @@ st.set_page_config(
 
 _app_run_started = time.perf_counter()
 
+PERFORMANCE_BUDGET_MS = {
+    "Home": 2000,
+    "Company Research": 3000,
+}
+NAVIGATION_RERUN_BUDGET_MS = 1000
+
 
 def _timed_render(page_name, render_callable):
     """Record server-side render duration for one top-level destination."""
@@ -2443,12 +2449,26 @@ if _debug_flag in {"1", "true", "yes"}:
         for page_name, samples in sorted(timings.items()):
             if not samples:
                 continue
+            budget = PERFORMANCE_BUDGET_MS.get(
+                page_name
+            )
+            average_ms = round(
+                sum(samples) / len(samples),
+                1,
+            )
             rows.append({
                 "Page": page_name,
                 "Last render (ms)": samples[-1],
-                "Average (ms)": round(
-                    sum(samples) / len(samples),
-                    1,
+                "Average (ms)": average_ms,
+                "Budget (ms)": budget or "—",
+                "Budget status": (
+                    "Within budget"
+                    if budget and samples[-1] <= budget
+                    else (
+                        "Over budget"
+                        if budget
+                        else "Monitor"
+                    )
                 ),
                 "Fastest (ms)": min(samples),
                 "Slowest (ms)": max(samples),
@@ -2464,8 +2484,14 @@ if _debug_flag in {"1", "true", "yes"}:
             st.caption(
                 "Navigate to a page to collect timing samples."
             )
+        navigation_status = (
+            "within target"
+            if _app_run_elapsed_ms <= NAVIGATION_RERUN_BUDGET_MS
+            else "over target"
+        )
         st.caption(
-            f"Current full Streamlit rerun: {_app_run_elapsed_ms:,.1f} ms · "
+            f"Current full Streamlit rerun: {_app_run_elapsed_ms:,.1f} ms "
+            f"({navigation_status}; target < {NAVIGATION_RERUN_BUDGET_MS:,} ms) · "
             "Server-side timing only; browser/network paint time is not included."
         )
 
