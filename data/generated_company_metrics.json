@@ -1,1 +1,2004 @@
-{}
+{
+  "Agilent Technologies Inc (A)": {
+    "ticker": "A",
+    "industry": "Diagnostics & Research",
+    "sector": "Healthcare",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-10-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1090872/000109087225000087/a-20251031.htm",
+    "revenue": 6948000000,
+    "gross_profit": null,
+    "operating_income": 1479000000,
+    "net_income": 1303000000,
+    "cash": 1758000000,
+    "assets": 13967000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 6510000000,
+        "operating_income": 1488000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 6510000000,
+        "operating_income": 1479000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 6948000000,
+        "operating_income": 1479000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 281928854,
+      "shares_as_of": "2026-08-26",
+      "total_debt": 2730000000,
+      "cash_and_investments": 1758000000,
+      "balance_sheet_as_of": "2026-07-31",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1090872/000109087226000064/a-20260731.htm"
+    }
+  },
+  "Apple Inc (AAPL)": {
+    "ticker": "AAPL",
+    "industry": "Consumer Electronics",
+    "sector": "Technology",
+    "country": "USA",
+    "fiscal_year": 2026,
+    "fiscal_year_end": "2026-09-26",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/aapl-20260926.htm",
+    "revenue": 478834000000,
+    "gross_profit": 233602000000,
+    "operating_income": 158063000000,
+    "net_income": 132175000000,
+    "cash": 36305000000,
+    "assets": 404548000000,
+    "history": [
+      {
+        "fiscal_year": 2025,
+        "revenue": 416161000000,
+        "operating_income": 133050000000
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 416161000000,
+        "operating_income": 158063000000
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 478834000000,
+        "operating_income": 158063000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 14532182000,
+      "shares_as_of": "2026-10-23",
+      "total_debt": 78114000000,
+      "cash_and_investments": 56722000000,
+      "balance_sheet_as_of": "2026-09-26",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm"
+    }
+  },
+  "Abbvie Inc (ABBV)": {
+    "ticker": "ABBV",
+    "industry": "Drug Manufacturers - General",
+    "sector": "Healthcare",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000008/abbv-20251231.htm",
+    "revenue": 61160000000,
+    "gross_profit": 12066000000,
+    "operating_income": 15075000000,
+    "net_income": 4226000000,
+    "cash": 10774000000,
+    "assets": 147680000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 56334000000,
+        "operating_income": 9137000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 56334000000,
+        "operating_income": 15075000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 61160000000,
+        "operating_income": 15075000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 1767616306,
+      "shares_as_of": "2026-10-26",
+      "total_debt": 64503000000,
+      "cash_and_investments": 10802000000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000037/abbv-20260930.htm"
+    }
+  },
+  "Airbnb Inc (ABNB)": {
+    "ticker": "ABNB",
+    "industry": "Travel Services",
+    "sector": "Consumer Cyclical",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1559720/000155972026000004/abnb-20251231.htm",
+    "revenue": 12241000000,
+    "gross_profit": null,
+    "operating_income": 2544000000,
+    "net_income": 2511000000,
+    "cash": 7272000000,
+    "assets": 24369000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 11102000000,
+        "operating_income": 2553000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 11102000000,
+        "operating_income": 2544000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 12241000000,
+        "operating_income": 2544000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": null,
+      "shares_as_of": null,
+      "total_debt": 2371000000,
+      "cash_and_investments": 12590000000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1559720/000155972026000032/abnb-20260930.htm"
+    }
+  },
+  "Abbott Laboratories (ABT)": {
+    "ticker": "ABT",
+    "industry": "Medical Devices",
+    "sector": "Healthcare",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1800/000162828026010185/abt-20251231.htm",
+    "revenue": 44328000000,
+    "gross_profit": null,
+    "operating_income": 8053000000,
+    "net_income": 6524000000,
+    "cash": 4052000000,
+    "assets": 108247000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 41950000000,
+        "operating_income": 6825000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 41950000000,
+        "operating_income": 8053000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 44328000000,
+        "operating_income": 8053000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 1731941601,
+      "shares_as_of": "2026-09-30",
+      "total_debt": 31159000000,
+      "cash_and_investments": 4298000000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1800/000162828026070154/abt-20260930.htm"
+    }
+  },
+  "Arch Capital Group Ltd (ACGL)": {
+    "ticker": "ACGL",
+    "industry": "Insurance - Diversified",
+    "sector": "Financial",
+    "country": "Bermuda",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/947484/000094748426000017/acgl-20251231.htm",
+    "revenue": 19929000000,
+    "gross_profit": null,
+    "operating_income": null,
+    "net_income": 4399000000,
+    "cash": 1152000000,
+    "assets": 84076000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 17440000000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 17440000000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 19929000000,
+        "operating_income": null
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 325525336,
+      "shares_as_of": "2026-10-29",
+      "total_debt": null,
+      "cash_and_investments": 1152000000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/947484/000094748426000152/acgl-20260930.htm"
+    }
+  },
+  "Accenture plc (ACN)": {
+    "ticker": "ACN",
+    "industry": "Information Technology Services",
+    "sector": "Technology",
+    "country": "Ireland",
+    "fiscal_year": 2026,
+    "fiscal_year_end": "2026-08-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1467373/000146737326000049/acn-20260831.htm",
+    "revenue": 74183445000,
+    "gross_profit": null,
+    "operating_income": 11405960000,
+    "net_income": 8367056000,
+    "cash": 12831471000,
+    "assets": 73597792000,
+    "history": [
+      {
+        "fiscal_year": 2026,
+        "revenue": 18718144000,
+        "operating_income": 11405960000
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 18679110000,
+        "operating_income": 11405960000
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 74183445000,
+        "operating_income": 11405960000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 637016143,
+      "shares_as_of": "2010-03-19",
+      "total_debt": null,
+      "cash_and_investments": 12837769000,
+      "balance_sheet_as_of": "2026-08-31",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1467373/000146737326000032/acn-20260531.htm"
+    }
+  },
+  "Adobe Inc (ADBE)": {
+    "ticker": "ADBE",
+    "industry": "Software - Application",
+    "sector": "Technology",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-11-28",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm",
+    "revenue": 23769000000,
+    "gross_profit": 21218000000,
+    "operating_income": 8706000000,
+    "net_income": 7130000000,
+    "cash": 4359000000,
+    "assets": 29981000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 21505000000,
+        "operating_income": 6741000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 21505000000,
+        "operating_income": 8706000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 23769000000,
+        "operating_income": 8706000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 389200000,
+      "shares_as_of": "2026-09-18",
+      "total_debt": 2750000000,
+      "cash_and_investments": 5639000000,
+      "balance_sheet_as_of": "2026-08-28",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000156/adbe-20260828.htm"
+    }
+  },
+  "Analog Devices Inc (ADI)": {
+    "ticker": "ADI",
+    "industry": "Semiconductors",
+    "sector": "Technology",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-11-01",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/6281/000000628125000153/adi-20251101.htm",
+    "revenue": 11019707000,
+    "gross_profit": 6773478000,
+    "operating_income": 2932496000,
+    "net_income": 2267342000,
+    "cash": 2165870000,
+    "assets": 48424417000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 9427157000,
+        "operating_income": 2032798000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 9427157000,
+        "operating_income": 2932496000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 11019707000,
+        "operating_income": 2932496000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 484565465,
+      "shares_as_of": "2026-08-01",
+      "total_debt": 8116479000,
+      "cash_and_investments": 3318785000,
+      "balance_sheet_as_of": "2026-08-01",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/6281/000000628126000073/adi-20260801.htm"
+    }
+  },
+  "Archer Daniels Midland Co (ADM)": {
+    "ticker": "ADM",
+    "industry": "Farm Products",
+    "sector": "Consumer Defensive",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/7084/000000708426000011/adm-20251231.htm",
+    "revenue": 24956000000,
+    "gross_profit": 5033000000,
+    "operating_income": null,
+    "net_income": 1078000000,
+    "cash": 711000000,
+    "assets": 55400000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 24373000000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 24373000000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 24956000000,
+        "operating_income": null
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 475919192,
+      "shares_as_of": "2026-10-30",
+      "total_debt": 7582000000,
+      "cash_and_investments": 1144000000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/7084/000000708426000057/adm-20260930.htm"
+    }
+  },
+  "Automatic Data Processing Inc (ADP)": {
+    "ticker": "ADP",
+    "industry": "Software - Application",
+    "sector": "Technology",
+    "country": "USA",
+    "fiscal_year": 2026,
+    "fiscal_year_end": "2026-06-30",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/8670/000000867026000030/adp-20260630.htm",
+    "revenue": 21947400000,
+    "gross_profit": null,
+    "operating_income": null,
+    "net_income": 4413500000,
+    "cash": 3277000000,
+    "assets": 63453800000,
+    "history": [
+      {
+        "fiscal_year": 2025,
+        "revenue": 20560900000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 20560900000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 21947400000,
+        "operating_income": null
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 394759432,
+      "shares_as_of": "2026-10-27",
+      "total_debt": 4983500000,
+      "cash_and_investments": 5538600000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/8670/000000867026000044/adp-20260930.htm"
+    }
+  },
+  "Autodesk Inc (ADSK)": {
+    "ticker": "ADSK",
+    "industry": "Software - Application",
+    "sector": "Technology",
+    "country": "USA",
+    "fiscal_year": 2026,
+    "fiscal_year_end": "2026-01-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/769397/000076939726000015/adsk-20260131.htm",
+    "revenue": 7206000000,
+    "gross_profit": 6556000000,
+    "operating_income": 1578000000,
+    "net_income": 1124000000,
+    "cash": 4098000000,
+    "assets": 12983000000,
+    "history": [
+      {
+        "fiscal_year": 2025,
+        "revenue": 6131000000,
+        "operating_income": 1354000000
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 6131000000,
+        "operating_income": 1578000000
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 7206000000,
+        "operating_income": 1578000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 209000000,
+      "shares_as_of": "2026-08-21",
+      "total_debt": 2500000000,
+      "cash_and_investments": 4155000000,
+      "balance_sheet_as_of": "2026-07-31",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/769397/000076939726000061/adsk-20260731.htm"
+    }
+  },
+  "Ameren Corp (AEE)": {
+    "ticker": "AEE",
+    "industry": "Utilities - Regulated Electric",
+    "sector": "Utilities",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1002910/000100291026000009/aee-20251231.htm",
+    "revenue": 8799000000,
+    "gross_profit": null,
+    "operating_income": 2026000000,
+    "net_income": null,
+    "cash": 12000000,
+    "assets": 51216000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 7623000000,
+        "operating_income": 1516000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 7623000000,
+        "operating_income": 2026000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 8799000000,
+        "operating_income": 2026000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 276843251,
+      "shares_as_of": "2026-07-30",
+      "total_debt": 20588000000,
+      "cash_and_investments": 12000000,
+      "balance_sheet_as_of": "2026-06-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1002910/000100291026000032/aee-20260930.htm"
+    }
+  },
+  "American Electric Power Company Inc (AEP)": {
+    "ticker": "AEP",
+    "industry": "Utilities - Regulated Electric",
+    "sector": "Utilities",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/aep-20251231.htm",
+    "revenue": 21702000000,
+    "gross_profit": null,
+    "operating_income": 5319000000,
+    "net_income": null,
+    "cash": 306000000,
+    "assets": 117776000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 19969700000,
+        "operating_income": 4304000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 19970000000,
+        "operating_income": 5319000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 21702000000,
+        "operating_income": 5319000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 544104955,
+      "shares_as_of": "2026-05-05",
+      "total_debt": 49554000000,
+      "cash_and_investments": 516000000,
+      "balance_sheet_as_of": "2026-03-31",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000072/aep-20260930.htm"
+    }
+  },
+  "AES Corp (AES)": {
+    "ticker": "AES",
+    "industry": "Utilities - Diversified",
+    "sector": "Utilities",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/874761/000087476126000063/aes-20251231.htm",
+    "revenue": 12233000000,
+    "gross_profit": 2211000000,
+    "operating_income": null,
+    "net_income": 910000000,
+    "cash": 1972000000,
+    "assets": 56047000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 12278000000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 12278000000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 12233000000,
+        "operating_income": null
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 713564658,
+      "shares_as_of": "2026-10-30",
+      "total_debt": null,
+      "cash_and_investments": 2026000000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/874761/000087476126000156/aes-20260930.htm"
+    }
+  },
+  "Aflac Inc (AFL)": {
+    "ticker": "AFL",
+    "industry": "Insurance - Life",
+    "sector": "Financial",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/4977/000162828026011402/afl-20251231.htm",
+    "revenue": 17164000000,
+    "gross_profit": null,
+    "operating_income": null,
+    "net_income": 3646000000,
+    "cash": 5623000000,
+    "assets": 113511000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 18927000000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 18927000000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 17164000000,
+        "operating_income": null
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 494607060,
+      "shares_as_of": "2026-10-27",
+      "total_debt": null,
+      "cash_and_investments": 5623000000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/4977/000162828026070776/afl-20260930.htm"
+    }
+  },
+  "American International Group Inc (AIG)": {
+    "ticker": "AIG",
+    "industry": "Insurance - Diversified",
+    "sector": "Financial",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/5272/000000527226000023/aig-20251231.htm",
+    "revenue": 26775000000,
+    "gross_profit": null,
+    "operating_income": null,
+    "net_income": 3096000000,
+    "cash": 1787000000,
+    "assets": 161861000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 27251000000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 27251000000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 26775000000,
+        "operating_income": null
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 518438878,
+      "shares_as_of": "2026-10-29",
+      "total_debt": 9191000000,
+      "cash_and_investments": 21560000000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/5272/000000527226000104/aig-20260930.htm"
+    }
+  },
+  "Assurant Inc (AIZ)": {
+    "ticker": "AIZ",
+    "industry": "Insurance - Property & Casualty",
+    "sector": "Financial",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1267238/000126723826000010/aiz-20251231.htm",
+    "revenue": 12814300000,
+    "gross_profit": null,
+    "operating_income": null,
+    "net_income": 872700000,
+    "cash": 1777800000,
+    "assets": 36493500000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 11877500000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 11877500000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 12814300000,
+        "operating_income": null
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 49066851,
+      "shares_as_of": "2026-10-30",
+      "total_debt": 2207500000,
+      "cash_and_investments": 2180300000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1267238/000126723826000046/aiz-20260930.htm"
+    }
+  },
+  "Arthur J. Gallagher & Co (AJG)": {
+    "ticker": "AJG",
+    "industry": "Insurance Brokers",
+    "sector": "Financial",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/354190/000162828026008662/ajg-20251231.htm",
+    "revenue": 13942000000,
+    "gross_profit": null,
+    "operating_income": null,
+    "net_income": 1494000000,
+    "cash": 857600000,
+    "assets": 79064000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 11554900000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 11555000000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 13942000000,
+        "operating_income": null
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 256400000,
+      "shares_as_of": "2026-10-30",
+      "total_debt": 11735000000,
+      "cash_and_investments": 857600000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/354190/000162828026070650/ajg-20260930.htm"
+    }
+  },
+  "Astera Labs Inc (ALAB)": {
+    "ticker": "ALAB",
+    "industry": "Semiconductors",
+    "sector": "Technology",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000010/alab-20251231.htm",
+    "revenue": 852525000,
+    "gross_profit": 645261000,
+    "operating_income": 173423000,
+    "net_income": 219134000,
+    "cash": 209396000,
+    "assets": 2300333000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 396290000,
+        "operating_income": -116066000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 396290000,
+        "operating_income": 173423000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 852525000,
+        "operating_income": 173423000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 174782075,
+      "shares_as_of": "2026-10-31",
+      "total_debt": null,
+      "cash_and_investments": 209396000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000045/alab-20260930.htm"
+    }
+  },
+  "Albemarle Corp (ALB)": {
+    "ticker": "ALB",
+    "industry": "Specialty Chemicals",
+    "sector": "Basic Materials",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K/A",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/915913/000091591326000060/alb-20251231.htm",
+    "revenue": 5142733000,
+    "gross_profit": 668719000,
+    "operating_income": -367084000,
+    "net_income": -510628000,
+    "cash": 1845999000,
+    "assets": 16083315000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 5377526000,
+        "operating_income": -1776545000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 5377526000,
+        "operating_income": -367084000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 5142733000,
+        "operating_income": -367084000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 118009849,
+      "shares_as_of": "2026-10-28",
+      "total_debt": 1881352000,
+      "cash_and_investments": 1845999000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/915913/000091591326000129/alb-20260930.htm"
+    }
+  },
+  "Align Technology Inc (ALGN)": {
+    "ticker": "ALGN",
+    "industry": "Medical Instruments & Supplies",
+    "sector": "Healthcare",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1097149/000109714926000014/algn-20251231.htm",
+    "revenue": 4034964000,
+    "gross_profit": 2711013000,
+    "operating_income": 545755000,
+    "net_income": 410351000,
+    "cash": 1144931000,
+    "assets": 6520609000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 3999012000,
+        "operating_income": 607628000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 3999012000,
+        "operating_income": 545755000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 4034964000,
+        "operating_income": 545755000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 70487053,
+      "shares_as_of": "2026-10-30",
+      "total_debt": null,
+      "cash_and_investments": 1463133000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1097149/000109714926000081/algn-20260930.htm"
+    }
+  },
+  "Allstate Corp (ALL)": {
+    "ticker": "ALL",
+    "industry": "Insurance - Property & Casualty",
+    "sector": "Financial",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/899051/000089905126000031/all-20251231.htm",
+    "revenue": 67685000000,
+    "gross_profit": null,
+    "operating_income": null,
+    "net_income": 10282000000,
+    "cash": 549000000,
+    "assets": 127849000000,
+    "history": [
+      {
+        "fiscal_year": 2025,
+        "revenue": 17255000000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 17345000000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 67685000000,
+        "operating_income": null
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 247449496,
+      "shares_as_of": "2026-10-19",
+      "total_debt": 7494000000,
+      "cash_and_investments": 5254000000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/899051/000089905126000157/all-20260930.htm"
+    }
+  },
+  "Allegion plc (ALLE)": {
+    "ticker": "ALLE",
+    "industry": "Security & Protection Services",
+    "sector": "Industrials",
+    "country": "Ireland",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1579241/000157924126000007/alle-20251231.htm",
+    "revenue": 4067300000,
+    "gross_profit": null,
+    "operating_income": 859500000,
+    "net_income": 643800000,
+    "cash": 356200000,
+    "assets": 5466900000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 3772200000,
+        "operating_income": 780700000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 3772200000,
+        "operating_income": 859500000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 4067300000,
+        "operating_income": 859500000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 84321432,
+      "shares_as_of": "2026-10-19",
+      "total_debt": 2032000000,
+      "cash_and_investments": 356200000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1579241/000157924126000034/alle-20260930.htm"
+    }
+  },
+  "Alnylam Pharmaceuticals Inc (ALNY)": {
+    "ticker": "ALNY",
+    "industry": "Biotechnology",
+    "sector": "Healthcare",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1178670/000162828026007497/alny-20251231.htm",
+    "revenue": 3713937000,
+    "gross_profit": null,
+    "operating_income": 501578000,
+    "net_income": 313747000,
+    "cash": 1754340000,
+    "assets": 7994672000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 2248243000,
+        "operating_income": -176885000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 2248243000,
+        "operating_income": 501578000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 3713937000,
+        "operating_income": 501578000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 133937576,
+      "shares_as_of": "2026-10-23",
+      "total_debt": 677723000,
+      "cash_and_investments": 1754340000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1178670/000117867026000076/alny-20260930.htm"
+    }
+  },
+  "Applied Materials Inc (AMAT)": {
+    "ticker": "AMAT",
+    "industry": "Semiconductor Equipment & Materials",
+    "sector": "Technology",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-10-26",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/6951/000162828025056742/amat-20251026.htm",
+    "revenue": 28368000000,
+    "gross_profit": 13808000000,
+    "operating_income": 8289000000,
+    "net_income": 6998000000,
+    "cash": 7037000000,
+    "assets": 43522000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 27176000000,
+        "operating_income": 7867000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 27176000000,
+        "operating_income": 8289000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 28368000000,
+        "operating_income": 8289000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 793597443,
+      "shares_as_of": "2026-07-26",
+      "total_debt": 6444000000,
+      "cash_and_investments": 9233000000,
+      "balance_sheet_as_of": "2026-07-26",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/6951/000162828026058235/amat-20260726.htm"
+    }
+  },
+  "Amcor Plc (AMCR)": {
+    "ticker": "AMCR",
+    "industry": "Packaging & Containers",
+    "sector": "Consumer Cyclical",
+    "country": "Switzerland",
+    "fiscal_year": 2026,
+    "fiscal_year_end": "2026-06-30",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1748790/000174879026000022/amcr-20260630.htm",
+    "revenue": 23506000000,
+    "gross_profit": 4690000000,
+    "operating_income": 1899000000,
+    "net_income": 1106000000,
+    "cash": 832000000,
+    "assets": 36852000000,
+    "history": [
+      {
+        "fiscal_year": 2025,
+        "revenue": 15009000000,
+        "operating_income": 1009000000
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 15009000000,
+        "operating_income": 1899000000
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 23506000000,
+        "operating_income": 1899000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 462345690,
+      "shares_as_of": "2026-11-03",
+      "total_debt": 79000000,
+      "cash_and_investments": 832000000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1748790/000174879026000031/amcr-20260930.htm"
+    }
+  },
+  "Advanced Micro Devices Inc (AMD)": {
+    "ticker": "AMD",
+    "industry": "Semiconductors",
+    "sector": "Technology",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-27",
+    "source": "10-K/A",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000021/amd-20251227.htm",
+    "revenue": 34639000000,
+    "gross_profit": 17152000000,
+    "operating_income": 3694000000,
+    "net_income": 4335000000,
+    "cash": 7404000000,
+    "assets": 94812000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 25785000000,
+        "operating_income": 1900000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 25785000000,
+        "operating_income": 3694000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 34639000000,
+        "operating_income": 3694000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 1640087251,
+      "shares_as_of": "2026-10-28",
+      "total_debt": 7079000000,
+      "cash_and_investments": 15776000000,
+      "balance_sheet_as_of": "2026-09-26",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000191/amd-20260926.htm"
+    }
+  },
+  "Ametek Inc (AME)": {
+    "ticker": "AME",
+    "industry": "Specialty Industrial Machinery",
+    "sector": "Industrials",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1037868/000103786826000016/ame-20251231.htm",
+    "revenue": 7401116000,
+    "gross_profit": null,
+    "operating_income": 1910317000,
+    "net_income": 1480142000,
+    "cash": 666152000,
+    "assets": 22388535000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 6941180000,
+        "operating_income": 1779562000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 6941180000,
+        "operating_income": 1910317000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 7401116000,
+        "operating_income": 1910317000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 229317998,
+      "shares_as_of": "2026-10-29",
+      "total_debt": 6302880000,
+      "cash_and_investments": 671405000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1037868/000103786826000196/ame-20260930.htm"
+    }
+  },
+  "AMGEN Inc (AMGN)": {
+    "ticker": "AMGN",
+    "industry": "Drug Manufacturers - General",
+    "sector": "Healthcare",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+    "revenue": 36751000000,
+    "gross_profit": null,
+    "operating_income": 9080000000,
+    "net_income": 7711000000,
+    "cash": 13190000000,
+    "assets": 96048000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 33424000000,
+        "operating_income": 7258000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 33424000000,
+        "operating_income": 9080000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 36751000000,
+        "operating_income": 9080000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 540911490,
+      "shares_as_of": "2026-10-29",
+      "total_debt": 54007000000,
+      "cash_and_investments": 13190000000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000155/amgn-20260930.htm"
+    }
+  },
+  "Ameriprise Financial Inc (AMP)": {
+    "ticker": "AMP",
+    "industry": "Asset Management",
+    "sector": "Financial",
+    "country": "USA",
+    "fiscal_year": null,
+    "fiscal_year_end": null,
+    "source": "10-K/A",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/820027/000082002726000016/amp-20251231.htm",
+    "revenue": null,
+    "gross_profit": null,
+    "operating_income": null,
+    "net_income": null,
+    "cash": 2318000000,
+    "assets": 191350000000,
+    "history": [],
+    "capital_structure": {
+      "shares_outstanding": 86812469,
+      "shares_as_of": "2026-10-24",
+      "total_debt": 2684000000,
+      "cash_and_investments": 2318000000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/820027/000082002726000054/amp-20260930.htm"
+    }
+  },
+  "American Tower Corp (AMT)": {
+    "ticker": "AMT",
+    "industry": "REIT - Specialty",
+    "sector": "Real Estate",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1053507/000105350726000035/amt-20251231.htm",
+    "revenue": 935900000,
+    "gross_profit": null,
+    "operating_income": 4845800000,
+    "net_income": null,
+    "cash": 1871900000,
+    "assets": 62980300000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 774600000,
+        "operating_income": 4516500000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 774600000,
+        "operating_income": 4845800000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 935900000,
+        "operating_income": 4845800000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 463763555,
+      "shares_as_of": "2026-10-20",
+      "total_debt": 23768600000,
+      "cash_and_investments": 1890300000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1053507/000105350726000157/amt-20260930.htm"
+    }
+  },
+  "Amazon.com Inc (AMZN)": {
+    "ticker": "AMZN",
+    "industry": "Internet Retail",
+    "sector": "Consumer Cyclical",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm",
+    "revenue": 716924000000,
+    "gross_profit": null,
+    "operating_income": 79975000000,
+    "net_income": 77670000000,
+    "cash": 55783000000,
+    "assets": 1243390000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 637959000000,
+        "operating_income": 68593000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 637959000000,
+        "operating_income": 79975000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 716924000000,
+        "operating_income": 79975000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 10813138306,
+      "shares_as_of": "2026-10-21",
+      "total_debt": 179952000000,
+      "cash_and_investments": 114226000000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm"
+    }
+  },
+  "Arista Networks Inc (ANET)": {
+    "ticker": "ANET",
+    "industry": "Computer Hardware",
+    "sector": "Technology",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+    "revenue": 9005700000,
+    "gross_profit": 5768700000,
+    "operating_income": 3856100000,
+    "net_income": 3511400000,
+    "cash": 2288100000,
+    "assets": 25264100000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 7003146000,
+        "operating_income": 2944600000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 7003100000,
+        "operating_income": 3856100000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 9005700000,
+        "operating_income": 3856100000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 1263402335,
+      "shares_as_of": "2026-10-29",
+      "total_debt": 0,
+      "cash_and_investments": 2288100000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000254/anet-20260930.htm"
+    }
+  },
+  "Aon Plc (AON)": {
+    "ticker": "AON",
+    "industry": "Insurance Brokers",
+    "sector": "Financial",
+    "country": "Ireland",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/315293/000162828026008116/aon-20251231.htm",
+    "revenue": 17181000000,
+    "gross_profit": null,
+    "operating_income": 4344000000,
+    "net_income": 3695000000,
+    "cash": 2017000000,
+    "assets": 65139000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 15698000000,
+        "operating_income": 3835000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 15698000000,
+        "operating_income": 4344000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 17181000000,
+        "operating_income": 4344000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 212157176,
+      "shares_as_of": "2026-10-27",
+      "total_debt": 26319000000,
+      "cash_and_investments": 15316000000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/315293/000162828026067879/aon-20260930.htm"
+    }
+  },
+  "A.O. Smith Corp (AOS)": {
+    "ticker": "AOS",
+    "industry": "Specialty Industrial Machinery",
+    "sector": "Industrials",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/91142/000009114226000008/aos-20251231.htm",
+    "revenue": 3830200000,
+    "gross_profit": 1487400000,
+    "operating_income": 728600000,
+    "net_income": 546200000,
+    "cash": 234500000,
+    "assets": 3655000000,
+    "history": [
+      {
+        "fiscal_year": 2025,
+        "revenue": 3852800000,
+        "operating_income": 728600000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 3818100000,
+        "operating_income": 728600000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 3830200000,
+        "operating_income": 728600000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 75732188,
+      "shares_as_of": "2015-08-05",
+      "total_debt": 673100000,
+      "cash_and_investments": 234500000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/91142/000009114226000104/aos-20260930.htm"
+    }
+  },
+  "APA Corp (APA)": {
+    "ticker": "APA",
+    "industry": "Oil & Gas E&P",
+    "sector": "Energy",
+    "country": "USA",
+    "fiscal_year": null,
+    "fiscal_year_end": null,
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1841666/000184166626000015/apa-20251231.htm",
+    "revenue": null,
+    "gross_profit": null,
+    "operating_income": null,
+    "net_income": null,
+    "cash": 75000000,
+    "assets": 17883000000,
+    "history": [],
+    "capital_structure": {
+      "shares_outstanding": 335756005,
+      "shares_as_of": "2026-10-31",
+      "total_debt": 8715000000,
+      "cash_and_investments": 75000000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1841666/000184166626000071/apa-20260930.htm"
+    }
+  },
+  "Air Products & Chemicals Inc (APD)": {
+    "ticker": "APD",
+    "industry": "Specialty Chemicals",
+    "sector": "Basic Materials",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-09-30",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/2969/000000296925000055/apd-20250930.htm",
+    "revenue": 12037300000,
+    "gross_profit": null,
+    "operating_income": -877000000,
+    "net_income": -394500000,
+    "cash": 980500000,
+    "assets": 40445600000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 12100600000,
+        "operating_income": 4466100000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 12100600000,
+        "operating_income": -877000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 12037300000,
+        "operating_income": -877000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 222685530,
+      "shares_as_of": "2026-06-30",
+      "total_debt": 3782600000,
+      "cash_and_investments": 980500000,
+      "balance_sheet_as_of": "2026-06-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/2969/000000296926000036/apd-20260630.htm"
+    }
+  },
+  "Amphenol Corp (APH)": {
+    "ticker": "APH",
+    "industry": "Electronic Components",
+    "sector": "Technology",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926013549/aph-20251231x10k.htm",
+    "revenue": 23094700000,
+    "gross_profit": 8517700000,
+    "operating_income": 5868600000,
+    "net_income": 4270300000,
+    "cash": 4173100000,
+    "assets": 47021800000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 15222700000,
+        "operating_income": 3156900000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 15222700000,
+        "operating_income": 5868600000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 23094700000,
+        "operating_income": 5868600000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 2469261188,
+      "shares_as_of": "2026-10-27",
+      "total_debt": 3239300000,
+      "cash_and_investments": 5301400000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/820313/000110465926120646/aph-20260930x10q.htm"
+    }
+  },
+  "Apollo Global Management Inc (APO)": {
+    "ticker": "APO",
+    "industry": "Asset Management",
+    "sector": "Financial",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1858681/000185868126000013/apo-20251231.htm",
+    "revenue": 32049000000,
+    "gross_profit": null,
+    "operating_income": null,
+    "net_income": 3492000000,
+    "cash": 12070000000,
+    "assets": 498326000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 26114000000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 26114000000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 32049000000,
+        "operating_income": null
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 590432584,
+      "shares_as_of": "2026-11-03",
+      "total_debt": 14749000000,
+      "cash_and_investments": 12070000000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1858681/000185868126000067/apo-20260930.htm"
+    }
+  },
+  "Applovin Corp (APP)": {
+    "ticker": "APP",
+    "industry": "Advertising Agencies",
+    "sector": "Communication Services",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1751008/000175100826000010/app-20251231.htm",
+    "revenue": 5480717000,
+    "gross_profit": null,
+    "operating_income": 4151914000,
+    "net_income": 3333751000,
+    "cash": 3173731000,
+    "assets": 8582749000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 4709248000,
+        "operating_income": 1910956000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 3224058000,
+        "operating_income": 4151914000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 5480717000,
+        "operating_income": 4151914000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": null,
+      "shares_as_of": null,
+      "total_debt": 3516136000,
+      "cash_and_investments": 3173731000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1751008/000175100826000069/app-20260930.htm"
+    }
+  },
+  "Aptiv Plc (APTV)": {
+    "ticker": "APTV",
+    "industry": "Auto Parts",
+    "sector": "Consumer Cyclical",
+    "country": "Switzerland",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1521332/000152133226000009/aptv-20251231.htm",
+    "revenue": 20398000000,
+    "gross_profit": 963000000,
+    "operating_income": 1184000000,
+    "net_income": 165000000,
+    "cash": 670000000,
+    "assets": 18102000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 19713000000,
+        "operating_income": 1842000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 19713000000,
+        "operating_income": 1184000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 20398000000,
+        "operating_income": 1184000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 202430074,
+      "shares_as_of": "2026-10-30",
+      "total_debt": 5332000000,
+      "cash_and_investments": 1461000000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1521332/000152133226000075/aptv-20260930.htm"
+    }
+  },
+  "Alexandria Real Estate Equities Inc (ARE)": {
+    "ticker": "ARE",
+    "industry": "REIT - Office",
+    "sector": "Real Estate",
+    "country": "USA",
+    "fiscal_year": null,
+    "fiscal_year_end": null,
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000013/are-20251231.htm",
+    "revenue": null,
+    "gross_profit": null,
+    "operating_income": null,
+    "net_income": null,
+    "cash": 508855000,
+    "assets": 34051722000,
+    "history": [],
+    "capital_structure": {
+      "shares_outstanding": 174160645,
+      "shares_as_of": "2026-10-15",
+      "total_debt": 12896996000,
+      "cash_and_investments": 508855000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000076/are-20260930.htm"
+    }
+  },
+  "Ares Management Corp (ARES)": {
+    "ticker": "ARES",
+    "industry": "Asset Management",
+    "sector": "Financial",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1176948/000162828026011413/ares-20251231.htm",
+    "revenue": 5601482000,
+    "gross_profit": null,
+    "operating_income": null,
+    "net_income": 527362000,
+    "cash": 152203000,
+    "assets": 30287348000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 3884781000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 3884781000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 5601482000,
+        "operating_income": null
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 103332418,
+      "shares_as_of": "2019-04-29",
+      "total_debt": 202869000,
+      "cash_and_investments": 152203000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1176948/000162828026071628/ares-20260930.htm"
+    }
+  },
+  "Arm Holdings Plc ADR (ARM)": {
+    "ticker": "ARM",
+    "industry": "Semiconductors",
+    "sector": "Technology",
+    "country": "United Kingdom",
+    "fiscal_year": 2026,
+    "fiscal_year_end": "2026-03-31",
+    "source": "20-F",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
+    "revenue": 4920000000,
+    "gross_profit": 4799000000,
+    "operating_income": 900000000,
+    "net_income": 904000000,
+    "cash": 2751000000,
+    "assets": 10703000000,
+    "history": [
+      {
+        "fiscal_year": 2025,
+        "revenue": 4007000000,
+        "operating_income": 831000000
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 4007000000,
+        "operating_income": 900000000
+      },
+      {
+        "fiscal_year": 2026,
+        "revenue": 4920000000,
+        "operating_income": 900000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 1064055252,
+      "shares_as_of": "2026-03-31",
+      "total_debt": null,
+      "cash_and_investments": 3601000000,
+      "balance_sheet_as_of": "2026-03-31",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm"
+    }
+  },
+  "ASML Holding NV (ASML)": {
+    "ticker": "ASML",
+    "industry": "Semiconductor Equipment & Materials",
+    "sector": "Technology",
+    "country": "Netherlands",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "20-F",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm",
+    "revenue": 32667300000,
+    "gross_profit": 17258000000,
+    "operating_income": 11301400000,
+    "net_income": 9609400000,
+    "cash": 12916000000,
+    "assets": 50566600000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 28262900000,
+        "operating_income": 9022600000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 28262900000,
+        "operating_income": 11301400000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 32667300000,
+        "operating_income": 11301400000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 385417665,
+      "shares_as_of": "2025-12-31",
+      "total_debt": 4390900000,
+      "cash_and_investments": 12916000000,
+      "balance_sheet_as_of": "2025-12-31",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm"
+    }
+  },
+  "Atmos Energy Corp (ATO)": {
+    "ticker": "ATO",
+    "industry": "Utilities - Regulated Gas",
+    "sector": "Utilities",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-09-30",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/731802/000073180225000056/ato-20250930.htm",
+    "revenue": 4702755000,
+    "gross_profit": null,
+    "operating_income": 1559971000,
+    "net_income": 1198754000,
+    "cash": 520953000,
+    "assets": 31585539000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 4165187000,
+        "operating_income": 1355362000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 4165187000,
+        "operating_income": 1559971000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 4702755000,
+        "operating_income": 1559971000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 168988553,
+      "shares_as_of": "2026-07-31",
+      "total_debt": 3529452000,
+      "cash_and_investments": 520953000,
+      "balance_sheet_as_of": "2026-06-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/731802/000073180226000102/ato-20260630.htm"
+    }
+  },
+  "Broadcom Inc (AVGO)": {
+    "ticker": "AVGO",
+    "industry": "Semiconductors",
+    "sector": "Technology",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-11-02",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+    "revenue": 63887000000,
+    "gross_profit": 43294000000,
+    "operating_income": 25484000000,
+    "net_income": null,
+    "cash": 23975000000,
+    "assets": 188148000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 51574000000,
+        "operating_income": 13463000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 51574000000,
+        "operating_income": 25484000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 63887000000,
+        "operating_income": 25484000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 4773629865,
+      "shares_as_of": "2026-08-28",
+      "total_debt": 59419000000,
+      "cash_and_investments": 23975000000,
+      "balance_sheet_as_of": "2026-08-02",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm"
+    }
+  },
+  "Avery Dennison Corp (AVY)": {
+    "ticker": "AVY",
+    "industry": "Packaging & Containers",
+    "sector": "Consumer Cyclical",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/8818/000000881826000015/avy-20251231.htm",
+    "revenue": 8855500000,
+    "gross_profit": 2546300000,
+    "operating_income": null,
+    "net_income": 688000000,
+    "cash": 271400000,
+    "assets": 9168400000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 8755700000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 8755700000,
+        "operating_income": null
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 8855500000,
+        "operating_income": null
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 75511437,
+      "shares_as_of": "2026-10-31",
+      "total_debt": 1204200000,
+      "cash_and_investments": 271400000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/8818/000000881826000166/avy-20260930.htm"
+    }
+  },
+  "American Water Works Co Inc (AWK)": {
+    "ticker": "AWK",
+    "industry": "Utilities - Regulated Water",
+    "sector": "Utilities",
+    "country": "USA",
+    "fiscal_year": 2025,
+    "fiscal_year_end": "2025-12-31",
+    "source": "10-K",
+    "filing_url": "https://www.sec.gov/Archives/edgar/data/1410636/000141063626000034/awk-20251231.htm",
+    "revenue": 5121000000,
+    "gross_profit": null,
+    "operating_income": 1879000000,
+    "net_income": 1111000000,
+    "cash": 121000000,
+    "assets": 37227000000,
+    "history": [
+      {
+        "fiscal_year": 2024,
+        "revenue": 4653000000,
+        "operating_income": 1718000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 4653000000,
+        "operating_income": 1879000000
+      },
+      {
+        "fiscal_year": 2025,
+        "revenue": 5121000000,
+        "operating_income": 1879000000
+      }
+    ],
+    "capital_structure": {
+      "shares_outstanding": 199104661,
+      "shares_as_of": "2026-10-19",
+      "total_debt": 5596229000,
+      "cash_and_investments": 121000000,
+      "balance_sheet_as_of": "2026-09-30",
+      "source_filing": "https://www.sec.gov/Archives/edgar/data/1410636/000141063626000149/awk-20260930.htm"
+    }
+  }
+}

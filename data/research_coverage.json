@@ -1,21 +1,21 @@
 {
-  "generated_at_utc": "2026-11-12T08:28:56+00:00",
+  "generated_at_utc": "2026-11-12T08:32:17+00:00",
   "totals": {
     "universe": 517,
     "sec_filings": 517,
-    "annual_financials": 8,
-    "quarterly_financials": 2,
+    "annual_financials": 55,
+    "quarterly_financials": 52,
     "qualitative_analysis": 126,
     "registration_research": 8,
-    "deep_research": 2
+    "deep_research": 49
   },
   "percentages": {
     "sec_filings": 100.0,
-    "annual_financials": 1.5,
-    "quarterly_financials": 0.4,
+    "annual_financials": 10.6,
+    "quarterly_financials": 10.1,
     "qualitative_analysis": 24.4,
     "registration_research": 1.5,
-    "deep_research": 0.4
+    "deep_research": 9.5
   },
   "companies": {
     "A": {
@@ -25,14 +25,15 @@
       "industry": "Diagnostics & Research",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1090872/000109087225000087/a-20251031.htm"
+        "https://www.sec.gov/Archives/edgar/data/1090872/000109087225000087/a-20251031.htm",
+        "https://www.sec.gov/Archives/edgar/data/1090872/000109087226000064/a-20260731.htm"
       ]
     },
     "AAPL": {
@@ -42,14 +43,16 @@
       "industry": "Consumer Electronics",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+        "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+        "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm",
+        "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/aapl-20260926.htm"
       ]
     },
     "ABBV": {
@@ -59,14 +62,15 @@
       "industry": "Drug Manufacturers - General",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000008/abbv-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000008/abbv-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000037/abbv-20260930.htm"
       ]
     },
     "ABNB": {
@@ -76,14 +80,15 @@
       "industry": "Travel Services",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1559720/000155972026000004/abnb-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/1559720/000155972026000004/abnb-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1559720/000155972026000032/abnb-20260930.htm"
       ]
     },
     "ABT": {
@@ -93,14 +98,15 @@
       "industry": "Medical Devices",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1800/000162828026010185/abt-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/1800/000162828026010185/abt-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1800/000162828026070154/abt-20260930.htm"
       ]
     },
     "ACGL": {
@@ -110,14 +116,15 @@
       "industry": "Insurance - Diversified",
       "country": "Bermuda",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/947484/000094748426000017/acgl-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/947484/000094748426000017/acgl-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/947484/000094748426000152/acgl-20260930.htm"
       ]
     },
     "ACN": {
@@ -127,14 +134,16 @@
       "industry": "Information Technology Services",
       "country": "Ireland",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1467373/000146737325000217/acn-20250831.htm"
+        "https://www.sec.gov/Archives/edgar/data/1467373/000146737325000217/acn-20250831.htm",
+        "https://www.sec.gov/Archives/edgar/data/1467373/000146737326000032/acn-20260531.htm",
+        "https://www.sec.gov/Archives/edgar/data/1467373/000146737326000049/acn-20260831.htm"
       ]
     },
     "ADBE": {
@@ -144,14 +153,15 @@
       "industry": "Software - Application",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+        "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm",
+        "https://www.sec.gov/Archives/edgar/data/796343/000079634326000156/adbe-20260828.htm"
       ]
     },
     "ADI": {
@@ -161,14 +171,15 @@
       "industry": "Semiconductors",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/6281/000000628125000153/adi-20251101.htm"
+        "https://www.sec.gov/Archives/edgar/data/6281/000000628125000153/adi-20251101.htm",
+        "https://www.sec.gov/Archives/edgar/data/6281/000000628126000073/adi-20260801.htm"
       ]
     },
     "ADM": {
@@ -178,14 +189,15 @@
       "industry": "Farm Products",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/7084/000000708426000011/adm-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/7084/000000708426000011/adm-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/7084/000000708426000057/adm-20260930.htm"
       ]
     },
     "ADP": {
@@ -195,14 +207,15 @@
       "industry": "Software - Application",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/8670/000000867026000030/adp-20260630.htm"
+        "https://www.sec.gov/Archives/edgar/data/8670/000000867026000030/adp-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/8670/000000867026000044/adp-20260930.htm"
       ]
     },
     "ADSK": {
@@ -212,14 +225,15 @@
       "industry": "Software - Application",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/769397/000076939726000015/adsk-20260131.htm"
+        "https://www.sec.gov/Archives/edgar/data/769397/000076939726000015/adsk-20260131.htm",
+        "https://www.sec.gov/Archives/edgar/data/769397/000076939726000061/adsk-20260731.htm"
       ]
     },
     "AEE": {
@@ -229,14 +243,15 @@
       "industry": "Utilities - Regulated Electric",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1002910/000100291026000009/aee-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/1002910/000100291026000009/aee-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1002910/000100291026000032/aee-20260930.htm"
       ]
     },
     "AEP": {
@@ -246,14 +261,15 @@
       "industry": "Utilities - Regulated Electric",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/aep-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/aep-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/4904/000000490426000072/aep-20260930.htm"
       ]
     },
     "AES": {
@@ -263,14 +279,15 @@
       "industry": "Utilities - Diversified",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/874761/000087476126000063/aes-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/874761/000087476126000063/aes-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/874761/000087476126000156/aes-20260930.htm"
       ]
     },
     "AFL": {
@@ -280,14 +297,15 @@
       "industry": "Insurance - Life",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/4977/000162828026011402/afl-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/4977/000162828026011402/afl-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/4977/000162828026070776/afl-20260930.htm"
       ]
     },
     "AIG": {
@@ -297,14 +315,15 @@
       "industry": "Insurance - Diversified",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/5272/000000527226000023/aig-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/5272/000000527226000023/aig-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/5272/000000527226000104/aig-20260930.htm"
       ]
     },
     "AIZ": {
@@ -314,14 +333,15 @@
       "industry": "Insurance - Property & Casualty",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1267238/000126723826000010/aiz-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/1267238/000126723826000010/aiz-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1267238/000126723826000046/aiz-20260930.htm"
       ]
     },
     "AJG": {
@@ -331,14 +351,15 @@
       "industry": "Insurance Brokers",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/354190/000162828026008662/ajg-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/354190/000162828026008662/ajg-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/354190/000162828026070650/ajg-20260930.htm"
       ]
     },
     "AKAM": {
@@ -367,14 +388,15 @@
       "industry": "Semiconductors",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000010/alab-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000010/alab-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000045/alab-20260930.htm"
       ]
     },
     "ALB": {
@@ -384,14 +406,16 @@
       "industry": "Specialty Chemicals",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/915913/000091591326000018/alb-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/915913/000091591326000018/alb-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/915913/000091591326000060/alb-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/915913/000091591326000129/alb-20260930.htm"
       ]
     },
     "ALGN": {
@@ -401,14 +425,15 @@
       "industry": "Medical Instruments & Supplies",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1097149/000109714926000014/algn-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/1097149/000109714926000014/algn-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1097149/000109714926000081/algn-20260930.htm"
       ]
     },
     "ALL": {
@@ -418,14 +443,15 @@
       "industry": "Insurance - Property & Casualty",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/899051/000089905126000031/all-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/899051/000089905126000031/all-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/899051/000089905126000157/all-20260930.htm"
       ]
     },
     "ALLE": {
@@ -435,14 +461,15 @@
       "industry": "Security & Protection Services",
       "country": "Ireland",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1579241/000157924126000007/alle-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/1579241/000157924126000007/alle-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1579241/000157924126000034/alle-20260930.htm"
       ]
     },
     "ALNY": {
@@ -452,13 +479,14 @@
       "industry": "Biotechnology",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
+        "https://www.sec.gov/Archives/edgar/data/1178670/000117867026000076/alny-20260930.htm",
         "https://www.sec.gov/Archives/edgar/data/1178670/000162828026007497/alny-20251231.htm"
       ]
     },
@@ -469,14 +497,15 @@
       "industry": "Semiconductor Equipment & Materials",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/6951/000162828025056742/amat-20251026.htm"
+        "https://www.sec.gov/Archives/edgar/data/6951/000162828025056742/amat-20251026.htm",
+        "https://www.sec.gov/Archives/edgar/data/6951/000162828026058235/amat-20260726.htm"
       ]
     },
     "AMCR": {
@@ -486,14 +515,16 @@
       "industry": "Packaging & Containers",
       "country": "Switzerland",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1748790/000174879025000023/amcr-20250630.htm"
+        "https://www.sec.gov/Archives/edgar/data/1748790/000174879025000023/amcr-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1748790/000174879026000022/amcr-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1748790/000174879026000031/amcr-20260930.htm"
       ]
     },
     "AMD": {
@@ -503,14 +534,16 @@
       "industry": "Semiconductors",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm"
+        "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+        "https://www.sec.gov/Archives/edgar/data/2488/000000248826000021/amd-20251227.htm",
+        "https://www.sec.gov/Archives/edgar/data/2488/000000248826000191/amd-20260926.htm"
       ]
     },
     "AME": {
@@ -520,14 +553,15 @@
       "industry": "Specialty Industrial Machinery",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1037868/000103786826000016/ame-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/1037868/000103786826000016/ame-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1037868/000103786826000196/ame-20260930.htm"
       ]
     },
     "AMGN": {
@@ -537,14 +571,15 @@
       "industry": "Drug Manufacturers - General",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/318154/000031815426000155/amgn-20260930.htm"
       ]
     },
     "AMP": {
@@ -555,13 +590,15 @@
       "country": "USA",
       "sec_filings": true,
       "annual_financials": false,
-      "quarterly_financials": false,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 65,
+      "completion_status": "Financial research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/820027/000082002726000011/amp-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/820027/000082002726000011/amp-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/820027/000082002726000016/amp-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/820027/000082002726000054/amp-20260930.htm"
       ]
     },
     "AMT": {
@@ -571,14 +608,15 @@
       "industry": "REIT - Specialty",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1053507/000105350726000035/amt-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/1053507/000105350726000035/amt-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1053507/000105350726000157/amt-20260930.htm"
       ]
     },
     "AMZN": {
@@ -588,14 +626,15 @@
       "industry": "Internet Retail",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm"
       ]
     },
     "ANET": {
@@ -605,14 +644,15 @@
       "industry": "Computer Hardware",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000254/anet-20260930.htm"
       ]
     },
     "AON": {
@@ -622,14 +662,15 @@
       "industry": "Insurance Brokers",
       "country": "Ireland",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/315293/000162828026008116/aon-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/315293/000162828026008116/aon-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/315293/000162828026067879/aon-20260930.htm"
       ]
     },
     "AOS": {
@@ -639,14 +680,15 @@
       "industry": "Specialty Industrial Machinery",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/91142/000009114226000008/aos-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/91142/000009114226000008/aos-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/91142/000009114226000104/aos-20260930.htm"
       ]
     },
     "APA": {
@@ -657,13 +699,14 @@
       "country": "USA",
       "sec_filings": true,
       "annual_financials": false,
-      "quarterly_financials": false,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 65,
+      "completion_status": "Financial research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1841666/000184166626000015/apa-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/1841666/000184166626000015/apa-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1841666/000184166626000071/apa-20260930.htm"
       ]
     },
     "APD": {
@@ -673,14 +716,15 @@
       "industry": "Specialty Chemicals",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/2969/000000296925000055/apd-20250930.htm"
+        "https://www.sec.gov/Archives/edgar/data/2969/000000296925000055/apd-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/2969/000000296926000036/apd-20260630.htm"
       ]
     },
     "APH": {
@@ -690,14 +734,15 @@
       "industry": "Electronic Components",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/820313/000110465926013549/aph-20251231x10k.htm"
+        "https://www.sec.gov/Archives/edgar/data/820313/000110465926013549/aph-20251231x10k.htm",
+        "https://www.sec.gov/Archives/edgar/data/820313/000110465926120646/aph-20260930x10q.htm"
       ]
     },
     "APO": {
@@ -707,14 +752,15 @@
       "industry": "Asset Management",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1858681/000185868126000013/apo-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/1858681/000185868126000013/apo-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1858681/000185868126000067/apo-20260930.htm"
       ]
     },
     "APP": {
@@ -724,14 +770,15 @@
       "industry": "Advertising Agencies",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1751008/000175100826000010/app-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/1751008/000175100826000010/app-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1751008/000175100826000069/app-20260930.htm"
       ]
     },
     "APTV": {
@@ -741,14 +788,15 @@
       "industry": "Auto Parts",
       "country": "Switzerland",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1521332/000152133226000009/aptv-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/1521332/000152133226000009/aptv-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1521332/000152133226000075/aptv-20260930.htm"
       ]
     },
     "ARE": {
@@ -759,13 +807,14 @@
       "country": "USA",
       "sec_filings": true,
       "annual_financials": false,
-      "quarterly_financials": false,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 65,
+      "completion_status": "Financial research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000013/are-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000013/are-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000076/are-20260930.htm"
       ]
     },
     "ARES": {
@@ -775,14 +824,15 @@
       "industry": "Asset Management",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1176948/000162828026011413/ares-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/1176948/000162828026011413/ares-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1176948/000162828026071628/ares-20260930.htm"
       ]
     },
     "ARM": {
@@ -792,12 +842,12 @@
       "industry": "Semiconductors",
       "country": "United Kingdom",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
         "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm"
       ]
@@ -809,12 +859,12 @@
       "industry": "Semiconductor Equipment & Materials",
       "country": "Netherlands",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
         "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm"
       ]
@@ -826,14 +876,15 @@
       "industry": "Utilities - Regulated Gas",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/731802/000073180225000056/ato-20250930.htm"
+        "https://www.sec.gov/Archives/edgar/data/731802/000073180225000056/ato-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/731802/000073180226000102/ato-20260630.htm"
       ]
     },
     "AVGO": {
@@ -843,14 +894,15 @@
       "industry": "Semiconductors",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm"
+        "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+        "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm"
       ]
     },
     "AVY": {
@@ -860,14 +912,15 @@
       "industry": "Packaging & Containers",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/8818/000000881826000015/avy-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/8818/000000881826000015/avy-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/8818/000000881826000166/avy-20260930.htm"
       ]
     },
     "AWK": {
@@ -877,14 +930,15 @@
       "industry": "Utilities - Regulated Water",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": true,
       "registration_research": false,
-      "completeness_percent": 45,
-      "completion_status": "SEC filings available",
+      "completeness_percent": 90,
+      "completion_status": "Deep research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1410636/000141063626000034/awk-20251231.htm"
+        "https://www.sec.gov/Archives/edgar/data/1410636/000141063626000034/awk-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1410636/000141063626000149/awk-20260930.htm"
       ]
     },
     "AXON": {

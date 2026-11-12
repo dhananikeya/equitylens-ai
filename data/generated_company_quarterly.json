@@ -1,1 +1,2052 @@
-{}
+{
+  "Agilent Technologies Inc (A)": {
+    "quarter_label": "CY2026Q2",
+    "period_end": "2026-07-31",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1090872/000109087226000064/a-20260731.htm",
+    "latest_quarter": {
+      "revenue": 1878000000,
+      "gross_profit": null,
+      "operating_income": 444000000,
+      "net_income": 362000000
+    },
+    "prior_quarter": {
+      "revenue": 1835000000,
+      "gross_profit": null,
+      "operating_income": 399000000,
+      "net_income": 339000000
+    },
+    "prior_year_quarter": {
+      "revenue": 1738000000,
+      "gross_profit": null,
+      "operating_income": 360000000,
+      "net_income": 336000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 7249000000,
+      "gross_profit": null,
+      "operating_income": 1556000000,
+      "net_income": 1342000000
+    }
+  },
+  "Apple Inc (AAPL)": {
+    "quarter_label": "CY2026Q2",
+    "period_end": "2026-06-27",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm",
+    "latest_quarter": {
+      "revenue": 109417000000,
+      "gross_profit": 54770000000,
+      "operating_income": 35695000000,
+      "net_income": 29789000000
+    },
+    "prior_quarter": {
+      "revenue": 111184000000,
+      "gross_profit": 54781000000,
+      "operating_income": 35885000000,
+      "net_income": 29578000000
+    },
+    "prior_year_quarter": {
+      "revenue": 94036000000,
+      "gross_profit": 43718000000,
+      "operating_income": 28202000000,
+      "net_income": 23434000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 458393000000,
+      "gross_profit": 222500000000,
+      "operating_income": 150634000000,
+      "net_income": 124898000000
+    }
+  },
+  "Abbvie Inc (ABBV)": {
+    "quarter_label": "CY2018Q3",
+    "period_end": "2018-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000037/abbv-20260930.htm",
+    "latest_quarter": {
+      "revenue": 8236000000,
+      "gross_profit": null,
+      "operating_income": 3159000000,
+      "net_income": null
+    },
+    "prior_quarter": {
+      "revenue": 8278000000,
+      "gross_profit": null,
+      "operating_income": 2762000000,
+      "net_income": null
+    },
+    "prior_year_quarter": {
+      "revenue": 6995000000,
+      "gross_profit": null,
+      "operating_income": 2694000000,
+      "net_income": null
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 31443000000,
+      "gross_profit": null,
+      "operating_income": 18593000000,
+      "net_income": 8712000000
+    }
+  },
+  "Airbnb Inc (ABNB)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1559720/000155972026000032/abnb-20260930.htm",
+    "latest_quarter": {
+      "revenue": 4869000000,
+      "gross_profit": null,
+      "operating_income": 2021000000,
+      "net_income": 1890000000
+    },
+    "prior_quarter": {
+      "revenue": 3608000000,
+      "gross_profit": null,
+      "operating_income": 758000000,
+      "net_income": 816000000
+    },
+    "prior_year_quarter": {
+      "revenue": 4095000000,
+      "gross_profit": null,
+      "operating_income": 1625000000,
+      "net_income": 1374000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 15250000000,
+      "gross_profit": null,
+      "operating_income": 4490000000,
+      "net_income": 4240000000
+    }
+  },
+  "Abbott Laboratories (ABT)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1800/000162828026070154/abt-20260930.htm",
+    "latest_quarter": {
+      "revenue": 13013000000,
+      "gross_profit": null,
+      "operating_income": 1358000000,
+      "net_income": 920000000
+    },
+    "prior_quarter": {
+      "revenue": 12593000000,
+      "gross_profit": null,
+      "operating_income": 1693000000,
+      "net_income": 928000000
+    },
+    "prior_year_quarter": {
+      "revenue": 11369000000,
+      "gross_profit": null,
+      "operating_income": 2057000000,
+      "net_income": 1644000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 48139000000,
+      "gross_profit": null,
+      "operating_income": 6453000000,
+      "net_income": 4569000000
+    }
+  },
+  "Arch Capital Group Ltd (ACGL)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/947484/000094748426000152/acgl-20260930.htm",
+    "latest_quarter": {
+      "revenue": 4655000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 1035000000
+    },
+    "prior_quarter": {
+      "revenue": 4668000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 1057000000
+    },
+    "prior_year_quarter": {
+      "revenue": 5109000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 1350000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 18953000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 4489000000
+    }
+  },
+  "Accenture plc (ACN)": {
+    "quarter_label": "Quarterly data unavailable",
+    "period_end": null,
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1467373/000146737326000032/acn-20260531.htm",
+    "latest_quarter": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_quarter": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_quarter": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    }
+  },
+  "Adobe Inc (ADBE)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-08-28",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000156/adbe-20260828.htm",
+    "latest_quarter": {
+      "revenue": 6760000000,
+      "gross_profit": 5997000000,
+      "operating_income": 2354000000,
+      "net_income": 1827000000
+    },
+    "prior_quarter": {
+      "revenue": 6618000000,
+      "gross_profit": 5903000000,
+      "operating_income": 2238000000,
+      "net_income": 1712000000
+    },
+    "prior_year_quarter": {
+      "revenue": 5988000000,
+      "gross_profit": 5346000000,
+      "operating_income": 2173000000,
+      "net_income": 1772000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 25764000000,
+      "gross_profit": 22980000000,
+      "operating_income": 9183000000,
+      "net_income": 7200000000
+    }
+  },
+  "Analog Devices Inc (ADI)": {
+    "quarter_label": "CY2026Q2",
+    "period_end": "2026-08-01",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/6281/000000628126000073/adi-20260801.htm",
+    "latest_quarter": {
+      "revenue": 4021899000,
+      "gross_profit": 2707544000,
+      "operating_income": 1612969000,
+      "net_income": 1340090000
+    },
+    "prior_quarter": {
+      "revenue": 3623465000,
+      "gross_profit": 2439798000,
+      "operating_income": 1379680000,
+      "net_income": 1176350000
+    },
+    "prior_year_quarter": {
+      "revenue": 2880348000,
+      "gross_profit": 1789748000,
+      "operating_income": 818028000,
+      "net_income": 518518000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 13685975000,
+      "gross_profit": 8982066000,
+      "operating_income": 4807703000,
+      "net_income": 3865784000
+    }
+  },
+  "Archer Daniels Midland Co (ADM)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/7084/000000708426000057/adm-20260930.htm",
+    "latest_quarter": {
+      "revenue": 6628000000,
+      "gross_profit": 1886000000,
+      "operating_income": null,
+      "net_income": 821000000
+    },
+    "prior_quarter": {
+      "revenue": 6386000000,
+      "gross_profit": 1935000000,
+      "operating_income": null,
+      "net_income": 908000000
+    },
+    "prior_year_quarter": {
+      "revenue": 6416000000,
+      "gross_profit": 1270000000,
+      "operating_income": null,
+      "net_income": 108000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 25569000000,
+      "gross_profit": 6313000000,
+      "operating_income": null,
+      "net_income": 2135000000
+    }
+  },
+  "Automatic Data Processing Inc (ADP)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/8670/000000867026000044/adp-20260930.htm",
+    "latest_quarter": {
+      "revenue": 5490700000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 1125200000
+    },
+    "prior_quarter": {
+      "revenue": 5939200000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 1359800000
+    },
+    "prior_year_quarter": {
+      "revenue": 5175200000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 1013000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 21964400000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 4560000000
+    }
+  },
+  "Autodesk Inc (ADSK)": {
+    "quarter_label": "CY2026Q2",
+    "period_end": "2026-07-31",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/769397/000076939726000061/adsk-20260731.htm",
+    "latest_quarter": {
+      "revenue": 2046000000,
+      "gross_profit": 1870000000,
+      "operating_income": 599000000,
+      "net_income": 492000000
+    },
+    "prior_quarter": {
+      "revenue": 1934000000,
+      "gross_profit": 1759000000,
+      "operating_income": 541000000,
+      "net_income": 491000000
+    },
+    "prior_year_quarter": {
+      "revenue": 1763000000,
+      "gross_profit": 1604000000,
+      "operating_income": 444000000,
+      "net_income": 313000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 7596000000,
+      "gross_profit": 6921000000,
+      "operating_income": 2054000000,
+      "net_income": 1639000000
+    }
+  },
+  "Ameren Corp (AEE)": {
+    "quarter_label": "CY2026Q2",
+    "period_end": "2026-06-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1002910/000100291026000032/aee-20260930.htm",
+    "latest_quarter": {
+      "revenue": 2092000000,
+      "gross_profit": null,
+      "operating_income": 459000000,
+      "net_income": null
+    },
+    "prior_quarter": {
+      "revenue": 2176000000,
+      "gross_profit": null,
+      "operating_income": 532000000,
+      "net_income": null
+    },
+    "prior_year_quarter": {
+      "revenue": 2221000000,
+      "gross_profit": null,
+      "operating_income": 411000000,
+      "net_income": null
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 9188000000,
+      "gross_profit": null,
+      "operating_income": 2227000000,
+      "net_income": null
+    }
+  },
+  "American Electric Power Company Inc (AEP)": {
+    "quarter_label": "CY2026Q1",
+    "period_end": "2026-03-31",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000072/aep-20260930.htm",
+    "latest_quarter": {
+      "revenue": 5921000000,
+      "gross_profit": null,
+      "operating_income": 1360000000,
+      "net_income": null
+    },
+    "prior_quarter": {
+      "revenue": 5962100000,
+      "gross_profit": null,
+      "operating_income": 1521400000,
+      "net_income": null
+    },
+    "prior_year_quarter": {
+      "revenue": 5631000000,
+      "gross_profit": null,
+      "operating_income": 1284000000,
+      "net_income": null
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 22569500000,
+      "gross_profit": null,
+      "operating_income": 5564500000,
+      "net_income": 3441800000
+    }
+  },
+  "AES Corp (AES)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/874761/000087476126000156/aes-20260930.htm",
+    "latest_quarter": {
+      "revenue": 3872000000,
+      "gross_profit": 982000000,
+      "operating_income": null,
+      "net_income": 553000000
+    },
+    "prior_quarter": {
+      "revenue": 3422000000,
+      "gross_profit": 692000000,
+      "operating_income": null,
+      "net_income": 426000000
+    },
+    "prior_year_quarter": {
+      "revenue": 3351000000,
+      "gross_profit": 735000000,
+      "operating_income": null,
+      "net_income": 639000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 13825000000,
+      "gross_profit": 3049000000,
+      "operating_income": null,
+      "net_income": 2105000000
+    }
+  },
+  "Aflac Inc (AFL)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/4977/000162828026070776/afl-20260930.htm",
+    "latest_quarter": {
+      "revenue": 3271000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 303000000
+    },
+    "prior_quarter": {
+      "revenue": 4117000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 825000000
+    },
+    "prior_year_quarter": {
+      "revenue": 4740000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 1639000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 16474000000,
+      "gross_profit": null,
+      "operating_income": 4676000000,
+      "net_income": 3786000000
+    }
+  },
+  "American International Group Inc (AIG)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/5272/000000527226000104/aig-20260930.htm",
+    "latest_quarter": {
+      "revenue": 7443000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_quarter": {
+      "revenue": 7085000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_quarter": {
+      "revenue": 6351000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 519000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 27529000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 2820000000
+    }
+  },
+  "Assurant Inc (AIZ)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1267238/000126723826000046/aiz-20260930.htm",
+    "latest_quarter": {
+      "revenue": 3529500000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 275200000
+    },
+    "prior_quarter": {
+      "revenue": 3454200000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 298600000
+    },
+    "prior_year_quarter": {
+      "revenue": 3231500000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 265600000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 13635300000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 1113500000
+    }
+  },
+  "Arthur J. Gallagher & Co (AJG)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/354190/000162828026070650/ajg-20260930.htm",
+    "latest_quarter": {
+      "revenue": 3976000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 403000000
+    },
+    "prior_quarter": {
+      "revenue": 4003000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 324000000
+    },
+    "prior_year_quarter": {
+      "revenue": 3365000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 272000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 16102000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 1821000000
+    }
+  },
+  "Astera Labs Inc (ALAB)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000045/alab-20260930.htm",
+    "latest_quarter": {
+      "revenue": 584899000,
+      "gross_profit": 422752000,
+      "operating_income": 179056000,
+      "net_income": 182944000
+    },
+    "prior_quarter": {
+      "revenue": 392400000,
+      "gross_profit": 287567000,
+      "operating_income": 89248000,
+      "net_income": 153088000
+    },
+    "prior_year_quarter": {
+      "revenue": 230575000,
+      "gross_profit": 175812000,
+      "operating_income": 55406000,
+      "net_income": 91114000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 1516235000,
+      "gross_profit": 1121272000,
+      "operating_income": 385543000,
+      "net_income": 507456000
+    }
+  },
+  "Albemarle Corp (ALB)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/915913/000091591326000129/alb-20260930.htm",
+    "latest_quarter": {
+      "revenue": 1553097000,
+      "gross_profit": 300724000,
+      "operating_income": 148160000,
+      "net_income": 296755000
+    },
+    "prior_quarter": {
+      "revenue": 1743313000,
+      "gross_profit": 590301000,
+      "operating_income": 452944000,
+      "net_income": 479959000
+    },
+    "prior_year_quarter": {
+      "revenue": 1307829000,
+      "gross_profit": 117610000,
+      "operating_income": -216986000,
+      "net_income": -160694000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 6032970000,
+      "gross_profit": 1509601000,
+      "operating_income": 617624000,
+      "net_income": 935111000
+    }
+  },
+  "Align Technology Inc (ALGN)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1097149/000109714926000081/algn-20260930.htm",
+    "latest_quarter": {
+      "revenue": 1014763000,
+      "gross_profit": 697471000,
+      "operating_income": 169164000,
+      "net_income": 135044000
+    },
+    "prior_quarter": {
+      "revenue": 1056192000,
+      "gross_profit": 757430000,
+      "operating_income": 154013000,
+      "net_income": 108294000
+    },
+    "prior_year_quarter": {
+      "revenue": 995692000,
+      "gross_profit": 639201000,
+      "operating_income": 96298000,
+      "net_income": 56753000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 4106734000,
+      "gross_profit": 2830689000,
+      "operating_income": 561430000,
+      "net_income": 412862000
+    }
+  },
+  "Allstate Corp (ALL)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/899051/000089905126000157/all-20260930.htm",
+    "latest_quarter": {
+      "revenue": 17348000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 2079000000
+    },
+    "prior_quarter": {
+      "revenue": 18596000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 3271000000
+    },
+    "prior_year_quarter": {
+      "revenue": 17255000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 3746000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 70140000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 11553000000
+    }
+  },
+  "Allegion plc (ALLE)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1579241/000157924126000034/alle-20260930.htm",
+    "latest_quarter": {
+      "revenue": 1172600000,
+      "gross_profit": null,
+      "operating_income": 284600000,
+      "net_income": null
+    },
+    "prior_quarter": {
+      "revenue": 1151500000,
+      "gross_profit": null,
+      "operating_income": 254700000,
+      "net_income": null
+    },
+    "prior_year_quarter": {
+      "revenue": 1070200000,
+      "gross_profit": null,
+      "operating_income": 233800000,
+      "net_income": null
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 4427900000,
+      "gross_profit": null,
+      "operating_income": 968400000,
+      "net_income": 601600000
+    }
+  },
+  "Alnylam Pharmaceuticals Inc (ALNY)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1178670/000117867026000076/alny-20260930.htm",
+    "latest_quarter": {
+      "revenue": 1458086000,
+      "gross_profit": null,
+      "operating_income": 345798000,
+      "net_income": 2167335000
+    },
+    "prior_quarter": {
+      "revenue": 1290948000,
+      "gross_profit": null,
+      "operating_income": 231441000,
+      "net_income": 164494000
+    },
+    "prior_year_quarter": {
+      "revenue": 1249026000,
+      "gross_profit": null,
+      "operating_income": 367982000,
+      "net_income": 292683000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 4771749000,
+      "gross_profit": null,
+      "operating_income": 929022000,
+      "net_income": 2830503000
+    }
+  },
+  "Applied Materials Inc (AMAT)": {
+    "quarter_label": "CY2026Q2",
+    "period_end": "2026-07-26",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/6951/000162828026058235/amat-20260726.htm",
+    "latest_quarter": {
+      "revenue": 9115000000,
+      "gross_profit": 4586000000,
+      "operating_income": 3075000000,
+      "net_income": 2538000000
+    },
+    "prior_quarter": {
+      "revenue": 7910000000,
+      "gross_profit": 3947000000,
+      "operating_income": 2523000000,
+      "net_income": 2806000000
+    },
+    "prior_year_quarter": {
+      "revenue": 7302000000,
+      "gross_profit": 3562000000,
+      "operating_income": 2233000000,
+      "net_income": 1779000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 31339000000,
+      "gross_profit": 15530000000,
+      "operating_income": 9662000000,
+      "net_income": 9149000000
+    }
+  },
+  "Amcor Plc (AMCR)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1748790/000174879026000031/amcr-20260930.htm",
+    "latest_quarter": {
+      "revenue": 6129000000,
+      "gross_profit": 1159000000,
+      "operating_income": 454000000,
+      "net_income": 242000000
+    },
+    "prior_quarter": {
+      "revenue": 5914000000,
+      "gross_profit": 1190000000,
+      "operating_income": 461000000,
+      "net_income": 278000000
+    },
+    "prior_year_quarter": {
+      "revenue": 5745000000,
+      "gross_profit": 1124000000,
+      "operating_income": 461000000,
+      "net_income": 262000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 23237000000,
+      "gross_profit": 4512000000,
+      "operating_income": 1707000000,
+      "net_income": 959000000
+    }
+  },
+  "Advanced Micro Devices Inc (AMD)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-26",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000191/amd-20260926.htm",
+    "latest_quarter": {
+      "revenue": 13377000000,
+      "gross_profit": 7210000000,
+      "operating_income": 2832000000,
+      "net_income": 2428000000
+    },
+    "prior_quarter": {
+      "revenue": 11536000000,
+      "gross_profit": 6203000000,
+      "operating_income": 1990000000,
+      "net_income": 2297000000
+    },
+    "prior_year_quarter": {
+      "revenue": 9246000000,
+      "gross_profit": 4780000000,
+      "operating_income": 1270000000,
+      "net_income": 1243000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 44412000000,
+      "gross_profit": 23609000000,
+      "operating_income": 7568000000,
+      "net_income": 7351000000
+    }
+  },
+  "Ametek Inc (AME)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1037868/000103786826000196/ame-20260930.htm",
+    "latest_quarter": {
+      "revenue": 2220306000,
+      "gross_profit": null,
+      "operating_income": 584949000,
+      "net_income": 426300000
+    },
+    "prior_quarter": {
+      "revenue": 2044397000,
+      "gross_profit": null,
+      "operating_income": 528193000,
+      "net_income": 406896000
+    },
+    "prior_year_quarter": {
+      "revenue": 1892641000,
+      "gross_profit": null,
+      "operating_income": 488380000,
+      "net_income": 371416000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 8085781000,
+      "gross_profit": null,
+      "operating_income": 2116458000,
+      "net_income": 1603969000
+    }
+  },
+  "AMGEN Inc (AMGN)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000155/amgn-20260930.htm",
+    "latest_quarter": {
+      "revenue": 10365000000,
+      "gross_profit": null,
+      "operating_income": 3710000000,
+      "net_income": 3864000000
+    },
+    "prior_quarter": {
+      "revenue": 10054000000,
+      "gross_profit": null,
+      "operating_income": 3514000000,
+      "net_income": 2375000000
+    },
+    "prior_year_quarter": {
+      "revenue": 9557000000,
+      "gross_profit": null,
+      "operating_income": 2526000000,
+      "net_income": 3216000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 38594000000,
+      "gross_profit": null,
+      "operating_income": 12416000000,
+      "net_income": 11274000000
+    }
+  },
+  "Ameriprise Financial Inc (AMP)": {
+    "quarter_label": "CY2018Q3",
+    "period_end": "2018-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/820027/000082002726000054/amp-20260930.htm",
+    "latest_quarter": {
+      "revenue": 2374000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_quarter": {
+      "revenue": 2338000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_quarter": {
+      "revenue": 2233000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 9253000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 4066000000
+    }
+  },
+  "American Tower Corp (AMT)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1053507/000105350726000157/amt-20260930.htm",
+    "latest_quarter": {
+      "revenue": 202500000,
+      "gross_profit": null,
+      "operating_income": 1269000000,
+      "net_income": null
+    },
+    "prior_quarter": {
+      "revenue": 211100000,
+      "gross_profit": null,
+      "operating_income": 1268800000,
+      "net_income": null
+    },
+    "prior_year_quarter": {
+      "revenue": 246400000,
+      "gross_profit": null,
+      "operating_income": 1233300000,
+      "net_income": null
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 876100000,
+      "gross_profit": null,
+      "operating_income": 5010300000,
+      "net_income": 3172600000
+    }
+  },
+  "Amazon.com Inc (AMZN)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm",
+    "latest_quarter": {
+      "revenue": 201944000000,
+      "gross_profit": null,
+      "operating_income": 28076000000,
+      "net_income": 20685000000
+    },
+    "prior_quarter": {
+      "revenue": 200606000000,
+      "gross_profit": null,
+      "operating_income": 27461000000,
+      "net_income": 62647000000
+    },
+    "prior_year_quarter": {
+      "revenue": 180169000000,
+      "gross_profit": null,
+      "operating_income": 17422000000,
+      "net_income": 21187000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 764238000000,
+      "gross_profit": 4372000000,
+      "operating_income": 96811000000,
+      "net_income": 134774000000
+    }
+  },
+  "Arista Networks Inc (ANET)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000254/anet-20260930.htm",
+    "latest_quarter": {
+      "revenue": 3657600000,
+      "gross_profit": 2325700000,
+      "operating_income": 1642400000,
+      "net_income": 1560400000
+    },
+    "prior_quarter": {
+      "revenue": 3035700000,
+      "gross_profit": 1910300000,
+      "operating_income": 1378000000,
+      "net_income": 1212900000
+    },
+    "prior_year_quarter": {
+      "revenue": 2308300000,
+      "gross_profit": 1490200000,
+      "operating_income": 978200000,
+      "net_income": 853000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 11710600000,
+      "gross_profit": 7403000000,
+      "operating_income": 5156400000,
+      "net_income": 4649200000
+    }
+  },
+  "Aon Plc (AON)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/315293/000162828026067879/aon-20260930.htm",
+    "latest_quarter": {
+      "revenue": 4101000000,
+      "gross_profit": null,
+      "operating_income": 809000000,
+      "net_income": 476000000
+    },
+    "prior_quarter": {
+      "revenue": 4246000000,
+      "gross_profit": null,
+      "operating_income": 915000000,
+      "net_income": 551000000
+    },
+    "prior_year_quarter": {
+      "revenue": 3997000000,
+      "gross_profit": null,
+      "operating_income": 816000000,
+      "net_income": 458000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 17378000000,
+      "gross_profit": null,
+      "operating_income": 4255000000,
+      "net_income": 2697000000
+    }
+  },
+  "A.O. Smith Corp (AOS)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/91142/000009114226000104/aos-20260930.htm",
+    "latest_quarter": {
+      "revenue": 940500000,
+      "gross_profit": 364700000,
+      "operating_income": 174400000,
+      "net_income": 126300000
+    },
+    "prior_quarter": {
+      "revenue": 1004300000,
+      "gross_profit": 387800000,
+      "operating_income": 166100000,
+      "net_income": 124900000
+    },
+    "prior_year_quarter": {
+      "revenue": 942500000,
+      "gross_profit": 364500000,
+      "operating_income": 175400000,
+      "net_income": 132000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 3832900000,
+      "gross_profit": 1482700000,
+      "operating_income": 677700000,
+      "net_income": 501200000
+    }
+  },
+  "APA Corp (APA)": {
+    "quarter_label": "Quarterly data unavailable",
+    "period_end": null,
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1841666/000184166626000071/apa-20260930.htm",
+    "latest_quarter": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_quarter": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_quarter": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": 4466000000,
+      "net_income": 2096000000
+    }
+  },
+  "Air Products & Chemicals Inc (APD)": {
+    "quarter_label": "CY2026Q2",
+    "period_end": "2026-06-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/2969/000000296926000036/apd-20260630.htm",
+    "latest_quarter": {
+      "revenue": 3161000000,
+      "gross_profit": null,
+      "operating_income": -2097100000,
+      "net_income": -1440800000
+    },
+    "prior_quarter": {
+      "revenue": 3171800000,
+      "gross_profit": null,
+      "operating_income": 752700000,
+      "net_income": 710400000
+    },
+    "prior_year_quarter": {
+      "revenue": 3022700000,
+      "gross_profit": null,
+      "operating_income": 790600000,
+      "net_income": 713800000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 12458000000,
+      "gross_profit": null,
+      "operating_income": 180700000,
+      "net_income": 661600000
+    }
+  },
+  "Amphenol Corp (APH)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/820313/000110465926120646/aph-20260930x10q.htm",
+    "latest_quarter": {
+      "revenue": 10229700000,
+      "gross_profit": 4016200000,
+      "operating_income": 3020800000,
+      "net_income": 2034300000
+    },
+    "prior_quarter": {
+      "revenue": 8758100000,
+      "gross_profit": 3548000000,
+      "operating_income": 2584600000,
+      "net_income": 1769200000
+    },
+    "prior_year_quarter": {
+      "revenue": 6194400000,
+      "gross_profit": 2359300000,
+      "operating_income": 1702300000,
+      "net_income": 1245700000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 32802300000,
+      "gross_profit": 12723700000,
+      "operating_income": 9139500000,
+      "net_income": 5982200000
+    }
+  },
+  "Apollo Global Management Inc (APO)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1858681/000185868126000067/apo-20260930.htm",
+    "latest_quarter": {
+      "revenue": 4739000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": -1057000000
+    },
+    "prior_quarter": {
+      "revenue": 11153000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 1361000000
+    },
+    "prior_year_quarter": {
+      "revenue": 9823000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 1736000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 30774000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 134000000
+    }
+  },
+  "Applovin Corp (APP)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1751008/000175100826000069/app-20260930.htm",
+    "latest_quarter": {
+      "revenue": 2184815000,
+      "gross_profit": null,
+      "operating_income": 1708968000,
+      "net_income": 1438902000
+    },
+    "prior_quarter": {
+      "revenue": 1923686000,
+      "gross_profit": null,
+      "operating_income": 1494277000,
+      "net_income": 1266538000
+    },
+    "prior_year_quarter": {
+      "revenue": 1405045000,
+      "gross_profit": null,
+      "operating_income": 1079007000,
+      "net_income": 835545000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 7355995000,
+      "gross_profit": null,
+      "operating_income": 5722185000,
+      "net_income": 4746598000
+    }
+  },
+  "Aptiv Plc (APTV)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1521332/000152133226000075/aptv-20260930.htm",
+    "latest_quarter": {
+      "revenue": 3199000000,
+      "gross_profit": null,
+      "operating_income": 281000000,
+      "net_income": 194000000
+    },
+    "prior_quarter": {
+      "revenue": 3274000000,
+      "gross_profit": null,
+      "operating_income": 367000000,
+      "net_income": 248000000
+    },
+    "prior_year_quarter": {
+      "revenue": 3127000000,
+      "gross_profit": null,
+      "operating_income": -353000000,
+      "net_income": -355000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 14686000000,
+      "gross_profit": null,
+      "operating_income": 673000000,
+      "net_income": 276000000
+    }
+  },
+  "Alexandria Real Estate Equities Inc (ARE)": {
+    "quarter_label": "Quarterly data unavailable",
+    "period_end": null,
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1035443/000103544326000076/are-20260930.htm",
+    "latest_quarter": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_quarter": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_quarter": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": -581570000
+    }
+  },
+  "Ares Management Corp (ARES)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1176948/000162828026071628/ares-20260930.htm",
+    "latest_quarter": {
+      "revenue": 1433399000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 85330000
+    },
+    "prior_quarter": {
+      "revenue": 1428610000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 150635000
+    },
+    "prior_year_quarter": {
+      "revenue": 1657628000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 288882000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 5916073000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": 667436000
+    }
+  },
+  "Arm Holdings Plc ADR (ARM)": {
+    "quarter_label": "Quarterly data unavailable",
+    "period_end": null,
+    "source_filing": "",
+    "latest_quarter": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_quarter": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_quarter": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    }
+  },
+  "ASML Holding NV (ASML)": {
+    "quarter_label": "Quarterly data unavailable",
+    "period_end": null,
+    "source_filing": "",
+    "latest_quarter": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_quarter": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_quarter": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    }
+  },
+  "Atmos Energy Corp (ATO)": {
+    "quarter_label": "CY2026Q2",
+    "period_end": "2026-06-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/731802/000073180226000102/ato-20260630.htm",
+    "latest_quarter": {
+      "revenue": 879059000,
+      "gross_profit": null,
+      "operating_income": 320414000,
+      "net_income": 242689000
+    },
+    "prior_quarter": {
+      "revenue": 1962402000,
+      "gross_profit": null,
+      "operating_income": 764804000,
+      "net_income": 581899000
+    },
+    "prior_year_quarter": {
+      "revenue": 838774000,
+      "gross_profit": null,
+      "operating_income": 252067000,
+      "net_income": 186429000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 5022820000,
+      "gross_profit": null,
+      "operating_income": 1852049000,
+      "net_income": 1413981000
+    }
+  },
+  "Broadcom Inc (AVGO)": {
+    "quarter_label": "CY2026Q2",
+    "period_end": "2026-08-02",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
+    "latest_quarter": {
+      "revenue": 29591000000,
+      "gross_profit": 20456000000,
+      "operating_income": 15955000000,
+      "net_income": null
+    },
+    "prior_quarter": {
+      "revenue": 22187000000,
+      "gross_profit": 15415000000,
+      "operating_income": 10788000000,
+      "net_income": null
+    },
+    "prior_year_quarter": {
+      "revenue": 15952000000,
+      "gross_profit": 10703000000,
+      "operating_income": 5887000000,
+      "net_income": null
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 87041000000,
+      "gross_profit": 59731000000,
+      "operating_income": 41193000000,
+      "net_income": 3073000000
+    }
+  },
+  "Avery Dennison Corp (AVY)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/8818/000000881826000166/avy-20260930.htm",
+    "latest_quarter": {
+      "revenue": 2331500000,
+      "gross_profit": 654800000,
+      "operating_income": null,
+      "net_income": 169700000
+    },
+    "prior_quarter": {
+      "revenue": 2462900000,
+      "gross_profit": 729400000,
+      "operating_income": null,
+      "net_income": 204100000
+    },
+    "prior_year_quarter": {
+      "revenue": 2215500000,
+      "gross_profit": 635000000,
+      "operating_income": null,
+      "net_income": 166300000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 9308400000,
+      "gross_profit": 2684000000,
+      "operating_income": null,
+      "net_income": 708200000
+    }
+  },
+  "American Water Works Co Inc (AWK)": {
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1410636/000141063626000149/awk-20260930.htm",
+    "latest_quarter": {
+      "revenue": 1502000000,
+      "gross_profit": null,
+      "operating_income": 641000000,
+      "net_income": 387000000
+    },
+    "prior_quarter": {
+      "revenue": 1350000000,
+      "gross_profit": null,
+      "operating_income": 542000000,
+      "net_income": 315000000
+    },
+    "prior_year_quarter": {
+      "revenue": 1454000000,
+      "gross_profit": null,
+      "operating_income": 614000000,
+      "net_income": 379000000
+    },
+    "current_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "prior_year_ytd": {
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": null
+    },
+    "ltm": {
+      "revenue": 5509000000,
+      "gross_profit": null,
+      "operating_income": 2188000000,
+      "net_income": 1277000000
+    }
+  }
+}
