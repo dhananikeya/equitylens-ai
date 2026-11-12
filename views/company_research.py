@@ -38,6 +38,7 @@ from sec_data import (
 )
 from ui_components import (
     loading_panel,
+    render_refresh_indicator,
     render_summary_cards,
     section,
 )
@@ -632,6 +633,17 @@ def render_company_research(
 
     quote_session = selected_quote.get("quote_session")
     quote_retrieved_at = selected_quote.get("retrieved_at")
+    render_refresh_indicator(
+        "Market snapshot refreshed",
+        quote_retrieved_at,
+        "quotes may be delayed",
+    )
+    render_refresh_indicator(
+        "SEC data checked",
+        selected_sec.get("last_checked_utc")
+        or selected_local_sec.get("last_checked_utc"),
+        "SEC EDGAR",
+    )
     st.caption(
         "Price source: Yahoo Finance daily price data · "
         f"Trading session: {quote_session or 'Unavailable'} · "
