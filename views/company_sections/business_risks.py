@@ -1,5 +1,6 @@
 import html
 
+import pandas as pd
 import streamlit as st
 
 from ui_components import section
@@ -94,6 +95,69 @@ def render_business_and_risks(
         + '</div>',
         unsafe_allow_html=True,
     )
+
+    section(
+        "Operating & capital context",
+        "Segments, geography, capital allocation & financial resilience",
+    )
+    operating_context = [
+        (
+            "Business segments",
+            selected_analysis.get(
+                "business_segments",
+                "Structured segment research is not available yet.",
+            ),
+        ),
+        (
+            "Geographic exposure",
+            selected_analysis.get(
+                "geographic_exposure",
+                "Structured geographic research is not available yet.",
+            ),
+        ),
+        (
+            "Competitive positioning",
+            selected_analysis.get(
+                "competitive_positioning",
+                "Structured competitive-positioning research is not available yet.",
+            ),
+        ),
+        (
+            "Capital allocation",
+            selected_analysis.get(
+                "capital_allocation",
+                "Structured capital-allocation research is not available yet.",
+            ),
+        ),
+        (
+            "Dilution & stock compensation",
+            selected_analysis.get(
+                "dilution_stock_comp",
+                "Structured dilution and stock-compensation research is not available yet.",
+            ),
+        ),
+        (
+            "Debt & liquidity",
+            selected_analysis.get(
+                "debt_liquidity",
+                "Structured debt and liquidity research is not available yet.",
+            ),
+        ),
+        (
+            "Profitability & free cash flow",
+            selected_analysis.get(
+                "profitability_cash_flow",
+                "Structured profitability and cash-flow research is not available yet.",
+            ),
+        ),
+    ]
+    context_cols = st.columns(2)
+    for index, (label, value) in enumerate(
+        operating_context
+    ):
+        with context_cols[index % 2]:
+            st.markdown(f"**{label}**")
+            st.write(value)
 
     section(
         "Risk framework",
@@ -269,6 +333,24 @@ def render_business_and_risks(
             "Prior-vs-current annual filing comparison has not been generated for this company yet. "
             "The local deep-research worker now supports this comparison and will add it when the company is refreshed."
         )
+
+    provenance = selected_analysis.get(
+        "source_provenance",
+        [],
+    )
+    if provenance:
+        with st.expander(
+            "Narrative source provenance"
+        ):
+            st.caption(
+                "Generated narrative fields identify which supplied evidence type supported the summary. "
+                "Open the linked SEC filing below to verify the underlying disclosure."
+            )
+            st.dataframe(
+                pd.DataFrame(provenance),
+                use_container_width=True,
+                hide_index=True,
+            )
 
     source_filing = selected_analysis.get(
         "source_filing",
