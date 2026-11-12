@@ -477,6 +477,10 @@ def render_market_monitor(
                 get_live_market_data.clear()
                 get_finviz_screener_data.clear()
                 get_bloomberg_market_news.clear()
+                st.session_state.pop(
+                    "market_monitor_snapshot::Overview",
+                    None,
+                )
             elif market_view == "Stocks":
                 get_live_market_data.clear()
                 get_finviz_screener_data.clear()
@@ -503,27 +507,76 @@ def render_market_monitor(
     if market_view == "Overview":
         section("Market Overview", "NYSE Tape, Heat Map & Broad-Market Context")
 
-        nyse_finviz = pd.DataFrame()
-        if public_finviz_data_enabled:
+        overview_snapshot_key = "market_monitor_snapshot::Overview"
+        overview_snapshot = st.session_state.get(
+            overview_snapshot_key
+        )
+
+        if overview_snapshot is None:
+            nyse_finviz = pd.DataFrame()
+            nyse_error = ""
+            if public_finviz_data_enabled:
+                try:
+                    nyse_finviz = normalize_finviz_screener(
+                        get_finviz_screener_data(
+                            filters="exch_nyse"
+                        )
+                    )
+                except Exception as exc:
+                    nyse_error = (
+                        market_provider_error(
+                            "NYSE market feed",
+                            exc,
+                        )
+                        + " Broad-market proxies and linked news remain available."
+                    )
+            else:
+                nyse_error = (
+                    "The NYSE market-data feed is not configured. "
+                    "Broad-market proxies and news remain available."
+                )
+
             try:
-                nyse_finviz = normalize_finviz_screener(
-                    get_finviz_screener_data(
-                        filters="exch_nyse"
-                    )
+                overview_quotes = get_live_market_data(
+                    ["SPY", "QQQ", "GLD", "USO", "UUP"]
                 )
-            except Exception as exc:
-                st.info(
-                    market_provider_error(
-                        "NYSE market feed",
-                        exc,
-                    )
-                    + " Broad-market proxies and linked news remain available."
-                )
+            except Exception:
+                overview_quotes = {}
+
+            try:
+                bloomberg_news = get_bloomberg_market_news()
+            except Exception:
+                bloomberg_news = []
+
+            overview_snapshot = {
+                "nyse_finviz": nyse_finviz,
+                "nyse_error": nyse_error,
+                "overview_quotes": overview_quotes,
+                "bloomberg_news": bloomberg_news,
+            }
+            st.session_state[
+                overview_snapshot_key
+            ] = overview_snapshot
         else:
-            st.info(
-                "The NYSE market-data feed is not configured. "
-                "Broad-market proxies and news remain available."
+            nyse_finviz = overview_snapshot.get(
+                "nyse_finviz",
+                pd.DataFrame(),
             )
+            nyse_error = overview_snapshot.get(
+                "nyse_error",
+                "",
+            )
+            overview_quotes = overview_snapshot.get(
+                "overview_quotes",
+                {},
+            )
+            bloomberg_news = overview_snapshot.get(
+                "bloomberg_news",
+                [],
+            )
+
+        if nyse_error:
+            st.info(nyse_error)
 
         render_nyse_market_monitor(
             nyse_finviz,
@@ -532,12 +585,6 @@ def render_market_monitor(
         )
 
         st.markdown("**Broad-market proxies · may be delayed**")
-        try:
-            overview_quotes = get_live_market_data(
-                ["SPY", "QQQ", "GLD", "USO", "UUP"]
-            )
-        except Exception:
-            overview_quotes = {}
 
         proxy_labels = {
             "SPY": "S&P 500 proxy",
@@ -591,12 +638,6 @@ def render_market_monitor(
         )
 
         section("News", "Linked Market Headlines")
-        try:
-            bloomberg_news = (
-                get_bloomberg_market_news()
-            )
-        except Exception:
-            bloomberg_news = []
 
         if bloomberg_news:
             news_context = {
