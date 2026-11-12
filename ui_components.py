@@ -1,3 +1,4 @@
+from contextlib import contextmanager
 import pandas as pd
 import streamlit as st
 
@@ -42,3 +43,29 @@ def format_utc_timestamp(value, fallback="Unavailable"):
     return parsed.strftime(
         "%Y-%m-%d %H:%M UTC"
     )
+
+
+@contextmanager
+def loading_panel(label, detail=""):
+    """Show a branded, descriptive loading placeholder during slow operations."""
+    placeholder = st.empty()
+    detail_html = (
+        f'<div class="el-loading-detail">{detail}</div>'
+        if detail else ""
+    )
+    placeholder.markdown(
+        f"""
+        <div class="el-loading-panel" role="status" aria-live="polite">
+            <div class="el-loading-dot"></div>
+            <div>
+                <div class="el-loading-label">{label}</div>
+                {detail_html}
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    try:
+        yield
+    finally:
+        placeholder.empty()
