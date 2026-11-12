@@ -9,6 +9,8 @@ on:
       - "data/generated_company_analysis.json"
       - "data/generated_company_s1.json"
       - "data/research_pipeline_state.json"
+      - "data/research_coverage.json"
+      - "data/research_index.json"
       - ".github/workflows/build-deep-research.yml"
 
 permissions:
@@ -35,15 +37,33 @@ jobs:
               "data/generated_company_analysis.json",
               "data/generated_company_s1.json",
               "data/research_pipeline_state.json",
+              "data/research_coverage.json",
+              "data/research_index.json",
           ]
 
+          counts = {}
           for filename in files:
               path = Path(filename)
               with path.open("r", encoding="utf-8") as handle:
                   payload = json.load(handle)
               if not isinstance(payload, dict):
                   raise TypeError(f"{filename} must contain a JSON object")
-              print(f"{filename}: {len(payload)} records")
+              counts[filename] = len(payload)
+              print(f"{filename}: {len(payload)} top-level records")
 
-          print("Generated local-LLM research data is valid.")
+          qualitative = counts["data/generated_company_analysis.json"]
+          registration = counts["data/generated_company_s1.json"]
+
+          if qualitative == 0:
+              print(
+                  "::warning::Generated qualitative research is empty. "
+                  "Run scripts/build_deep_research.py from a machine that can reach the configured local LLM."
+              )
+          if registration == 0:
+              print(
+                  "::warning::Generated registration research is empty. "
+                  "This workflow validates local-LLM artifacts but does not create them."
+              )
+
+          print("Local research artifacts and coverage indexes are valid.")
           PY
