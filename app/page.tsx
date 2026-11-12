@@ -1,29 +1,11 @@
 import Link from "next/link";
 import { getUniverseStats } from "@/lib/company-universe";
 
-const navigation = [
-  ["Home", "/"],
-  ["Company Research", "/company"],
-  ["Industry Comparison", "/compare"],
-  ["Market Monitor", "/markets"],
-  ["Filings", "/filings"],
-  ["Learn", "/learn"]
-];
-
 export default function HomePage() {
   const stats = getUniverseStats();
 
   return (
     <main>
-      <header className="shell topbar">
-        <Link href="/" className="brand">EquityLens AI</Link>
-        <nav className="nav" aria-label="Primary navigation">
-          {navigation.map(([label, href]) => (
-            <Link key={href} href={href}>{label}</Link>
-          ))}
-        </nav>
-      </header>
-
       <section className="shell hero">
         <p className="eyebrow">PRIMARY-SOURCE PUBLIC COMPANY RESEARCH</p>
         <h1>
