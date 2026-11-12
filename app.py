@@ -6,7 +6,6 @@
 # or applicable platform terms. Third-party libraries, public filings, factual source data,
 # company names, and trademarks remain subject to their respective rights and terms.
 
-import gzip
 import json
 import time
 from urllib.parse import urlencode
@@ -14,7 +13,16 @@ from urllib.parse import urlencode
 import pandas as pd
 import streamlit as st
 
-from research_data import index_dataset_by_ticker as _index_dataset_by_ticker
+from app_runtime import (
+    load_company_universe,
+    load_json,
+    load_research_datasets,
+    load_research_index,
+    load_sec_company,
+    load_sec_filings,
+    load_sec_summary,
+    load_startup_company_data,
+)
 from ui_components import section
 from views.home import render_home
 from research_experience import inject_readability_styles
@@ -1791,147 +1799,10 @@ hr {
 
 
 
-@st.cache_data(show_spinner=False)
-def load_json(path):
-    """Load repository-backed JSON once per app process.
-
-    Git-backed data changes arrive through a Streamlit redeploy, so repeatedly
-    re-reading large static files every 60 seconds only adds startup/rerun cost.
-    """
-    with open(path, "r") as file:
-        return json.load(file)
-
-
-@st.cache_data(show_spinner=False)
-def load_sec_filings():
-    """Load the full SEC filing archive only on pages that truly need it."""
-    try:
-        with gzip.open(
-            "data/sec_filings.json.gz",
-            "rt",
-            encoding="utf-8",
-        ) as archive_file:
-            return json.load(archive_file)
-    except (FileNotFoundError, OSError, json.JSONDecodeError):
-        # Transitional fallback until the next SEC refresh writes the compressed
-        # archive and removes the legacy plain JSON file.
-        return load_json("data/sec_filings.json")
-
-
-@st.cache_data(show_spinner=False)
-def load_sec_company(ticker, company_key=""):
-    """Load one company's local SEC shard without opening the full archive.
-
-    During the migration window, fall back to the legacy monolithic archive if
-    the per-company shard has not been generated yet.
-    """
-    safe_ticker = re.sub(
-        r"[^A-Z0-9.\-]",
-        "",
-        str(ticker or "").upper().strip(),
-    )
-    if safe_ticker:
-        try:
-            return load_json(f"data/sec_companies/{safe_ticker}.json")
-        except (FileNotFoundError, json.JSONDecodeError):
-            pass
-
-    if company_key:
-        try:
-            return load_sec_filings().get(company_key, {})
-        except (FileNotFoundError, json.JSONDecodeError):
-            return {}
-    return {}
-
-
-hand_company_data = load_json("data/company_metrics.json")
-generated_company_data = load_json("data/generated_company_metrics.json")
-
-# Keep startup lightweight. Narrative, quarterly, and registration research
-# load only when a destination actually needs them.
-company_data = {**generated_company_data, **hand_company_data}
-
-@st.cache_data(show_spinner=False)
-def load_research_datasets():
-    hand_analysis = load_json("data/company_analysis.json")
-    hand_quarterly = load_json("data/company_quarterly.json")
-    hand_s1 = load_json("data/company_s1.json")
-    generated_analysis = load_json("data/generated_company_analysis.json")
-    generated_quarterly = load_json("data/generated_company_quarterly.json")
-    generated_s1 = load_json("data/generated_company_s1.json")
-
-    analysis = {**generated_analysis, **hand_analysis}
-    quarterly = {**generated_quarterly, **hand_quarterly}
-    s1 = {**generated_s1, **hand_s1}
-    return {
-        "analysis": analysis,
-        "quarterly": quarterly,
-        "s1": s1,
-        "analysis_by_ticker": _index_dataset_by_ticker(analysis),
-        "quarterly_by_ticker": _index_dataset_by_ticker(quarterly),
-        "s1_by_ticker": _index_dataset_by_ticker(s1),
-    }
-
-try:
-    research_index = load_json("data/research_index.json")
-except (FileNotFoundError, json.JSONDecodeError):
-    research_index = {"deep_research_tickers": []}
-
-try:
-    sec_summary = load_json("data/sec_summary.json")
-    sec_summary["_ready"] = True
-except (FileNotFoundError, json.JSONDecodeError):
-    # The summary is produced by the SEC refresh workflow. Do not fall back to
-    # the giant filing archive during startup; keeping the homepage lightweight
-    # is more important than a temporary coverage counter during deployment.
-    sec_summary = {
-        "_ready": False,
-        "company_count": 0,
-        "synced_companies": 0,
-        "companies": {},
-        "recent_filings": [],
-    }
-
-def _market_cap_dollars(value):
-    """Normalize screener market-cap values without importing market_data/yfinance."""
-    if value is None or pd.isna(value):
-        return None
-
-    text = str(value).strip().replace(",", "").replace("%", "")
-    if not text or text in {"-", "N/A", "nan"}:
-        return None
-
-    multiplier = 1.0
-    suffix = text[-1:].upper()
-    if suffix == "K":
-        multiplier = 1_000.0
-        text = text[:-1]
-    elif suffix == "M":
-        multiplier = 1_000_000.0
-        text = text[:-1]
-    elif suffix == "B":
-        multiplier = 1_000_000_000.0
-        text = text[:-1]
-    elif suffix == "T":
-        multiplier = 1_000_000_000_000.0
-        text = text[:-1]
-
-    try:
-        parsed = float(text) * multiplier
-    except ValueError:
-        return None
-
-    return parsed if suffix in {"K", "M", "B", "T"} else parsed * 1_000_000
-
-
-try:
-    company_universe = pd.read_csv("data/finviz_universe.csv")
-except pd.errors.ParserError:
-    company_universe = pd.read_csv(
-        "data/finviz_universe.csv",
-        engine="python",
-        on_bad_lines="skip"
-    )
+company_data = load_startup_company_data()
+research_index = load_research_index()
+sec_summary = load_sec_summary()
+company_universe = load_company_universe()
 
 required_universe_columns = {
     "Ticker", "Company", "Sector", "Industry", "Country"
@@ -1946,21 +1817,15 @@ if not required_universe_columns.issubset(company_universe.columns):
     )
     st.stop()
 
-for _column in ["Ticker", "Company", "Sector", "Industry", "Country"]:
-    company_universe[_column] = (
-        company_universe[_column].fillna("").astype(str).str.strip()
-    )
-if "Market Cap" in company_universe.columns:
-    company_universe["Market Cap"] = company_universe["Market Cap"].apply(_market_cap_dollars)
-company_universe["Ticker"] = company_universe["Ticker"].str.upper()
-company_universe["Coverage Key"] = (
-    company_universe["Company"]
-    + " ("
-    + company_universe["Ticker"]
-    + ")"
-)
 coverage_sectors = sorted(
-    [value for value in company_universe["Sector"].dropna().unique().tolist() if value]
+    [
+        value
+        for value in company_universe["Sector"]
+        .dropna()
+        .unique()
+        .tolist()
+        if value
+    ]
 )
 
 # Make all 517 companies available throughout the app immediately.
