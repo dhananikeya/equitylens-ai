@@ -4,6 +4,8 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+from charts import apply_equitylens_layout
+
 from market_data import finviz_numeric
 from ui_components import section
 
@@ -429,7 +431,8 @@ def render_market_heatmap(
             root={"color": "#071014"},
         )
     )
-    fig.update_layout(
+    apply_equitylens_layout(
+        fig,
         height=680,
         margin={
             "l": 0,
@@ -437,12 +440,9 @@ def render_market_heatmap(
             "t": 8,
             "b": 0,
         },
-        paper_bgcolor="rgba(0,0,0,0)",
+    )
+    fig.update_layout(
         plot_bgcolor="#050B0E",
-        font={
-            "color": "#EEF3F5",
-            "family": "IBM Plex Sans",
-        },
     )
     st.plotly_chart(
         fig,
