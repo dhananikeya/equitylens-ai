@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
@@ -14,7 +16,7 @@ from market_data import (
     get_company_financial_snapshot,
     get_live_market_data,
 )
-from ui_components import loading_panel, section
+from ui_components import loading_panel, render_refresh_indicator, section
 
 
 def _annual_snapshot(company, company_data, supplemental):
@@ -322,6 +324,7 @@ def render_industry_comparison(
             "financials": peer_financial_cache,
             "annual": annual_by_company,
             "quarterly": quarter_by_company,
+            "loaded_at_utc": datetime.now(timezone.utc).isoformat(),
         }
         st.session_state[comparison_snapshot_key] = comparison_snapshot
     else:
@@ -356,6 +359,12 @@ def render_industry_comparison(
             )
             for company in selected_companies
         }
+
+    render_refresh_indicator(
+        "Comparison loaded",
+        comparison_snapshot.get("loaded_at_utc"),
+        "supplemental peer data",
+    )
 
     comparison_focus = st.radio(
         "Comparison view",
