@@ -52,7 +52,7 @@ def render_company_research(
     _quarterly_by_ticker,
     _s1_by_ticker,
     industries,
-    load_sec_filings,
+    load_sec_company,
     open_company_research,
     reset_coverage_selection,
     remember_choice,
@@ -332,17 +332,14 @@ def render_company_research(
             "The rest of the workspace will continue to load."
         )
 
-    # The full local SEC archive is intentionally lazy-loaded. Most company
-    # sessions use the live per-company SEC request and never touch the large file.
+    # Local SEC fallback is sharded by ticker so a single company lookup never
+    # needs to deserialize the full multi-company filing archive.
     selected_local_sec = {}
     if not selected_sec.get("filings"):
-        try:
-            selected_local_sec = load_sec_filings().get(
-                selected_company_key,
-                {},
-            )
-        except (FileNotFoundError, json.JSONDecodeError):
-            selected_local_sec = {}
+        selected_local_sec = load_sec_company(
+            selected_ticker,
+            selected_company_key,
+        )
 
     selected_filings = (
         selected_sec.get("filings")
