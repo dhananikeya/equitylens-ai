@@ -2116,6 +2116,10 @@ def retry_company_data(ticker):
     get_live_market_data.clear([ticker])
     get_company_financial_snapshot.clear(ticker)
     get_market_history.clear()
+    st.session_state.pop(
+        f"company_core_snapshot::{str(ticker).upper().strip()}",
+        None,
+    )
 
 
 def research_link(ticker=None, destination="Company Research"):
