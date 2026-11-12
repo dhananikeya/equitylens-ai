@@ -17,6 +17,7 @@ from app_runtime import (
     load_company_universe,
     load_json,
     load_research_datasets,
+    load_research_coverage,
     load_research_index,
     load_sec_company,
     load_sec_filings,
@@ -75,6 +76,7 @@ inject_global_styles(st)
 
 company_data = load_startup_company_data()
 research_index = load_research_index()
+research_coverage = load_research_coverage()
 sec_summary = load_sec_summary()
 company_universe = load_company_universe()
 
@@ -475,6 +477,7 @@ if active_destination == "Home":
         company_universe=company_universe,
         sec_synced_companies=sec_synced_companies,
         sec_summary=sec_summary,
+        research_coverage=research_coverage,
         deep_research_tickers=deep_research_tickers,
         company_data=company_data,
         open_company_research=open_company_research,
@@ -539,6 +542,7 @@ if active_destination == "Company Research":
         company_analysis=company_analysis,
         company_quarterly=company_quarterly,
         company_s1=company_s1,
+        research_coverage=research_coverage,
         analysis_by_ticker=_analysis_by_ticker,
         quarterly_by_ticker=_quarterly_by_ticker,
         s1_by_ticker=_s1_by_ticker,
@@ -655,6 +659,74 @@ if _debug_flag in {"1", "true", "yes"}:
             st.caption(
                 "Navigate to a page to collect timing samples."
             )
+
+        coverage_totals = research_coverage.get(
+            "totals",
+            {},
+        )
+        coverage_percentages = research_coverage.get(
+            "percentages",
+            {},
+        )
+        st.markdown("**Research coverage**")
+        coverage_rows = [
+            {
+                "Layer": "SEC filing coverage",
+                "Companies": coverage_totals.get(
+                    "sec_filings",
+                    0,
+                ),
+                "Coverage": (
+                    f"{coverage_percentages.get('sec_filings', 0):.1f}%"
+                ),
+            },
+            {
+                "Layer": "Annual financials",
+                "Companies": coverage_totals.get(
+                    "annual_financials",
+                    0,
+                ),
+                "Coverage": (
+                    f"{coverage_percentages.get('annual_financials', 0):.1f}%"
+                ),
+            },
+            {
+                "Layer": "Quarterly financials",
+                "Companies": coverage_totals.get(
+                    "quarterly_financials",
+                    0,
+                ),
+                "Coverage": (
+                    f"{coverage_percentages.get('quarterly_financials', 0):.1f}%"
+                ),
+            },
+            {
+                "Layer": "Qualitative analysis",
+                "Companies": coverage_totals.get(
+                    "qualitative_analysis",
+                    0,
+                ),
+                "Coverage": (
+                    f"{coverage_percentages.get('qualitative_analysis', 0):.1f}%"
+                ),
+            },
+            {
+                "Layer": "Deep research",
+                "Companies": coverage_totals.get(
+                    "deep_research",
+                    0,
+                ),
+                "Coverage": (
+                    f"{coverage_percentages.get('deep_research', 0):.1f}%"
+                ),
+            },
+        ]
+        st.dataframe(
+            pd.DataFrame(coverage_rows),
+            use_container_width=True,
+            hide_index=True,
+        )
+
         navigation_status = (
             "within target"
             if _app_run_elapsed_ms <= NAVIGATION_RERUN_BUDGET_MS
