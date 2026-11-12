@@ -1759,6 +1759,31 @@ hr {
 @media (prefers-reduced-motion: reduce) {
     .el-loading-dot { animation: none; }
 }
+
+.el-refresh-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: .38rem;
+    margin: .25rem 0 .65rem;
+    padding: .38rem .58rem;
+    border: 1px solid var(--el-border-soft);
+    border-radius: 999px;
+    background: rgba(9,18,23,.68);
+    color: var(--el-muted);
+    font-size: .72rem;
+    line-height: 1.35;
+}
+.el-refresh-indicator strong {
+    color: var(--el-text);
+    font-weight: 600;
+}
+.el-refresh-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--el-teal);
+    box-shadow: 0 0 0 2px rgba(22,199,178,.12);
+}
 </style>
     """,
     unsafe_allow_html=True
