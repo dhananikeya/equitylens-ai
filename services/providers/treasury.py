@@ -6,6 +6,7 @@ def fetch_treasury_csv(url, headers):
         url,
         headers=headers,
         timeout=(5, 15),
+        provider="Treasury",
     )
 
 
@@ -14,6 +15,7 @@ def fetch_treasury_html(url, headers):
         url,
         headers=headers,
         timeout=(5, 15),
+        provider="Treasury",
     )
 
 
@@ -22,6 +24,7 @@ def fetch_treasury_xml(url, headers):
         url,
         headers=headers,
         timeout=(5, 15),
+        provider="Treasury",
     )
 
 
@@ -30,4 +33,5 @@ def fetch_fred_csv(url, headers):
         url,
         headers=headers,
         timeout=(5, 15),
+        provider="Treasury",
     )
