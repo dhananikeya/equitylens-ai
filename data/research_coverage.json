@@ -1,21 +1,21 @@
 {
-  "generated_at_utc": "2026-11-12T08:26:31.902Z",
+  "generated_at_utc": "2026-11-12T08:28:56+00:00",
   "totals": {
     "universe": 517,
     "sec_filings": 517,
     "annual_financials": 8,
-    "quarterly_financials": 8,
+    "quarterly_financials": 2,
     "qualitative_analysis": 126,
     "registration_research": 8,
-    "deep_research": 8
+    "deep_research": 2
   },
   "percentages": {
-    "sec_filings": 100,
+    "sec_filings": 100.0,
     "annual_financials": 1.5,
-    "quarterly_financials": 1.5,
+    "quarterly_financials": 0.4,
     "qualitative_analysis": 24.4,
     "registration_research": 1.5,
-    "deep_research": 1.5
+    "deep_research": 0.4
   },
   "companies": {
     "A": {
@@ -1864,11 +1864,11 @@
       "country": "USA",
       "sec_filings": true,
       "annual_financials": true,
-      "quarterly_financials": true,
+      "quarterly_financials": false,
       "qualitative_analysis": true,
       "registration_research": true,
-      "completeness_percent": 100,
-      "completion_status": "Deep research available",
+      "completeness_percent": 80,
+      "completion_status": "Structured research available",
       "source_urls": [
         "https://www.sec.gov/Archives/edgar/data/1679788/000162828021003168/coinbaseglobalincs-1.htm",
         "https://www.sec.gov/Archives/edgar/data/1679788/000167978826000015/coin-20251231.htm"
@@ -2052,11 +2052,11 @@
       "country": "USA",
       "sec_filings": true,
       "annual_financials": true,
-      "quarterly_financials": true,
+      "quarterly_financials": false,
       "qualitative_analysis": true,
       "registration_research": true,
-      "completeness_percent": 100,
-      "completion_status": "Deep research available",
+      "completeness_percent": 80,
+      "completion_status": "Structured research available",
       "source_urls": [
         "https://www.sec.gov/Archives/edgar/data/1535527/000104746919003095/a2238800zs-1.htm",
         "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000010/crwd-20260131.htm"
@@ -3306,11 +3306,11 @@
       "country": "USA",
       "sec_filings": true,
       "annual_financials": true,
-      "quarterly_financials": true,
+      "quarterly_financials": false,
       "qualitative_analysis": true,
       "registration_research": true,
-      "completeness_percent": 100,
-      "completion_status": "Deep research available",
+      "completeness_percent": 80,
+      "completion_status": "Structured research available",
       "source_urls": [
         "https://www.sec.gov/Archives/edgar/data/1262039/000119312509169817/ds1.htm",
         "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm"
@@ -3774,11 +3774,11 @@
       "country": "USA",
       "sec_filings": true,
       "annual_financials": true,
-      "quarterly_financials": true,
+      "quarterly_financials": false,
       "qualitative_analysis": true,
       "registration_research": true,
-      "completeness_percent": 100,
-      "completion_status": "Deep research available",
+      "completeness_percent": 80,
+      "completion_status": "Structured research available",
       "source_urls": [
         "https://www.sec.gov/Archives/edgar/data/1783879/000162828021013318/robinhoods-1.htm",
         "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000023/hood-20251231.htm"
@@ -5742,11 +5742,11 @@
       "country": "USA",
       "sec_filings": true,
       "annual_financials": true,
-      "quarterly_financials": true,
+      "quarterly_financials": false,
       "qualitative_analysis": true,
       "registration_research": true,
-      "completeness_percent": 100,
-      "completion_status": "Deep research available",
+      "completeness_percent": 80,
+      "completion_status": "Structured research available",
       "source_urls": [
         "https://www.sec.gov/Archives/edgar/data/1327567/000119312512153764/d318373ds1.htm",
         "https://www.sec.gov/Archives/edgar/data/1327567/000132756726000023/panw-20260731.htm"
@@ -7965,11 +7965,11 @@
       "country": "USA",
       "sec_filings": true,
       "annual_financials": true,
-      "quarterly_financials": true,
+      "quarterly_financials": false,
       "qualitative_analysis": true,
       "registration_research": true,
-      "completeness_percent": 100,
-      "completion_status": "Deep research available",
+      "completeness_percent": 80,
+      "completion_status": "Structured research available",
       "source_urls": [
         "https://www.sec.gov/Archives/edgar/data/1512673/000119312515343733/d937622ds1.htm",
         "https://www.sec.gov/Archives/edgar/data/1512673/000162828026012254/xyz-20251231.htm"
@@ -8037,7 +8037,7 @@
     }
   },
   "definition": {
-    "universe": "Company appears in the EquityLens universe.",
-    "deep_research": "Ticker has SEC filings, annual and quarterly financial coverage, qualitative analysis, and enough weighted research coverage to reach at least 90% completeness."
+    "universe": "Company appears in the 517-company EquityLens universe.",
+    "deep_research": "Ticker has SEC filings, annual and quarterly financial coverage, qualitative analysis, and registration research where represented by the weighted completeness model."
   }
 }
