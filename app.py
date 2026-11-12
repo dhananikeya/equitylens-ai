@@ -1803,23 +1803,37 @@ def load_sec_company(ticker, company_key=""):
 
 
 hand_company_data = load_json("data/company_metrics.json")
-hand_company_analysis = load_json("data/company_analysis.json")
-hand_company_quarterly = load_json("data/company_quarterly.json")
-hand_company_s1 = load_json("data/company_s1.json")
-
 generated_company_data = load_json("data/generated_company_metrics.json")
-generated_company_analysis = load_json("data/generated_company_analysis.json")
-generated_company_quarterly = load_json("data/generated_company_quarterly.json")
-generated_company_s1 = load_json("data/generated_company_s1.json")
 
-# Generated research expands coverage; hand-curated records remain authoritative.
+# Keep startup lightweight. Narrative, quarterly, and registration research
+# load only when a destination actually needs them.
 company_data = {**generated_company_data, **hand_company_data}
-company_analysis = {**generated_company_analysis, **hand_company_analysis}
-company_quarterly = {
-    **generated_company_quarterly,
-    **hand_company_quarterly
-}
-company_s1 = {**generated_company_s1, **hand_company_s1}
+
+@st.cache_data(show_spinner=False)
+def load_research_datasets():
+    hand_analysis = load_json("data/company_analysis.json")
+    hand_quarterly = load_json("data/company_quarterly.json")
+    hand_s1 = load_json("data/company_s1.json")
+    generated_analysis = load_json("data/generated_company_analysis.json")
+    generated_quarterly = load_json("data/generated_company_quarterly.json")
+    generated_s1 = load_json("data/generated_company_s1.json")
+
+    analysis = {**generated_analysis, **hand_analysis}
+    quarterly = {**generated_quarterly, **hand_quarterly}
+    s1 = {**generated_s1, **hand_s1}
+    return {
+        "analysis": analysis,
+        "quarterly": quarterly,
+        "s1": s1,
+        "analysis_by_ticker": _index_dataset_by_ticker(analysis),
+        "quarterly_by_ticker": _index_dataset_by_ticker(quarterly),
+        "s1_by_ticker": _index_dataset_by_ticker(s1),
+    }
+
+try:
+    research_index = load_json("data/research_index.json")
+except (FileNotFoundError, json.JSONDecodeError):
+    research_index = {"deep_research_tickers": []}
 
 try:
     sec_summary = load_json("data/sec_summary.json")
@@ -1907,12 +1921,6 @@ coverage_sectors = sorted(
     [value for value in company_universe["Sector"].dropna().unique().tolist() if value]
 )
 
-# Normalize research datasets by ticker so company-name capitalization or spelling
-# differences never disconnect research from the matching universe record.
-_analysis_by_ticker = _index_dataset_by_ticker(company_analysis)
-_quarterly_by_ticker = _index_dataset_by_ticker(company_quarterly)
-_s1_by_ticker = _index_dataset_by_ticker(company_s1)
-
 # Make all 517 companies available throughout the app immediately.
 # Generated SEC research fills these stubs over time.
 _company_key_by_ticker = {
@@ -1920,14 +1928,6 @@ _company_key_by_ticker = {
     for key, record in company_data.items()
     if record.get("ticker")
 }
-for _ticker, _key in list(_company_key_by_ticker.items()):
-    if _ticker in _analysis_by_ticker:
-        company_analysis[_key] = _analysis_by_ticker[_ticker]
-    if _ticker in _quarterly_by_ticker:
-        company_quarterly[_key] = _quarterly_by_ticker[_ticker]
-    if _ticker in _s1_by_ticker:
-        company_s1[_key] = _s1_by_ticker[_ticker]
-
 for _, _row in company_universe.iterrows():
     _ticker = str(_row.get("Ticker", "")).upper().strip()
     if not _ticker or _ticker in _company_key_by_ticker:
@@ -1959,9 +1959,6 @@ for _, _row in company_universe.iterrows():
             "source_filing": ""
         }
     }
-    company_analysis[_key] = _analysis_by_ticker.get(_ticker, {})
-    company_quarterly[_key] = _quarterly_by_ticker.get(_ticker, {})
-    company_s1[_key] = _s1_by_ticker.get(_ticker, {})
     _company_key_by_ticker[_ticker] = _key
 
 public_market_data_enabled = True
@@ -2282,11 +2279,13 @@ sec_synced_companies = int(
 )
 
 deep_research_tickers = {
-    str(company_data.get(_key, {}).get("ticker", "")).upper()
-    for _key, _analysis in company_analysis.items()
-    if _analysis and _analysis.get("business_model")
+    str(ticker).upper().strip()
+    for ticker in research_index.get(
+        "deep_research_tickers",
+        [],
+    )
+    if str(ticker).strip()
 }
-deep_research_tickers.discard("")
 
 if active_destination == "Home":
     _timed_render(
@@ -2307,6 +2306,11 @@ if active_destination == "Home":
 if active_destination == "Industry Comparison":
     from views.industry_comparison import render_industry_comparison
 
+    _research = load_research_datasets()
+    company_analysis = _research["analysis"]
+    company_quarterly = _research["quarterly"]
+    _analysis_by_ticker = _research["analysis_by_ticker"]
+
     _timed_render(
         "Industry Comparison",
         lambda: render_industry_comparison(
@@ -2326,6 +2330,24 @@ if active_destination == "Industry Comparison":
 
 if active_destination == "Company Research":
     from views.company_research import render_company_research
+
+    _research = load_research_datasets()
+    company_analysis = _research["analysis"]
+    company_quarterly = _research["quarterly"]
+    company_s1 = _research["s1"]
+    _analysis_by_ticker = _research["analysis_by_ticker"]
+    _quarterly_by_ticker = _research["quarterly_by_ticker"]
+    _s1_by_ticker = _research["s1_by_ticker"]
+
+    # Fill lightweight universe stubs with the matching lazy-loaded records.
+    for _key, _record in company_data.items():
+        _ticker = str(_record.get("ticker", "")).upper()
+        if _ticker in _analysis_by_ticker:
+            company_analysis[_key] = _analysis_by_ticker[_ticker]
+        if _ticker in _quarterly_by_ticker:
+            company_quarterly[_key] = _quarterly_by_ticker[_ticker]
+        if _ticker in _s1_by_ticker:
+            company_s1[_key] = _s1_by_ticker[_ticker]
 
     _timed_render(
         "Company Research",
