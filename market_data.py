@@ -140,6 +140,14 @@ def get_live_market_data(symbols):
     return _get_live_market_data_cached(canonical_symbols)
 
 
+def _clear_live_market_data_cache(*_args, **_kwargs):
+    """Preserve the old refresh API while clearing the canonical quote cache."""
+    _get_live_market_data_cached.clear()
+
+
+get_live_market_data.clear = _clear_live_market_data_cache
+
+
 @st.cache_data(ttl=120)
 def get_finviz_screener_data(symbols=None, filters=None):
     export_url = st.secrets.get("FINVIZ_EXPORT_URL")
