@@ -18,4 +18,5 @@ def fetch_swap_curve(
         endpoint,
         headers=headers,
         timeout=(5, 12),
+        provider="SwapCurve",
     )
