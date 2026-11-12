@@ -98,6 +98,24 @@ def load_startup_company_data():
 
 
 @st.cache_data(show_spinner=False)
+def load_research_coverage():
+    try:
+        return load_json(
+            "data/research_coverage.json"
+        )
+    except (
+        FileNotFoundError,
+        json.JSONDecodeError,
+    ):
+        return {
+            "generated_at_utc": "",
+            "totals": {},
+            "percentages": {},
+            "companies": {},
+        }
+
+
+@st.cache_data(show_spinner=False)
 def load_research_index():
     try:
         return load_json("data/research_index.json")
