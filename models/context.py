@@ -29,6 +29,7 @@ class CompanyResearchContext:
     company_analysis: Mapping[str, dict]
     company_quarterly: Mapping[str, dict]
     company_s1: Mapping[str, dict]
+    research_coverage: Mapping[str, Any]
     analysis_by_ticker: Mapping[str, dict]
     quarterly_by_ticker: Mapping[str, dict]
     s1_by_ticker: Mapping[str, dict]
