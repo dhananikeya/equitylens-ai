@@ -322,3 +322,64 @@ h1 span { color: var(--muted); }
   .panel-heading { flex-direction:column; }
   .source-link { white-space:normal; }
 }
+
+.research-jumps {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  margin-bottom: 18px;
+  padding: 10px 0;
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  background: rgba(5,11,14,.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(38,54,64,.65);
+}
+.research-jumps a {
+  flex: 0 0 auto;
+  padding: 8px 11px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: .74rem;
+}
+.research-jumps a:hover { color: var(--text); border-color: rgba(22,199,178,.55); }
+
+.coverage-strip {
+  margin-bottom: 16px;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(9,18,23,.62);
+  display: grid;
+  grid-template-columns: 180px 1fr minmax(250px, 1.2fr);
+  gap: 18px;
+  align-items: center;
+}
+.coverage-strip span, .coverage-strip p { color: var(--muted); }
+.coverage-strip span { display:block; font-size:.7rem; }
+.coverage-strip strong { display:block; margin-top:4px; font-size:1.4rem; }
+.coverage-strip p { margin:0; font-size:.76rem; line-height:1.5; }
+.coverage-meter { height:8px; border-radius:999px; overflow:hidden; background:#142027; }
+.coverage-meter span { display:block; height:100%; border-radius:inherit; background:var(--teal); }
+
+.trend-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:28px; }
+.trend-grid h3 { margin:0 0 14px; font-size:.8rem; }
+.trend-bars { display:grid; gap:10px; }
+.trend-row {
+  display:grid;
+  grid-template-columns:62px 1fr 88px;
+  gap:10px;
+  align-items:center;
+}
+.trend-row > span { color:var(--muted); font-size:.68rem; }
+.trend-row > div { height:9px; background:#142027; border-radius:999px; overflow:hidden; }
+.trend-row i { display:block; height:100%; background:var(--teal); border-radius:inherit; }
+.trend-row i.negative { background:#f87171; }
+.trend-row strong { font-size:.7rem; text-align:right; }
+
+@media (max-width: 760px) {
+  .coverage-strip { grid-template-columns:1fr; gap:12px; }
+  .trend-grid { grid-template-columns:1fr; }
+}
