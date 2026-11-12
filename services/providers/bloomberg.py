@@ -11,6 +11,7 @@ def fetch_feed(url, headers):
         url,
         headers=headers,
         timeout=(5, 20),
+        provider="Bloomberg",
     )
 
 
@@ -19,4 +20,5 @@ def fetch_markets(headers):
         BLOOMBERG_MARKETS_URL,
         headers=headers,
         timeout=(5, 20),
+        provider="Bloomberg",
     )
