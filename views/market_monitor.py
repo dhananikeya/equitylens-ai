@@ -991,6 +991,10 @@ def render_market_monitor(
                 )
                 latest_filing = (
                     summary_company.get(
+                        "latest_material_filing",
+                        {},
+                    )
+                    or summary_company.get(
                         "latest_filing",
                         {},
                     )
