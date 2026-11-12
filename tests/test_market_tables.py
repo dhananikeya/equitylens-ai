@@ -54,7 +54,8 @@ class MarketTableTests(unittest.TestCase):
             for path in market_paths
         )
 
-        self.assertIn('section("Screener", "Market Intelligence")', market_source)
+        self.assertIn('"Industry Market Board & Movement"', market_source)
+        self.assertIn('"Price, Volume & Market Activity"', market_source)
         self.assertIn("render_crisp_table(", market_source)
         self.assertIn("get_rates_bundle(", market_source)
         self.assertIn("ThreadPoolExecutor(max_workers=3)", market_source)
