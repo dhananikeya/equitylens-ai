@@ -63,7 +63,16 @@ class ResearchExperienceTests(unittest.TestCase):
         self.assertTrue(pdf.startswith(b"%PDF-"))
 
     def test_original_six_sections_remain_accessible(self):
-        app = Path("app.py").read_text(encoding="utf-8")
+        navigation = Path("navigation.py").read_text(
+            encoding="utf-8"
+        )
+        app = Path("app.py").read_text(
+            encoding="utf-8"
+        )
+        overview = Path(
+            "views/company_sections/overview.py"
+        ).read_text(encoding="utf-8")
+
         for section in (
             '"Home": "Home"',
             '"Company Research":',
@@ -72,10 +81,20 @@ class ResearchExperienceTests(unittest.TestCase):
             '"Filings":',
             '"Learn":',
         ):
-            self.assertIn(section, app)
-        self.assertIn('render_company_evidence(', app)
-        self.assertIn('render_report_download(', app)
-        self.assertNotIn("from supabase import", app)
+            self.assertIn(section, navigation)
+
+        self.assertIn(
+            "render_company_evidence(",
+            overview,
+        )
+        self.assertIn(
+            "render_report_download(",
+            overview,
+        )
+        self.assertNotIn(
+            "from supabase import",
+            app,
+        )
 
 
 if __name__ == "__main__":
