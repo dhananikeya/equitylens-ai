@@ -9,6 +9,7 @@ def render_home(
     company_universe,
     sec_synced_companies,
     sec_summary,
+    research_coverage,
     deep_research_tickers,
     company_data,
     open_company_research,
@@ -42,8 +43,20 @@ def render_home(
         unsafe_allow_html=True,
     )
 
+    coverage_totals = research_coverage.get(
+        "totals",
+        {},
+    )
+    coverage_percentages = research_coverage.get(
+        "percentages",
+        {},
+    )
+
     homepage_proof = st.columns(4)
-    homepage_proof[0].metric("Companies", f"{len(company_universe):,}")
+    homepage_proof[0].metric(
+        "Universe companies",
+        f"{len(company_universe):,}",
+    )
     homepage_proof[1].metric(
         "Industries",
         f"{company_universe['Industry'].nunique():,}",
@@ -57,12 +70,17 @@ def render_home(
         ),
     )
     homepage_proof[3].metric(
-        "Structured research",
-        f"{len(deep_research_tickers):,}",
+        "Deep research",
+        (
+            f"{coverage_totals.get('deep_research', len(deep_research_tickers)):,}"
+        ),
+        (
+            f"{coverage_percentages.get('deep_research', 0):.1f}% of universe"
+        ),
     )
     st.caption(
-        "Coverage universe and completed structured research are tracked separately. "
-        "Primary-source SEC filings remain accessible even while deeper research is being expanded."
+        "The 517-company universe is a discovery universe, not a claim that every company has complete research. "
+        "SEC coverage, financial coverage, and deep structured research are tracked separately."
     )
 
     render_home_discovery(
@@ -130,6 +148,36 @@ def render_home(
         st.write(
             "Company coverage and completed research are different. "
             "Some companies have market data and filings while structured analysis is still being added."
+        )
+        coverage_cols = st.columns(4)
+        coverage_cols[0].metric(
+            "Annual financials",
+            f"{coverage_totals.get('annual_financials', 0):,}",
+            f"{coverage_percentages.get('annual_financials', 0):.1f}%",
+        )
+        coverage_cols[1].metric(
+            "Quarterly financials",
+            f"{coverage_totals.get('quarterly_financials', 0):,}",
+            f"{coverage_percentages.get('quarterly_financials', 0):.1f}%",
+        )
+        coverage_cols[2].metric(
+            "Qualitative analysis",
+            f"{coverage_totals.get('qualitative_analysis', 0):,}",
+            f"{coverage_percentages.get('qualitative_analysis', 0):.1f}%",
+        )
+        coverage_cols[3].metric(
+            "Deep research",
+            f"{coverage_totals.get('deep_research', 0):,}",
+            f"{coverage_percentages.get('deep_research', 0):.1f}%",
+        )
+        st.caption(
+            "Coverage snapshot generated: "
+            + format_utc_timestamp(
+                research_coverage.get(
+                    "generated_at_utc"
+                ),
+                fallback="Unavailable",
+            )
         )
         st.markdown(
             "**Reported:** taken from a company disclosure. "
