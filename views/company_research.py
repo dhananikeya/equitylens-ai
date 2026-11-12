@@ -68,6 +68,7 @@ def render_company_research(
     company_analysis = context.company_analysis
     company_quarterly = context.company_quarterly
     company_s1 = context.company_s1
+    research_coverage = context.research_coverage
     _analysis_by_ticker = context.analysis_by_ticker
     _quarterly_by_ticker = context.quarterly_by_ticker
     _s1_by_ticker = context.s1_by_ticker
@@ -321,6 +322,16 @@ def render_company_research(
         company_s1.get(selected_company_key, {}),
     )
     selected_latest = selected_qdata.get("latest_quarter", {})
+    selected_coverage = (
+        research_coverage.get(
+            "companies",
+            {},
+        ).get(
+            selected_ticker,
+            {},
+        )
+        or {}
+    )
 
     core_snapshot_key = f"company_core_snapshot::{selected_ticker}"
     core_snapshot = st.session_state.get(core_snapshot_key)
@@ -554,7 +565,8 @@ def render_company_research(
             <p class="el-subtitle">{html.escape(str(business_summary))}</p>
             <div class="el-badges">
                 <span class="el-badge">{html.escape(selected_country or "Global")}</span>
-                <span class="el-badge">Primary-source research</span>
+                <span class="el-badge">{html.escape(str(selected_coverage.get("completion_status", "Coverage status unavailable")))}</span>
+                <span class="el-badge">{int(selected_coverage.get("completeness_percent", 0) or 0)}% research completeness</span>
                 <span class="el-badge">Educational · not investment advice</span>
             </div>
         </div>
@@ -588,6 +600,23 @@ def render_company_research(
         "Availability reflects the sources currently loaded for this company. "
         "“Not found” is different from a reported value of zero."
     )
+
+    missing_layers = [
+        label
+        for key, label in [
+            ("annual_financials", "annual financials"),
+            ("quarterly_financials", "quarterly financials"),
+            ("qualitative_analysis", "qualitative analysis"),
+            ("registration_research", "registration research"),
+        ]
+        if not selected_coverage.get(key)
+    ]
+    if missing_layers:
+        st.info(
+            "Research still being expanded for this company: "
+            + ", ".join(missing_layers)
+            + ". SEC filing access remains available where indexed."
+        )
 
     research_actions = st.columns(3)
     with research_actions[0]:
