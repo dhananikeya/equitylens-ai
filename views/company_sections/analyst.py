@@ -3,6 +3,7 @@ import streamlit as st
 
 from financial_utils import safe_float
 from market_data import get_company_analyst_data
+from sources import source_label
 from ui_components import section
 
 
@@ -141,6 +142,7 @@ def render_analyst_research(selected_ticker, selected_price):
         )
 
     st.caption(
-        "Supplemental analyst data: Yahoo Finance via yfinance. "
-        "EquityLens does not convert third-party opinions into its own buy, sell, or hold rating."
+        "Supplemental analyst data: "
+        + source_label("Yahoo")
+        + ". EquityLens does not convert third-party opinions into its own buy, sell, or hold rating."
     )
