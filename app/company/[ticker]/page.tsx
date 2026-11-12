@@ -79,6 +79,9 @@ export default async function CompanyResearchPage({
     1,
     ...annualHistory.map((item: any) => Math.abs(Number(item?.operating_income) || 0))
   );
+  const companyExtra = company as Record<string, unknown>;
+  const screenerMarketCap = Number(companyExtra["Market Cap"]);
+  const screenerPE = String(companyExtra["P/E"] || "").trim();
   const marketHistory = market?.history || [];
   const chartWidth = 760;
   const chartHeight = 190;
