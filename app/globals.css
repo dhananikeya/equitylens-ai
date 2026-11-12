@@ -468,3 +468,41 @@ h1 span { color: var(--muted); }
   .market-snapshot-meta { grid-template-columns:1fr; }
   .market-price-line > strong { font-size:1.7rem; }
 }
+
+.filing-table {
+  border-top:1px solid var(--border);
+}
+.filing-table-head,
+.filing-table-row {
+  display:grid;
+  grid-template-columns:78px 105px 115px minmax(220px,1fr) 70px;
+  gap:14px;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+}
+.filing-table-head {
+  color:var(--muted);
+  font-size:.66rem;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+.filing-table-row {
+  font-size:.76rem;
+}
+.filing-table-row span { color:var(--muted); line-height:1.4; }
+.filing-table-row a { color:var(--blue); text-align:right; }
+.filing-table-row a:hover { text-decoration:underline; }
+
+@media (max-width: 760px) {
+  .filing-table-head { display:none; }
+  .filing-table-row {
+    grid-template-columns:70px 1fr;
+    gap:8px 12px;
+    padding:14px 0;
+  }
+  .filing-table-row span:nth-of-type(1)::before { content:"Filed: "; color:#d8e0e4; }
+  .filing-table-row span:nth-of-type(2)::before { content:"Period: "; color:#d8e0e4; }
+  .filing-table-row span:nth-of-type(3) { grid-column:1 / -1; }
+  .filing-table-row a { text-align:left; }
+}
