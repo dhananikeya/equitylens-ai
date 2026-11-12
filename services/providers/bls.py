@@ -17,6 +17,7 @@ def fetch_series(payload, headers):
         headers=headers,
         json=payload,
         timeout=(5, 30),
+        provider="BLS",
     )
 
 
@@ -25,4 +26,5 @@ def fetch_calendar(headers):
         BLS_CALENDAR_URL,
         headers=headers,
         timeout=(5, 25),
+        provider="BLS",
     )
