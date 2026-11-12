@@ -10,6 +10,7 @@ No SEC API key is required.
 from __future__ import annotations
 
 import csv
+import gzip
 import json
 import sys
 import time
@@ -20,7 +21,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 UNIVERSE_PATH = ROOT / "data" / "finviz_universe.csv"
-OUTPUT_PATH = ROOT / "data" / "sec_filings.json"
+LEGACY_OUTPUT_PATH = ROOT / "data" / "sec_filings.json"
+ARCHIVE_PATH = ROOT / "data" / "sec_filings.json.gz"
 SUMMARY_PATH = ROOT / "data" / "sec_summary.json"
 SHARD_DIR = ROOT / "data" / "sec_companies"
 
@@ -387,11 +389,21 @@ def build_summary(output: dict, generated_at_utc: str) -> dict:
 
 def main() -> None:
     universe = load_universe()
-    previous_output = (
-        json.loads(OUTPUT_PATH.read_text(encoding="utf-8"))
-        if OUTPUT_PATH.exists()
-        else {}
-    )
+    if ARCHIVE_PATH.exists():
+        with gzip.open(
+            ARCHIVE_PATH,
+            "rt",
+            encoding="utf-8",
+        ) as archive_file:
+            previous_output = json.load(archive_file)
+    elif LEGACY_OUTPUT_PATH.exists():
+        previous_output = json.loads(
+            LEGACY_OUTPUT_PATH.read_text(
+                encoding="utf-8"
+            )
+        )
+    else:
+        previous_output = {}
     try:
         ticker_map = load_ticker_map()
     except Exception as exc:
@@ -581,21 +593,44 @@ def main() -> None:
                 "last_checked_utc", observed_at_utc
             )
 
-    new_text = json.dumps(output, indent=2, sort_keys=False) + "\n"
-    old_text = (
-        OUTPUT_PATH.read_text(encoding="utf-8")
-        if OUTPUT_PATH.exists()
-        else ""
+    new_text = json.dumps(
+        output,
+        separators=(",", ":"),
+        sort_keys=False,
     )
+
+    old_text = ""
+    if ARCHIVE_PATH.exists():
+        try:
+            with gzip.open(
+                ARCHIVE_PATH,
+                "rt",
+                encoding="utf-8",
+            ) as archive_file:
+                old_text = archive_file.read()
+        except (OSError, UnicodeDecodeError):
+            old_text = ""
 
     feed_changed = new_text != old_text
     if feed_changed:
-        OUTPUT_PATH.write_text(new_text, encoding="utf-8")
+        with gzip.open(
+            ARCHIVE_PATH,
+            "wt",
+            encoding="utf-8",
+            compresslevel=9,
+        ) as archive_file:
+            archive_file.write(new_text)
         print(
-            f"SEC filing feed updated for {len(output)} covered companies."
+            f"Compressed SEC archive updated for {len(output)} covered companies."
         )
     else:
         print("No SEC filing changes detected.")
+
+    # The per-company shards and summary are the runtime fast paths. Once the
+    # compressed archive is available, remove the legacy multi-megabyte JSON.
+    if ARCHIVE_PATH.exists() and LEGACY_OUTPUT_PATH.exists():
+        LEGACY_OUTPUT_PATH.unlink()
+        print("Removed legacy uncompressed SEC archive.")
 
     shard_changes, shard_removals = write_company_shards(output)
     if shard_changes or shard_removals:
