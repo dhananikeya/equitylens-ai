@@ -1,0 +1,208 @@
+import gzip
+import json
+import re
+
+import pandas as pd
+import streamlit as st
+
+from research_data import index_dataset_by_ticker
+
+
+@st.cache_data(show_spinner=False)
+def load_json(path):
+    """Load repository-backed JSON once per app process."""
+    with open(path, "r", encoding="utf-8") as file:
+        return json.load(file)
+
+
+@st.cache_data(show_spinner=False)
+def load_sec_filings():
+    """Load the full SEC filing archive only on pages that truly need it."""
+    try:
+        with gzip.open(
+            "data/sec_filings.json.gz",
+            "rt",
+            encoding="utf-8",
+        ) as archive_file:
+            return json.load(archive_file)
+    except (FileNotFoundError, OSError, json.JSONDecodeError):
+        return load_json("data/sec_filings.json")
+
+
+@st.cache_data(show_spinner=False)
+def load_sec_company(ticker, company_key=""):
+    """Load one company's SEC shard, with legacy archive fallback."""
+    safe_ticker = re.sub(
+        r"[^A-Z0-9.\-]",
+        "",
+        str(ticker or "").upper().strip(),
+    )
+    if safe_ticker:
+        try:
+            return load_json(
+                f"data/sec_companies/{safe_ticker}.json"
+            )
+        except (FileNotFoundError, json.JSONDecodeError):
+            pass
+
+    if company_key:
+        try:
+            return load_sec_filings().get(company_key, {})
+        except (FileNotFoundError, json.JSONDecodeError):
+            return {}
+    return {}
+
+
+@st.cache_data(show_spinner=False)
+def load_research_datasets():
+    """Load narrative, quarterly, and S-1 datasets only when needed."""
+    hand_analysis = load_json("data/company_analysis.json")
+    hand_quarterly = load_json("data/company_quarterly.json")
+    hand_s1 = load_json("data/company_s1.json")
+    generated_analysis = load_json(
+        "data/generated_company_analysis.json"
+    )
+    generated_quarterly = load_json(
+        "data/generated_company_quarterly.json"
+    )
+    generated_s1 = load_json(
+        "data/generated_company_s1.json"
+    )
+
+    analysis = {**generated_analysis, **hand_analysis}
+    quarterly = {**generated_quarterly, **hand_quarterly}
+    s1 = {**generated_s1, **hand_s1}
+
+    return {
+        "analysis": analysis,
+        "quarterly": quarterly,
+        "s1": s1,
+        "analysis_by_ticker": index_dataset_by_ticker(
+            analysis
+        ),
+        "quarterly_by_ticker": index_dataset_by_ticker(
+            quarterly
+        ),
+        "s1_by_ticker": index_dataset_by_ticker(s1),
+    }
+
+
+@st.cache_data(show_spinner=False)
+def load_startup_company_data():
+    """Load only the small company-metrics datasets required at startup."""
+    hand = load_json("data/company_metrics.json")
+    generated = load_json(
+        "data/generated_company_metrics.json"
+    )
+    return {**generated, **hand}
+
+
+@st.cache_data(show_spinner=False)
+def load_research_index():
+    try:
+        return load_json("data/research_index.json")
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {"deep_research_tickers": []}
+
+
+@st.cache_data(show_spinner=False)
+def load_sec_summary():
+    try:
+        summary = dict(load_json("data/sec_summary.json"))
+        summary["_ready"] = True
+        return summary
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {
+            "_ready": False,
+            "company_count": 0,
+            "synced_companies": 0,
+            "companies": {},
+            "recent_filings": [],
+        }
+
+
+def _market_cap_dollars(value):
+    if value is None or pd.isna(value):
+        return None
+
+    text = str(value).strip().replace(",", "").replace("%", "")
+    if not text or text in {"-", "N/A", "nan"}:
+        return None
+
+    multiplier = 1.0
+    suffix = text[-1:].upper()
+    if suffix == "K":
+        multiplier = 1_000.0
+        text = text[:-1]
+    elif suffix == "M":
+        multiplier = 1_000_000.0
+        text = text[:-1]
+    elif suffix == "B":
+        multiplier = 1_000_000_000.0
+        text = text[:-1]
+    elif suffix == "T":
+        multiplier = 1_000_000_000_000.0
+        text = text[:-1]
+
+    try:
+        parsed = float(text) * multiplier
+    except ValueError:
+        return None
+
+    return (
+        parsed
+        if suffix in {"K", "M", "B", "T"}
+        else parsed * 1_000_000
+    )
+
+
+@st.cache_data(show_spinner=False)
+def load_company_universe():
+    try:
+        universe = pd.read_csv(
+            "data/finviz_universe.csv"
+        )
+    except pd.errors.ParserError:
+        universe = pd.read_csv(
+            "data/finviz_universe.csv",
+            engine="python",
+            on_bad_lines="skip",
+        )
+
+    for column in [
+        "Ticker",
+        "Company",
+        "Sector",
+        "Industry",
+        "Country",
+    ]:
+        if column in universe.columns:
+            universe[column] = (
+                universe[column]
+                .fillna("")
+                .astype(str)
+                .str.strip()
+            )
+
+    if "Market Cap" in universe.columns:
+        universe["Market Cap"] = universe[
+            "Market Cap"
+        ].apply(_market_cap_dollars)
+
+    if "Ticker" in universe.columns:
+        universe["Ticker"] = (
+            universe["Ticker"].str.upper()
+        )
+
+    if {
+        "Company",
+        "Ticker",
+    }.issubset(universe.columns):
+        universe["Coverage Key"] = (
+            universe["Company"]
+            + " ("
+            + universe["Ticker"]
+            + ")"
+        )
+
+    return universe
