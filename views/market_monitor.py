@@ -29,7 +29,12 @@ from market_data import (
     normalize_finviz_screener,
 )
 from market_tables import render_crisp_table
-from ui_components import format_utc_timestamp, loading_panel, section
+from ui_components import (
+    format_utc_timestamp,
+    loading_panel,
+    render_refresh_indicator,
+    section,
+)
 
 
 def render_nyse_market_monitor(nyse_finviz, workspace_known_tickers, research_link):
@@ -603,6 +608,11 @@ def render_market_monitor(
             if overview_retrieval_times
             else ""
         )
+        render_refresh_indicator(
+            "Market overview refreshed",
+            overview_latest_retrieval,
+            "Yahoo Finance proxy snapshot",
+        )
 
         proxy_cols = st.columns(len(proxy_labels))
         for col, (symbol, label) in zip(
@@ -811,6 +821,11 @@ def render_market_monitor(
             max(stock_retrieval_times)
             if stock_retrieval_times
             else ""
+        )
+        render_refresh_indicator(
+            "Stock snapshot refreshed",
+            stock_latest_retrieval,
+            "quotes may be delayed",
         )
         st.caption(
             "Stock quote snapshot retrieved: "
