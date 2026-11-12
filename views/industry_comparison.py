@@ -301,9 +301,27 @@ def render_industry_comparison(
                 except Exception:
                     peer_financial_cache[company] = {}
 
+        annual_by_company = {
+            company: _annual_snapshot(
+                company,
+                company_data,
+                peer_financial_cache.get(company, {}),
+            )
+            for company in selected_companies
+        }
+        quarter_by_company = {
+            company: _quarter_snapshot(
+                company,
+                company_quarterly,
+                peer_financial_cache.get(company, {}),
+            )
+            for company in selected_companies
+        }
         comparison_snapshot = {
             "signature": signature,
             "financials": peer_financial_cache,
+            "annual": annual_by_company,
+            "quarterly": quarter_by_company,
         }
         st.session_state[comparison_snapshot_key] = comparison_snapshot
     else:
@@ -311,23 +329,33 @@ def render_industry_comparison(
             "financials",
             {},
         )
+        annual_by_company = comparison_snapshot.get(
+            "annual",
+            {},
+        )
+        quarter_by_company = comparison_snapshot.get(
+            "quarterly",
+            {},
+        )
 
-    annual_by_company = {
-        company: _annual_snapshot(
-            company,
-            company_data,
-            peer_financial_cache.get(company, {}),
-        )
-        for company in selected_companies
-    }
-    quarter_by_company = {
-        company: _quarter_snapshot(
-            company,
-            company_quarterly,
-            peer_financial_cache.get(company, {}),
-        )
-        for company in selected_companies
-    }
+    if not annual_by_company:
+        annual_by_company = {
+            company: _annual_snapshot(
+                company,
+                company_data,
+                peer_financial_cache.get(company, {}),
+            )
+            for company in selected_companies
+        }
+    if not quarter_by_company:
+        quarter_by_company = {
+            company: _quarter_snapshot(
+                company,
+                company_quarterly,
+                peer_financial_cache.get(company, {}),
+            )
+            for company in selected_companies
+        }
 
     comparison_focus = st.radio(
         "Comparison view",
