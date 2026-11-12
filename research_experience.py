@@ -12,19 +12,6 @@ import io
 from datetime import datetime, timezone
 from urllib.parse import urlparse
 
-from reportlab.lib import colors
-from reportlab.lib.enums import TA_LEFT
-from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
-from reportlab.lib.utils import simpleSplit
-from reportlab.lib.pagesizes import letter
-from reportlab.platypus import (
-    HRFlowable,
-    KeepTogether,
-    Paragraph,
-    SimpleDocTemplate,
-    Spacer,
-)
-
 SOURCE_UNAVAILABLE = "Structured research is still being added for this company."
 
 
@@ -391,6 +378,18 @@ def render_company_evidence(st, ticker, analysis, filings, growth_label, period_
 def build_research_pdf(company_name, ticker, industry, sector, analysis,
                        filings, metric_labels):
     """Produce a concise, source-linked educational brief from known data."""
+    # ReportLab is only needed when a user reaches the PDF export path. Keeping
+    # these imports local prevents the document engine from slowing app startup.
+    from reportlab.lib import colors
+    from reportlab.lib.enums import TA_LEFT
+    from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+    from reportlab.lib.pagesizes import letter
+    from reportlab.platypus import (
+        HRFlowable,
+        Paragraph,
+        SimpleDocTemplate,
+        Spacer,
+    )
     analysis = analysis or {}
     metrics = metric_labels or {}
     buffer = io.BytesIO()
