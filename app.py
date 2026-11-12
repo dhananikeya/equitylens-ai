@@ -1688,6 +1688,46 @@ hr {
     .el-evidence-strip { flex-direction:column; align-items:flex-start; }
     .el-evidence-note { white-space:normal; }
 }
+
+.el-loading-panel {
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+    min-height: 76px;
+    margin: .55rem 0;
+    padding: 1rem 1.05rem;
+    border: 1px solid var(--el-border);
+    border-radius: 9px;
+    background: linear-gradient(90deg, rgba(9,18,23,.96), rgba(13,23,29,.88));
+}
+.el-loading-dot {
+    width: 11px;
+    height: 11px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: var(--el-teal);
+    box-shadow: 0 0 0 0 rgba(22,199,178,.34);
+    animation: el-loading-pulse 1.35s ease-out infinite;
+}
+.el-loading-label {
+    color: var(--el-text);
+    font-size: .9rem;
+    font-weight: 600;
+}
+.el-loading-detail {
+    margin-top: .2rem;
+    color: var(--el-muted);
+    font-size: .76rem;
+    line-height: 1.45;
+}
+@keyframes el-loading-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(22,199,178,.34); }
+    70% { box-shadow: 0 0 0 9px rgba(22,199,178,0); }
+    100% { box-shadow: 0 0 0 0 rgba(22,199,178,0); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .el-loading-dot { animation: none; }
+}
 </style>
     """,
     unsafe_allow_html=True
