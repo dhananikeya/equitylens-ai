@@ -8,7 +8,6 @@
 
 import json
 import time
-from urllib.parse import urlencode
 
 import pandas as pd
 import streamlit as st
@@ -36,6 +35,20 @@ from models.context import (
     CompanyResearchContext,
     IndustryComparisonContext,
 )
+from navigation import (
+    NAVIGATION_LABELS,
+    build_global_company_lookup,
+    clear_company_filters as clear_company_filters_state,
+    format_global_search_option as format_global_search_option_value,
+    global_search_options as build_global_search_options,
+    initialize_saved_choices,
+    navigate_to as navigate_to_state,
+    remember_choice as remember_choice_state,
+    research_link,
+    reset_coverage_selection as reset_coverage_selection_state,
+    save_rendered_choices as save_rendered_choices_state,
+)
+from services.refresh import retry_company_data as retry_company_data_state
 from ui_components import section
 from views.home import render_home
 from research_experience import inject_readability_styles
@@ -252,167 +265,123 @@ if workspace_extra_rows:
     )
 
 
-def reset_coverage_selection():
-    # A new top-level search takes precedence over a previously selected table row.
-    st.session_state.pop("workspace_coverage_table", None)
-
-
-# One toolbar searches destinations across the website.
-navigation_labels = {
-    "Home": "Home",
-    "Company Research": "Company Research — companies, tickers & SEC analysis",
-    "Industry Comparison": "Industry Comparison — industries & peers",
-    "Market Monitor": "Market Monitor — company monitor, markets, ticker & heat map",
-    "Filings": "Filings — SEC tracker, S-1, 10-K & 10-Q",
-    "Learn": "Learn — learn the basics, lessons & financial terms",
-}
-# Durable copies keep widget choices when their section is not rendered.
-saved_choices = st.session_state.setdefault("saved_choices", {})
-for choice_key, choice_value in saved_choices.items():
-    st.session_state.setdefault(choice_key, choice_value)
+initialize_saved_choices(st)
+navigation_labels = NAVIGATION_LABELS
 
 
 def remember_choice(key, value):
-    st.session_state[key] = value
-    st.session_state["saved_choices"][key] = value
+    remember_choice_state(
+        st,
+        key,
+        value,
+    )
 
 
 def save_rendered_choices():
-    choice_keys = {
-        "workspace_company_search", "workspace_sector", "workspace_industry",
-        "peer_industry", "peer_subgroup", "peer_companies",
-        "nyse_heatmap_sector", "nyse_heatmap_limit", "nyse_heatmap_search",
-        "market_monitor_industry", "market_movement_threshold",
-        "market_monitor_section", "finviz_min_relative_volume", "finviz_min_abs_change",
-        "peer_comparison_focus", "learning_path",
-        "sec_tracker_company", "sec_tracker_forms", "sec_registration_company",
-        "sec_tracker_search", "sec_tracker_category", "sec_tracker_display_limit",
-        "sec_tracker_start_date", "sec_tracker_end_date",
-    }
-    for key, value in list(st.session_state.items()):
-        if key in choice_keys or key.startswith(("workspace_chart_range_", "workspace_section_")):
-            st.session_state["saved_choices"][key] = value
+    save_rendered_choices_state(st)
+
+
+def reset_coverage_selection():
+    reset_coverage_selection_state(st)
 
 
 def clear_company_filters():
-    remember_choice("workspace_sector", "All sectors")
-    remember_choice("workspace_industry", "All industries")
-    reset_coverage_selection()
+    clear_company_filters_state(st)
+
+
+def navigate_to(destination):
+    navigate_to_state(
+        st,
+        destination,
+    )
 
 
 def open_company_research(ticker):
     clear_company_filters()
-    remember_choice("workspace_company_search", ticker)
-    st.session_state["last_research_ticker"] = ticker
+    remember_choice(
+        "workspace_company_search",
+        ticker,
+    )
+    st.session_state[
+        "last_research_ticker"
+    ] = ticker
     reset_coverage_selection()
     navigate_to("Company Research")
 
 
 def compare_company(company_key):
-    comparison_industry = company_data[company_key].get("industry", "Unclassified")
+    comparison_industry = (
+        company_data[company_key].get(
+            "industry",
+            "Unclassified",
+        )
+    )
     peers = [
-        name for name, data in company_data.items()
-        if data.get("industry", "Unclassified") == comparison_industry
+        name
+        for name, data in company_data.items()
+        if data.get(
+            "industry",
+            "Unclassified",
+        )
+        == comparison_industry
         and name != company_key
     ]
-    remember_choice("peer_industry", comparison_industry)
-    remember_choice("peer_subgroup", "All current peers")
-    remember_choice("peer_companies", [company_key] + peers[:2])
-    navigate_to("Industry Comparison")
+    remember_choice(
+        "peer_industry",
+        comparison_industry,
+    )
+    remember_choice(
+        "peer_subgroup",
+        "All current peers",
+    )
+    remember_choice(
+        "peer_companies",
+        [company_key] + peers[:2],
+    )
+    navigate_to(
+        "Industry Comparison"
+    )
 
 
 def retry_company_data(ticker):
-    # Import network-heavy modules only when the user explicitly requests a refresh.
-    from sec_data import get_sec_company_research
-    from market_data import (
-        get_company_analyst_data,
-        get_company_financial_snapshot,
-        get_company_ownership_data,
-        get_live_market_data,
-        get_major_etf_exposure,
-        get_market_history,
+    retry_company_data_state(
+        st,
+        ticker,
     )
 
-    normalized_ticker = str(ticker).upper().strip()
-    get_sec_company_research.clear(ticker)
-    get_live_market_data.clear([ticker])
-    get_company_financial_snapshot.clear(ticker)
-    get_company_ownership_data.clear(ticker)
-    get_company_analyst_data.clear(ticker)
-    get_major_etf_exposure.clear(ticker)
-    get_market_history.clear()
 
-    snapshot_prefixes = (
-        f"company_core_snapshot::{normalized_ticker}",
-        f"company_ownership::{normalized_ticker}",
-        f"company_analyst::{normalized_ticker}",
-        f"company_etf_exposure::{normalized_ticker}",
-        f"company_history::{normalized_ticker}::",
+global_company_lookup = (
+    build_global_company_lookup(
+        company_universe
     )
-    for key in list(st.session_state):
-        if any(
-            key == prefix or key.startswith(prefix)
-            for prefix in snapshot_prefixes
-        ):
-            st.session_state.pop(key, None)
-
-
-def research_link(ticker=None, destination="Company Research"):
-    params = {"section": destination}
-    if ticker:
-        params["ticker"] = ticker
-    return PUBLIC_APP_URL + "?" + urlencode(params)
-
-
-global_company_lookup = {}
-for _, _search_row in company_universe.iterrows():
-    _search_ticker = str(_search_row.get("Ticker", "")).upper().strip()
-    _search_company = str(_search_row.get("Company", "")).strip()
-    _search_industry = str(_search_row.get("Industry", "")).strip()
-    if not _search_ticker:
-        continue
-    global_company_lookup[f"ticker::{_search_ticker}"] = {
-        "ticker": _search_ticker,
-        "company": _search_company,
-        "industry": _search_industry,
-    }
-
+)
 global_search_options = (
-    list(navigation_labels)
-    + sorted(
-        global_company_lookup,
-        key=lambda option: (
-            global_company_lookup[option]["company"].lower(),
-            global_company_lookup[option]["ticker"].lower(),
-        ),
+    build_global_search_options(
+        global_company_lookup
     )
 )
 
 
 def format_global_search_option(option):
-    if option in navigation_labels:
-        return navigation_labels[option]
-
-    company = global_company_lookup.get(option, {})
-    ticker = company.get("ticker", "")
-    name = company.get("company", ticker)
-    industry = company.get("industry", "")
-    suffix = f" · {industry}" if industry else ""
-    return f"{ticker} · {name}{suffix}"
-
-
-def navigate_to(destination):
-    st.session_state["main_navigation"] = destination
+    return format_global_search_option_value(
+        option,
+        global_company_lookup,
+    )
 
 
 def navigate_from_global_search():
-    selected = st.session_state.get("global_search_choice")
+    selected = st.session_state.get(
+        "global_search_choice"
+    )
 
     if selected in navigation_labels:
         navigate_to(selected)
         return
 
-    company = global_company_lookup.get(selected, {})
+    company = global_company_lookup.get(
+        selected,
+        {},
+    )
     ticker = company.get("ticker")
     if ticker:
         open_company_research(ticker)
