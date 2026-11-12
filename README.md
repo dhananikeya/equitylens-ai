@@ -156,6 +156,59 @@ The platform distinguishes between broad market coverage and deeper research cov
 - Streamlit Community Cloud
 - ReportLab for local PDF export (no external report service)
 
+## Local qualitative research
+
+EquityLens keeps qualitative filing analysis local. The research worker can use **Ollama** or an **OpenAI-compatible local server such as LM Studio**; it does not require the OpenAI API.
+
+The local worker:
+- reads SEC filing evidence and XBRL context,
+- generates structured business/risk research using the local model,
+- records field-level source provenance,
+- writes incremental generated JSON,
+- rebuilds the research-coverage index after each batch.
+
+### Ollama
+
+Start Ollama and make sure at least one model is installed, then run:
+
+```bash
+bash scripts/run_local_research.sh
+```
+
+To choose a model or batch size:
+
+```bash
+LOCAL_LLM_PROVIDER=ollama \
+LOCAL_LLM_MODEL=llama3.1:8b \
+RESEARCH_BATCH_SIZE=20 \
+bash scripts/run_local_research.sh
+```
+
+### LM Studio / other OpenAI-compatible local server
+
+Start the local API server, then run:
+
+```bash
+LOCAL_LLM_PROVIDER=openai_compatible \
+LOCAL_LLM_URL=http://127.0.0.1:1234/v1 \
+RESEARCH_BATCH_SIZE=20 \
+bash scripts/run_local_research.sh
+```
+
+To check progress without calling the model:
+
+```bash
+python scripts/local_research_status.py
+```
+
+The local worker updates:
+- `data/generated_company_analysis.json`
+- `data/generated_company_s1.json`
+- `data/research_pipeline_state.json`
+- and, when applicable, generated financial records.
+
+Hand-curated research remains authoritative field by field. Generated research fills missing fields rather than overwriting populated curated values.
+
 ## Project Structure
 
 ```text
