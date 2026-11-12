@@ -20,7 +20,7 @@ concurrency:
 jobs:
   build-financial-coverage:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 90
 
     steps:
       - name: Check out repository
@@ -40,7 +40,7 @@ jobs:
 
       - name: Build next SEC XBRL financial batch
         env:
-          FINANCIAL_BATCH_SIZE: "50"
+          FINANCIAL_BATCH_SIZE: "500"
           SEC_REQUEST_DELAY_SECONDS: "0.12"
         run: |
           python scripts/build_financial_coverage.py
