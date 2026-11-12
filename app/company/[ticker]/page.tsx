@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCompanyResearch } from "@/lib/research-data";
+import { getMarketSnapshot } from "@/lib/market-data-next";
 
 function money(value: unknown) {
   const number = Number(value);
@@ -12,6 +13,17 @@ function money(value: unknown) {
     style: "currency",
     currency: "USD",
     maximumFractionDigits: 0
+  }).format(number);
+}
+
+function price(value: unknown) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return "Not available";
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
   }).format(number);
 }
 
@@ -38,6 +50,7 @@ export default async function CompanyResearchPage({
 
   const { company, metrics, analysis, quarterly, s1, sec, secGeneratedAt } = research;
   const ticker = String(company.Ticker).toUpperCase();
+  const market = await getMarketSnapshot(ticker);
   const latest = quarterly?.latest_quarter || {};
   const priorYear = quarterly?.prior_year_quarter || {};
   const ltm = quarterly?.ltm || {};
@@ -66,6 +79,25 @@ export default async function CompanyResearchPage({
     1,
     ...annualHistory.map((item: any) => Math.abs(Number(item?.operating_income) || 0))
   );
+  const marketHistory = market?.history || [];
+  const chartWidth = 760;
+  const chartHeight = 190;
+  const marketMin = marketHistory.length
+    ? Math.min(...marketHistory.map((point) => point.close))
+    : 0;
+  const marketMax = marketHistory.length
+    ? Math.max(...marketHistory.map((point) => point.close))
+    : 0;
+  const marketRange = Math.max(1, marketMax - marketMin);
+  const chartPoints = marketHistory
+    .map((point, index) => {
+      const x = marketHistory.length > 1
+        ? (index / (marketHistory.length - 1)) * chartWidth
+        : chartWidth / 2;
+      const y = chartHeight - ((point.close - marketMin) / marketRange) * chartHeight;
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    })
+    .join(" ");
 
   return (
     <main className="shell research-page">
@@ -91,6 +123,48 @@ export default async function CompanyResearchPage({
           </div>
         </div>
       </section>
+
+      <section className="market-snapshot">
+        <div className="market-snapshot-main">
+          <span>Market snapshot</span>
+          <div className="market-price-line">
+            <strong>{market?.price !== null && market?.price !== undefined ? price(market.price) : "Unavailable"}</strong>
+            {market?.changePercent !== null && market?.changePercent !== undefined && (
+              <b className={market.changePercent >= 0 ? "market-up" : "market-down"}>
+                {market.changePercent >= 0 ? "+" : ""}{market.changePercent.toFixed(2)}%
+              </b>
+            )}
+          </div>
+          <small>
+            {market?.exchange || "Exchange unavailable"}
+            {market?.sessionDate ? ` · Session ${market.sessionDate}` : ""}
+            {" · "}Supplemental market data, may be delayed
+          </small>
+        </div>
+        <div className="market-snapshot-meta">
+          <div><span>Previous close</span><strong>{market?.previousClose !== null && market?.previousClose !== undefined ? price(market.previousClose) : "N/A"}</strong></div>
+          <div><span>Universe market cap</span><strong>{company["Market Cap"] ? `${(Number(company["Market Cap"]) / 1000).toFixed(1)}B` : "N/A"}</strong></div>
+          <div><span>P/E</span><strong>{company["P/E"] || "N/A"}</strong></div>
+        </div>
+      </section>
+
+      {marketHistory.length > 1 && (
+        <section className="market-chart-panel" aria-label="Six month closing price history">
+          <div className="market-chart-head">
+            <div>
+              <span>PRICE HISTORY</span>
+              <strong>6 month closing price</strong>
+            </div>
+            <small>{price(marketMin)} – {price(marketMax)}</small>
+          </div>
+          <div className="market-chart-wrap">
+            <svg viewBox={`0 0 ${chartWidth} ${chartHeight}`} role="img" aria-label={`${ticker} six month closing price chart`}>
+              <polyline points={chartPoints} fill="none" stroke="currentColor" strokeWidth="3" vectorEffect="non-scaling-stroke" />
+            </svg>
+          </div>
+          <p>Source: Yahoo Finance chart feed. Supplemental market context only. Verify time-sensitive prices with your brokerage or exchange source.</p>
+        </section>
+      )}
 
       <nav className="research-jumps" aria-label="Company research sections">
         <a href="#overview">Overview</a>
