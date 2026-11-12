@@ -1,6 +1,8 @@
 import requests
 import streamlit as st
 
+from models.context import CompanyIdentifier
+
 
 SEC_REQUEST_HEADERS = {
     "User-Agent": "EquityLens AI research app dhananikeya@gmail.com",
