@@ -224,6 +224,7 @@ def find_finviz_column(dataframe, candidates):
     return None
 
 
+@st.cache_data(ttl=120, show_spinner=False)
 def normalize_finviz_screener(dataframe):
     if dataframe is None or dataframe.empty:
         return pd.DataFrame()
