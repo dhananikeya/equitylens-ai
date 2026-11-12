@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCompanyResearch } from "@/lib/research-data";
 import { getMarketSnapshot } from "@/lib/market-data-next";
+import { getSecResearchFilings } from "@/lib/sec-live";
 
 function money(value: unknown) {
   const number = Number(value);
@@ -50,7 +51,10 @@ export default async function CompanyResearchPage({
 
   const { company, metrics, analysis, quarterly, s1, sec, secGeneratedAt } = research;
   const ticker = String(company.Ticker).toUpperCase();
-  const market = await getMarketSnapshot(ticker);
+  const [market, researchFilings] = await Promise.all([
+    getMarketSnapshot(ticker),
+    getSecResearchFilings(sec?.cik)
+  ]);
   const latest = quarterly?.latest_quarter || {};
   const priorYear = quarterly?.prior_year_quarter || {};
   const ltm = quarterly?.ltm || {};
@@ -297,15 +301,35 @@ export default async function CompanyResearchPage({
 
         <section className="research-panel wide" id="filings">
           <div className="panel-heading">
-            <div><p className="eyebrow">SEC EVIDENCE</p><h2>Latest filing record</h2></div>
+            <div><p className="eyebrow">SEC EVIDENCE</p><h2>Research filing history</h2></div>
             {sourceLink(sec?.latest_filing?.url, "Open latest SEC filing")}
           </div>
-          <div className="filing-row">
-            <div><span>Form</span><strong>{sec?.latest_filing?.form || "Not available"}</strong></div>
-            <div><span>Filed</span><strong>{sec?.latest_filing?.filing_date || "Not available"}</strong></div>
-            <div><span>Report period</span><strong>{sec?.latest_filing?.report_date || "Not specified"}</strong></div>
-            <div><span>SEC status</span><strong>{sec?.sec_status || "Unknown"}</strong></div>
-          </div>
+          {researchFilings.length ? (
+            <div className="filing-table" role="table" aria-label={`${ticker} research filings`}>
+              <div className="filing-table-head" role="row">
+                <span>Form</span><span>Filed</span><span>Report period</span><span>Description</span><span>Source</span>
+              </div>
+              {researchFilings.map((filing) => (
+                <div className="filing-table-row" role="row" key={filing.accessionNumber || `${filing.form}-${filing.filingDate}`}>
+                  <strong>{filing.form}</strong>
+                  <span>{filing.filingDate || "N/A"}</span>
+                  <span>{filing.reportDate || "N/A"}</span>
+                  <span>{filing.description || filing.items || "SEC filing"}</span>
+                  <a href={filing.url} target="_blank" rel="noreferrer">Open ↗</a>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <>
+              <div className="filing-row">
+                <div><span>Form</span><strong>{sec?.latest_filing?.form || "Not available"}</strong></div>
+                <div><span>Filed</span><strong>{sec?.latest_filing?.filing_date || "Not available"}</strong></div>
+                <div><span>Report period</span><strong>{sec?.latest_filing?.report_date || "Not specified"}</strong></div>
+                <div><span>SEC status</span><strong>{sec?.sec_status || "Unknown"}</strong></div>
+              </div>
+              <p className="empty-state">Live research-focused SEC filing history is temporarily unavailable. The latest indexed filing is shown above.</p>
+            </>
+          )}
         </section>
 
         {s1?.source_url && (
