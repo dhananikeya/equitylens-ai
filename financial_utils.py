@@ -1,61 +1,11 @@
-def safe_float(value):
-    try:
-        if value in (None, ""):
-            return None
-        return float(value)
-    except (TypeError, ValueError):
-        return None
-
-
-def market_return(history, sessions):
-    if history is None or history.empty or len(history) <= sessions:
-        return None
-
-    latest = safe_float(history.iloc[-1].get("close"))
-    prior = safe_float(history.iloc[-(sessions + 1)].get("close"))
-
-    if latest is None or prior in (None, 0):
-        return None
-
-    return ((latest - prior) / prior) * 100
-
-
-def format_market_price(value):
-    number = safe_float(value)
-    return "$" + f"{number:,.2f}" if number is not None else "N/A"
-
-
-def format_market_volume(value):
-    number = safe_float(value)
-    if number is None:
-        return "N/A"
-    if number >= 1_000_000_000:
-        return f"{number / 1_000_000_000:.2f}B"
-    if number >= 1_000_000:
-        return f"{number / 1_000_000:.2f}M"
-    if number >= 1_000:
-        return f"{number / 1_000:.1f}K"
-    return f"{number:,.0f}"
-
-
-def format_money(value):
-    if value is None:
-        return "N/A"
-    sign = "-" if value < 0 else ""
-    value = abs(value)
-    if value >= 1_000_000_000:
-        return f"{sign}${value / 1_000_000_000:.2f}B"
-    if value >= 1_000_000:
-        return f"{sign}${value / 1_000_000:.1f}M"
-    return f"{sign}${value:,.0f}"
-
-
-def pct(value):
-    return f"{value:.1f}%" if value is not None else "N/A"
-
-
-def format_multiple(value):
-    return f"{value:.2f}x" if value is not None else "N/A"
+from formatting import (
+    format_market_price,
+    format_market_volume,
+    format_money,
+    format_multiple,
+    pct,
+    safe_float,
+)
 
 
 def calc_growth(current, prior):
