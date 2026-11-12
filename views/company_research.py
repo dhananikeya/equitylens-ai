@@ -303,13 +303,63 @@ def render_company_research(
     )
     selected_latest = selected_qdata.get("latest_quarter", {})
 
-    try:
-        with st.spinner("Loading financial statements from Yahoo Finance…"):
-            selected_financial_fallback = get_company_financial_snapshot(
-                selected_ticker
+    core_snapshot_key = f"company_core_snapshot::{selected_ticker}"
+    core_snapshot = st.session_state.get(core_snapshot_key)
+
+    if core_snapshot is None:
+        try:
+            with st.spinner("Loading financial statements from Yahoo Finance…"):
+                core_financial_fallback = get_company_financial_snapshot(
+                    selected_ticker
+                )
+        except Exception:
+            core_financial_fallback = {}
+
+        try:
+            with st.spinner("Loading company filings from SEC EDGAR…"):
+                core_sec = get_sec_company_research(selected_ticker)
+            core_sec_error = None
+        except Exception:
+            core_sec = {}
+            core_sec_error = (
+                "SEC EDGAR is temporarily unavailable for this company. "
+                "The rest of the workspace will continue to load."
             )
-    except Exception:
-        selected_financial_fallback = {}
+
+        # Local SEC fallback is sharded by ticker so a single company lookup
+        # never needs to deserialize the full multi-company filing archive.
+        core_local_sec = {}
+        if not core_sec.get("filings"):
+            core_local_sec = load_sec_company(
+                selected_ticker,
+                selected_company_key,
+            )
+
+        try:
+            with st.spinner("Loading the latest available Yahoo Finance price…"):
+                core_quote = get_live_market_data(
+                    [selected_ticker]
+                ).get(selected_ticker, {})
+        except Exception:
+            core_quote = {}
+
+        core_snapshot = {
+            "financial_fallback": core_financial_fallback,
+            "sec": core_sec,
+            "sec_error": core_sec_error,
+            "local_sec": core_local_sec,
+            "quote": core_quote,
+        }
+        st.session_state[core_snapshot_key] = core_snapshot
+
+    selected_financial_fallback = core_snapshot.get(
+        "financial_fallback",
+        {},
+    )
+    selected_sec = core_snapshot.get("sec", {})
+    selected_sec_error = core_snapshot.get("sec_error")
+    selected_local_sec = core_snapshot.get("local_sec", {})
+    selected_quote = core_snapshot.get("quote", {})
 
     selected_fallback_latest = selected_financial_fallback.get(
         "latest", {}
@@ -320,26 +370,6 @@ def render_company_research(
     selected_fallback_quarters = selected_financial_fallback.get(
         "quarterly_history", []
     )
-
-    try:
-        with st.spinner("Loading company filings from SEC EDGAR…"):
-            selected_sec = get_sec_company_research(selected_ticker)
-        selected_sec_error = None
-    except Exception:
-        selected_sec = {}
-        selected_sec_error = (
-            "SEC EDGAR is temporarily unavailable for this company. "
-            "The rest of the workspace will continue to load."
-        )
-
-    # Local SEC fallback is sharded by ticker so a single company lookup never
-    # needs to deserialize the full multi-company filing archive.
-    selected_local_sec = {}
-    if not selected_sec.get("filings"):
-        selected_local_sec = load_sec_company(
-            selected_ticker,
-            selected_company_key,
-        )
 
     selected_filings = (
         selected_sec.get("filings")
@@ -365,12 +395,6 @@ def render_company_research(
         {"8-K", "8-K/A", "6-K", "6-K/A"},
     )
     primary_registration = selected_registrations[0] if selected_registrations else {}
-
-    try:
-        with st.spinner("Loading the latest available Yahoo Finance price…"):
-            selected_quote = get_live_market_data([selected_ticker]).get(selected_ticker, {})
-    except Exception:
-        selected_quote = {}
 
     selected_price = selected_quote.get("close")
     selected_change = selected_quote.get("percent_change")
