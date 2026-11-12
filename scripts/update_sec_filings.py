@@ -22,6 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 UNIVERSE_PATH = ROOT / "data" / "finviz_universe.csv"
 OUTPUT_PATH = ROOT / "data" / "sec_filings.json"
 SUMMARY_PATH = ROOT / "data" / "sec_summary.json"
+SHARD_DIR = ROOT / "data" / "sec_companies"
 
 USER_AGENT = "EquityLens AI research app dhananikeya@gmail.com"
 MAX_FILINGS_PER_COMPANY = 25
@@ -91,6 +92,52 @@ def get_json(url: str) -> dict:
 def load_universe() -> list[dict]:
     with UNIVERSE_PATH.open("r", encoding="utf-8-sig", newline="") as handle:
         return list(csv.DictReader(handle))
+
+
+def write_company_shards(output: dict[str, dict]) -> tuple[int, int]:
+    """Write one compact SEC filing payload per ticker.
+
+    The monolithic archive remains during the migration so the Filing Tracker
+    can continue to operate unchanged. Company Research reads these shards
+    directly and avoids deserializing the multi-megabyte archive.
+    """
+    SHARD_DIR.mkdir(parents=True, exist_ok=True)
+    expected_files = set()
+    changed_files = 0
+
+    for company_data in output.values():
+        ticker = str(company_data.get("ticker", "")).upper().strip()
+        safe_ticker = "".join(
+            char for char in ticker
+            if char.isalnum() or char in ".-"
+        )
+        if not safe_ticker:
+            continue
+
+        filename = f"{safe_ticker}.json"
+        expected_files.add(filename)
+        path = SHARD_DIR / filename
+        text = json.dumps(
+            company_data,
+            indent=2,
+            sort_keys=False,
+        ) + "\n"
+        old_text = (
+            path.read_text(encoding="utf-8")
+            if path.exists()
+            else ""
+        )
+        if text != old_text:
+            path.write_text(text, encoding="utf-8")
+            changed_files += 1
+
+    removed_files = 0
+    for path in SHARD_DIR.glob("*.json"):
+        if path.name not in expected_files:
+            path.unlink()
+            removed_files += 1
+
+    return changed_files, removed_files
 
 
 def load_ticker_map() -> dict[str, dict]:
@@ -518,6 +565,15 @@ def main() -> None:
         )
     else:
         print("No SEC filing changes detected.")
+
+    shard_changes, shard_removals = write_company_shards(output)
+    if shard_changes or shard_removals:
+        print(
+            "SEC company shards updated: "
+            f"{shard_changes} written, {shard_removals} removed."
+        )
+    else:
+        print("No SEC company shard changes detected.")
 
     summary_generated_at = observed_at_utc
     if not feed_changed and SUMMARY_PATH.exists():
