@@ -2022,3 +2022,17 @@ hr {
         aspect-ratio: 16 / 9;
     }
 }
+
+
+.el-move-research {
+    display: inline-block;
+    margin-top: .75rem;
+    color: var(--el-blue);
+    font-size: .76rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.el-move-research:hover {
+    text-decoration: underline;
+}
