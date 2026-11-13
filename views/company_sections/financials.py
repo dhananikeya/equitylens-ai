@@ -613,6 +613,12 @@ def render_financials(
             "free_cash_flow"
         )
     )
+    free_cash_flow_method = (
+        fallback_cash_flow.get(
+            "free_cash_flow_method",
+            "unavailable",
+        )
+    )
     cash_flow_date = (
         fallback_cash_flow.get(
             "cash_flow_as_of"
@@ -634,13 +640,23 @@ def render_financials(
         ),
     )
     cash_flow_cols[2].metric(
-        "Free Cash Flow · Calculated",
+        (
+            "Free Cash Flow · Reported"
+            if free_cash_flow_method
+            == "reported"
+            else (
+                "Free Cash Flow · Calculated"
+                if free_cash_flow_method
+                == "calculated"
+                else "Free Cash Flow"
+            )
+        ),
         format_money(
             free_cash_flow
         ),
         help=(
-            "Uses Yahoo-reported free cash flow when available; "
-            "otherwise operating cash flow minus capital expenditures."
+            "Reported when Yahoo exposes a direct free-cash-flow row; "
+            "otherwise calculated as operating cash flow minus capital expenditures."
         ),
     )
     st.caption(
