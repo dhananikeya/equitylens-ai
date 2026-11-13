@@ -798,6 +798,7 @@ if active_destination == "Filings":
         load_sec_filings=load_sec_filings,
         get_sec_company_research=get_sec_company_research,
         sec_summary=sec_summary,
+        research_link=research_link,
         ),
     )
 
