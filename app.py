@@ -111,6 +111,7 @@ _metadata_by_ticker = (
 if _metadata_by_ticker:
     metadata_columns = {
         "Listing Status": "listing_status",
+        "Ticker Aliases": "aliases",
         "Share Class": "share_class",
         "Issuer Type": "issuer_type",
         "Reporting Regime": "reporting_regime",
@@ -295,6 +296,7 @@ for workspace_key, workspace_record in company_data.items():
         "Industry": extra_industry,
         "Country": str(workspace_record.get("country", "")).strip(),
         "Listing Status": "Historical / outside active universe",
+        "Ticker Aliases": [],
         "Share Class": "",
         "Issuer Type": "Historical profile",
         "Reporting Regime": "Unknown",
