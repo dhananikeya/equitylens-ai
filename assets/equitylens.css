@@ -1725,3 +1725,133 @@ hr {
     background: var(--el-teal);
     box-shadow: 0 0 0 2px rgba(22,199,178,.12);
 }
+
+
+/* Home discovery and summary cards */
+.el-home-hero {
+    padding-bottom: 1.45rem;
+}
+
+.el-home-card-grid,
+.el-home-workflow {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .8rem;
+    margin: .9rem 0 1.2rem;
+}
+
+.el-home-card,
+.el-home-workflow-step,
+.el-home-industry-card,
+.el-home-learn-card {
+    border: 1px solid var(--el-border);
+    border-radius: 9px;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,.014), transparent),
+        #091217;
+}
+
+.el-home-card,
+.el-home-workflow-step {
+    min-height: 150px;
+    padding: 1.15rem 1.2rem;
+}
+
+.el-home-card-kicker,
+.el-home-workflow-num {
+    color: var(--el-teal);
+    font-family: var(--el-mono);
+    font-size: .68rem;
+    font-weight: 600;
+    letter-spacing: .045em;
+    text-transform: uppercase;
+}
+
+.el-home-card-title {
+    margin-top: .48rem;
+    color: var(--el-text);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -.015em;
+}
+
+.el-home-card-copy {
+    margin-top: .55rem;
+    color: var(--el-muted);
+    font-size: .84rem;
+    line-height: 1.6;
+}
+
+.el-home-workflow-step {
+    position: relative;
+    overflow: hidden;
+}
+
+.el-home-workflow-step::after {
+    content: "";
+    position: absolute;
+    left: 1.2rem;
+    right: 1.2rem;
+    bottom: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--el-teal), transparent);
+    opacity: .55;
+}
+
+.el-home-industry-card {
+    min-height: 92px;
+    padding: 1rem 1.05rem;
+    margin-bottom: .45rem;
+}
+
+.el-home-learn-card {
+    padding: 1.2rem 1.25rem;
+    margin: .8rem 0 .65rem;
+    background:
+        radial-gradient(circle at 92% 10%, rgba(22,199,178,.07), transparent 35%),
+        #091217;
+}
+
+/* Compact global footer */
+.el-site-footer {
+    margin-top: 2rem;
+    padding: 1rem 0 .3rem;
+    border-top: 1px solid var(--el-border);
+    color: var(--el-muted);
+    font-size: .73rem;
+    line-height: 1.6;
+}
+
+.el-site-footer strong {
+    color: var(--el-text);
+    font-weight: 600;
+}
+
+.el-site-footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+    margin-top: .25rem;
+    color: var(--el-muted-2);
+}
+
+.el-site-footer a {
+    color: var(--el-blue);
+    text-decoration: none;
+}
+
+.el-site-footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+    .el-home-card-grid,
+    .el-home-workflow {
+        grid-template-columns: 1fr;
+    }
+
+    .el-home-card,
+    .el-home-workflow-step {
+        min-height: 0;
+    }
+}
