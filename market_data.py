@@ -521,6 +521,12 @@ def get_company_financial_snapshot(symbol):
         "balance_sheet",
         "get_balance_sheet",
     )
+    cash_flow = _yf_attribute(
+        ticker,
+        "cash_flow",
+        "cashflow",
+        "get_cash_flow",
+    )
 
     if not isinstance(income, pd.DataFrame):
         income = pd.DataFrame()
@@ -528,6 +534,8 @@ def get_company_financial_snapshot(symbol):
         quarterly_income = pd.DataFrame()
     if not isinstance(balance, pd.DataFrame):
         balance = pd.DataFrame()
+    if not isinstance(cash_flow, pd.DataFrame):
+        cash_flow = pd.DataFrame()
 
     annual_history = []
     for column in list(income.columns)[:4]:
@@ -627,6 +635,48 @@ def get_company_financial_snapshot(symbol):
 
     latest_income = annual_history[-1] if annual_history else {}
     latest_balance_column = balance.columns[0] if not balance.empty else None
+    latest_cash_flow_column = (
+        cash_flow.columns[0]
+        if not cash_flow.empty
+        else None
+    )
+
+    operating_cash_flow = _statement_value(
+        cash_flow,
+        [
+            "Operating Cash Flow",
+            "Total Cash From Operating Activities",
+            "Cash Flow From Continuing Operating Activities",
+        ],
+        latest_cash_flow_column,
+    )
+    capital_expenditure = _statement_value(
+        cash_flow,
+        [
+            "Capital Expenditure",
+            "Capital Expenditures",
+        ],
+        latest_cash_flow_column,
+    )
+    free_cash_flow = _statement_value(
+        cash_flow,
+        [
+            "Free Cash Flow",
+        ],
+        latest_cash_flow_column,
+    )
+    if (
+        free_cash_flow is None
+        and operating_cash_flow is not None
+        and capital_expenditure is not None
+    ):
+        free_cash_flow = (
+            operating_cash_flow
+            + capital_expenditure
+            if capital_expenditure < 0
+            else operating_cash_flow
+            - capital_expenditure
+        )
 
     cash_and_investments = _statement_value(
         balance,
@@ -699,6 +749,22 @@ def get_company_financial_snapshot(symbol):
             "cash_and_investments": cash_and_investments,
             "total_assets": total_assets,
             "balance_sheet_as_of": balance_date or "Latest available",
+        },
+        "cash_flow": {
+            "operating_cash_flow": operating_cash_flow,
+            "capital_expenditure": capital_expenditure,
+            "free_cash_flow": free_cash_flow,
+            "cash_flow_as_of": (
+                str(latest_cash_flow_column.date())
+                if hasattr(
+                    latest_cash_flow_column,
+                    "date",
+                )
+                else str(
+                    latest_cash_flow_column
+                    or ""
+                )
+            ),
         },
         "source": "Yahoo Finance via yfinance",
     }
