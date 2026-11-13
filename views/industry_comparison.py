@@ -214,18 +214,64 @@ def render_industry_comparison(
         "Fiscal calendars can differ, so EquityLens shows the reported period instead of pretending every row is perfectly synchronized."
     )
 
-    selected_industry = st.selectbox(
-        "Industry",
-        industries,
-        index=0,
-        key="peer_industry",
+    industry_cols = st.columns(2)
+    with industry_cols[0]:
+        selected_industry = st.selectbox(
+            "Primary industry",
+            industries,
+            index=0,
+            key="peer_industry",
+        )
+
+    secondary_options = [
+        "No second industry"
+    ] + [
+        industry
+        for industry in industries
+        if industry != selected_industry
+    ]
+    current_secondary = (
+        st.session_state.get(
+            "peer_secondary_industry",
+            "No second industry",
+        )
     )
+    if current_secondary not in secondary_options:
+        remember_choice(
+            "peer_secondary_industry",
+            "No second industry",
+        )
+
+    with industry_cols[1]:
+        secondary_industry = st.selectbox(
+            "Optional second industry",
+            secondary_options,
+            key="peer_secondary_industry",
+            help=(
+                "Use this for cross-industry comparisons. "
+                "Curated subgroups are available only for a single industry."
+            ),
+        )
+
+    selected_industries = [
+        selected_industry
+    ]
+    if (
+        secondary_industry
+        != "No second industry"
+    ):
+        selected_industries.append(
+            secondary_industry
+        )
 
     industry_companies = sorted([
         name
         for name, data in company_data.items()
-        if data.get("industry", "Unclassified")
-        == selected_industry
+        if data.get(
+            "industry",
+            "Unclassified",
+        )
+        in selected_industries
     ])
 
     curated_sets = {
@@ -242,10 +288,22 @@ def render_industry_comparison(
         if len(members) >= 2
     }
 
-    peer_set_options = ["Full industry"] + [
-        f"Curated · {name}"
-        for name in sorted(curated_sets)
-    ]
+    peer_set_options = (
+        ["Full industry selection"]
+        if len(
+            selected_industries
+        )
+        > 1
+        else (
+            ["Full industry"]
+            + [
+                f"Curated · {name}"
+                for name in sorted(
+                    curated_sets
+                )
+            ]
+        )
+    )
     current_peer_set = st.session_state.get(
         "peer_subgroup",
         "Full industry",
@@ -263,7 +321,10 @@ def render_industry_comparison(
         ),
     )
 
-    if selected_peer_set == "Full industry":
+    if selected_peer_set in {
+        "Full industry",
+        "Full industry selection",
+    }:
         available_companies = industry_companies
     else:
         curated_name = selected_peer_set.replace(
@@ -321,7 +382,11 @@ def render_industry_comparison(
         for name in selected_companies
     )
     st.caption(
-        f"Selected: {selection_summary} · {len(selected_companies)} companies"
+        "Industries: "
+        + " + ".join(
+            selected_industries
+        )
+        + f" · Selected: {selection_summary} · {len(selected_companies)} companies"
     )
 
     compare_button = st.button(
@@ -330,7 +395,9 @@ def render_industry_comparison(
         use_container_width=True,
     )
     signature = (
-        selected_industry,
+        tuple(
+            selected_industries
+        ),
         selected_peer_set,
         tuple(selected_companies),
     )
