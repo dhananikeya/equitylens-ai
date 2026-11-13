@@ -480,7 +480,7 @@ def retry_company_data(ticker):
 
 global_company_lookup = (
     build_global_company_lookup(
-        company_universe
+        workspace_universe
     )
 )
 global_search_options = (
