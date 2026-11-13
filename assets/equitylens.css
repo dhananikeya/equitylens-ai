@@ -1909,3 +1909,34 @@ hr {
         overflow: visible;
     }
 }
+
+
+/* Company Research section navigation */
+[class*="st-key-workspace_section_"] [role="radiogroup"] {
+    gap: .35rem;
+    padding: .35rem;
+    border: 1px solid var(--el-border);
+    border-radius: 9px;
+    background: rgba(9,18,23,.72);
+}
+
+[class*="st-key-workspace_section_"] [role="radiogroup"] label:has(input:checked) {
+    border: 1px solid rgba(22,199,178,.45);
+    border-radius: 7px;
+    background: rgba(22,199,178,.08);
+}
+
+@media (max-width: 760px) {
+    [class*="st-key-workspace_section_"] [role="radiogroup"] {
+        display: flex;
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scrollbar-width: thin;
+    }
+
+    [class*="st-key-workspace_section_"] [role="radiogroup"] label {
+        flex: 0 0 auto;
+        white-space: nowrap;
+    }
+}
