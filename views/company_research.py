@@ -734,6 +734,12 @@ def render_company_research(
         "Choose one research area at a time. EquityLens keeps the original "
         "filings and source context available inside each section."
     )
+    render_breadcrumbs(
+        "Home",
+        "Company Research",
+        selected_ticker,
+    )
+
     company_section = st.radio(
         "Company sections",
         [
@@ -749,6 +755,12 @@ def render_company_research(
         horizontal=True,
         key=workspace_section_key,
         label_visibility="collapsed",
+    )
+    render_breadcrumbs(
+        "Home",
+        "Company Research",
+        selected_ticker,
+        company_section,
     )
 
     if company_section == "Overview":
