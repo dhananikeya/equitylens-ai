@@ -80,6 +80,9 @@ jobs:
           metrics = loaded[
               "data/generated_company_metrics.json"
           ]
+          quarterly = loaded[
+              "data/generated_company_quarterly.json"
+          ]
           problems = []
 
           for key, record in metrics.items():
@@ -130,6 +133,75 @@ jobs:
                       f"{key}: fiscal_year={fiscal_year} "
                       f"does not match fiscal_year_end={fiscal_year_end}"
                   )
+
+          def quarter_ordinal(frame):
+              import re
+
+              match = re.match(
+                  r"CY(\d{4})Q([1-4])$",
+                  str(frame or ""),
+              )
+              if not match:
+                  return None
+              return (
+                  int(match.group(1)) * 4
+                  + int(match.group(2))
+              )
+
+          for key, record in quarterly.items():
+              if not isinstance(record, dict):
+                  continue
+
+              latest = (
+                  record.get(
+                      "latest_quarter",
+                      {},
+                  )
+                  or {}
+              )
+              prior = (
+                  record.get(
+                      "prior_quarter",
+                      {},
+                  )
+                  or {}
+              )
+              latest_frame = latest.get(
+                  "frame"
+              )
+              prior_frame = prior.get(
+                  "frame"
+              )
+
+              if (
+                  latest.get("revenue")
+                  is not None
+                  and prior.get("revenue")
+                  is not None
+              ):
+                  latest_ordinal = (
+                      quarter_ordinal(
+                          latest_frame
+                      )
+                  )
+                  prior_ordinal = (
+                      quarter_ordinal(
+                          prior_frame
+                      )
+                  )
+                  if (
+                      latest_ordinal
+                      is not None
+                      and prior_ordinal
+                      is not None
+                      and latest_ordinal
+                      - prior_ordinal
+                      != 1
+                  ):
+                      problems.append(
+                          f"{key}: non-consecutive latest/prior quarter "
+                          f"{latest_frame} vs {prior_frame}"
+                      )
 
           if problems:
               raise ValueError(
