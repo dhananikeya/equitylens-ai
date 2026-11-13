@@ -306,10 +306,13 @@ def render_industry_comparison(
     )
     current_peer_set = st.session_state.get(
         "peer_subgroup",
-        "Full industry",
+        peer_set_options[0],
     )
     if current_peer_set not in peer_set_options:
-        remember_choice("peer_subgroup", "Full industry")
+        remember_choice(
+            "peer_subgroup",
+            peer_set_options[0],
+        )
 
     selected_peer_set = st.selectbox(
         "Peer set",
@@ -335,6 +338,108 @@ def render_industry_comparison(
         available_companies = curated_sets.get(
             curated_name,
             industry_companies,
+        )
+
+    universe_market_cap = {
+        str(
+            row.get(
+                "Ticker",
+                "",
+            )
+        ).upper(): (
+            safe_float(
+                row.get(
+                    "Market Cap"
+                )
+            )
+            or 0
+        )
+        for _, row in (
+            company_universe.iterrows()
+        )
+    }
+    available_companies = sorted(
+        available_companies,
+        key=lambda company: (
+            -universe_market_cap.get(
+                str(
+                    company_data[
+                        company
+                    ].get(
+                        "ticker",
+                        "",
+                    )
+                ).upper(),
+                0,
+            ),
+            company.lower(),
+        ),
+    )
+
+    candidate_rows = []
+    for company in (
+        available_companies[:20]
+    ):
+        ticker = str(
+            company_data[
+                company
+            ].get(
+                "ticker",
+                "",
+            )
+        ).upper()
+        coverage = (
+            research_coverage.get(
+                "companies",
+                {},
+            ).get(
+                ticker,
+                {},
+            )
+            or {}
+        )
+        candidate_rows.append({
+            "Company": (
+                company.split(
+                    " ("
+                )[0]
+            ),
+            "Ticker": ticker,
+            "Industry": (
+                company_data[
+                    company
+                ].get(
+                    "industry",
+                    "Unclassified",
+                )
+            ),
+            "Market Cap": (
+                universe_market_cap.get(
+                    ticker
+                )
+            ),
+            "Research %": int(
+                coverage.get(
+                    "completeness_percent",
+                    0,
+                )
+                or 0
+            ),
+        })
+
+    with st.expander(
+        "Top peer candidates · by market cap",
+        expanded=False,
+    ):
+        st.dataframe(
+            pd.DataFrame(
+                candidate_rows
+            ),
+            use_container_width=True,
+            hide_index=True,
+        )
+        st.caption(
+            "Candidate ranking is a navigation aid, not an investment ranking."
         )
 
     existing_selection = st.session_state.get(
