@@ -679,41 +679,122 @@ def render_company_research(
     header_metrics[3].metric("Revenue", format_money(workspace_revenue), help="Sales before expenses. Check the period shown below before comparing companies.")
     header_metrics[4].metric("Revenue Growth", pct(workspace_growth), help=income_selection["growth_basis"])
 
-    quote_session = selected_quote.get("quote_session")
-    quote_retrieved_at = selected_quote.get("retrieved_at")
-    render_refresh_indicator(
-        "Market snapshot refreshed",
-        quote_retrieved_at,
-        "quotes may be delayed",
+    quote_session = selected_quote.get(
+        "quote_session"
     )
-    render_refresh_indicator(
-        "SEC data checked",
-        selected_sec.get("last_checked_utc")
-        or selected_local_sec.get("last_checked_utc"),
-        "SEC EDGAR",
+    quote_retrieved_at = selected_quote.get(
+        "retrieved_at"
     )
-    st.caption(
-        "Price source: Yahoo Finance daily price data · "
-        f"Trading session: {quote_session or 'Unavailable'} · "
-        f"Retrieved (UTC): {quote_retrieved_at or 'Unavailable'}. Quotes may be delayed."
-    )
-    st.caption(
-        f"Revenue source: {revenue_source_label}. "
-        "Market cap and P/E: coverage screener dataset; may have a different update time."
+    sec_checked_at = (
+        selected_sec.get(
+            "last_checked_utc"
+        )
+        or selected_local_sec.get(
+            "last_checked_utc"
+        )
     )
 
     latest_available_filing = max(
         selected_filings,
-        key=lambda filing: str(filing.get("filing_date") or ""),
+        key=lambda filing: str(
+            filing.get(
+                "filing_date"
+            )
+            or ""
+        ),
         default={},
     )
-    filing_date = latest_available_filing.get("filing_date") or "Date unavailable"
-    filing_form = latest_available_filing.get("form") or "Form unavailable"
-    financial_period = income_selection["period"]
-    st.caption(
-        f"Financial period: {financial_period or 'See Financials for source periods'} · "
-        "Market quotes may be delayed. Unavailable figures are not zero."
+    filing_date = (
+        latest_available_filing.get(
+            "filing_date"
+        )
+        or "Date unavailable"
     )
+    filing_form = (
+        latest_available_filing.get(
+            "form"
+        )
+        or "Form unavailable"
+    )
+    financial_period = (
+        income_selection["period"]
+    )
+
+    with st.expander(
+        "Data & source status"
+    ):
+        source_status_rows = [
+            {
+                "Dataset": "Market quote",
+                "Source": (
+                    "Yahoo Finance daily price data"
+                ),
+                "Period / checked": (
+                    quote_retrieved_at
+                    or "Unavailable"
+                ),
+                "Context": (
+                    "Session: "
+                    + str(
+                        quote_session
+                        or "Unavailable"
+                    )
+                    + " · quotes may be delayed"
+                ),
+            },
+            {
+                "Dataset": (
+                    "Financial statement"
+                ),
+                "Source": (
+                    revenue_source_label
+                ),
+                "Period / checked": (
+                    financial_period
+                    or "Period unavailable"
+                ),
+                "Context": (
+                    "Reported source values; "
+                    "EquityLens calculations are labeled separately"
+                ),
+            },
+            {
+                "Dataset": (
+                    "Market cap / P-E"
+                ),
+                "Source": (
+                    "Coverage screener dataset"
+                ),
+                "Period / checked": (
+                    "Provider snapshot"
+                ),
+                "Context": (
+                    "May update on a different schedule from price and filings"
+                ),
+            },
+            {
+                "Dataset": "SEC filings",
+                "Source": "SEC EDGAR",
+                "Period / checked": (
+                    sec_checked_at
+                    or "Unavailable"
+                ),
+                "Context": (
+                    f"Latest indexed filing: {filing_form} · {filing_date}"
+                ),
+            },
+        ]
+        st.dataframe(
+            pd.DataFrame(
+                source_status_rows
+            ),
+            use_container_width=True,
+            hide_index=True,
+        )
+        st.caption(
+            "Unavailable figures are not treated as zero. "
+            "Registration-era research is historical unless a section explicitly says otherwise."
+        )
 
     workspace_section_key = f"workspace_section_{selected_ticker}"
     legacy_section = st.session_state.get(workspace_section_key)
