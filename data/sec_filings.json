@@ -86913,10 +86913,24 @@
     "sector": "Technology",
     "industry": "Scientific & Technical Instruments",
     "country": "Switzerland",
-    "last_checked_utc": "2026-11-10T18:51:22+00:00",
+    "last_checked_utc": "2026-11-13T10:20:05+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1121788&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "4",
+        "filing_date": "2026-11-12",
+        "acceptance_datetime": "2026-11-13T02:55:03.000Z",
+        "report_date": "2026-11-11",
+        "accession_number": "0001193125-26-459015",
+        "primary_document": "xslF345X06/ownership.xml",
+        "description": "4",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-11-13T10:20:05+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526459015/xslF345X06/ownership.xml"
+      },
       {
         "form": "4",
         "filing_date": "2026-11-10",
@@ -87252,20 +87266,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526282547/grmn-11k-20260625.htm"
-      },
-      {
-        "form": "4",
-        "filing_date": "2026-06-12",
-        "acceptance_datetime": "2026-06-13T01:55:07.000Z",
-        "report_date": "2026-06-11",
-        "accession_number": "0001193125-26-270052",
-        "primary_document": "xslF345X06/ownership.xml",
-        "description": "4",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526270052/xslF345X06/ownership.xml"
       }
     ],
     "registration_filings": [

@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-13T02:53:59+00:00",
+  "generated_at_utc": "2026-11-13T10:20:05+00:00",
   "company_count": 517,
   "synced_companies": 517,
   "companies": {
@@ -3750,15 +3750,15 @@
       "has_filings": true,
       "latest_filing": {
         "form": "4",
-        "filing_date": "2026-11-10",
-        "report_date": "2026-11-09",
-        "description": "PRIMARY DOCUMENT",
-        "url": "https://www.sec.gov/Archives/edgar/data/1121788/000101410826000065/xslF345X06/primary_doc.xml"
+        "filing_date": "2026-11-12",
+        "report_date": "2026-11-11",
+        "description": "4",
+        "url": "https://www.sec.gov/Archives/edgar/data/1121788/000119312526459015/xslF345X06/ownership.xml"
       },
       "registration_count": 7,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-10T18:51:22+00:00"
+      "last_checked_utc": "2026-11-13T10:20:05+00:00"
     },
     "GS": {
       "ticker": "GS",
