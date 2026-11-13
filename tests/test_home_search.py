@@ -1,16 +1,25 @@
 import unittest
 
-import pandas as pd
-
 from home_search import (
     normalize_search_text,
     rank_company_matches,
 )
 
 
+class FakeUniverse:
+    def __init__(self, rows):
+        self.rows = rows
+
+    def iterrows(self):
+        for index, row in enumerate(
+            self.rows
+        ):
+            yield index, row
+
+
 class HomeSearchTests(unittest.TestCase):
     def setUp(self):
-        self.universe = pd.DataFrame([
+        self.universe = FakeUniverse([
             {
                 "Ticker": "AAPL",
                 "Company": "Apple Inc",
@@ -42,7 +51,9 @@ class HomeSearchTests(unittest.TestCase):
 
     def test_normalization_removes_corporate_suffixes(self):
         self.assertEqual(
-            normalize_search_text("Apple, Inc."),
+            normalize_search_text(
+                "Apple, Inc."
+            ),
             "apple",
         )
 
