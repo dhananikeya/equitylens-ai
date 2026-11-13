@@ -41,7 +41,7 @@ jobs:
 
       - name: Build next SEC XBRL financial batch
         env:
-          FINANCIAL_BATCH_SIZE: "500"
+          FINANCIAL_BATCH_SIZE: "600"
           SEC_REQUEST_DELAY_SECONDS: "0.12"
         run: |
           python scripts/build_financial_coverage.py
