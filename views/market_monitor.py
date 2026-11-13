@@ -139,6 +139,7 @@ def render_market_monitor(
             public_finviz_data_enabled=(
                 public_finviz_data_enabled
             ),
+            research_link=research_link,
         )
     elif market_view == "Rates":
         render_rates()
