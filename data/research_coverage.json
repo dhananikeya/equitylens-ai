@@ -1,18 +1,18 @@
 {
-  "generated_at_utc": "2026-11-13T07:07:48+00:00",
+  "generated_at_utc": "2026-11-13T07:13:12+00:00",
   "totals": {
     "universe": 517,
     "sec_filings": 517,
-    "annual_financials": 477,
-    "quarterly_financials": 502,
+    "annual_financials": 485,
+    "quarterly_financials": 511,
     "qualitative_analysis": 126,
     "registration_research": 8,
     "deep_research": 2
   },
   "percentages": {
     "sec_filings": 100.0,
-    "annual_financials": 92.3,
-    "quarterly_financials": 97.1,
+    "annual_financials": 93.8,
+    "quarterly_financials": 98.8,
     "qualitative_analysis": 24.4,
     "registration_research": 1.5,
     "deep_research": 0.4
@@ -9662,14 +9662,17 @@
       "industry": "REIT - Specialty",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": false,
       "registration_research": false,
       "qualitative_depth_percent": 0.0,
-      "completeness_percent": 20,
-      "completion_status": "SEC filings available",
-      "source_urls": []
+      "completeness_percent": 65,
+      "completion_status": "Financial research available",
+      "source_urls": [
+        "https://www.sec.gov/Archives/edgar/data/106535/000119312526051422/wy-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/106535/000119312526441693/wy-20260930.htm"
+      ]
     },
     "WYNN": {
       "ticker": "WYNN",
@@ -9678,14 +9681,17 @@
       "industry": "Resorts & Casinos",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": false,
       "registration_research": false,
       "qualitative_depth_percent": 0.0,
-      "completeness_percent": 20,
-      "completion_status": "SEC filings available",
-      "source_urls": []
+      "completeness_percent": 65,
+      "completion_status": "Financial research available",
+      "source_urls": [
+        "https://www.sec.gov/Archives/edgar/data/1174922/000117492226000013/wynn-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1174922/000117492226000079/wynn-20260930.htm"
+      ]
     },
     "XEL": {
       "ticker": "XEL",
@@ -9694,14 +9700,17 @@
       "industry": "Utilities - Regulated Electric",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": false,
       "registration_research": false,
       "qualitative_depth_percent": 0.0,
-      "completeness_percent": 20,
-      "completion_status": "SEC filings available",
-      "source_urls": []
+      "completeness_percent": 65,
+      "completion_status": "Financial research available",
+      "source_urls": [
+        "https://www.sec.gov/Archives/edgar/data/72903/000007290326000009/xel-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/72903/000007290326000181/xel-20260930.htm"
+      ]
     },
     "XOM": {
       "ticker": "XOM",
@@ -9711,13 +9720,15 @@
       "country": "USA",
       "sec_filings": true,
       "annual_financials": false,
-      "quarterly_financials": false,
+      "quarterly_financials": true,
       "qualitative_analysis": false,
       "registration_research": false,
       "qualitative_depth_percent": 0.0,
-      "completeness_percent": 20,
-      "completion_status": "SEC filings available",
-      "source_urls": []
+      "completeness_percent": 40,
+      "completion_status": "Financial research available",
+      "source_urls": [
+        "https://www.sec.gov/Archives/edgar/data/2115436/000211543626000020/xom-20260930.htm"
+      ]
     },
     "XYL": {
       "ticker": "XYL",
@@ -9726,14 +9737,17 @@
       "industry": "Specialty Industrial Machinery",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": false,
       "registration_research": false,
       "qualitative_depth_percent": 0.0,
-      "completeness_percent": 20,
-      "completion_status": "SEC filings available",
-      "source_urls": []
+      "completeness_percent": 65,
+      "completion_status": "Financial research available",
+      "source_urls": [
+        "https://www.sec.gov/Archives/edgar/data/1524472/000152447226000012/xyl-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1524472/000152447226000148/xyl-20260930.htm"
+      ]
     },
     "XYZ": {
       "ticker": "XYZ",
@@ -9761,14 +9775,17 @@
       "industry": "Restaurants",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": false,
       "registration_research": false,
       "qualitative_depth_percent": 0.0,
-      "completeness_percent": 20,
-      "completion_status": "SEC filings available",
-      "source_urls": []
+      "completeness_percent": 65,
+      "completion_status": "Financial research available",
+      "source_urls": [
+        "https://www.sec.gov/Archives/edgar/data/1041061/000104106126000084/yum-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1041061/000104106126000210/yum-20260930.htm"
+      ]
     },
     "ZBH": {
       "ticker": "ZBH",
@@ -9777,14 +9794,17 @@
       "industry": "Medical Devices",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": false,
       "registration_research": false,
       "qualitative_depth_percent": 0.0,
-      "completeness_percent": 20,
-      "completion_status": "SEC filings available",
-      "source_urls": []
+      "completeness_percent": 65,
+      "completion_status": "Financial research available",
+      "source_urls": [
+        "https://www.sec.gov/Archives/edgar/data/1136869/000119312526059853/zbh-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1136869/000119312526447203/zbh-20260930.htm"
+      ]
     },
     "ZBRA": {
       "ticker": "ZBRA",
@@ -9793,14 +9813,17 @@
       "industry": "Communication Equipment",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": false,
       "registration_research": false,
       "qualitative_depth_percent": 0.0,
-      "completeness_percent": 20,
-      "completion_status": "SEC filings available",
-      "source_urls": []
+      "completeness_percent": 65,
+      "completion_status": "Financial research available",
+      "source_urls": [
+        "https://www.sec.gov/Archives/edgar/data/877212/000162828026007668/zbra-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/877212/000162828026069444/zbra-20261003.htm"
+      ]
     },
     "ZTS": {
       "ticker": "ZTS",
@@ -9809,14 +9832,17 @@
       "industry": "Drug Manufacturers - Specialty & Generic",
       "country": "USA",
       "sec_filings": true,
-      "annual_financials": false,
-      "quarterly_financials": false,
+      "annual_financials": true,
+      "quarterly_financials": true,
       "qualitative_analysis": false,
       "registration_research": false,
       "qualitative_depth_percent": 0.0,
-      "completeness_percent": 20,
-      "completion_status": "SEC filings available",
-      "source_urls": []
+      "completeness_percent": 65,
+      "completion_status": "Financial research available",
+      "source_urls": [
+        "https://www.sec.gov/Archives/edgar/data/1555280/000155528026000011/zts-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1555280/000155528026000050/zts-20260930.htm"
+      ]
     }
   },
   "definition": {
