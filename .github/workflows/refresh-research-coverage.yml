@@ -1,0 +1,86 @@
+name: Refresh research coverage index
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - perf/sec-company-shards
+    paths:
+      - "data/company_metrics.json"
+      - "data/company_quarterly.json"
+      - "data/company_analysis.json"
+      - "data/generated_company_analysis.json"
+      - "data/company_s1.json"
+      - "data/generated_company_s1.json"
+      - "data/sec_summary.json"
+      - "data/finviz_universe.csv"
+      - "scripts/build_research_coverage.py"
+      - ".github/workflows/refresh-research-coverage.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: equitylens-research-coverage
+  cancel-in-progress: true
+
+jobs:
+  rebuild-coverage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          ref: perf/sec-company-shards
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Rebuild coverage index
+        run: |
+          python scripts/build_research_coverage.py
+
+      - name: Validate coverage JSON
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          coverage = json.loads(
+              Path("data/research_coverage.json").read_text(
+                  encoding="utf-8"
+              )
+          )
+          index = json.loads(
+              Path("data/research_index.json").read_text(
+                  encoding="utf-8"
+              )
+          )
+
+          if coverage.get("totals", {}).get("universe") != 517:
+              raise ValueError("Expected 517 companies in the research universe.")
+          if not isinstance(coverage.get("companies"), dict):
+              raise TypeError("Coverage companies must be an object.")
+          if not isinstance(index.get("deep_research_tickers"), list):
+              raise TypeError("Deep research index must be a list.")
+
+          print(coverage.get("totals", {}))
+          print(coverage.get("percentages", {}))
+          PY
+
+      - name: Commit refreshed indexes
+        run: |
+          if [ -z "$(git status --porcelain -- data/research_coverage.json data/research_index.json)" ]; then
+            echo "Research coverage index is already current."
+            exit 0
+          fi
+
+          git config user.name "EquityLens Coverage Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/research_coverage.json data/research_index.json
+          git commit -m "Refresh research coverage index"
+          git push origin HEAD:perf/sec-company-shards

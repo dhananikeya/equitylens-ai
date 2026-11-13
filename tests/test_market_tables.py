@@ -39,16 +39,33 @@ class MarketTableTests(unittest.TestCase):
         self.assertIn("No table entries available", table_markup(EmptyTable()))
 
     def test_market_monitor_retains_features_without_provider_brand_text(self):
-        app = Path("app.py").read_text(encoding="utf-8")
-        self.assertIn('section("Screener", "Market Intelligence")', app)
-        self.assertIn("render_crisp_table(st, covered_finviz[visible_columns])", app)
-        self.assertIn("render_crisp_table(", app)
-        self.assertIn("get_rates_bundle(", app)
-        self.assertIn("ThreadPoolExecutor(max_workers=3)", app)
-        self.assertIn("section(\"Rates\", \"Treasury, SOFR & Swap Monitor\")", app)
-        self.assertNotIn("Finviz Market Intelligence", app)
-        self.assertNotIn("Finviz supplies the screener", app)
-        self.assertNotIn("Finviz Elite · market timing", app)
+        market_paths = [
+            Path("views/market_monitor.py"),
+            Path("views/market_sections/overview.py"),
+            Path("views/market_sections/overview_workspace.py"),
+            Path("views/market_sections/stocks.py"),
+            Path("views/market_sections/rates.py"),
+            Path("views/market_sections/macro.py"),
+            Path("views/market_sections/calendar.py"),
+            Path("macro_data.py"),
+        ]
+        market_source = "\n".join(
+            path.read_text(encoding="utf-8")
+            for path in market_paths
+        )
+
+        self.assertIn('"Industry Market Board & Movement"', market_source)
+        self.assertIn('"Price, Volume & Market Activity"', market_source)
+        self.assertIn("render_crisp_table(", market_source)
+        self.assertIn("get_rates_bundle(", market_source)
+        self.assertIn("ThreadPoolExecutor(max_workers=3)", market_source)
+        self.assertIn(
+            '"Treasury, SOFR & Swap Monitor"',
+            market_source,
+        )
+        self.assertNotIn("Finviz Market Intelligence", market_source)
+        self.assertNotIn("Finviz supplies the screener", market_source)
+        self.assertNotIn("Finviz Elite · market timing", market_source)
 
 
 if __name__ == "__main__":

@@ -5,7 +5,9 @@ import streamlit as st
 from ui_components import section
 
 
-def render_learn():
+def render_learn(
+    navigate_to=None,
+):
     section("Learning", "Understand the Numbers")
     st.write(
         "EquityLens is designed for users who are still learning how to read public-company information. "
@@ -279,6 +281,13 @@ def render_learn():
         horizontal=True,
         key="learning_path",
     )
+
+    concept_search = st.text_input(
+        "Search learning concepts",
+        placeholder="Search revenue, 10-K, SOFR, inflation, debt…",
+        key="learn_concept_search",
+    ).strip()
+
     st.markdown(f"### {learning_path}")
     st.write(path_descriptions[learning_path])
 
@@ -304,10 +313,107 @@ def render_learn():
         ]
     )
 
+    if concept_search:
+        query = concept_search.lower()
+        display_items = [
+            item
+            for item in learning_items
+            if query
+            in " ".join([
+                item.get(
+                    "term",
+                    "",
+                ),
+                item.get(
+                    "definition",
+                    "",
+                ),
+                item.get(
+                    "why",
+                    "",
+                ),
+                item.get(
+                    "how",
+                    "",
+                ),
+                item.get(
+                    "watch",
+                    "",
+                ),
+            ]).lower()
+        ]
+        st.caption(
+            f"Searching all concepts · {len(display_items)} match"
+            + (
+                "es"
+                if len(display_items)
+                != 1
+                else ""
+            )
+        )
+
+    focus_term = str(
+        st.session_state.get(
+            "learn_focus_term",
+            "",
+        )
+    ).strip()
+    if focus_term:
+        display_items = sorted(
+            display_items,
+            key=lambda item: (
+                0
+                if item["term"]
+                == focus_term
+                else 1,
+                item["term"],
+            ),
+        )
+        st.caption(
+            "Focused concept: "
+            + focus_term
+        )
+
     st.markdown("### Concepts in this path")
 
+    review_keys = {
+        item["term"]: (
+            "learn_reviewed_"
+            + re.sub(
+                r"[^a-z0-9]+",
+                "_",
+                item["term"].lower(),
+            ).strip("_")
+        )
+        for item in display_items
+    }
+    reviewed_count = sum(
+        bool(
+            st.session_state.get(
+                key,
+                False,
+            )
+        )
+        for key in review_keys.values()
+    )
+    if display_items:
+        st.progress(
+            reviewed_count
+            / len(display_items)
+        )
+        st.caption(
+            f"{reviewed_count} of {len(display_items)} displayed concepts marked reviewed this visit."
+        )
+
     for item in display_items:
-        with st.expander(item["term"]):
+        with st.expander(
+            item["term"],
+            expanded=(
+                bool(focus_term)
+                and item["term"]
+                == focus_term
+            ),
+        ):
             st.markdown("**What it means**")
             st.write(item["definition"])
             st.markdown("**Why it matters**")
@@ -316,6 +422,62 @@ def render_learn():
             st.write(item["how"])
             st.markdown("**What to watch for**")
             st.write(item["watch"])
+            review_key = review_keys[
+                item["term"]
+            ]
+            st.checkbox(
+                "Mark as reviewed",
+                key=review_key,
+            )
+
+            if navigate_to is not None:
+                market_terms = {
+                    "Consumer Price Index (CPI)",
+                    "Producer Price Index (PPI)",
+                    "Employment Situation",
+                    "JOLTS",
+                    "Employment Cost Index (ECI)",
+                    "10-Year Treasury Yield",
+                    "SOFR",
+                    "Interest-Rate Swap",
+                }
+                filing_terms = {
+                    "S-1 Registration Statement",
+                    "8-K Current Report",
+                    "10-K",
+                    "10-Q",
+                }
+                destination = (
+                    "Market Monitor"
+                    if item["term"]
+                    in market_terms
+                    else (
+                        "Filings"
+                        if item["term"]
+                        in filing_terms
+                        else "Company Research"
+                    )
+                )
+                st.button(
+                    (
+                        "Try this in "
+                        + destination
+                    ),
+                    key=(
+                        "learning_try_"
+                        + re.sub(
+                            r"[^a-z0-9]+",
+                            "_",
+                            item[
+                                "term"
+                            ].lower(),
+                        ).strip("_")
+                    ),
+                    on_click=navigate_to,
+                    args=(destination,),
+                    use_container_width=True,
+                )
+
             if item.get("source_url"):
                 st.link_button(
                     "Open primary source",

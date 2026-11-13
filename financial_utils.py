@@ -1,61 +1,11 @@
-def safe_float(value):
-    try:
-        if value in (None, ""):
-            return None
-        return float(value)
-    except (TypeError, ValueError):
-        return None
-
-
-def market_return(history, sessions):
-    if history is None or history.empty or len(history) <= sessions:
-        return None
-
-    latest = safe_float(history.iloc[-1].get("close"))
-    prior = safe_float(history.iloc[-(sessions + 1)].get("close"))
-
-    if latest is None or prior in (None, 0):
-        return None
-
-    return ((latest - prior) / prior) * 100
-
-
-def format_market_price(value):
-    number = safe_float(value)
-    return "$" + f"{number:,.2f}" if number is not None else "N/A"
-
-
-def format_market_volume(value):
-    number = safe_float(value)
-    if number is None:
-        return "N/A"
-    if number >= 1_000_000_000:
-        return f"{number / 1_000_000_000:.2f}B"
-    if number >= 1_000_000:
-        return f"{number / 1_000_000:.2f}M"
-    if number >= 1_000:
-        return f"{number / 1_000:.1f}K"
-    return f"{number:,.0f}"
-
-
-def format_money(value):
-    if value is None:
-        return "N/A"
-    sign = "-" if value < 0 else ""
-    value = abs(value)
-    if value >= 1_000_000_000:
-        return f"{sign}${value / 1_000_000_000:.2f}B"
-    if value >= 1_000_000:
-        return f"{sign}${value / 1_000_000:.1f}M"
-    return f"{sign}${value:,.0f}"
-
-
-def pct(value):
-    return f"{value:.1f}%" if value is not None else "N/A"
-
-
-def format_multiple(value):
-    return f"{value:.2f}x" if value is not None else "N/A"
+from formatting import (
+    format_market_price,
+    format_market_volume,
+    format_money,
+    format_multiple,
+    pct,
+    safe_float,
+)
 
 
 def calc_growth(current, prior):
@@ -94,6 +44,12 @@ def choose_income_period(company, quarterly, fallback):
     if latest_quarter.get("revenue") is not None:
         return {
             "record": latest_quarter,
+            "currency": (
+                quarterly.get("currency")
+                or company.get("currency")
+                or fallback.get("currency")
+                or "USD"
+            ),
             "period": quarterly.get("quarter_label") or quarterly.get("period_end") or financial_period_label(latest_quarter),
             "source": "Structured quarterly company dataset",
             "source_url": quarterly.get("source_filing"),
@@ -111,6 +67,11 @@ def choose_income_period(company, quarterly, fallback):
             consecutive = False
         return {
             "record": current,
+            "currency": (
+                company.get("currency")
+                or fallback.get("currency")
+                or "USD"
+            ),
             "period": financial_period_label(current),
             "source": annual_source,
             "source_url": company.get("filing_url") if structured_history else None,
@@ -122,6 +83,11 @@ def choose_income_period(company, quarterly, fallback):
     record = fallback.get("latest") or company
     return {
         "record": record,
+        "currency": (
+            fallback.get("currency")
+            or company.get("currency")
+            or "USD"
+        ),
         "period": financial_period_label(record),
         "source": "Yahoo Finance annual statements" if fallback.get("latest") else "Structured company dataset",
         "source_url": None,
@@ -158,6 +124,10 @@ def quarterly_metrics(qdata):
 
 
 def build_change_notes(qdata):
+    currency = (
+        qdata.get("currency")
+        or "USD"
+    )
     latest = qdata.get("latest_quarter", {})
     prior_q = qdata.get("prior_quarter", {})
     prior_y = qdata.get("prior_year_quarter", {})
@@ -169,14 +139,26 @@ def build_change_notes(qdata):
         notes.append((
             "Sequential revenue",
             f"Revenue changed {m['qoq_growth']:+.1f}% from the prior quarter, "
-            f"from {format_money(prior_q.get('revenue'))} to {format_money(latest.get('revenue'))}."
+            f"from {format_money(
+                prior_q.get('revenue'),
+                currency,
+            )} to {format_money(
+                latest.get('revenue'),
+                currency,
+            )}."
         ))
 
     if m["yoy_growth"] is not None:
         notes.append((
             "Year-over-year revenue",
             f"Revenue changed {m['yoy_growth']:+.1f}% from the same quarter a year earlier, "
-            f"from {format_money(prior_y.get('revenue'))} to {format_money(latest.get('revenue'))}."
+            f"from {format_money(
+                prior_y.get('revenue'),
+                currency,
+            )} to {format_money(
+                latest.get('revenue'),
+                currency,
+            )}."
         ))
 
     if m["operating_margin"] is not None and m["prior_q_operating_margin"] is not None:
@@ -192,18 +174,36 @@ def build_change_notes(qdata):
     if current_net is not None and prior_net is not None:
         if prior_net < 0 <= current_net:
             copy = (
-                f"Net income moved from a loss of {format_money(prior_net)} "
-                f"to profit of {format_money(current_net)}."
+                f"Net income moved from a loss of {format_money(
+                    prior_net,
+                    currency,
+                )} "
+                f"to profit of {format_money(
+                    current_net,
+                    currency,
+                )}."
             )
         elif prior_net >= 0 > current_net:
             copy = (
-                f"Net income moved from profit of {format_money(prior_net)} "
-                f"to a loss of {format_money(current_net)}."
+                f"Net income moved from profit of {format_money(
+                    prior_net,
+                    currency,
+                )} "
+                f"to a loss of {format_money(
+                    current_net,
+                    currency,
+                )}."
             )
         else:
             copy = (
-                f"Net income changed from {format_money(prior_net)} "
-                f"to {format_money(current_net)}."
+                f"Net income changed from {format_money(
+                    prior_net,
+                    currency,
+                )} "
+                f"to {format_money(
+                    current_net,
+                    currency,
+                )}."
             )
         notes.append(("Net income", copy))
 

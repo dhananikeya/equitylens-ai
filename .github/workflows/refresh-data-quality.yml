@@ -1,0 +1,88 @@
+name: Refresh research data quality report
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 7,19 * * *"
+  push:
+    branches:
+      - perf/sec-company-shards
+    paths:
+      - "scripts/build_data_quality_report.py"
+      - ".github/workflows/refresh-data-quality.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: equitylens-data-quality
+  cancel-in-progress: true
+
+jobs:
+  refresh-data-quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          ref: perf/sec-company-shards
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build data-quality report
+        run: |
+          python scripts/build_data_quality_report.py
+
+      - name: Validate report structure
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(
+              Path(
+                  "data/data_quality_report.json"
+              ).read_text(
+                  encoding="utf-8"
+              )
+          )
+          if report.get("universe_count") != 517:
+              raise ValueError(
+                  "Data-quality report must cover the 517-company active universe."
+              )
+          if not isinstance(
+              report.get(
+                  "companies"
+              ),
+              dict,
+          ):
+              raise TypeError(
+                  "Data-quality companies must be an object."
+              )
+          print(
+              report.get(
+                  "summary",
+                  {},
+              )
+          )
+          PY
+
+      - name: Commit report
+        run: |
+          if [ -z "$(git status --porcelain -- data/data_quality_report.json)" ]; then
+            echo "Data-quality report is already current."
+            exit 0
+          fi
+
+          git config user.name "EquityLens Quality Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/data_quality_report.json
+          git commit -m "Refresh research data quality report"
+          git fetch origin perf/sec-company-shards
+          git rebase origin/perf/sec-company-shards
+          git push origin HEAD:perf/sec-company-shards

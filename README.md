@@ -156,25 +156,112 @@ The platform distinguishes between broad market coverage and deeper research cov
 - Streamlit Community Cloud
 - ReportLab for local PDF export (no external report service)
 
+## Local qualitative research
+
+EquityLens keeps qualitative filing analysis local. The research worker can use **Ollama** or an **OpenAI-compatible local server such as LM Studio**; it does not require the OpenAI API.
+
+The local worker:
+- reads SEC filing evidence and XBRL context,
+- generates structured business/risk research using the local model,
+- records field-level source provenance,
+- writes incremental generated JSON,
+- rebuilds the research-coverage index after each batch.
+
+### Ollama
+
+Start Ollama and make sure at least one model is installed, then run:
+
+```bash
+bash scripts/run_local_research.sh
+```
+
+To choose a model or batch size:
+
+```bash
+LOCAL_LLM_PROVIDER=ollama \
+LOCAL_LLM_MODEL=llama3.1:8b \
+RESEARCH_BATCH_SIZE=20 \
+bash scripts/run_local_research.sh
+```
+
+### LM Studio / other OpenAI-compatible local server
+
+Start the local API server, then run:
+
+```bash
+LOCAL_LLM_PROVIDER=openai_compatible \
+LOCAL_LLM_URL=http://127.0.0.1:1234/v1 \
+RESEARCH_BATCH_SIZE=20 \
+bash scripts/run_local_research.sh
+```
+
+To check progress without calling the model:
+
+```bash
+python scripts/local_research_status.py
+```
+
+The local worker updates:
+- `data/generated_company_analysis.json`
+- `data/generated_company_s1.json`
+- `data/research_pipeline_state.json`
+- and, when applicable, generated financial records.
+
+Hand-curated research remains authoritative field by field. Generated research fills missing fields rather than overwriting populated curated values.
+
 ## Project Structure
 
 ```text
 equitylens-ai/
-├── app.py
-├── sec_data.py
+├── app.py                       # Streamlit shell, navigation, page dispatch
+├── app_runtime.py               # Lazy repository-backed data loading
+├── config.py                    # App settings, provider metadata, cache TTLs
+├── formatting.py                # Shared money/percent/date formatting
+├── charts.py                    # Reusable Plotly constructors/layout
+├── sources.py                   # Source labels and authority metadata
+├── market_data.py               # Market-domain transformations/cache
+├── macro_data.py                # Macro/rates transformations/cache
+├── sec_data.py                  # SEC-domain transformations/cache
+├── models/
+│   ├── context.py               # Typed view contexts / company identifiers
+│   └── schema.py                # Typed market and SEC schemas
+├── services/
+│   ├── http.py                  # Shared HTTP behavior/error handling
+│   ├── errors.py
+│   └── providers/               # Treasury, NY Fed, BLS, Fed, Bloomberg, swaps
+├── views/
+│   ├── company_research.py
+│   ├── company_sections/        # Ownership, analyst, peers/ETF components
+│   ├── market_monitor.py
+│   ├── market_sections/         # NYSE tape / heat-map components
+│   ├── industry_comparison.py
+│   ├── filings.py
+│   ├── home.py
+│   └── learn.py
+├── assets/
+│   └── equitylens.css           # Global application styles
 ├── data/
+│   ├── finviz_universe.csv
 │   ├── company_metrics.json
 │   ├── company_quarterly.json
 │   ├── company_analysis.json
 │   ├── company_s1.json
-│   └── sec_filings.json
+│   ├── research_index.json
+│   ├── sec_summary.json
+│   ├── sec_filings.json.gz      # Compressed historical archive after refresh
+│   └── sec_companies/           # Per-company SEC shards
 ├── scripts/
+│   └── update_sec_filings.py    # Scheduled ingestion
+├── docs/
+│   └── ARCHITECTURE.md
+├── tests/
 ├── .github/
 │   └── workflows/
-│       └── refresh-sec-filings.yml
 ├── requirements.txt
 └── COPYRIGHT.md
 ```
+
+See `docs/ARCHITECTURE.md` for data flow, dependency boundaries, performance rules, and source-authority guidance.
 
 ## Run Locally
 

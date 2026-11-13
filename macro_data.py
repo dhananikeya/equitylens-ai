@@ -7,9 +7,33 @@ from datetime import datetime, timezone
 from urllib.parse import urljoin
 
 import pandas as pd
-import requests
 import streamlit as st
 from bs4 import BeautifulSoup
+
+from services.http import get as service_get
+from services.providers.bls import (
+    fetch_calendar as fetch_bls_calendar,
+    fetch_series as fetch_bls_series,
+)
+from services.providers.bloomberg import (
+    fetch_feed as fetch_bloomberg_feed,
+    fetch_markets as fetch_bloomberg_markets,
+)
+from services.providers.federal_reserve import (
+    fetch_fomc_calendar,
+    fetch_monetary_feed,
+)
+from services.providers.nyfed import (
+    fetch_sofr,
+    fetch_sofr_averages,
+)
+from services.providers.swaps import fetch_swap_curve
+from services.providers.treasury import (
+    fetch_fred_csv,
+    fetch_treasury_csv,
+    fetch_treasury_html,
+    fetch_treasury_xml,
+)
 
 
 def _safe_float(value):
@@ -101,9 +125,9 @@ def _fetch_treasury_yield_curve_csv():
         "&page=&type=daily_treasury_yield_curve"
     )
 
-    response = requests.get(
+    response = fetch_treasury_csv(
         source_url,
-        headers={
+        {
             **PUBLIC_DATA_HEADERS,
             "Accept": "text/csv,text/plain;q=0.9,*/*;q=0.8",
             "User-Agent": (
@@ -112,9 +136,7 @@ def _fetch_treasury_yield_curve_csv():
                 "Chrome/130.0 Safari/537.36 EquityLensAI/1.0"
             ),
         },
-        timeout=(5, 15),
     )
-    response.raise_for_status()
 
     frame = pd.read_csv(io.StringIO(response.text))
     if frame.empty:
@@ -166,15 +188,13 @@ def _fetch_fred_treasury_yield_curve():
         "https://fred.stlouisfed.org/graph/fredgraph.csv"
         "?id=DGS1MO,DGS3MO,DGS6MO,DGS1,DGS2,DGS3,DGS5,DGS7,DGS10,DGS20,DGS30"
     )
-    response = requests.get(
+    response = fetch_fred_csv(
         source_url,
-        headers={
+        {
             **PUBLIC_DATA_HEADERS,
             "Accept": "text/csv,text/plain;q=0.9,*/*;q=0.8",
         },
-        timeout=(5, 15),
     )
-    response.raise_for_status()
 
     frame = pd.read_csv(io.StringIO(response.text))
     if frame.empty or "DATE" not in frame.columns:
@@ -256,9 +276,9 @@ def _fetch_treasury_yield_curve_html():
         "interest-rates/TextView"
         f"?field_tdr_date_value={year}&type=daily_treasury_yield_curve"
     )
-    response = requests.get(
+    response = fetch_treasury_html(
         source_url,
-        headers={
+        {
             **PUBLIC_DATA_HEADERS,
             "User-Agent": (
                 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
@@ -266,9 +286,7 @@ def _fetch_treasury_yield_curve_html():
                 "Chrome/130.0 Safari/537.36 EquityLensAI/1.0"
             ),
         },
-        timeout=(5, 14),
     )
-    response.raise_for_status()
 
     soup = BeautifulSoup(response.text, "html.parser")
     observations = []
@@ -372,15 +390,13 @@ def _fetch_treasury_yield_curve_xml():
         "interest-rates/pages/xml"
         f"?data=daily_treasury_yield_curve&field_tdr_date_value={year}"
     )
-    response = requests.get(
+    response = fetch_treasury_xml(
         source_url,
-        headers={
+        {
             **PUBLIC_DATA_HEADERS,
             "Accept": "application/xml,text/xml;q=0.9,*/*;q=0.8",
         },
-        timeout=(5, 14),
     )
-    response.raise_for_status()
 
     root = ET.fromstring(response.content)
     records = []
@@ -472,7 +488,7 @@ def _fetch_treasury_yield_curve():
 
 
 def _find_html_data_row(url, required_header_terms):
-    response = requests.get(
+    response = service_get(
         url,
         headers={
             **PUBLIC_DATA_HEADERS,
@@ -482,8 +498,8 @@ def _find_html_data_row(url, required_header_terms):
             ),
         },
         timeout=(4, 7),
+        provider="MacroHTML",
     )
-    response.raise_for_status()
     soup = BeautifulSoup(response.text, "html.parser")
 
     for table in soup.find_all("table"):
@@ -540,11 +556,7 @@ def _fetch_sofr_reference_rates():
 
     # Prefer the New York Fed's Markets Data API when available.
     try:
-        response = requests.get(
-            "https://markets.newyorkfed.org/api/rates/secured/sofr/last/1.json",
-            headers=PUBLIC_DATA_HEADERS,
-            timeout=(4, 8),
-        )
+        response = fetch_sofr(PUBLIC_DATA_HEADERS)
         if response.ok:
             for record in _walk_dicts(response.json()):
                 normalized = _normalized_dict(record)
@@ -570,11 +582,8 @@ def _fetch_sofr_reference_rates():
         pass
 
     try:
-        response = requests.get(
-            "https://markets.newyorkfed.org/api/rates/secured/"
-            "sofr-avg-ind/last/1.json",
-            headers=PUBLIC_DATA_HEADERS,
-            timeout=(4, 8),
+        response = fetch_sofr_averages(
+            PUBLIC_DATA_HEADERS
         )
         if response.ok:
             for record in _walk_dicts(response.json()):
@@ -784,13 +793,10 @@ def get_bls_macro_snapshot():
         "startyear": str(now.year - 2),
         "endyear": str(now.year),
     }
-    response = requests.post(
-        "https://api.bls.gov/publicAPI/v2/timeseries/data/",
-        json=payload,
-        headers=PUBLIC_DATA_HEADERS,
-        timeout=30,
+    response = fetch_bls_series(
+        payload,
+        PUBLIC_DATA_HEADERS,
     )
-    response.raise_for_status()
     data = response.json()
 
     if data.get("status") != "REQUEST_SUCCEEDED":
@@ -887,12 +893,9 @@ def format_bls_display(item):
 def get_bls_release_calendar(limit=16):
     """Read the automatically updated BLS release calendar."""
     calendar_url = "https://www.bls.gov/schedule/news_release/bls.ics"
-    response = requests.get(
-        calendar_url,
-        headers=PUBLIC_DATA_HEADERS,
-        timeout=25,
+    response = fetch_bls_calendar(
+        PUBLIC_DATA_HEADERS
     )
-    response.raise_for_status()
 
     ics = (
         response.text
@@ -984,12 +987,9 @@ def get_fomc_calendar(limit=12):
         "https://www.federalreserve.gov/monetarypolicy/"
         "fomccalendars.htm"
     )
-    response = requests.get(
-        source_url,
-        headers=PUBLIC_DATA_HEADERS,
-        timeout=25,
+    response = fetch_fomc_calendar(
+        PUBLIC_DATA_HEADERS
     )
-    response.raise_for_status()
     soup = BeautifulSoup(response.text, "html.parser")
     text_lines = [
         line.strip()
@@ -1120,12 +1120,9 @@ def get_fomc_calendar(limit=12):
 def get_fed_monetary_updates(limit=6):
     """Read official Federal Reserve monetary-policy press releases."""
     feed_url = "https://www.federalreserve.gov/feeds/press_monetary.xml"
-    response = requests.get(
-        feed_url,
-        headers=PUBLIC_DATA_HEADERS,
-        timeout=25,
+    response = fetch_monetary_feed(
+        PUBLIC_DATA_HEADERS
     )
-    response.raise_for_status()
     root = ET.fromstring(response.content)
 
     rows = []
@@ -1188,13 +1185,10 @@ def get_bloomberg_market_news(limit=10):
 
     for feed_url in feed_candidates:
         try:
-            response = requests.get(
+            response = fetch_bloomberg_feed(
                 feed_url,
-                headers=PUBLIC_DATA_HEADERS,
-                timeout=20,
+                PUBLIC_DATA_HEADERS,
             )
-            if not response.ok:
-                continue
             root = ET.fromstring(response.content)
             for item in root.findall(".//item"):
                 title = (item.findtext("title") or "").strip()
@@ -1216,18 +1210,15 @@ def get_bloomberg_market_news(limit=10):
     # Fallback: capture headline links from Bloomberg Markets without
     # reproducing article text.
     try:
-        response = requests.get(
-            "https://www.bloomberg.com/markets",
-            headers={
+        response = fetch_bloomberg_markets(
+            {
                 **PUBLIC_DATA_HEADERS,
                 "User-Agent": (
                     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
                     "AppleWebKit/537.36 Safari/537.36"
                 ),
-            },
-            timeout=25,
+            }
         )
-        response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
         for anchor in soup.find_all("a", href=True):
             title = " ".join(anchor.stripped_strings).strip()
@@ -1519,12 +1510,10 @@ def _fetch_optional_swap_rates(configured_endpoint=''):
         else "https://checkmyswap.com/api/curves/USD"
     )
 
-    response = requests.get(
+    response = fetch_swap_curve(
         endpoint,
-        headers=PUBLIC_DATA_HEADERS,
-        timeout=(5, 12),
+        PUBLIC_DATA_HEADERS,
     )
-    response.raise_for_status()
     payload = response.json()
 
     rows = []

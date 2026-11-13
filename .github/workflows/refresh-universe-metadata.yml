@@ -1,0 +1,105 @@
+name: Refresh company universe metadata
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "41 6 * * *"
+  push:
+    branches:
+      - perf/sec-company-shards
+    paths:
+      - "data/finviz_universe.csv"
+      - "data/company_metrics.json"
+      - "data/company_s1.json"
+      - "scripts/build_universe_metadata.py"
+      - ".github/workflows/refresh-universe-metadata.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: equitylens-universe-metadata
+  cancel-in-progress: true
+
+jobs:
+  refresh-universe-metadata:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          ref: perf/sec-company-shards
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Rebuild universe metadata
+        run: |
+          python scripts/build_universe_metadata.py
+
+      - name: Validate metadata
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          payload = json.loads(
+              Path(
+                  "data/company_universe_metadata.json"
+              ).read_text(
+                  encoding="utf-8"
+              )
+          )
+          companies = payload.get(
+              "companies",
+              {},
+          )
+          if len(companies) != 517:
+              raise ValueError(
+                  f"Expected 517 active-universe metadata records, got {len(companies)}"
+              )
+
+          valid_regimes = {
+              "10-K domestic reporting",
+              "20-F foreign private issuer",
+              "40-F Canadian issuer",
+              "Periodic form not classified",
+          }
+          invalid = [
+              ticker
+              for ticker, record in companies.items()
+              if record.get(
+                  "reporting_regime"
+              )
+              not in valid_regimes
+          ]
+          if invalid:
+              raise ValueError(
+                  "Unexpected reporting regimes: "
+                  + ", ".join(
+                      invalid[:20]
+                  )
+              )
+          print(
+              f"Validated {len(companies)} universe metadata records."
+          )
+          PY
+
+      - name: Commit metadata changes
+        run: |
+          if [ -z "$(git status --porcelain -- data/company_universe_metadata.json)" ]; then
+            echo "Universe metadata is already current."
+            exit 0
+          fi
+
+          git config user.name "EquityLens Metadata Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/company_universe_metadata.json
+          git commit -m "Refresh company universe metadata"
+          git fetch origin perf/sec-company-shards
+          git rebase origin/perf/sec-company-shards
+          git push origin HEAD:perf/sec-company-shards

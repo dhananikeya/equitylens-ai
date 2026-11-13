@@ -73,6 +73,13 @@ RESEARCH_SCHEMA = {
         "profitability_history": {"type": "string"},
         "customer_concentration": {"type": "string"},
         "international_exposure": {"type": "string"},
+        "business_segments": {"type": "string"},
+        "geographic_exposure": {"type": "string"},
+        "competitive_positioning": {"type": "string"},
+        "capital_allocation": {"type": "string"},
+        "dilution_stock_comp": {"type": "string"},
+        "debt_liquidity": {"type": "string"},
+        "profitability_cash_flow": {"type": "string"},
         "key_risk_themes": {
             "type": "array",
             "items": {"type": "string"},
@@ -186,6 +193,33 @@ RESEARCH_SCHEMA = {
             "items": {"type": "string"},
             "maxItems": 6,
         },
+        "source_provenance": {
+            "type": "array",
+            "maxItems": 30,
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "properties": {
+                    "field": {"type": "string"},
+                    "source_type": {
+                        "type": "string",
+                        "enum": [
+                            "annual_filing",
+                            "quarterly_filing",
+                            "registration_filing",
+                            "current_filing",
+                            "company_facts"
+                        ]
+                    },
+                    "note": {"type": "string"}
+                },
+                "required": [
+                    "field",
+                    "source_type",
+                    "note"
+                ]
+            }
+        },
     },
     "required": [
         "business_model",
@@ -197,6 +231,13 @@ RESEARCH_SCHEMA = {
         "profitability_history",
         "customer_concentration",
         "international_exposure",
+        "business_segments",
+        "geographic_exposure",
+        "competitive_positioning",
+        "capital_allocation",
+        "dilution_stock_comp",
+        "debt_liquidity",
+        "profitability_cash_flow",
         "key_risk_themes",
         "recent_performance_summary",
         "historical_context",
@@ -204,6 +245,7 @@ RESEARCH_SCHEMA = {
         "filing_details",
         "filing_changes",
         "confidence_notes",
+        "source_provenance",
     ],
 }
 
@@ -507,10 +549,26 @@ def fact_points(
         for unit in preferred_units:
             points = units.get(unit)
             if points:
-                return [point for point in points if point.get("val") is not None]
-        for points in units.values():
+                return [
+                    {
+                        **point,
+                        "_unit": unit,
+                    }
+                    for point in points
+                    if point.get("val")
+                    is not None
+                ]
+        for unit, points in units.items():
             if points:
-                return [point for point in points if point.get("val") is not None]
+                return [
+                    {
+                        **point,
+                        "_unit": unit,
+                    }
+                    for point in points
+                    if point.get("val")
+                    is not None
+                ]
     return []
 
 
@@ -536,6 +594,82 @@ def dedupe_period_points(points: list[dict]) -> list[dict]:
     )
 
 
+def dedupe_annual_period_points(
+    points: list[dict],
+) -> list[dict]:
+    """Keep one annual fact per actual reporting-period end.
+
+    SEC Company Facts can repeat a comparative prior-year value in a newer
+    filing with the newer filing's fiscal-year context. The period end is the
+    stable identity of the annual fact; the newest filed value wins.
+    """
+    output = {}
+    for point in points:
+        end = str(
+            point.get(
+                "end",
+                "",
+            )
+        ).strip()
+        key = (
+            end
+            or str(
+                point.get(
+                    "frame",
+                    "",
+                )
+            ).strip()
+            or str(
+                point.get(
+                    "filed",
+                    "",
+                )
+            ).strip()
+            or str(
+                point.get(
+                    "val",
+                    "",
+                )
+            )
+        )
+        previous = output.get(key)
+        if (
+            previous is None
+            or str(
+                point.get(
+                    "filed",
+                    "",
+                )
+            )
+            > str(
+                previous.get(
+                    "filed",
+                    "",
+                )
+            )
+        ):
+            output[key] = point
+
+    return sorted(
+        output.values(),
+        key=lambda item: (
+            str(
+                item.get(
+                    "end",
+                    "",
+                )
+            ),
+            str(
+                item.get(
+                    "filed",
+                    "",
+                )
+            ),
+        ),
+        reverse=True,
+    )
+
+
 def annual_points(companyfacts: dict, metric: str) -> list[dict]:
     points = fact_points(companyfacts, FACT_TAGS[metric])
     filtered = [
@@ -547,7 +681,9 @@ def annual_points(companyfacts: dict, metric: str) -> list[dict]:
             or not point.get("fp")
         )
     ]
-    return dedupe_period_points(filtered)
+    return dedupe_annual_period_points(
+        filtered
+    )
 
 
 def quarterly_points(companyfacts: dict, metric: str) -> list[dict]:
@@ -616,26 +752,86 @@ def build_financial_records(
     }
 
     revenue_annual = annual["revenue"]
-    latest_revenue_point = revenue_annual[0] if revenue_annual else {}
-    latest_end = latest_revenue_point.get("end")
-    latest_fy = latest_revenue_point.get("fy")
+    annual_report_end = str(
+        annual_filing.get(
+            "report_date",
+            "",
+        )
+        or ""
+    ).strip()
+
+    latest_revenue_point = next(
+        (
+            point
+            for point in revenue_annual
+            if annual_report_end
+            and str(
+                point.get(
+                    "end",
+                    "",
+                )
+            )
+            == annual_report_end
+        ),
+        (
+            revenue_annual[0]
+            if revenue_annual
+            else {}
+        ),
+    )
+    latest_end = latest_revenue_point.get(
+        "end"
+    )
+    latest_fy = (
+        int(
+            str(
+                latest_end
+            )[:4]
+        )
+        if (
+            latest_end
+            and str(
+                latest_end
+            )[:4].isdigit()
+        )
+        else latest_revenue_point.get(
+            "fy"
+        )
+    )
 
     history = []
     for point in revenue_annual[:3]:
-        fy = point.get("fy")
-        end = point.get("end")
+        end = str(
+            point.get(
+                "end",
+                "",
+            )
+            or ""
+        )
+        fiscal_year = (
+            int(end[:4])
+            if (
+                len(end) >= 4
+                and end[:4].isdigit()
+            )
+            else point.get("fy")
+        )
         history.append({
-            "fiscal_year": fy or (
-                int(end[:4]) if isinstance(end, str) and len(end) >= 4 else None
+            "fiscal_year": fiscal_year,
+            "period_end": (
+                end or None
             ),
             "revenue": numeric(point),
             "operating_income": metric_value_for_period(
                 annual["operating_income"],
-                end=end,
-                fy=fy,
+                end=(
+                    end or None
+                ),
             ),
         })
-    history = list(reversed(history))
+    history = list(
+        reversed(history)
+    )
 
     cash_point = latest_balance_point(companyfacts, "cash")
     investments_point = latest_balance_point(
@@ -673,11 +869,14 @@ def build_financial_records(
         "industry": company.get("Industry", "Unclassified"),
         "sector": company.get("Sector", ""),
         "country": company.get("Country", ""),
-        "fiscal_year": latest_fy or (
-            int(latest_end[:4])
-            if isinstance(latest_end, str) and len(latest_end) >= 4
-            else None
+        "currency": (
+            latest_revenue_point.get(
+                "_unit",
+                "USD",
+            )
+            or "USD"
         ),
+        "fiscal_year": latest_fy,
         "fiscal_year_end": latest_end,
         "source": annual_filing.get("form", "SEC annual filing"),
         "filing_url": annual_filing.get("url", ""),
@@ -727,26 +926,74 @@ def build_financial_records(
         ]
     }
 
-    latest_quarter_point = (
-        quarter_metrics["revenue"][0]
-        if quarter_metrics["revenue"]
-        else {}
+    revenue_quarters = (
+        quarter_metrics["revenue"]
     )
-    quarter_end = latest_quarter_point.get("end")
-    quarter_frame = latest_quarter_point.get("frame")
+    quarterly_report_end = str(
+        quarterly_filing.get(
+            "report_date",
+            "",
+        )
+        or ""
+    ).strip()
+    latest_quarter_point = next(
+        (
+            point
+            for point in revenue_quarters
+            if quarterly_report_end
+            and str(
+                point.get(
+                    "end",
+                    "",
+                )
+            )
+            == quarterly_report_end
+        ),
+        (
+            revenue_quarters[0]
+            if revenue_quarters
+            else {}
+        ),
+    )
+    quarter_end = latest_quarter_point.get(
+        "end"
+    )
+    quarter_frame = latest_quarter_point.get(
+        "frame"
+    )
 
-    def quarter_record(index: int) -> dict:
-        revenue_points = quarter_metrics["revenue"]
-        if index >= len(revenue_points):
+    def quarter_frame_ordinal(
+        frame,
+    ) -> int | None:
+        match = re.match(
+            r"CY(\d{4})Q([1-4])$",
+            str(frame or ""),
+        )
+        if not match:
+            return None
+        return (
+            int(match.group(1)) * 4
+            + int(match.group(2))
+        )
+
+    def quarter_record_from_point(
+        point: dict,
+    ) -> dict:
+        if not point:
             return {
+                "period_end": None,
+                "frame": None,
                 "revenue": None,
                 "gross_profit": None,
                 "operating_income": None,
                 "net_income": None,
             }
-        point = revenue_points[index]
         end = point.get("end")
         return {
+            "period_end": end,
+            "frame": point.get(
+                "frame"
+            ),
             "revenue": numeric(point),
             "gross_profit": metric_value_for_period(
                 quarter_metrics["gross_profit"],
@@ -762,10 +1009,39 @@ def build_financial_records(
             ),
         }
 
-    latest_quarter = quarter_record(0)
-    prior_quarter = quarter_record(1)
+    latest_quarter = (
+        quarter_record_from_point(
+            latest_quarter_point
+        )
+    )
+
+    latest_ordinal = (
+        quarter_frame_ordinal(
+            quarter_frame
+        )
+    )
+    prior_quarter_point = {}
+    if latest_ordinal is not None:
+        prior_quarter_point = next(
+            (
+                point
+                for point in revenue_quarters
+                if quarter_frame_ordinal(
+                    point.get("frame")
+                )
+                == latest_ordinal - 1
+            ),
+            {},
+        )
+    prior_quarter = (
+        quarter_record_from_point(
+            prior_quarter_point
+        )
+    )
 
     prior_year_quarter = {
+        "period_end": None,
+        "frame": None,
         "revenue": None,
         "gross_profit": None,
         "operating_income": None,
@@ -779,6 +1055,10 @@ def build_financial_records(
                 if point.get("frame") == prior_frame:
                     end = point.get("end")
                     prior_year_quarter = {
+                        "period_end": end,
+                        "frame": point.get(
+                            "frame"
+                        ),
                         "revenue": numeric(point),
                         "gross_profit": metric_value_for_period(
                             quarter_metrics["gross_profit"],
@@ -795,14 +1075,87 @@ def build_financial_records(
                     }
                     break
 
+    ltm_frames = []
+    if latest_ordinal is not None:
+        desired_ordinals = [
+            latest_ordinal - offset
+            for offset in range(4)
+        ]
+        revenue_by_ordinal = {
+            quarter_frame_ordinal(
+                point.get("frame")
+            ): point
+            for point in revenue_quarters
+            if quarter_frame_ordinal(
+                point.get("frame")
+            )
+            is not None
+        }
+        if all(
+            ordinal
+            in revenue_by_ordinal
+            for ordinal in desired_ordinals
+        ):
+            ltm_frames = [
+                str(
+                    revenue_by_ordinal[
+                        ordinal
+                    ].get(
+                        "frame",
+                        "",
+                    )
+                )
+                for ordinal in (
+                    desired_ordinals
+                )
+            ]
+
     def ltm_value(metric: str) -> float | int | None:
-        points = quarter_metrics[metric][:4]
-        values = [numeric(point) for point in points]
-        if len(values) < 4 or any(value is None for value in values):
+        if len(ltm_frames) != 4:
+            return None
+
+        points_by_frame = {
+            str(
+                point.get(
+                    "frame",
+                    "",
+                )
+            ): point
+            for point in quarter_metrics[
+                metric
+            ]
+            if point.get("frame")
+        }
+        values = [
+            numeric(
+                points_by_frame.get(
+                    frame,
+                    {},
+                )
+            )
+            for frame in ltm_frames
+        ]
+        if any(
+            value is None
+            for value in values
+        ):
             return None
         return sum(values)
 
     quarterly_record = {
+        "currency": (
+            latest_quarter_point.get(
+                "_unit",
+                metrics_record.get(
+                    "currency",
+                    "USD",
+                ),
+            )
+            or metrics_record.get(
+                "currency",
+                "USD",
+            )
+        ),
         "quarter_label": quarter_frame or (
             "Latest quarter" if quarter_end else "Quarterly data unavailable"
         ),
@@ -833,6 +1186,10 @@ def build_financial_records(
 
     financial_context = {
         "annual": {
+            "currency": metrics_record.get(
+                "currency",
+                "USD",
+            ),
             "fiscal_year": metrics_record["fiscal_year"],
             "period_end": metrics_record["fiscal_year_end"],
             "revenue": metrics_record["revenue"],
@@ -843,6 +1200,13 @@ def build_financial_records(
             "assets": metrics_record["assets"],
         },
         "quarterly": {
+            "currency": quarterly_record.get(
+                "currency",
+                metrics_record.get(
+                    "currency",
+                    "USD",
+                ),
+            ),
             "period": quarterly_record["quarter_label"],
             "period_end": quarterly_record["period_end"],
             **latest_quarter,
@@ -907,7 +1271,14 @@ def research_prompt(
         "supported by the supplied evidence, write 'Not disclosed in the supplied filing.' "
         "Treat risk factors as company disclosures, not predictions. Distinguish current "
         "annual/quarterly context from IPO-era registration context. Keep each field concise "
-        "but substantive enough to be useful to a research user.\n\n"
+        "but substantive enough to be useful to a research user. "
+        "For business_segments, geographic_exposure, competitive_positioning, "
+        "capital_allocation, dilution_stock_comp, debt_liquidity, and "
+        "profitability_cash_flow, summarize only what the supplied evidence supports. "
+        "Populate source_provenance with one or more evidence records for every "
+        "non-empty narrative field, identifying whether the evidence came from the "
+        "annual filing, quarterly filing, registration filing, current filing, or "
+        "company facts.\n\n"
         "SEC/XBRL CONTEXT:\n"
         + json.dumps(evidence, indent=2)
         + "\n\nLATEST ANNUAL FILING EXCERPT:\n"
@@ -1306,12 +1677,20 @@ def main() -> None:
                 "profitability_history": research["profitability_history"],
                 "customer_concentration": research["customer_concentration"],
                 "international_exposure": research["international_exposure"],
+                "business_segments": research["business_segments"],
+                "geographic_exposure": research["geographic_exposure"],
+                "competitive_positioning": research["competitive_positioning"],
+                "capital_allocation": research["capital_allocation"],
+                "dilution_stock_comp": research["dilution_stock_comp"],
+                "debt_liquidity": research["debt_liquidity"],
+                "profitability_cash_flow": research["profitability_cash_flow"],
                 "key_risk_themes": research["key_risk_themes"],
                 "recent_performance_summary": research[
                     "recent_performance_summary"
                 ],
                 "filing_changes": research["filing_changes"],
                 "confidence_notes": research["confidence_notes"],
+                "source_provenance": research["source_provenance"],
                 "source_filing": (
                     annual_filing.get("url")
                     or quarterly_filing.get("url", "")

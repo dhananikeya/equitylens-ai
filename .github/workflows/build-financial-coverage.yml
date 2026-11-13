@@ -1,0 +1,228 @@
+name: Build deterministic financial coverage
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */4 * * *"
+  push:
+    paths:
+      - "scripts/build_financial_coverage.py"
+      - "scripts/build_deep_research.py"
+      - "scripts/build_research_coverage.py"
+      - ".github/workflows/build-financial-coverage.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: equitylens-financial-coverage
+  cancel-in-progress: false
+
+jobs:
+  build-financial-coverage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: perf/sec-company-shards
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install research dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4
+
+      - name: Build next SEC XBRL financial batch
+        env:
+          FINANCIAL_BATCH_SIZE: "600"
+          SEC_REQUEST_DELAY_SECONDS: "0.12"
+        run: |
+          python scripts/build_financial_coverage.py
+
+      - name: Rebuild research coverage index
+        run: |
+          python scripts/build_research_coverage.py
+
+      - name: Validate generated JSON
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          files = [
+              "data/generated_company_metrics.json",
+              "data/generated_company_quarterly.json",
+              "data/financial_pipeline_state.json",
+              "data/research_coverage.json",
+              "data/research_index.json",
+          ]
+          loaded = {}
+          for filename in files:
+              payload = json.loads(
+                  Path(filename).read_text(
+                      encoding="utf-8"
+                  )
+              )
+              if not isinstance(payload, dict):
+                  raise TypeError(
+                      f"{filename} must contain a JSON object"
+                  )
+              loaded[filename] = payload
+              print(filename, len(payload))
+
+          metrics = loaded[
+              "data/generated_company_metrics.json"
+          ]
+          quarterly = loaded[
+              "data/generated_company_quarterly.json"
+          ]
+          problems = []
+
+          for key, record in metrics.items():
+              if not isinstance(record, dict):
+                  continue
+
+              history = record.get(
+                  "history",
+                  [],
+              ) or []
+              period_ends = [
+                  str(
+                      row.get(
+                          "period_end",
+                          "",
+                      )
+                  )
+                  for row in history
+                  if isinstance(row, dict)
+                  and row.get("period_end")
+              ]
+              if len(period_ends) != len(
+                  set(period_ends)
+              ):
+                  problems.append(
+                      f"{key}: duplicate annual period_end"
+                  )
+
+              fiscal_year_end = str(
+                  record.get(
+                      "fiscal_year_end",
+                      "",
+                  )
+                  or ""
+              )
+              fiscal_year = record.get(
+                  "fiscal_year"
+              )
+              if (
+                  fiscal_year_end[:4].isdigit()
+                  and fiscal_year is not None
+                  and int(
+                      fiscal_year_end[:4]
+                  )
+                  != int(fiscal_year)
+              ):
+                  problems.append(
+                      f"{key}: fiscal_year={fiscal_year} "
+                      f"does not match fiscal_year_end={fiscal_year_end}"
+                  )
+
+          def quarter_ordinal(frame):
+              import re
+
+              match = re.match(
+                  r"CY(\d{4})Q([1-4])$",
+                  str(frame or ""),
+              )
+              if not match:
+                  return None
+              return (
+                  int(match.group(1)) * 4
+                  + int(match.group(2))
+              )
+
+          for key, record in quarterly.items():
+              if not isinstance(record, dict):
+                  continue
+
+              latest = (
+                  record.get(
+                      "latest_quarter",
+                      {},
+                  )
+                  or {}
+              )
+              prior = (
+                  record.get(
+                      "prior_quarter",
+                      {},
+                  )
+                  or {}
+              )
+              latest_frame = latest.get(
+                  "frame"
+              )
+              prior_frame = prior.get(
+                  "frame"
+              )
+
+              if (
+                  latest.get("revenue")
+                  is not None
+                  and prior.get("revenue")
+                  is not None
+              ):
+                  latest_ordinal = (
+                      quarter_ordinal(
+                          latest_frame
+                      )
+                  )
+                  prior_ordinal = (
+                      quarter_ordinal(
+                          prior_frame
+                      )
+                  )
+                  if (
+                      latest_ordinal
+                      is not None
+                      and prior_ordinal
+                      is not None
+                      and latest_ordinal
+                      - prior_ordinal
+                      != 1
+                  ):
+                      problems.append(
+                          f"{key}: non-consecutive latest/prior quarter "
+                          f"{latest_frame} vs {prior_frame}"
+                      )
+
+          if problems:
+              raise ValueError(
+                  "Financial-period validation failed:\n"
+                  + "\n".join(
+                      problems[:50]
+                  )
+              )
+          PY
+
+      - name: Commit refreshed coverage
+        run: |
+          if [ -z "$(git status --porcelain -- data/generated_company_metrics.json data/generated_company_quarterly.json data/financial_pipeline_state.json data/research_coverage.json data/research_index.json)" ]; then
+            echo "No financial coverage changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             data/generated_company_metrics.json             data/generated_company_quarterly.json             data/financial_pipeline_state.json             data/research_coverage.json             data/research_index.json
+          git commit -m "Refresh deterministic financial research coverage"
+          git fetch origin perf/sec-company-shards
+          git rebase origin/perf/sec-company-shards
+          git push origin HEAD:perf/sec-company-shards

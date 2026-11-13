@@ -1,5 +1,8 @@
-import pandas as pd
+import html
+from contextlib import contextmanager
 import streamlit as st
+
+from formatting import format_utc_timestamp
 
 
 def section(label, title):
@@ -10,6 +13,29 @@ def section(label, title):
             <div class="el-section-title">{title}</div>
         </div>
         """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_breadcrumbs(*parts):
+    clean_parts = [
+        str(part).strip()
+        for part in parts
+        if str(part or "").strip()
+    ]
+    if not clean_parts:
+        return
+
+    markup = (
+        '<nav class="el-breadcrumbs" aria-label="Breadcrumb">'
+        + '<span class="el-breadcrumb-separator">/</span>'.join(
+            f'<span>{html.escape(part)}</span>'
+            for part in clean_parts
+        )
+        + '</nav>'
+    )
+    st.markdown(
+        markup,
         unsafe_allow_html=True,
     )
 
@@ -29,16 +55,20 @@ def render_summary_cards(cards):
             )
 
 
-def format_utc_timestamp(value, fallback="Unavailable"):
-    if not value:
-        return fallback
-    parsed = pd.to_datetime(
-        value,
-        errors="coerce",
-        utc=True,
+def render_refresh_indicator(label, timestamp, detail=""):
+    """Render a compact source-freshness indicator without overstating recency."""
+    formatted = format_utc_timestamp(
+        timestamp,
+        fallback="Unavailable",
     )
-    if pd.isna(parsed):
-        return str(value)
-    return parsed.strftime(
-        "%Y-%m-%d %H:%M UTC"
+    detail_text = f" · {detail}" if detail else ""
+    st.markdown(
+        f"""
+        <div class="el-refresh-indicator">
+            <span class="el-refresh-dot"></span>
+            <strong>{label}:</strong>
+            <span>{formatted}{detail_text}</span>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )

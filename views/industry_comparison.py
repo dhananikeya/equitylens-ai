@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
@@ -10,11 +12,12 @@ from financial_utils import (
     quarterly_metrics,
     safe_float,
 )
+from models.context import IndustryComparisonContext
 from market_data import (
     get_company_financial_snapshot,
     get_live_market_data,
 )
-from ui_components import section
+from ui_components import loading_panel, render_refresh_indicator, section
 
 
 def _annual_snapshot(company, company_data, supplemental):
@@ -52,6 +55,11 @@ def _annual_snapshot(company, company_data, supplemental):
         )
 
     return {
+        "currency": (
+            data.get("currency")
+            or supplemental.get("currency")
+            or "USD"
+        ),
         "revenue": revenue,
         "gross_profit": gross_profit,
         "operating_income": operating_income,
@@ -66,7 +74,12 @@ def _annual_snapshot(company, company_data, supplemental):
         ),
         "history": history,
         "source": (
-            "SEC filing"
+            str(
+                data.get(
+                    "source",
+                    "SEC filing",
+                )
+            )
             if data.get("filing_url")
             else "Yahoo Finance supplemental"
         ),
@@ -82,6 +95,11 @@ def _quarter_snapshot(company, company_quarterly, supplemental):
         latest = qdata.get("latest_quarter", {})
         metrics = quarterly_metrics(qdata)
         return {
+            "currency": (
+                qdata.get("currency")
+                or supplemental.get("currency")
+                or "USD"
+            ),
             "period": (
                 qdata.get("quarter_label")
                 or qdata.get("period_end")
@@ -114,6 +132,11 @@ def _quarter_snapshot(company, company_quarterly, supplemental):
         "prior_year_quarter": prior_y,
     })
     return {
+        "currency": (
+            supplemental.get("currency")
+            or qdata.get("currency")
+            or "USD"
+        ),
         "period": latest.get("period_end", "N/A"),
         "revenue": metrics.get("revenue"),
         "yoy_growth": metrics.get("yoy_growth"),
@@ -130,36 +153,140 @@ def _quarter_snapshot(company, company_quarterly, supplemental):
     }
 
 
-def render_industry_comparison(
-    industries,
+def _needs_peer_supplemental(
+    company,
     company_data,
-    subgroups,
-    public_market_data_enabled,
     company_quarterly,
-    analysis_by_ticker,
-    company_analysis,
-    remember_choice,
-    company_universe,
-    research_link,
 ):
+    data = company_data.get(
+        company,
+        {},
+    )
+    qdata = company_quarterly.get(
+        company,
+        {},
+    )
+    structured = (
+        data.get(
+            "capital_structure",
+            {},
+        )
+        or {}
+    )
+
+    annual_missing = (
+        data.get("revenue") is None
+        or data.get("operating_income")
+        is None
+        or not data.get("history")
+    )
+    quarterly_missing = not bool(
+        qdata.get(
+            "latest_quarter"
+        )
+    )
+    balance_missing = any(
+        value is None
+        for value in [
+            structured.get(
+                "shares_outstanding"
+            ),
+            structured.get(
+                "total_debt"
+            ),
+            structured.get(
+                "cash_and_investments"
+            ),
+            data.get("assets"),
+        ]
+    )
+    return (
+        annual_missing
+        or quarterly_missing
+        or balance_missing
+    )
+
+
+def render_industry_comparison(
+    context: IndustryComparisonContext,
+):
+    industries = context.industries
+    company_data = context.company_data
+    subgroups = context.subgroups
+    public_market_data_enabled = (
+        context.public_market_data_enabled
+    )
+    company_quarterly = context.company_quarterly
+    analysis_by_ticker = context.analysis_by_ticker
+    company_analysis = context.company_analysis
+    research_coverage = context.research_coverage
+    remember_choice = context.remember_choice
+    company_universe = context.company_universe
+    research_link = context.research_link
     section("Peer Research", "Industry Comparison")
     st.caption(
         "Compare 2–6 companies using clearly labeled periods and sources. "
         "Fiscal calendars can differ, so EquityLens shows the reported period instead of pretending every row is perfectly synchronized."
     )
 
-    selected_industry = st.selectbox(
-        "Industry",
-        industries,
-        index=0,
-        key="peer_industry",
+    industry_cols = st.columns(2)
+    with industry_cols[0]:
+        selected_industry = st.selectbox(
+            "Primary industry",
+            industries,
+            index=0,
+            key="peer_industry",
+        )
+
+    secondary_options = [
+        "No second industry"
+    ] + [
+        industry
+        for industry in industries
+        if industry != selected_industry
+    ]
+    current_secondary = (
+        st.session_state.get(
+            "peer_secondary_industry",
+            "No second industry",
+        )
     )
+    if current_secondary not in secondary_options:
+        remember_choice(
+            "peer_secondary_industry",
+            "No second industry",
+        )
+
+    with industry_cols[1]:
+        secondary_industry = st.selectbox(
+            "Optional second industry",
+            secondary_options,
+            key="peer_secondary_industry",
+            help=(
+                "Use this for cross-industry comparisons. "
+                "Curated subgroups are available only for a single industry."
+            ),
+        )
+
+    selected_industries = [
+        selected_industry
+    ]
+    if (
+        secondary_industry
+        != "No second industry"
+    ):
+        selected_industries.append(
+            secondary_industry
+        )
 
     industry_companies = sorted([
         name
         for name, data in company_data.items()
-        if data.get("industry", "Unclassified")
-        == selected_industry
+        if data.get(
+            "industry",
+            "Unclassified",
+        )
+        in selected_industries
     ])
 
     curated_sets = {
@@ -176,16 +303,31 @@ def render_industry_comparison(
         if len(members) >= 2
     }
 
-    peer_set_options = ["Full industry"] + [
-        f"Curated · {name}"
-        for name in sorted(curated_sets)
-    ]
+    peer_set_options = (
+        ["Full industry selection"]
+        if len(
+            selected_industries
+        )
+        > 1
+        else (
+            ["Full industry"]
+            + [
+                f"Curated · {name}"
+                for name in sorted(
+                    curated_sets
+                )
+            ]
+        )
+    )
     current_peer_set = st.session_state.get(
         "peer_subgroup",
-        "Full industry",
+        peer_set_options[0],
     )
     if current_peer_set not in peer_set_options:
-        remember_choice("peer_subgroup", "Full industry")
+        remember_choice(
+            "peer_subgroup",
+            peer_set_options[0],
+        )
 
     selected_peer_set = st.selectbox(
         "Peer set",
@@ -197,7 +339,10 @@ def render_industry_comparison(
         ),
     )
 
-    if selected_peer_set == "Full industry":
+    if selected_peer_set in {
+        "Full industry",
+        "Full industry selection",
+    }:
         available_companies = industry_companies
     else:
         curated_name = selected_peer_set.replace(
@@ -208,6 +353,108 @@ def render_industry_comparison(
         available_companies = curated_sets.get(
             curated_name,
             industry_companies,
+        )
+
+    universe_market_cap = {
+        str(
+            row.get(
+                "Ticker",
+                "",
+            )
+        ).upper(): (
+            safe_float(
+                row.get(
+                    "Market Cap"
+                )
+            )
+            or 0
+        )
+        for _, row in (
+            company_universe.iterrows()
+        )
+    }
+    available_companies = sorted(
+        available_companies,
+        key=lambda company: (
+            -universe_market_cap.get(
+                str(
+                    company_data[
+                        company
+                    ].get(
+                        "ticker",
+                        "",
+                    )
+                ).upper(),
+                0,
+            ),
+            company.lower(),
+        ),
+    )
+
+    candidate_rows = []
+    for company in (
+        available_companies[:20]
+    ):
+        ticker = str(
+            company_data[
+                company
+            ].get(
+                "ticker",
+                "",
+            )
+        ).upper()
+        coverage = (
+            research_coverage.get(
+                "companies",
+                {},
+            ).get(
+                ticker,
+                {},
+            )
+            or {}
+        )
+        candidate_rows.append({
+            "Company": (
+                company.split(
+                    " ("
+                )[0]
+            ),
+            "Ticker": ticker,
+            "Industry": (
+                company_data[
+                    company
+                ].get(
+                    "industry",
+                    "Unclassified",
+                )
+            ),
+            "Market Cap": (
+                universe_market_cap.get(
+                    ticker
+                )
+            ),
+            "Research %": int(
+                coverage.get(
+                    "completeness_percent",
+                    0,
+                )
+                or 0
+            ),
+        })
+
+    with st.expander(
+        "Top peer candidates · by market cap",
+        expanded=False,
+    ):
+        st.dataframe(
+            pd.DataFrame(
+                candidate_rows
+            ),
+            use_container_width=True,
+            hide_index=True,
+        )
+        st.caption(
+            "Candidate ranking is a navigation aid, not an investment ranking."
         )
 
     existing_selection = st.session_state.get(
@@ -255,7 +502,11 @@ def render_industry_comparison(
         for name in selected_companies
     )
     st.caption(
-        f"Selected: {selection_summary} · {len(selected_companies)} companies"
+        "Industries: "
+        + " + ".join(
+            selected_industries
+        )
+        + f" · Selected: {selection_summary} · {len(selected_companies)} companies"
     )
 
     compare_button = st.button(
@@ -264,12 +515,16 @@ def render_industry_comparison(
         use_container_width=True,
     )
     signature = (
-        selected_industry,
+        tuple(
+            selected_industries
+        ),
         selected_peer_set,
         tuple(selected_companies),
     )
+    comparison_snapshot_key = "peer_financial_snapshot"
     if compare_button:
         st.session_state["completed_comparison"] = signature
+        st.session_state.pop(comparison_snapshot_key, None)
 
     if st.session_state.get("completed_comparison") != signature:
         st.info(
@@ -278,37 +533,122 @@ def render_industry_comparison(
         )
         return
 
-    peer_financial_cache = {}
-    with st.spinner(
-        "Loading supplemental peer financial statements…"
+    comparison_snapshot = st.session_state.get(comparison_snapshot_key)
+    if (
+        not isinstance(comparison_snapshot, dict)
+        or comparison_snapshot.get("signature") != signature
     ):
-        for company in selected_companies:
-            ticker = str(
-                company_data[company].get("ticker", "")
-            ).upper()
-            try:
-                peer_financial_cache[company] = (
-                    get_company_financial_snapshot(ticker)
-                )
-            except Exception:
-                peer_financial_cache[company] = {}
+        peer_financial_cache = {}
+        with loading_panel(
+            "Loading peer financial statements",
+            "Retrieving supplemental statements for the selected comparison set."
+        ):
+            for company in selected_companies:
+                if not _needs_peer_supplemental(
+                    company,
+                    company_data,
+                    company_quarterly,
+                ):
+                    peer_financial_cache[
+                        company
+                    ] = {}
+                    continue
 
-    annual_by_company = {
-        company: _annual_snapshot(
-            company,
-            company_data,
-            peer_financial_cache.get(company, {}),
+                ticker = str(
+                    company_data[company].get("ticker", "")
+                ).upper()
+                try:
+                    peer_financial_cache[company] = (
+                        get_company_financial_snapshot(ticker)
+                    )
+                except Exception:
+                    peer_financial_cache[company] = {}
+
+        annual_by_company = {
+            company: _annual_snapshot(
+                company,
+                company_data,
+                peer_financial_cache.get(company, {}),
+            )
+            for company in selected_companies
+        }
+        quarter_by_company = {
+            company: _quarter_snapshot(
+                company,
+                company_quarterly,
+                peer_financial_cache.get(company, {}),
+            )
+            for company in selected_companies
+        }
+        comparison_snapshot = {
+            "signature": signature,
+            "financials": peer_financial_cache,
+            "annual": annual_by_company,
+            "quarterly": quarter_by_company,
+            "loaded_at_utc": datetime.now(timezone.utc).isoformat(),
+        }
+        st.session_state[comparison_snapshot_key] = comparison_snapshot
+    else:
+        peer_financial_cache = comparison_snapshot.get(
+            "financials",
+            {},
+        )
+        annual_by_company = comparison_snapshot.get(
+            "annual",
+            {},
+        )
+        quarter_by_company = comparison_snapshot.get(
+            "quarterly",
+            {},
+        )
+
+    if not annual_by_company:
+        annual_by_company = {
+            company: _annual_snapshot(
+                company,
+                company_data,
+                peer_financial_cache.get(company, {}),
+            )
+            for company in selected_companies
+        }
+    if not quarter_by_company:
+        quarter_by_company = {
+            company: _quarter_snapshot(
+                company,
+                company_quarterly,
+                peer_financial_cache.get(company, {}),
+            )
+            for company in selected_companies
+        }
+
+    render_refresh_indicator(
+        "Comparison loaded",
+        comparison_snapshot.get("loaded_at_utc"),
+        "supplemental peer data",
+    )
+
+    fiscal_years = {
+        str(
+            annual_by_company[
+                company
+            ].get(
+                "fiscal_year",
+                "",
+            )
         )
         for company in selected_companies
-    }
-    quarter_by_company = {
-        company: _quarter_snapshot(
-            company,
-            company_quarterly,
-            peer_financial_cache.get(company, {}),
+        if annual_by_company[
+            company
+        ].get(
+            "fiscal_year"
         )
-        for company in selected_companies
+        is not None
     }
+    if len(fiscal_years) > 1:
+        st.warning(
+            "Selected peers report different fiscal years. "
+            "Use the Reported FY and source columns when comparing annual figures."
+        )
 
     comparison_focus = st.radio(
         "Comparison view",
@@ -328,6 +668,159 @@ def render_industry_comparison(
         for _, row in company_universe.iterrows()
     }
 
+    export_rows = []
+    for company in selected_companies:
+        ticker = str(
+            company_data[
+                company
+            ].get(
+                "ticker",
+                "",
+            )
+        ).upper()
+        annual = annual_by_company[
+            company
+        ]
+        quarter = quarter_by_company[
+            company
+        ]
+        universe_row = (
+            universe_by_ticker.get(
+                ticker,
+                {},
+            )
+        )
+        coverage = (
+            research_coverage.get(
+                "companies",
+                {},
+            ).get(
+                ticker,
+                {},
+            )
+            or {}
+        )
+        export_rows.append({
+            "Company": (
+                company.split(
+                    " ("
+                )[0]
+            ),
+            "Ticker": ticker,
+            "Industry": (
+                company_data[
+                    company
+                ].get(
+                    "industry",
+                    "",
+                )
+            ),
+            "Fiscal Year": annual.get(
+                "fiscal_year"
+            ),
+            "Annual Currency": annual.get(
+                "currency",
+                "USD",
+            ),
+            "Annual Revenue": annual.get(
+                "revenue"
+            ),
+            "Annual Revenue Growth %": annual.get(
+                "growth"
+            ),
+            "Gross Margin %": annual.get(
+                "gross_margin"
+            ),
+            "Operating Margin %": annual.get(
+                "operating_margin"
+            ),
+            "Net Margin %": annual.get(
+                "net_margin"
+            ),
+            "Quarter": quarter.get(
+                "period"
+            ),
+            "Quarter Currency": quarter.get(
+                "currency",
+                "USD",
+            ),
+            "Quarter Revenue": quarter.get(
+                "revenue"
+            ),
+            "Quarter YoY Growth %": quarter.get(
+                "yoy_growth"
+            ),
+            "Quarter QoQ Growth %": quarter.get(
+                "qoq_growth"
+            ),
+            "Market Cap": safe_float(
+                universe_row.get(
+                    "Market Cap"
+                )
+            ),
+            "SEC Reporting": (
+                universe_row.get(
+                    "Reporting Regime",
+                    "",
+                )
+            ),
+            "Research Completeness %": int(
+                coverage.get(
+                    "completeness_percent",
+                    0,
+                )
+                or 0
+            ),
+            "Annual Source": annual.get(
+                "source"
+            ),
+            "Annual Filing": annual.get(
+                "source_url"
+            ),
+            "Quarter Source": quarter.get(
+                "source"
+            ),
+            "Quarter Filing": quarter.get(
+                "source_url"
+            ),
+        })
+
+    export_df = pd.DataFrame(
+        export_rows
+    )
+    st.download_button(
+        "Download comparison data (CSV)",
+        data=export_df.to_csv(
+            index=False
+        ).encode("utf-8"),
+        file_name=(
+            "EquityLens_peer_comparison_"
+            + "_".join(
+                str(
+                    company_data[
+                        company
+                    ].get(
+                        "ticker",
+                        "",
+                    )
+                ).upper()
+                for company
+                in selected_companies
+            )
+            + ".csv"
+        ),
+        mime="text/csv",
+        key=(
+            "peer_comparison_csv_"
+            + str(
+                abs(
+                    hash(signature)
+                )
+            )
+        ),
+        use_container_width=True,
+    )
+
     if comparison_focus == "Overview":
         section(
             "Overview",
@@ -345,6 +838,10 @@ def render_industry_comparison(
                 "Company": company.split(" (")[0],
                 "Ticker": ticker,
                 "Reported FY": annual.get("fiscal_year"),
+                "Currency": annual.get(
+                    "currency",
+                    "USD",
+                ),
                 "Revenue": annual.get("revenue"),
                 "YoY Revenue Growth": annual.get("growth"),
                 "Operating Margin": annual.get(
@@ -354,11 +851,68 @@ def render_industry_comparison(
                 "Market Cap": safe_float(
                     universe_row.get("Market Cap")
                 ),
+                "SEC Reporting": (
+                    universe_row.get(
+                        "Reporting Regime",
+                        "",
+                    )
+                ),
+                "Research %": int(
+                    (
+                        research_coverage.get(
+                            "companies",
+                            {},
+                        ).get(
+                            ticker,
+                            {},
+                        )
+                        or {}
+                    ).get(
+                        "completeness_percent",
+                        0,
+                    )
+                    or 0
+                ),
+                "Research Status": (
+                    (
+                        research_coverage.get(
+                            "companies",
+                            {},
+                        ).get(
+                            ticker,
+                            {},
+                        )
+                        or {}
+                    ).get(
+                        "completion_status",
+                        "Coverage unavailable",
+                    )
+                ),
                 "Data Source": annual.get("source"),
                 "SEC Filing": annual.get("source_url"),
             })
 
         overview_df = pd.DataFrame(overview_rows)
+        annual_currencies = {
+            str(value).upper()
+            for value in overview_df[
+                "Currency"
+            ].dropna().tolist()
+            if str(value).strip()
+        }
+        mixed_annual_currencies = (
+            len(annual_currencies) > 1
+        )
+        if mixed_annual_currencies:
+            st.warning(
+                "Selected peers report financial statements in different currencies ("
+                + ", ".join(
+                    sorted(
+                        annual_currencies
+                    )
+                )
+                + "). Growth and margin percentages remain comparable, but absolute revenue is not FX-normalized."
+            )
 
         question_cols = st.columns(4)
         ranking_specs = [
@@ -371,6 +925,18 @@ def render_industry_comparison(
             question_cols,
             ranking_specs,
         ):
+            if (
+                field == "Revenue"
+                and mixed_annual_currencies
+            ):
+                col.metric(
+                    label,
+                    "Mixed currencies",
+                    "FX conversion not applied",
+                    delta_color="off",
+                )
+                continue
+
             valid = overview_df.dropna(subset=[field])
             if valid.empty:
                 col.metric(label, "N/A")
@@ -383,7 +949,20 @@ def render_industry_comparison(
             display_value = (
                 pct(value)
                 if mode == "percent"
-                else format_money(value)
+                else (
+                    format_money(
+                        value,
+                        winner.get(
+                            "Currency",
+                            "USD",
+                        ),
+                    )
+                    if field
+                    == "Revenue"
+                    else format_money(
+                        value
+                    )
+                )
             )
             col.metric(
                 label,
@@ -393,9 +972,21 @@ def render_industry_comparison(
             )
 
         display_overview = overview_df.copy()
-        display_overview["Revenue"] = (
-            display_overview["Revenue"].map(format_money)
-        )
+        display_overview["Revenue"] = [
+            format_money(
+                revenue,
+                currency,
+            )
+            for revenue, currency
+            in zip(
+                display_overview[
+                    "Revenue"
+                ],
+                display_overview[
+                    "Currency"
+                ],
+            )
+        ]
         display_overview["YoY Revenue Growth"] = (
             display_overview["YoY Revenue Growth"].map(pct)
         )
@@ -497,6 +1088,10 @@ def render_industry_comparison(
                 "Ticker": ticker,
                 "Fiscal Year": annual.get(
                     "fiscal_year"
+                ),
+                "Currency": annual.get(
+                    "currency",
+                    "USD",
                 ),
                 "Revenue": annual.get("revenue"),
                 "Revenue Growth": annual.get(
@@ -618,11 +1213,21 @@ def render_industry_comparison(
             display_metrics[field] = (
                 display_metrics[field].map(pct)
             )
-        display_metrics["Revenue"] = (
-            display_metrics["Revenue"].map(
-                format_money
+        display_metrics["Revenue"] = [
+            format_money(
+                revenue,
+                currency,
             )
-        )
+            for revenue, currency
+            in zip(
+                display_metrics[
+                    "Revenue"
+                ],
+                display_metrics[
+                    "Currency"
+                ],
+            )
+        ]
         st.dataframe(
             display_metrics,
             use_container_width=True,
@@ -656,8 +1261,16 @@ def render_industry_comparison(
                 "Company": company.split(" (")[0],
                 "Ticker": ticker,
                 "Quarter / Period": q.get("period"),
+                "Currency": q.get(
+                    "currency",
+                    "USD",
+                ),
                 "Revenue": format_money(
-                    q.get("revenue")
+                    q.get("revenue"),
+                    q.get(
+                        "currency",
+                        "USD",
+                    ),
                 ),
                 "YoY Growth": pct(
                     q.get("yoy_growth")
@@ -672,7 +1285,11 @@ def render_industry_comparison(
                     q.get("operating_margin")
                 ),
                 "Net Income": format_money(
-                    q.get("net_income")
+                    q.get("net_income"),
+                    q.get(
+                        "currency",
+                        "USD",
+                    ),
                 ),
                 "Data Source": q.get("source"),
                 "SEC Filing": q.get("source_url"),
@@ -706,44 +1323,120 @@ def render_industry_comparison(
                 "capital_structure",
                 {},
             )
-            supplemental = peer_financial_cache.get(
-                company,
-                {},
-            ).get("capital_structure", {})
+            supplemental_record = (
+                peer_financial_cache.get(
+                    company,
+                    {},
+                )
+                or {}
+            )
+            supplemental = (
+                supplemental_record.get(
+                    "capital_structure",
+                    {},
+                )
+                or {}
+            )
+            balance_currency = str(
+                data.get("currency")
+                or supplemental_record.get(
+                    "currency"
+                )
+                or "USD"
+            ).upper()
 
-            use_structured = any(
-                value is not None
-                for value in [
+            structured_values = {
+                "shares_outstanding": (
                     structured.get(
                         "shares_outstanding"
-                    ),
-                    structured.get("total_debt"),
+                    )
+                ),
+                "total_debt": (
+                    structured.get(
+                        "total_debt"
+                    )
+                ),
+                "cash_and_investments": (
                     structured.get(
                         "cash_and_investments"
-                    ),
-                    data.get("assets"),
-                ]
-            )
-            source = (
-                structured
-                if use_structured
-                else supplemental
-            )
-            shares = source.get(
-                "shares_outstanding"
-            )
-            debt = source.get("total_debt")
-            cash_investments = source.get(
-                "cash_and_investments"
-            )
-            assets = (
-                data.get("assets")
-                if use_structured
-                else (
-                    source.get("total_assets")
-                    or source.get("assets")
+                    )
+                ),
+                "assets": data.get(
+                    "assets"
+                ),
+            }
+            supplemental_values = {
+                "shares_outstanding": (
+                    supplemental.get(
+                        "shares_outstanding"
+                    )
+                ),
+                "total_debt": (
+                    supplemental.get(
+                        "total_debt"
+                    )
+                ),
+                "cash_and_investments": (
+                    supplemental.get(
+                        "cash_and_investments"
+                    )
+                ),
+                "assets": (
+                    supplemental.get(
+                        "total_assets"
+                    )
+                    or supplemental.get(
+                        "assets"
+                    )
+                ),
+            }
+
+            merged_values = {
+                key: (
+                    value
+                    if value is not None
+                    else supplemental_values.get(
+                        key
+                    )
+                )
+                for key, value in (
+                    structured_values.items()
+                )
+            }
+            used_structured = any(
+                value is not None
+                for value in (
+                    structured_values.values()
                 )
             )
+            used_supplemental = any(
+                (
+                    structured_values.get(
+                        key
+                    )
+                    is None
+                    and supplemental_values.get(
+                        key
+                    )
+                    is not None
+                )
+                for key in merged_values
+            )
+
+            shares = merged_values[
+                "shares_outstanding"
+            ]
+            debt = merged_values[
+                "total_debt"
+            ]
+            cash_investments = (
+                merged_values[
+                    "cash_and_investments"
+                ]
+            )
+            assets = merged_values[
+                "assets"
+            ]
             rows.append({
                 "Company": company.split(" (")[0],
                 "Ticker": str(
@@ -754,15 +1447,28 @@ def render_industry_comparison(
                     if shares is not None
                     else "N/A"
                 ),
-                "Debt": format_money(debt),
+                "Currency": (
+                    balance_currency
+                ),
+                "Debt": format_money(
+                    debt,
+                    balance_currency,
+                ),
                 "Cash + Investments": (
                     format_money(
-                        cash_investments
+                        cash_investments,
+                        balance_currency,
                     )
                 ),
-                "Assets": format_money(assets),
+                "Assets": format_money(
+                    assets,
+                    balance_currency,
+                ),
                 "Balance Sheet Date": (
-                    source.get(
+                    structured.get(
+                        "balance_sheet_as_of"
+                    )
+                    or supplemental.get(
                         "balance_sheet_as_of"
                     )
                     or data.get(
@@ -771,17 +1477,22 @@ def render_industry_comparison(
                     or "N/A"
                 ),
                 "Source": (
-                    "SEC filing"
-                    if use_structured
-                    else "Yahoo Finance supplemental"
+                    "SEC filing + Yahoo supplemental"
+                    if (
+                        used_structured
+                        and used_supplemental
+                    )
+                    else (
+                        "SEC filing"
+                        if used_structured
+                        else "Yahoo Finance supplemental"
+                    )
                 ),
                 "SEC Filing": (
                     structured.get(
                         "source_filing",
                         "",
                     )
-                    if use_structured
-                    else ""
                 ),
             })
 

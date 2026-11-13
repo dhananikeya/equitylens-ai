@@ -2,62 +2,153 @@ import io
 from datetime import datetime, timezone
 
 import pandas as pd
-import requests
 import streamlit as st
+
+from market_units import market_cap_dollars
+
+from services.providers.finviz import fetch_screener
 import yfinance as yf
 
 
+def _quote_from_history(symbol, history, retrieved_at):
+    """Normalize one symbol's OHLCV history into the EquityLens quote shape."""
+    if history is None or history.empty or "Close" not in history.columns:
+        return None
+
+    usable = history.dropna(subset=["Close"])
+    if usable.empty:
+        return None
+
+    latest = usable.iloc[-1]
+    previous_close = (
+        float(usable.iloc[-2]["Close"])
+        if len(usable) >= 2 and pd.notna(usable.iloc[-2]["Close"])
+        else None
+    )
+    close = (
+        float(latest["Close"])
+        if pd.notna(latest.get("Close"))
+        else None
+    )
+    open_price = (
+        float(latest["Open"])
+        if pd.notna(latest.get("Open"))
+        else None
+    )
+    volume = (
+        float(latest["Volume"])
+        if pd.notna(latest.get("Volume"))
+        else None
+    )
+
+    percent_change = None
+    if close is not None and previous_close not in (None, 0):
+        percent_change = (
+            (close - previous_close) / previous_close
+        ) * 100
+
+    return {
+        "symbol": symbol,
+        "close": close,
+        "open": open_price,
+        "previous_close": previous_close,
+        "percent_change": percent_change,
+        "quote_session": pd.Timestamp(
+            usable.index[-1]
+        ).date().isoformat(),
+        "retrieved_at": retrieved_at,
+        "volume": volume,
+    }
+
+
 @st.cache_data(ttl=300)
-def get_live_market_data(symbols):
-    """Fetch current-ish quote data from Yahoo Finance via yfinance."""
-    symbols = [str(symbol).strip().upper() for symbol in symbols if symbol]
+def _get_live_market_data_cached(symbols):
+    """Fetch one canonical symbol tuple in a single Yahoo request when possible."""
+    symbols = tuple(symbols)
     if not symbols:
         return {}
 
+    retrieved_at = datetime.now(timezone.utc).isoformat()
     quotes = {}
-    for symbol in symbols:
+
+    try:
+        downloaded = yf.download(
+            tickers=list(symbols),
+            period="5d",
+            interval="1d",
+            auto_adjust=False,
+            group_by="ticker",
+            threads=True,
+            progress=False,
+        )
+
+        if isinstance(downloaded, pd.DataFrame) and not downloaded.empty:
+            for symbol in symbols:
+                history = None
+                if isinstance(downloaded.columns, pd.MultiIndex):
+                    level_zero = downloaded.columns.get_level_values(0)
+                    level_one = downloaded.columns.get_level_values(1)
+                    if symbol in level_zero:
+                        history = downloaded[symbol].copy()
+                    elif symbol in level_one:
+                        history = downloaded.xs(
+                            symbol,
+                            axis=1,
+                            level=1,
+                        ).copy()
+                elif len(symbols) == 1:
+                    history = downloaded.copy()
+
+                quote = _quote_from_history(
+                    symbol,
+                    history,
+                    retrieved_at,
+                )
+                if quote:
+                    quotes[symbol] = quote
+    except Exception:
+        quotes = {}
+
+    missing = [
+        symbol for symbol in symbols
+        if symbol not in quotes
+    ]
+    for symbol in missing:
         try:
             history = yf.Ticker(symbol).history(
                 period="5d",
                 interval="1d",
-                auto_adjust=False
+                auto_adjust=False,
             )
+            quote = _quote_from_history(
+                symbol,
+                history,
+                retrieved_at,
+            )
+            if quote:
+                quotes[symbol] = quote
         except Exception:
             continue
 
-        if history is None or history.empty:
-            continue
-
-        history = history.dropna(subset=["Close"])
-        if history.empty:
-            continue
-
-        latest = history.iloc[-1]
-        previous_close = (
-            float(history.iloc[-2]["Close"])
-            if len(history) >= 2 and pd.notna(history.iloc[-2]["Close"])
-            else None
-        )
-        close = float(latest["Close"]) if pd.notna(latest.get("Close")) else None
-        open_price = float(latest["Open"]) if pd.notna(latest.get("Open")) else None
-        volume = float(latest["Volume"]) if pd.notna(latest.get("Volume")) else None
-
-        percent_change = None
-        if close is not None and previous_close not in (None, 0):
-            percent_change = ((close - previous_close) / previous_close) * 100
-
-        quotes[symbol] = {
-            "symbol": symbol,
-            "close": close,
-            "open": open_price,
-            "previous_close": previous_close,
-            "percent_change": percent_change,
-            "quote_session": pd.Timestamp(history.index[-1]).date().isoformat(),
-            "retrieved_at": datetime.now(timezone.utc).isoformat(),
-            "volume": volume
-        }
-
     return quotes
+
+
+def get_live_market_data(symbols):
+    """Fetch current-ish quote data using canonicalized, batched Yahoo requests."""
+    canonical_symbols = tuple(sorted({
+        str(symbol).strip().upper()
+        for symbol in symbols
+        if str(symbol).strip()
+    }))
+    return _get_live_market_data_cached(canonical_symbols)
+
+
+def _clear_live_market_data_cache(*_args, **_kwargs):
+    """Preserve the old refresh API while clearing the canonical quote cache."""
+    _get_live_market_data_cached.clear()
+
+
+get_live_market_data.clear = _clear_live_market_data_cache
 
 
 @st.cache_data(ttl=120)
@@ -88,17 +179,15 @@ def get_finviz_screener_data(symbols=None, filters=None):
         if filters:
             params["f"] = str(filters)
 
-        response = requests.get(
-            str(api_url),
+        response = fetch_screener(
+            api_url,
             params=params,
             headers=headers,
-            timeout=30
         )
     elif export_url:
-        response = requests.get(
-            str(export_url),
+        response = fetch_screener(
+            export_url,
             headers=headers,
-            timeout=30
         )
     else:
         raise ValueError(
@@ -136,6 +225,7 @@ def find_finviz_column(dataframe, candidates):
     return None
 
 
+@st.cache_data(ttl=120, show_spinner=False)
 def normalize_finviz_screener(dataframe):
     if dataframe is None or dataframe.empty:
         return pd.DataFrame()
@@ -145,6 +235,7 @@ def normalize_finviz_screener(dataframe):
         "Company": ["Company", "Company Name"],
         "Sector": ["Sector"],
         "Industry": ["Industry"],
+        "Exchange": ["Exchange", "Exchange Code"],
         "Market Cap": ["Market Cap", "Market Cap."],
         "P/E": ["P/E", "PE"],
         "Price": ["Price"],
@@ -204,12 +295,11 @@ def finviz_numeric(value):
 
 
 def finviz_market_cap_dollars(value):
-    """Market-screener plain market-cap values are in millions unless suffixed."""
-    parsed = finviz_numeric(value)
-    if parsed is None:
-        return None
-    text = str(value).strip()
-    return parsed if text[-1:].upper() in {"K", "M", "B", "T"} else parsed * 1_000_000
+    """Normalize Finviz market-cap fields to dollars."""
+    return market_cap_dollars(
+        value,
+        plain_numbers_are_millions=True,
+    )
 
 
 @st.cache_data(ttl=900)
@@ -416,6 +506,29 @@ def get_company_financial_snapshot(symbol):
     """Supplement missing standardized financials with Yahoo Finance statement data."""
     ticker = yf.Ticker(str(symbol).upper())
 
+    try:
+        info_value = ticker.info
+        ticker_info = (
+            info_value
+            if isinstance(
+                info_value,
+                dict,
+            )
+            else {}
+        )
+    except Exception:
+        ticker_info = {}
+
+    financial_currency = str(
+        ticker_info.get(
+            "financialCurrency"
+        )
+        or ticker_info.get(
+            "currency"
+        )
+        or "USD"
+    ).upper().strip()
+
     income = _yf_attribute(
         ticker,
         "income_stmt",
@@ -433,6 +546,12 @@ def get_company_financial_snapshot(symbol):
         "balance_sheet",
         "get_balance_sheet",
     )
+    cash_flow = _yf_attribute(
+        ticker,
+        "cash_flow",
+        "cashflow",
+        "get_cash_flow",
+    )
 
     if not isinstance(income, pd.DataFrame):
         income = pd.DataFrame()
@@ -440,6 +559,8 @@ def get_company_financial_snapshot(symbol):
         quarterly_income = pd.DataFrame()
     if not isinstance(balance, pd.DataFrame):
         balance = pd.DataFrame()
+    if not isinstance(cash_flow, pd.DataFrame):
+        cash_flow = pd.DataFrame()
 
     annual_history = []
     for column in list(income.columns)[:4]:
@@ -539,6 +660,56 @@ def get_company_financial_snapshot(symbol):
 
     latest_income = annual_history[-1] if annual_history else {}
     latest_balance_column = balance.columns[0] if not balance.empty else None
+    latest_cash_flow_column = (
+        cash_flow.columns[0]
+        if not cash_flow.empty
+        else None
+    )
+
+    operating_cash_flow = _statement_value(
+        cash_flow,
+        [
+            "Operating Cash Flow",
+            "Total Cash From Operating Activities",
+            "Cash Flow From Continuing Operating Activities",
+        ],
+        latest_cash_flow_column,
+    )
+    capital_expenditure = _statement_value(
+        cash_flow,
+        [
+            "Capital Expenditure",
+            "Capital Expenditures",
+        ],
+        latest_cash_flow_column,
+    )
+    free_cash_flow = _statement_value(
+        cash_flow,
+        [
+            "Free Cash Flow",
+        ],
+        latest_cash_flow_column,
+    )
+    free_cash_flow_method = (
+        "reported"
+        if free_cash_flow is not None
+        else "unavailable"
+    )
+    if (
+        free_cash_flow is None
+        and operating_cash_flow is not None
+        and capital_expenditure is not None
+    ):
+        free_cash_flow = (
+            operating_cash_flow
+            + capital_expenditure
+            if capital_expenditure < 0
+            else operating_cash_flow
+            - capital_expenditure
+        )
+        free_cash_flow_method = (
+            "calculated"
+        )
 
     cash_and_investments = _statement_value(
         balance,
@@ -602,6 +773,7 @@ def get_company_financial_snapshot(symbol):
         total_assets = _safe_float(info.get("totalAssets"))
 
     return {
+        "currency": financial_currency,
         "latest": latest_income,
         "history": annual_history,
         "quarterly_history": quarterly_history,
@@ -611,6 +783,25 @@ def get_company_financial_snapshot(symbol):
             "cash_and_investments": cash_and_investments,
             "total_assets": total_assets,
             "balance_sheet_as_of": balance_date or "Latest available",
+        },
+        "cash_flow": {
+            "operating_cash_flow": operating_cash_flow,
+            "capital_expenditure": capital_expenditure,
+            "free_cash_flow": free_cash_flow,
+            "free_cash_flow_method": (
+                free_cash_flow_method
+            ),
+            "cash_flow_as_of": (
+                str(latest_cash_flow_column.date())
+                if hasattr(
+                    latest_cash_flow_column,
+                    "date",
+                )
+                else str(
+                    latest_cash_flow_column
+                    or ""
+                )
+            ),
         },
         "source": "Yahoo Finance via yfinance",
     }

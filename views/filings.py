@@ -3,7 +3,11 @@ import json
 import pandas as pd
 import streamlit as st
 
-from ui_components import section
+from ui_components import (
+    render_breadcrumbs,
+    render_refresh_indicator,
+    section,
+)
 
 
 FINANCIAL_FORMS = {
@@ -14,12 +18,31 @@ CURRENT_FORMS = {"8-K", "8-K/A", "6-K", "6-K/A"}
 REGISTRATION_FORMS = {
     "S-1", "S-1/A", "F-1", "F-1/A", "S-11", "S-11/A",
 }
-OWNERSHIP_FORMS = {
-    "3", "3/A", "4", "4/A", "5", "5/A",
-    "SC 13D", "SC 13D/A", "SC 13G", "SC 13G/A",
-    "DEF 14A", "DEFA14A", "144", "144/A",
+INSIDER_FORMS = {
+    "3", "3/A", "4", "4/A",
+    "5", "5/A", "144", "144/A",
 }
-MATERIAL_FORMS = FINANCIAL_FORMS | CURRENT_FORMS | REGISTRATION_FORMS
+BENEFICIAL_OWNERSHIP_FORMS = {
+    "SC 13D", "SC 13D/A",
+    "SC 13G", "SC 13G/A",
+    "SCHEDULE 13D", "SCHEDULE 13D/A",
+    "SCHEDULE 13G", "SCHEDULE 13G/A",
+}
+PROXY_FORMS = {
+    "DEF 14A",
+    "DEFA14A",
+    "PRE 14A",
+    "DEFM14A",
+}
+OWNERSHIP_FORMS = (
+    INSIDER_FORMS
+    | BENEFICIAL_OWNERSHIP_FORMS
+)
+MATERIAL_FORMS = (
+    FINANCIAL_FORMS
+    | CURRENT_FORMS
+    | REGISTRATION_FORMS
+)
 
 FORM_CATEGORIES = {
     "Material reports": MATERIAL_FORMS,
@@ -27,6 +50,7 @@ FORM_CATEGORIES = {
     "Current events": CURRENT_FORMS,
     "Registration": REGISTRATION_FORMS,
     "Ownership / insiders": OWNERSHIP_FORMS,
+    "Proxy / governance": PROXY_FORMS,
     "All filings": None,
 }
 
@@ -35,8 +59,20 @@ def render_filings(
     company_universe,
     load_sec_filings,
     get_sec_company_research,
+    sec_summary=None,
+    research_link=None,
 ):
+    render_breadcrumbs(
+        "Home",
+        "Filings",
+        "Filing Tracker",
+    )
     section("SEC Monitor", "Filing Tracker")
+    render_refresh_indicator(
+        "SEC archive refreshed",
+        (sec_summary or {}).get("generated_at_utc"),
+        "automated filing monitor",
+    )
 
     try:
         sec_filings = load_sec_filings()
@@ -84,6 +120,16 @@ def render_filings(
                     "",
                 ),
                 "SEC Filing": filing.get("url", ""),
+                "Research": (
+                    research_link(
+                        tracked_ticker
+                    )
+                    if (
+                        research_link
+                        and tracked_ticker
+                    )
+                    else ""
+                ),
             })
 
     tracker_df = pd.DataFrame(tracker_rows)
@@ -111,6 +157,37 @@ def render_filings(
         tracker_df["First Seen by EquityLens (ET)"] = (
             first_seen_dt.dt.tz_convert("America/New_York")
             .dt.strftime("%Y-%m-%d %I:%M:%S %p %Z")
+        )
+
+        detection_seconds = (
+            first_seen_dt
+            - accepted_dt
+        ).dt.total_seconds()
+
+        def format_detection_lag(value):
+            if pd.isna(value) or value < 0:
+                return "N/A"
+            seconds = int(value)
+            if seconds < 60:
+                return f"{seconds}s"
+            minutes, remaining = divmod(
+                seconds,
+                60,
+            )
+            if minutes < 60:
+                return (
+                    f"{minutes}m {remaining}s"
+                )
+            hours, minutes = divmod(
+                minutes,
+                60,
+            )
+            return f"{hours}h {minutes}m"
+
+        tracker_df[
+            "Detection Lag"
+        ] = detection_seconds.map(
+            format_detection_lag
         )
 
         tracker_df = tracker_df.drop(
@@ -147,6 +224,37 @@ def render_filings(
             latest_date = pd.Timestamp.today().date()
             earliest_date = latest_date
             default_start = latest_date
+
+        seven_day_cutoff = pd.Timestamp(
+            latest_date
+        ) - pd.Timedelta(days=6)
+        recent_material_mask = (
+            tracker_df["Form"].isin(
+                MATERIAL_FORMS
+            )
+            & tracker_df[
+                "_FiledDate"
+            ].ge(
+                seven_day_cutoff
+            )
+        )
+        filing_pulse = st.columns(4)
+        filing_pulse[0].metric(
+            "Indexed filings",
+            f"{len(tracker_df):,}",
+        )
+        filing_pulse[1].metric(
+            "Issuers",
+            f"{tracker_df['Ticker'].nunique():,}",
+        )
+        filing_pulse[2].metric(
+            "Material · last 7 days",
+            f"{int(recent_material_mask.sum()):,}",
+        )
+        filing_pulse[3].metric(
+            "Newest filing",
+            str(latest_date),
+        )
 
         primary_filters = st.columns([1.6, 1, .75])
         with primary_filters[0]:
@@ -320,9 +428,12 @@ def render_filings(
             "Form",
             "SEC Filed Date",
             "SEC Accepted (ET)",
+            "First Seen by EquityLens (ET)",
+            "Detection Lag",
             "Report Period",
             "Description",
             "SEC Filing",
+            "Research",
         ]
         visible_tracker = (
             filtered_tracker[
@@ -343,7 +454,11 @@ def render_filings(
                     "SEC Filing": st.column_config.LinkColumn(
                         "SEC Filing",
                         display_text="Open filing",
-                    )
+                    ),
+                    "Research": st.column_config.LinkColumn(
+                        "Research",
+                        display_text="Open research",
+                    ),
                 },
             )
 
@@ -406,6 +521,11 @@ def render_filings(
                     "Meaning": "Beneficial ownership disclosure",
                     "Use it for": "Certain holders crossing reporting thresholds",
                 },
+                {
+                    "Form": "DEF 14A",
+                    "Meaning": "Definitive proxy statement",
+                    "Use it for": "Board matters, executive compensation, shareholder votes, and governance",
+                },
             ])
             st.dataframe(
                 form_guide,
@@ -439,23 +559,48 @@ def render_filings(
         registration_row.get("Ticker", "")
     )
 
-    try:
-        registration_feed = get_sec_company_research(
-            registration_ticker
+    archived_registration_feed = next(
+        (
+            feed
+            for feed in sec_filings.values()
+            if str(
+                feed.get(
+                    "ticker",
+                    "",
+                )
+            ).upper()
+            == registration_ticker.upper()
+        ),
+        {},
+    )
+
+    registration_feed = (
+        archived_registration_feed
+        if archived_registration_feed.get(
+            "registration_filings"
         )
-        registration_error = None
-    except Exception:
-        registration_feed = {}
-        registration_error = (
-            "SEC EDGAR is temporarily unavailable for this company."
-        )
+        else {}
+    )
+    registration_error = None
+
+    if not registration_feed:
+        try:
+            registration_feed = (
+                get_sec_company_research(
+                    registration_ticker
+                )
+            )
+        except Exception:
+            registration_feed = (
+                archived_registration_feed
+            )
+            registration_error = (
+                "Live SEC refresh is temporarily unavailable. "
+                "Showing the latest registration history from the synced archive."
+            )
 
     if registration_error:
-        st.info(
-            registration_error
-            + " The filing tracker above remains available from the synced archive."
-        )
-        return
+        st.info(registration_error)
 
     registration_rows = registration_feed.get(
         "registration_filings",
