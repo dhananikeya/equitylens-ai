@@ -14,6 +14,7 @@ import streamlit as st
 
 from app_runtime import (
     load_company_universe,
+    load_company_universe_metadata,
     load_json,
     load_research_datasets,
     load_research_coverage,
@@ -92,10 +93,50 @@ research_index = load_research_index()
 research_coverage = load_research_coverage()
 sec_summary = load_sec_summary()
 company_universe = load_company_universe()
+company_universe_metadata = (
+    load_company_universe_metadata()
+)
 
 required_universe_columns = {
     "Ticker", "Company", "Sector", "Industry", "Country"
 }
+
+_metadata_by_ticker = (
+    company_universe_metadata.get(
+        "companies",
+        {},
+    )
+    or {}
+)
+if _metadata_by_ticker:
+    metadata_columns = {
+        "Listing Status": "listing_status",
+        "Share Class": "share_class",
+        "Issuer Type": "issuer_type",
+        "Reporting Regime": "reporting_regime",
+        "Market Cap Band": "market_cap_band",
+        "Registration Year": "registration_year",
+        "IPO Year": "ipo_year",
+        "Exchange": "exchange",
+        "Index Memberships": "index_memberships",
+    }
+    for display_column, metadata_key in (
+        metadata_columns.items()
+    ):
+        company_universe[
+            display_column
+        ] = company_universe[
+            "Ticker"
+        ].astype(str).str.upper().map(
+            lambda ticker: (
+                _metadata_by_ticker.get(
+                    ticker,
+                    {},
+                ).get(
+                    metadata_key
+                )
+            )
+        )
 if not required_universe_columns.issubset(company_universe.columns):
     missing_columns = sorted(
         required_universe_columns - set(company_universe.columns)
@@ -253,6 +294,15 @@ for workspace_key, workspace_record in company_data.items():
         "Sector": extra_sector,
         "Industry": extra_industry,
         "Country": str(workspace_record.get("country", "")).strip(),
+        "Listing Status": "Historical / outside active universe",
+        "Share Class": "",
+        "Issuer Type": "Historical profile",
+        "Reporting Regime": "Unknown",
+        "Market Cap Band": "Unknown",
+        "Registration Year": None,
+        "IPO Year": None,
+        "Exchange": None,
+        "Index Memberships": [],
         "Coverage Key": workspace_key,
     })
     workspace_known_tickers.add(extra_ticker)
