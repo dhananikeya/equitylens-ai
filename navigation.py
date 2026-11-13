@@ -65,6 +65,7 @@ CHOICE_KEYS = {
     "nyse_heatmap_search",
     "market_monitor_industry",
     "market_movement_threshold",
+    "market_screener_sort",
     "market_monitor_section",
     "finviz_min_relative_volume",
     "finviz_min_abs_change",
