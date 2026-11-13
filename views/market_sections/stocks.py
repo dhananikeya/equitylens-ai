@@ -28,6 +28,7 @@ def render_stocks_workspace(
     company_data,
     sec_summary,
     public_finviz_data_enabled,
+    research_link,
 ):
         section("Stocks", "Industry Market Board & Movement")
     
@@ -236,6 +237,13 @@ def render_stocks_workspace(
                     if previous_close is not None
                     else "N/A"
                 ),
+                "Research": (
+                    research_link(
+                        ticker
+                    )
+                    if ticker
+                    else ""
+                ),
                 "_change": change,
             })
     
@@ -246,6 +254,10 @@ def render_stocks_workspace(
                 board_df.drop(
                     columns=["_change"]
                 ),
+                link_columns=(
+                    "Research",
+                ),
+                link_label="Open research",
             )
         else:
             st.info(
@@ -316,6 +328,17 @@ def render_stocks_workspace(
                         industry_symbols
                     )
                 ].copy()
+                covered[
+                    "Research"
+                ] = covered[
+                    "Ticker"
+                ].astype(str).map(
+                    lambda ticker: (
+                        research_link(
+                            ticker
+                        )
+                    )
+                )
     
                 if (
                     "Relative Volume"
@@ -408,6 +431,7 @@ def render_stocks_workspace(
                     "Perf Week",
                     "Perf Month",
                     "Earnings",
+                    "Research",
                 ]
                 visible = [
                     column
@@ -426,6 +450,12 @@ def render_stocks_workspace(
                     render_crisp_table(
                         st,
                         covered[visible],
+                        link_columns=(
+                            "Research",
+                        ),
+                        link_label=(
+                            "Open research"
+                        ),
                     )
                 else:
                     st.caption(
@@ -508,6 +538,9 @@ def render_stocks_workspace(
                             Recent SEC context: {filing_label}<br>
                             Market movement shown without attributing a cause.
                         </div>
+                        <a class="el-move-research" href="{research_link(row['Ticker'])}">
+                            Open company research ↗
+                        </a>
                     </div>
                     """
                 )
