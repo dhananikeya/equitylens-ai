@@ -32,17 +32,56 @@ def format_market_volume(value):
     return f"{number:,.0f}"
 
 
-def format_money(value):
+CURRENCY_PREFIXES = {
+    "USD": "$",
+    "EUR": "€",
+    "GBP": "£",
+    "JPY": "¥",
+    "CAD": "C$",
+    "AUD": "A$",
+    "CHF": "CHF ",
+    "CNY": "CN¥",
+    "HKD": "HK$",
+    "INR": "₹",
+    "KRW": "₩",
+}
+
+
+def format_money(
+    value,
+    currency="USD",
+):
     number = safe_float(value)
     if number is None:
         return "N/A"
+
+    currency_code = str(
+        currency or "USD"
+    ).upper().strip()
+    prefix = CURRENCY_PREFIXES.get(
+        currency_code,
+        currency_code + " ",
+    )
+
     sign = "-" if number < 0 else ""
     number = abs(number)
     if number >= 1_000_000_000:
-        return sign + "$" + f"{number / 1_000_000_000:.2f}B"
+        return (
+            sign
+            + prefix
+            + f"{number / 1_000_000_000:.2f}B"
+        )
     if number >= 1_000_000:
-        return sign + "$" + f"{number / 1_000_000:.1f}M"
-    return sign + "$" + f"{number:,.0f}"
+        return (
+            sign
+            + prefix
+            + f"{number / 1_000_000:.1f}M"
+        )
+    return (
+        sign
+        + prefix
+        + f"{number:,.0f}"
+    )
 
 
 def pct(value):
