@@ -55,6 +55,11 @@ def _annual_snapshot(company, company_data, supplemental):
         )
 
     return {
+        "currency": (
+            data.get("currency")
+            or supplemental.get("currency")
+            or "USD"
+        ),
         "revenue": revenue,
         "gross_profit": gross_profit,
         "operating_income": operating_income,
@@ -90,6 +95,11 @@ def _quarter_snapshot(company, company_quarterly, supplemental):
         latest = qdata.get("latest_quarter", {})
         metrics = quarterly_metrics(qdata)
         return {
+            "currency": (
+                qdata.get("currency")
+                or supplemental.get("currency")
+                or "USD"
+            ),
             "period": (
                 qdata.get("quarter_label")
                 or qdata.get("period_end")
@@ -122,6 +132,11 @@ def _quarter_snapshot(company, company_quarterly, supplemental):
         "prior_year_quarter": prior_y,
     })
     return {
+        "currency": (
+            supplemental.get("currency")
+            or qdata.get("currency")
+            or "USD"
+        ),
         "period": latest.get("period_end", "N/A"),
         "revenue": metrics.get("revenue"),
         "yoy_growth": metrics.get("yoy_growth"),
@@ -703,6 +718,10 @@ def render_industry_comparison(
             "Fiscal Year": annual.get(
                 "fiscal_year"
             ),
+            "Annual Currency": annual.get(
+                "currency",
+                "USD",
+            ),
             "Annual Revenue": annual.get(
                 "revenue"
             ),
@@ -720,6 +739,10 @@ def render_industry_comparison(
             ),
             "Quarter": quarter.get(
                 "period"
+            ),
+            "Quarter Currency": quarter.get(
+                "currency",
+                "USD",
             ),
             "Quarter Revenue": quarter.get(
                 "revenue"
@@ -815,6 +838,10 @@ def render_industry_comparison(
                 "Company": company.split(" (")[0],
                 "Ticker": ticker,
                 "Reported FY": annual.get("fiscal_year"),
+                "Currency": annual.get(
+                    "currency",
+                    "USD",
+                ),
                 "Revenue": annual.get("revenue"),
                 "YoY Revenue Growth": annual.get("growth"),
                 "Operating Margin": annual.get(
@@ -866,6 +893,26 @@ def render_industry_comparison(
             })
 
         overview_df = pd.DataFrame(overview_rows)
+        annual_currencies = {
+            str(value).upper()
+            for value in overview_df[
+                "Currency"
+            ].dropna().tolist()
+            if str(value).strip()
+        }
+        mixed_annual_currencies = (
+            len(annual_currencies) > 1
+        )
+        if mixed_annual_currencies:
+            st.warning(
+                "Selected peers report financial statements in different currencies ("
+                + ", ".join(
+                    sorted(
+                        annual_currencies
+                    )
+                )
+                + "). Growth and margin percentages remain comparable, but absolute revenue is not FX-normalized."
+            )
 
         question_cols = st.columns(4)
         ranking_specs = [
@@ -878,6 +925,18 @@ def render_industry_comparison(
             question_cols,
             ranking_specs,
         ):
+            if (
+                field == "Revenue"
+                and mixed_annual_currencies
+            ):
+                col.metric(
+                    label,
+                    "Mixed currencies",
+                    "FX conversion not applied",
+                    delta_color="off",
+                )
+                continue
+
             valid = overview_df.dropna(subset=[field])
             if valid.empty:
                 col.metric(label, "N/A")
@@ -890,7 +949,20 @@ def render_industry_comparison(
             display_value = (
                 pct(value)
                 if mode == "percent"
-                else format_money(value)
+                else (
+                    format_money(
+                        value,
+                        winner.get(
+                            "Currency",
+                            "USD",
+                        ),
+                    )
+                    if field
+                    == "Revenue"
+                    else format_money(
+                        value
+                    )
+                )
             )
             col.metric(
                 label,
@@ -900,9 +972,21 @@ def render_industry_comparison(
             )
 
         display_overview = overview_df.copy()
-        display_overview["Revenue"] = (
-            display_overview["Revenue"].map(format_money)
-        )
+        display_overview["Revenue"] = [
+            format_money(
+                revenue,
+                currency,
+            )
+            for revenue, currency
+            in zip(
+                display_overview[
+                    "Revenue"
+                ],
+                display_overview[
+                    "Currency"
+                ],
+            )
+        ]
         display_overview["YoY Revenue Growth"] = (
             display_overview["YoY Revenue Growth"].map(pct)
         )
@@ -1004,6 +1088,10 @@ def render_industry_comparison(
                 "Ticker": ticker,
                 "Fiscal Year": annual.get(
                     "fiscal_year"
+                ),
+                "Currency": annual.get(
+                    "currency",
+                    "USD",
                 ),
                 "Revenue": annual.get("revenue"),
                 "Revenue Growth": annual.get(
@@ -1163,8 +1251,16 @@ def render_industry_comparison(
                 "Company": company.split(" (")[0],
                 "Ticker": ticker,
                 "Quarter / Period": q.get("period"),
+                "Currency": q.get(
+                    "currency",
+                    "USD",
+                ),
                 "Revenue": format_money(
-                    q.get("revenue")
+                    q.get("revenue"),
+                    q.get(
+                        "currency",
+                        "USD",
+                    ),
                 ),
                 "YoY Growth": pct(
                     q.get("yoy_growth")
@@ -1179,7 +1275,11 @@ def render_industry_comparison(
                     q.get("operating_margin")
                 ),
                 "Net Income": format_money(
-                    q.get("net_income")
+                    q.get("net_income"),
+                    q.get(
+                        "currency",
+                        "USD",
+                    ),
                 ),
                 "Data Source": q.get("source"),
                 "SEC Filing": q.get("source_url"),
@@ -1213,10 +1313,27 @@ def render_industry_comparison(
                 "capital_structure",
                 {},
             )
-            supplemental = peer_financial_cache.get(
-                company,
-                {},
-            ).get("capital_structure", {})
+            supplemental_record = (
+                peer_financial_cache.get(
+                    company,
+                    {},
+                )
+                or {}
+            )
+            supplemental = (
+                supplemental_record.get(
+                    "capital_structure",
+                    {},
+                )
+                or {}
+            )
+            balance_currency = str(
+                data.get("currency")
+                or supplemental_record.get(
+                    "currency"
+                )
+                or "USD"
+            ).upper()
 
             structured_values = {
                 "shares_outstanding": (
@@ -1320,13 +1437,23 @@ def render_industry_comparison(
                     if shares is not None
                     else "N/A"
                 ),
-                "Debt": format_money(debt),
+                "Currency": (
+                    balance_currency
+                ),
+                "Debt": format_money(
+                    debt,
+                    balance_currency,
+                ),
                 "Cash + Investments": (
                     format_money(
-                        cash_investments
+                        cash_investments,
+                        balance_currency,
                     )
                 ),
-                "Assets": format_money(assets),
+                "Assets": format_money(
+                    assets,
+                    balance_currency,
+                ),
                 "Balance Sheet Date": (
                     structured.get(
                         "balance_sheet_as_of"
