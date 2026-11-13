@@ -806,7 +806,9 @@ if active_destination == "Filings":
 if active_destination == "Learn":
     from views.learn import render_learn
 
-    render_learn()
+    render_learn(
+        navigate_to=navigate_to
+    )
 
 
 save_rendered_choices()
