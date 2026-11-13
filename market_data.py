@@ -505,6 +505,28 @@ def get_company_financial_snapshot(symbol):
     """Supplement missing standardized financials with Yahoo Finance statement data."""
     ticker = yf.Ticker(str(symbol).upper())
 
+    try:
+        ticker_info = (
+            ticker.info
+            if isinstance(
+                ticker.info,
+                dict,
+            )
+            else {}
+        )
+    except Exception:
+        ticker_info = {}
+
+    financial_currency = str(
+        ticker_info.get(
+            "financialCurrency"
+        )
+        or ticker_info.get(
+            "currency"
+        )
+        or "USD"
+    ).upper().strip()
+
     income = _yf_attribute(
         ticker,
         "income_stmt",
@@ -749,6 +771,7 @@ def get_company_financial_snapshot(symbol):
         total_assets = _safe_float(info.get("totalAssets"))
 
     return {
+        "currency": financial_currency,
         "latest": latest_income,
         "history": annual_history,
         "quarterly_history": quarterly_history,
