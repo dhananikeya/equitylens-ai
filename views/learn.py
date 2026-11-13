@@ -304,10 +304,39 @@ def render_learn():
         ]
     )
 
+    focus_term = str(
+        st.session_state.get(
+            "learn_focus_term",
+            "",
+        )
+    ).strip()
+    if focus_term:
+        display_items = sorted(
+            display_items,
+            key=lambda item: (
+                0
+                if item["term"]
+                == focus_term
+                else 1,
+                item["term"],
+            ),
+        )
+        st.caption(
+            "Focused concept: "
+            + focus_term
+        )
+
     st.markdown("### Concepts in this path")
 
     for item in display_items:
-        with st.expander(item["term"]):
+        with st.expander(
+            item["term"],
+            expanded=(
+                bool(focus_term)
+                and item["term"]
+                == focus_term
+            ),
+        ):
             st.markdown("**What it means**")
             st.write(item["definition"])
             st.markdown("**Why it matters**")
