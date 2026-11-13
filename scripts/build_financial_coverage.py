@@ -40,7 +40,7 @@ BATCH_SIZE = max(
 )
 
 FINANCIAL_PIPELINE_VERSION = (
-    "sec-period-integrity-v3"
+    "sec-period-currency-v4"
 )
 
 
