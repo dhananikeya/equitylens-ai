@@ -549,10 +549,26 @@ def fact_points(
         for unit in preferred_units:
             points = units.get(unit)
             if points:
-                return [point for point in points if point.get("val") is not None]
-        for points in units.values():
+                return [
+                    {
+                        **point,
+                        "_unit": unit,
+                    }
+                    for point in points
+                    if point.get("val")
+                    is not None
+                ]
+        for unit, points in units.items():
             if points:
-                return [point for point in points if point.get("val") is not None]
+                return [
+                    {
+                        **point,
+                        "_unit": unit,
+                    }
+                    for point in points
+                    if point.get("val")
+                    is not None
+                ]
     return []
 
 
@@ -853,6 +869,13 @@ def build_financial_records(
         "industry": company.get("Industry", "Unclassified"),
         "sector": company.get("Sector", ""),
         "country": company.get("Country", ""),
+        "currency": (
+            latest_revenue_point.get(
+                "_unit",
+                "USD",
+            )
+            or "USD"
+        ),
         "fiscal_year": latest_fy,
         "fiscal_year_end": latest_end,
         "source": annual_filing.get("form", "SEC annual filing"),
@@ -1120,6 +1143,19 @@ def build_financial_records(
         return sum(values)
 
     quarterly_record = {
+        "currency": (
+            latest_quarter_point.get(
+                "_unit",
+                metrics_record.get(
+                    "currency",
+                    "USD",
+                ),
+            )
+            or metrics_record.get(
+                "currency",
+                "USD",
+            )
+        ),
         "quarter_label": quarter_frame or (
             "Latest quarter" if quarter_end else "Quarterly data unavailable"
         ),
@@ -1150,6 +1186,10 @@ def build_financial_records(
 
     financial_context = {
         "annual": {
+            "currency": metrics_record.get(
+                "currency",
+                "USD",
+            ),
             "fiscal_year": metrics_record["fiscal_year"],
             "period_end": metrics_record["fiscal_year_end"],
             "revenue": metrics_record["revenue"],
@@ -1160,6 +1200,13 @@ def build_financial_records(
             "assets": metrics_record["assets"],
         },
         "quarterly": {
+            "currency": quarterly_record.get(
+                "currency",
+                metrics_record.get(
+                    "currency",
+                    "USD",
+                ),
+            ),
             "period": quarterly_record["quarter_label"],
             "period_end": quarterly_record["period_end"],
             **latest_quarter,
