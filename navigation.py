@@ -50,6 +50,10 @@ CHOICE_KEYS = {
     "workspace_company_search",
     "workspace_sector",
     "workspace_industry",
+    "workspace_market_cap_band",
+    "workspace_country",
+    "workspace_issuer_type",
+    "workspace_reporting_regime",
     "peer_industry",
     "peer_subgroup",
     "peer_companies",
@@ -122,16 +126,37 @@ def reset_coverage_selection(st):
 
 
 def clear_company_filters(st):
-    remember_choice(
-        st,
-        "workspace_sector",
-        "All sectors",
-    )
-    remember_choice(
-        st,
-        "workspace_industry",
-        "All industries",
-    )
+    for key, value in [
+        (
+            "workspace_sector",
+            "All sectors",
+        ),
+        (
+            "workspace_industry",
+            "All industries",
+        ),
+        (
+            "workspace_market_cap_band",
+            "All market caps",
+        ),
+        (
+            "workspace_country",
+            "All countries",
+        ),
+        (
+            "workspace_issuer_type",
+            "All issuer types",
+        ),
+        (
+            "workspace_reporting_regime",
+            "All reporting regimes",
+        ),
+    ]:
+        remember_choice(
+            st,
+            key,
+            value,
+        )
     reset_coverage_selection(st)
 
 
