@@ -227,6 +227,24 @@ def _market_cap_dollars(value):
 
 
 @st.cache_data(show_spinner=False)
+def load_data_quality_report():
+    try:
+        return load_json(
+            "data/data_quality_report.json"
+        )
+    except (
+        FileNotFoundError,
+        json.JSONDecodeError,
+    ):
+        return {
+            "generated_at_utc": "",
+            "universe_count": 0,
+            "summary": {},
+            "companies": {},
+        }
+
+
+@st.cache_data(show_spinner=False)
 def load_company_universe_metadata():
     try:
         return load_json(
