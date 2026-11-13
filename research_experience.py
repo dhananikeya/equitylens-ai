@@ -473,19 +473,54 @@ def build_research_pdf(company_name, ticker, industry, sector, analysis,
     story.append(Paragraph("Financial snapshot", styles["ELHeading"]))
     for label, value in metrics.items():
         add(label, value)
-    story.append(Paragraph("Growth questions / bull lens", styles["ELHeading"]))
+    story.append(Paragraph("Business questions to test", styles["ELHeading"]))
     story.append(Paragraph(
-        "Investigate whether reported revenue trends and the business model are durable. "
-        "This is an educational research prompt, not a positive investment rating.",
+        "Investigate whether reported revenue trends, customer demand, and the business model "
+        "remain supported by current filings. This is an educational research prompt, not a rating.",
         styles["ELBody"],
     ))
-    story.append(Paragraph("Counterarguments / bear lens", styles["ELHeading"]))
-    for label, field in [("Competitive risk", "competitive_risk"),
-                         ("Operational risk", "operational_risk")]:
+
+    story.append(Paragraph("Operating & capital context", styles["ELHeading"]))
+    for label, field in [
+        ("Business segments", "business_segments"),
+        ("Geographic exposure", "geographic_exposure"),
+        ("Competitive positioning", "competitive_positioning"),
+        ("Capital allocation", "capital_allocation"),
+        ("Dilution / stock compensation", "dilution_stock_comp"),
+        ("Debt / liquidity", "debt_liquidity"),
+        ("Profitability / cash flow", "profitability_cash_flow"),
+    ]:
+        value = analysis.get(field)
+        if str(value or "").strip():
+            add(label, value)
+
+    story.append(Paragraph("Risks & counterarguments", styles["ELHeading"]))
+    for label, field in [
+        ("Competitive risk", "competitive_risk"),
+        ("Operational risk", "operational_risk"),
+        ("Customer concentration", "customer_concentration"),
+        ("International exposure", "international_exposure"),
+    ]:
         add(label, _clean(analysis.get(field), SOURCE_UNAVAILABLE))
     themes = analysis.get("key_risk_themes", []) or []
     if themes:
         add("Risk themes", ", ".join(str(item) for item in themes[:8]))
+
+    provenance = analysis.get("source_provenance", []) or []
+    if provenance:
+        story.append(Paragraph("Narrative source provenance", styles["ELHeading"]))
+        for item in provenance[:20]:
+            if not isinstance(item, dict):
+                continue
+            field = _clean(item.get("field"), "Research field")
+            source_type = _clean(item.get("source_type"), "Source")
+            note = _clean(item.get("note"), "")
+            add(
+                field,
+                source_type + ((" · " + note) if note else ""),
+                "ELSmall",
+            )
+
     story.append(Paragraph("Recent SEC filings and sources", styles["ELHeading"]))
     sources = _analysis_sources(analysis, filings)
     if sources:
