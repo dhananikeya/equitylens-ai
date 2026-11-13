@@ -20,6 +20,7 @@ def render_financials(
     selected_fallback_quarters,
     income_selection,
     workspace_growth,
+    financial_currency,
 ):
     section(
         "Financials",
@@ -113,6 +114,7 @@ def render_financials(
 
     st.caption(
         f"Reporting period: {financial_period_label} · "
+        f"Reporting currency: {financial_currency} · "
         f"Source: {financial_source_label}. "
         "Reported values come from the selected source record; margins and growth are calculated by EquityLens."
     )
@@ -120,7 +122,7 @@ def render_financials(
     primary_cols = st.columns(4)
     primary_cols[0].metric(
         "Revenue · Reported",
-        format_money(period_revenue),
+        format_money(period_revenue, financial_currency),
         help=(
             "Reported revenue for "
             + financial_period_label
@@ -145,7 +147,7 @@ def render_financials(
     )
     primary_cols[3].metric(
         "Net Income · Reported",
-        format_money(period_net_income),
+        format_money(period_net_income, financial_currency),
         help=(
             "Reported net income or loss for "
             + financial_period_label
@@ -156,7 +158,7 @@ def render_financials(
     secondary_cols = st.columns(4)
     secondary_cols[0].metric(
         "Gross Profit · Reported",
-        format_money(period_gross_profit),
+        format_money(period_gross_profit, financial_currency),
     )
     secondary_cols[1].metric(
         "Gross Margin · Calculated",
@@ -169,7 +171,8 @@ def render_financials(
     secondary_cols[2].metric(
         "Operating Income · Reported",
         format_money(
-            period_operating_income
+            period_operating_income,
+            financial_currency,
         ),
     )
     secondary_cols[3].metric(
@@ -191,7 +194,8 @@ def render_financials(
         {
             "Metric": "Revenue",
             "Value": format_money(
-                period_revenue
+                period_revenue,
+                financial_currency,
             ),
             "Type": "Reported",
             "Period": financial_period_label,
@@ -200,7 +204,8 @@ def render_financials(
         {
             "Metric": "Gross Profit",
             "Value": format_money(
-                period_gross_profit
+                period_gross_profit,
+                financial_currency,
             ),
             "Type": "Reported",
             "Period": financial_period_label,
@@ -209,7 +214,8 @@ def render_financials(
         {
             "Metric": "Operating Income",
             "Value": format_money(
-                period_operating_income
+                period_operating_income,
+                financial_currency,
             ),
             "Type": "Reported",
             "Period": financial_period_label,
@@ -218,7 +224,8 @@ def render_financials(
         {
             "Metric": "Net Income",
             "Value": format_money(
-                period_net_income
+                period_net_income,
+                financial_currency,
             ),
             "Type": "Reported",
             "Period": financial_period_label,
@@ -287,6 +294,8 @@ def render_financials(
                 "annual_source"
             ]
         )
+        + " · reporting currency: "
+        + str(financial_currency)
     )
     chart_cols = st.columns(2)
 
@@ -630,13 +639,15 @@ def render_financials(
     cash_flow_cols[0].metric(
         "Operating Cash Flow · Reported",
         format_money(
-            operating_cash_flow
+            operating_cash_flow,
+            financial_currency,
         ),
     )
     cash_flow_cols[1].metric(
         "Capital Expenditure · Reported",
         format_money(
-            capital_expenditure
+            capital_expenditure,
+            financial_currency,
         ),
     )
     cash_flow_cols[2].metric(
@@ -652,7 +663,8 @@ def render_financials(
             )
         ),
         format_money(
-            free_cash_flow
+            free_cash_flow,
+            financial_currency,
         ),
         help=(
             "Reported when Yahoo exposes a direct free-cash-flow row; "
@@ -750,21 +762,22 @@ def render_financials(
     balance_cols = st.columns(4)
     balance_cols[0].metric(
         "Cash",
-        format_money(cash_value),
+        format_money(cash_value, financial_currency),
     )
     balance_cols[1].metric(
         "Cash + Investments",
         format_money(
-            cash_investments_value
+            cash_investments_value,
+            financial_currency,
         ),
     )
     balance_cols[2].metric(
         "Total Debt",
-        format_money(debt_value),
+        format_money(debt_value, financial_currency),
     )
     balance_cols[3].metric(
         "Total Assets",
-        format_money(assets_value),
+        format_money(assets_value, financial_currency),
     )
 
     financial_source = (
