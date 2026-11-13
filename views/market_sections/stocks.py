@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 import pandas as pd
 import streamlit as st
 
@@ -270,7 +272,12 @@ def render_stocks_workspace(
                 finviz_market = pd.DataFrame()
     
             if not finviz_market.empty:
-                screener_cols = st.columns(2)
+                screener_retrieved_at = (
+                    datetime.now(
+                        timezone.utc
+                    ).isoformat()
+                )
+                screener_cols = st.columns(3)
                 with screener_cols[0]:
                     min_relative_volume = (
                         st.number_input(
@@ -292,6 +299,16 @@ def render_stocks_workspace(
                             step=0.5,
                             key="finviz_min_abs_change",
                         )
+                    )
+                with screener_cols[2]:
+                    screener_sort = st.selectbox(
+                        "Sort by",
+                        [
+                            "Absolute daily move",
+                            "Relative volume",
+                            "Market cap",
+                        ],
+                        key="market_screener_sort",
                     )
     
                 covered = finviz_market[
@@ -324,10 +341,64 @@ def render_stocks_workspace(
                         values.abs().fillna(-1)
                         >= min_abs_change
                     ]
+
+                if (
+                    screener_sort
+                    == "Absolute daily move"
+                    and "Change"
+                    in covered.columns
+                ):
+                    covered["_sort_value"] = (
+                        covered["Change"]
+                        .apply(finviz_numeric)
+                        .abs()
+                    )
+                elif (
+                    screener_sort
+                    == "Relative volume"
+                    and "Relative Volume"
+                    in covered.columns
+                ):
+                    covered["_sort_value"] = (
+                        covered[
+                            "Relative Volume"
+                        ].apply(
+                            finviz_numeric
+                        )
+                    )
+                elif (
+                    "Market Cap"
+                    in covered.columns
+                ):
+                    covered["_sort_value"] = (
+                        covered[
+                            "Market Cap"
+                        ].apply(
+                            finviz_numeric
+                        )
+                    )
+
+                if (
+                    "_sort_value"
+                    in covered.columns
+                ):
+                    covered = (
+                        covered.sort_values(
+                            "_sort_value",
+                            ascending=False,
+                            na_position="last",
+                        )
+                        .drop(
+                            columns=[
+                                "_sort_value"
+                            ]
+                        )
+                    )
     
                 preferred = [
                     "Ticker",
                     "Company",
+                    "Exchange",
                     "Price",
                     "Change",
                     "Volume",
@@ -344,6 +415,14 @@ def render_stocks_workspace(
                     if column in covered.columns
                 ]
                 if not covered.empty:
+                    st.caption(
+                        f"{len(covered):,} companies match the current screener filters · "
+                        "snapshot retrieved "
+                        + format_utc_timestamp(
+                            screener_retrieved_at,
+                            fallback="Unavailable",
+                        )
+                    )
                     render_crisp_table(
                         st,
                         covered[visible],
