@@ -3,6 +3,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from market_data import get_company_financial_snapshot
+from methodology import calculation_methodology_markdown
 from financial_utils import (
     calc_margin,
     format_money,
@@ -892,16 +893,7 @@ def render_financials(
                 )
 
         st.markdown(
-            "**Calculated metrics**\n\n"
-            "- Revenue growth = (current revenue − comparable prior revenue) ÷ comparable prior revenue × 100.\n"
-            "- Gross margin = gross profit ÷ revenue × 100.\n"
-            "- Operating margin = operating income ÷ revenue × 100.\n"
-            "- Net margin = net income ÷ revenue × 100.\n"
-            "- Free cash flow = operating cash flow − capital expenditures when a direct FCF row is unavailable."
-        )
-        st.caption(
-            "EquityLens does not replace a missing reported figure with zero. "
-            "Calculations are shown only when the required source values exist."
+            calculation_methodology_markdown()
         )
 
     st.caption(
