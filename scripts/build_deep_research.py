@@ -958,6 +958,8 @@ def build_financial_records(
     ) -> dict:
         if not point:
             return {
+                "period_end": None,
+                "frame": None,
                 "revenue": None,
                 "gross_profit": None,
                 "operating_income": None,
@@ -965,6 +967,10 @@ def build_financial_records(
             }
         end = point.get("end")
         return {
+            "period_end": end,
+            "frame": point.get(
+                "frame"
+            ),
             "revenue": numeric(point),
             "gross_profit": metric_value_for_period(
                 quarter_metrics["gross_profit"],
@@ -1011,6 +1017,8 @@ def build_financial_records(
     )
 
     prior_year_quarter = {
+        "period_end": None,
+        "frame": None,
         "revenue": None,
         "gross_profit": None,
         "operating_income": None,
@@ -1024,6 +1032,10 @@ def build_financial_records(
                 if point.get("frame") == prior_frame:
                     end = point.get("end")
                     prior_year_quarter = {
+                        "period_end": end,
+                        "frame": point.get(
+                            "frame"
+                        ),
                         "revenue": numeric(point),
                         "gross_profit": metric_value_for_period(
                             quarter_metrics["gross_profit"],
