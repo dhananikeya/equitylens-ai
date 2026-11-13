@@ -125,7 +125,7 @@ def render_company_research(
         ]
     )
 
-    workspace_filters = st.columns(2)
+    workspace_filters = st.columns(4)
 
     with workspace_filters[0]:
         workspace_sector = st.selectbox(
@@ -159,10 +159,120 @@ def render_company_research(
             key="workspace_industry",
         )
 
+    market_cap_options = [
+        "All market caps",
+        "Mega cap",
+        "Large cap",
+        "Mid cap",
+        "Small cap",
+        "Micro cap",
+        "Unknown",
+    ]
+    with workspace_filters[2]:
+        workspace_market_cap_band = st.selectbox(
+            "Market cap",
+            market_cap_options,
+            key="workspace_market_cap_band",
+        )
+
+    country_options = sorted(
+        [
+            str(value).strip()
+            for value in workspace_universe[
+                "Country"
+            ].dropna().unique().tolist()
+            if str(value).strip()
+        ]
+    )
+    with workspace_filters[3]:
+        workspace_country = st.selectbox(
+            "Country",
+            ["All countries"] + country_options,
+            key="workspace_country",
+        )
+
+    secondary_filters = st.columns(2)
+    issuer_options = sorted(
+        [
+            str(value).strip()
+            for value in workspace_universe.get(
+                "Issuer Type",
+                pd.Series(dtype=str),
+            ).dropna().unique().tolist()
+            if str(value).strip()
+        ]
+    )
+    with secondary_filters[0]:
+        workspace_issuer_type = st.selectbox(
+            "Issuer type",
+            ["All issuer types"] + issuer_options,
+            key="workspace_issuer_type",
+        )
+
+    reporting_options = sorted(
+        [
+            str(value).strip()
+            for value in workspace_universe.get(
+                "Reporting Regime",
+                pd.Series(dtype=str),
+            ).dropna().unique().tolist()
+            if str(value).strip()
+        ]
+    )
+    with secondary_filters[1]:
+        workspace_reporting_regime = st.selectbox(
+            "SEC reporting",
+            ["All reporting regimes"] + reporting_options,
+            key="workspace_reporting_regime",
+        )
+
     workspace_filtered = workspace_sector_df.copy()
     if workspace_industry != "All industries":
         workspace_filtered = workspace_filtered[
             workspace_filtered["Industry"] == workspace_industry
+        ].copy()
+    if (
+        workspace_market_cap_band
+        != "All market caps"
+        and "Market Cap Band"
+        in workspace_filtered.columns
+    ):
+        workspace_filtered = workspace_filtered[
+            workspace_filtered[
+                "Market Cap Band"
+            ]
+            == workspace_market_cap_band
+        ].copy()
+    if workspace_country != "All countries":
+        workspace_filtered = workspace_filtered[
+            workspace_filtered[
+                "Country"
+            ]
+            == workspace_country
+        ].copy()
+    if (
+        workspace_issuer_type
+        != "All issuer types"
+        and "Issuer Type"
+        in workspace_filtered.columns
+    ):
+        workspace_filtered = workspace_filtered[
+            workspace_filtered[
+                "Issuer Type"
+            ]
+            == workspace_issuer_type
+        ].copy()
+    if (
+        workspace_reporting_regime
+        != "All reporting regimes"
+        and "Reporting Regime"
+        in workspace_filtered.columns
+    ):
+        workspace_filtered = workspace_filtered[
+            workspace_filtered[
+                "Reporting Regime"
+            ]
+            == workspace_reporting_regime
         ].copy()
 
     search_text = workspace_search.strip()
@@ -249,6 +359,12 @@ def render_company_research(
                 "Sector",
                 "Industry",
                 "Country",
+                "Listing Status",
+                "Share Class",
+                "Issuer Type",
+                "Reporting Regime",
+                "Market Cap Band",
+                "Registration Year",
                 "Market Cap",
                 "P/E",
                 "Price",
