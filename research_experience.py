@@ -12,6 +12,8 @@ import io
 from datetime import datetime, timezone
 from urllib.parse import urlparse
 
+from home_search import rank_company_matches
+
 SOURCE_UNAVAILABLE = "Structured research is still being added for this company."
 
 
@@ -105,78 +107,118 @@ def _analysis_sources(analysis, filings):
     return sources[:6]
 
 
-def render_home_discovery(st, universe, open_company_research, sec_summary):
-    """Guided first interaction without replacing the original landing page."""
+def render_home_discovery(
+    st,
+    universe,
+    open_company_research,
+    sec_summary,
+    research_coverage,
+):
+    """Make company discovery the primary Home interaction."""
     st.markdown(
-        '<div class="el-readability-intro"><strong>Start with a question, not a spreadsheet.</strong>'
-        '<p>Search a U.S. public company to see its business model, financial trends, '
-        'SEC filings, and questions worth investigating. Open access, no account required.</p>'
+        '<div class="el-readability-intro">'
+        '<strong>Start with a company.</strong>'
+        '<p>Search by ticker, company name, or a familiar alias. '
+        'EquityLens shows the available research depth before you open the profile.</p>'
         '</div>',
         unsafe_allow_html=True,
     )
-    left, right = st.columns([1.55, 1], gap="large")
-    with left:
-        search = st.text_input(
-            "Find a company",
-            placeholder="Try Apple, AAPL, Microsoft, or MSFT",
-            key="home_company_lookup",
-            help="Find a company in the covered market universe. All research is free.",
-        ).strip()
-        if search:
-            tickers = universe["Ticker"].fillna("").astype(str)
-            companies = universe["Company"].fillna("").astype(str)
-            matching = universe[
-                tickers.str.contains(search, case=False, regex=False)
-                | companies.str.contains(search, case=False, regex=False)
-            ].head(5)
-            if matching.empty:
-                st.caption("No matches in the current coverage list. Try a company name or ticker.")
-            else:
-                for _, row in matching.iterrows():
-                    ticker = str(row.get("Ticker", "")).upper().strip()
-                    company = str(row.get("Company", ticker))
-                    if ticker:
-                        st.button(
-                            "%s · %s" % (ticker, company),
-                            key="home_lookup_%s" % ticker,
-                            on_click=open_company_research,
-                            args=(ticker,),
-                            use_container_width=True,
-                        )
+
+    search = st.text_input(
+        "Search companies",
+        placeholder="Search Apple, AAPL, Google, Microsoft, NVIDIA…",
+        key="home_company_lookup",
+        help=(
+            "Live suggestions rank exact tickers first, then company names, aliases, "
+            "partial matches, and close misspellings."
+        ),
+    ).strip()
+
+    if search:
+        matching = rank_company_matches(
+            universe,
+            search,
+            research_coverage=research_coverage,
+            limit=8,
+        )
+        if not matching:
+            st.caption(
+                "No close match found in the current company universe. "
+                "Try a ticker, company name, or shorter spelling."
+            )
         else:
-            st.caption("Examples to explore")
-            examples = [
-                (ticker, name) for ticker, name in [
-                    ("AAPL", "Apple"), ("MSFT", "Microsoft"), ("NVDA", "NVIDIA"),
-                ] if (universe["Ticker"].fillna("").astype(str).str.upper() == ticker).any()
+            st.caption(
+                "Best matches · ticker, company, industry, and current research status"
+            )
+            for result in matching:
+                ticker = result["ticker"]
+                st.button(
+                    f"{ticker} · {result['company']}",
+                    key=f"home_lookup_{ticker}",
+                    on_click=open_company_research,
+                    args=(ticker,),
+                    use_container_width=True,
+                )
+                st.caption(
+                    f"{result['industry']} · {result['status']} · "
+                    f"{result['completeness']}% research completeness"
+                )
+    else:
+        st.caption("Examples to explore")
+        examples = [
+            (ticker, label)
+            for ticker, label in [
+                ("AAPL", "Apple"),
+                ("MSFT", "Microsoft"),
+                ("NVDA", "NVIDIA"),
+                ("GOOGL", "Alphabet"),
             ]
-            example_cols = st.columns(max(1, len(examples)))
-            for col, (ticker, label) in zip(example_cols, examples):
-                with col:
-                    st.button(
-                        label, key="home_example_%s" % ticker,
-                        on_click=open_company_research, args=(ticker,),
-                        use_container_width=True,
-                    )
-    with right:
-        total = len(universe)
-        summary_ready = bool((sec_summary or {}).get("_ready", False))
-        synced = int((sec_summary or {}).get("synced_companies", 0) or 0)
-        sec_copy = (
-            f"{synced:,} with available SEC filing records."
-            if summary_ready
-            else "SEC filing coverage index is refreshing."
+            if (
+                universe["Ticker"]
+                .fillna("")
+                .astype(str)
+                .str.upper()
+                == ticker
+            ).any()
+        ]
+        example_cols = st.columns(
+            max(1, len(examples))
         )
-        st.markdown(
-            '<div class="el-evidence-card">'
-            '<div class="el-quicklabel">Research coverage</div>'
-            '<h4>%s public companies</h4>'
-            '<p>%s</p>'
-            '<p>Coverage does not imply that every company has a completed deep-dive.</p>'
-            '</div>' % (f"{total:,}", sec_copy),
-            unsafe_allow_html=True,
+        for col, (ticker, label) in zip(
+            example_cols,
+            examples,
+        ):
+            with col:
+                st.button(
+                    label,
+                    key=f"home_example_{ticker}",
+                    on_click=open_company_research,
+                    args=(ticker,),
+                    use_container_width=True,
+                )
+
+    summary_ready = bool(
+        (sec_summary or {}).get(
+            "_ready",
+            False,
         )
-    st.caption("Educational research only. No sign-in, subscription, paywall, or personalized investment recommendations.")
+    )
+    synced = int(
+        (sec_summary or {}).get(
+            "synced_companies",
+            0,
+        )
+        or 0
+    )
+    sec_copy = (
+        f"{synced:,} companies with indexed SEC filing records."
+        if summary_ready
+        else "SEC filing coverage index is refreshing."
+    )
+    st.caption(
+        sec_copy
+        + " Coverage depth varies by company and is shown in every search result."
+    )
 
 
 def _watchlist_store(st):
