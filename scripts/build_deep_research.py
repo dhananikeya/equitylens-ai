@@ -903,24 +903,66 @@ def build_financial_records(
         ]
     }
 
-    latest_quarter_point = (
-        quarter_metrics["revenue"][0]
-        if quarter_metrics["revenue"]
-        else {}
+    revenue_quarters = (
+        quarter_metrics["revenue"]
     )
-    quarter_end = latest_quarter_point.get("end")
-    quarter_frame = latest_quarter_point.get("frame")
+    quarterly_report_end = str(
+        quarterly_filing.get(
+            "report_date",
+            "",
+        )
+        or ""
+    ).strip()
+    latest_quarter_point = next(
+        (
+            point
+            for point in revenue_quarters
+            if quarterly_report_end
+            and str(
+                point.get(
+                    "end",
+                    "",
+                )
+            )
+            == quarterly_report_end
+        ),
+        (
+            revenue_quarters[0]
+            if revenue_quarters
+            else {}
+        ),
+    )
+    quarter_end = latest_quarter_point.get(
+        "end"
+    )
+    quarter_frame = latest_quarter_point.get(
+        "frame"
+    )
 
-    def quarter_record(index: int) -> dict:
-        revenue_points = quarter_metrics["revenue"]
-        if index >= len(revenue_points):
+    def quarter_frame_ordinal(
+        frame,
+    ) -> int | None:
+        match = re.match(
+            r"CY(\d{4})Q([1-4])$",
+            str(frame or ""),
+        )
+        if not match:
+            return None
+        return (
+            int(match.group(1)) * 4
+            + int(match.group(2))
+        )
+
+    def quarter_record_from_point(
+        point: dict,
+    ) -> dict:
+        if not point:
             return {
                 "revenue": None,
                 "gross_profit": None,
                 "operating_income": None,
                 "net_income": None,
             }
-        point = revenue_points[index]
         end = point.get("end")
         return {
             "revenue": numeric(point),
@@ -938,8 +980,35 @@ def build_financial_records(
             ),
         }
 
-    latest_quarter = quarter_record(0)
-    prior_quarter = quarter_record(1)
+    latest_quarter = (
+        quarter_record_from_point(
+            latest_quarter_point
+        )
+    )
+
+    latest_ordinal = (
+        quarter_frame_ordinal(
+            quarter_frame
+        )
+    )
+    prior_quarter_point = {}
+    if latest_ordinal is not None:
+        prior_quarter_point = next(
+            (
+                point
+                for point in revenue_quarters
+                if quarter_frame_ordinal(
+                    point.get("frame")
+                )
+                == latest_ordinal - 1
+            ),
+            {},
+        )
+    prior_quarter = (
+        quarter_record_from_point(
+            prior_quarter_point
+        )
+    )
 
     prior_year_quarter = {
         "revenue": None,
@@ -971,10 +1040,70 @@ def build_financial_records(
                     }
                     break
 
+    ltm_frames = []
+    if latest_ordinal is not None:
+        desired_ordinals = [
+            latest_ordinal - offset
+            for offset in range(4)
+        ]
+        revenue_by_ordinal = {
+            quarter_frame_ordinal(
+                point.get("frame")
+            ): point
+            for point in revenue_quarters
+            if quarter_frame_ordinal(
+                point.get("frame")
+            )
+            is not None
+        }
+        if all(
+            ordinal
+            in revenue_by_ordinal
+            for ordinal in desired_ordinals
+        ):
+            ltm_frames = [
+                str(
+                    revenue_by_ordinal[
+                        ordinal
+                    ].get(
+                        "frame",
+                        "",
+                    )
+                )
+                for ordinal in (
+                    desired_ordinals
+                )
+            ]
+
     def ltm_value(metric: str) -> float | int | None:
-        points = quarter_metrics[metric][:4]
-        values = [numeric(point) for point in points]
-        if len(values) < 4 or any(value is None for value in values):
+        if len(ltm_frames) != 4:
+            return None
+
+        points_by_frame = {
+            str(
+                point.get(
+                    "frame",
+                    "",
+                )
+            ): point
+            for point in quarter_metrics[
+                metric
+            ]
+            if point.get("frame")
+        }
+        values = [
+            numeric(
+                points_by_frame.get(
+                    frame,
+                    {},
+                )
+            )
+            for frame in ltm_frames
+        ]
+        if any(
+            value is None
+            for value in values
+        ):
             return None
         return sum(values)
 
