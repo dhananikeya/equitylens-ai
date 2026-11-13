@@ -15,6 +15,7 @@ import streamlit as st
 from app_runtime import (
     load_company_universe,
     load_company_universe_metadata,
+    load_data_quality_report,
     load_json,
     load_research_datasets,
     load_research_coverage,
@@ -96,6 +97,9 @@ sec_summary = load_sec_summary()
 company_universe = load_company_universe()
 company_universe_metadata = (
     load_company_universe_metadata()
+)
+data_quality_report = (
+    load_data_quality_report()
 )
 
 required_universe_columns = {
@@ -936,6 +940,41 @@ if _debug_flag in {"1", "true", "yes"}:
             hide_index=True,
         )
 
+        quality_summary = (
+            data_quality_report.get(
+                "summary",
+                {},
+            )
+            or {}
+        )
+        st.markdown(
+            "**Data quality**"
+        )
+        quality_cols = st.columns(3)
+        quality_cols[0].metric(
+            "Companies with errors",
+            quality_summary.get(
+                "companies_with_errors",
+                0,
+            ),
+        )
+        quality_cols[1].metric(
+            "Companies with warnings",
+            quality_summary.get(
+                "companies_with_warnings",
+                0,
+            ),
+        )
+        quality_cols[2].metric(
+            "Quality snapshot",
+            (
+                data_quality_report.get(
+                    "generated_at_utc"
+                )
+                or "Unavailable"
+            ),
+        )
+
         navigation_status = (
             "within target"
             if _app_run_elapsed_ms <= NAVIGATION_RERUN_BUDGET_MS
@@ -972,6 +1011,39 @@ with st.expander(
     st.markdown(
         calculation_methodology_markdown()
     )
+    quality_summary = (
+        data_quality_report.get(
+            "summary",
+            {},
+        )
+        or {}
+    )
+    if data_quality_report.get(
+        "generated_at_utc"
+    ):
+        st.caption(
+            "Automated data-quality snapshot: "
+            + str(
+                quality_summary.get(
+                    "companies_with_errors",
+                    0,
+                )
+            )
+            + " companies with correctness errors · "
+            + str(
+                quality_summary.get(
+                    "companies_with_warnings",
+                    0,
+                )
+            )
+            + " with metadata/source warnings · generated "
+            + str(
+                data_quality_report.get(
+                    "generated_at_utc"
+                )
+            )
+            + ". Coverage gaps are tracked separately from correctness errors."
+        )
     st.markdown(
         """
         **Educational disclosure**
