@@ -2,6 +2,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+from market_data import get_company_financial_snapshot
 from financial_utils import (
     calc_margin,
     format_money,
@@ -24,6 +25,47 @@ def render_financials(
         "Financials",
         "Income Statement & Balance Sheet",
     )
+
+    supplemental_financials = (
+        selected_financial_fallback
+        if isinstance(
+            selected_financial_fallback,
+            dict,
+        )
+        else {}
+    )
+    supplemental_key = (
+        "company_financial_section::"
+        + selected_ticker
+    )
+    if not supplemental_financials.get(
+        "cash_flow"
+    ):
+        cached_supplemental = (
+            st.session_state.get(
+                supplemental_key
+            )
+        )
+        if not isinstance(
+            cached_supplemental,
+            dict,
+        ):
+            try:
+                cached_supplemental = (
+                    get_company_financial_snapshot(
+                        selected_ticker
+                    )
+                )
+            except Exception:
+                cached_supplemental = {}
+            st.session_state[
+                supplemental_key
+            ] = cached_supplemental
+
+        if cached_supplemental:
+            supplemental_financials = (
+                cached_supplemental
+            )
 
     latest_financial_period = income_selection[
         "record"
@@ -550,7 +592,7 @@ def render_financials(
         "**Cash Flow Snapshot**"
     )
     fallback_cash_flow = (
-        selected_financial_fallback.get(
+        supplemental_financials.get(
             "cash_flow",
             {},
         )
@@ -617,7 +659,7 @@ def render_financials(
         )
     )
     fallback_capital = (
-        selected_financial_fallback.get(
+        supplemental_financials.get(
             "capital_structure",
             {},
         )
