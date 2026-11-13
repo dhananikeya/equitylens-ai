@@ -21,12 +21,8 @@ from financial_utils import (
 from models.context import CompanyResearchContext
 from market_data import (
     finviz_numeric,
-    get_company_analyst_data,
     get_company_financial_snapshot,
-    get_company_ownership_data,
     get_live_market_data,
-    get_major_etf_exposure,
-    get_market_history,
 )
 from research_experience import (
     render_company_evidence,
@@ -529,26 +525,23 @@ def render_company_research(
         )
     )
 
-    research_fields = [
-        selected_analysis.get("business_model"),
-        selected_analysis.get("primary_revenue_source"),
-        selected_analysis.get("customer_type"),
-        selected_analysis.get("competitive_risk"),
-        selected_analysis.get("operational_risk"),
-        selected_analysis.get("profitability_history"),
-        selected_analysis.get("key_risk_themes"),
-    ]
-    research_field_count = sum(bool(value) for value in research_fields)
-    if selected_analysis.get("business_model") and research_field_count >= 4:
+    qualitative_depth = float(
+        selected_coverage.get(
+            "qualitative_depth_percent",
+            0,
+        )
+        or 0
+    )
+    if qualitative_depth >= 80:
         research_status = (
-            "Available",
-            f"{research_field_count} structured research fields",
+            "Deep",
+            f"{qualitative_depth:.0f}% of qualitative research fields populated",
             "available",
         )
-    elif research_field_count:
+    elif qualitative_depth > 0:
         research_status = (
             "Partial",
-            f"{research_field_count} structured research fields",
+            f"{qualitative_depth:.0f}% of qualitative research fields populated",
             "partial",
         )
     else:
