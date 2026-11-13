@@ -1971,3 +1971,54 @@ hr {
         white-space: nowrap;
     }
 }
+
+
+/* Market Monitor navigation and 16:9 heat map */
+.st-key-market_monitor_section [role="radiogroup"] {
+    gap: .35rem;
+    padding: .35rem;
+    border: 1px solid var(--el-border);
+    border-radius: 9px;
+    background: rgba(9,18,23,.72);
+}
+
+.st-key-market_monitor_section [role="radiogroup"] label:has(input:checked) {
+    border: 1px solid rgba(22,199,178,.45);
+    border-radius: 7px;
+    background: rgba(22,199,178,.08);
+}
+
+.st-key-nyse_heatmap_visual {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    min-height: 420px;
+    overflow: hidden;
+}
+
+.st-key-nyse_heatmap_visual [data-testid="stPlotlyChart"],
+.st-key-nyse_heatmap_visual .js-plotly-plot,
+.st-key-nyse_heatmap_visual .plot-container,
+.st-key-nyse_heatmap_visual .svg-container {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+@media (max-width: 760px) {
+    .st-key-market_monitor_section [role="radiogroup"] {
+        display: flex;
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scrollbar-width: thin;
+    }
+
+    .st-key-market_monitor_section [role="radiogroup"] label {
+        flex: 0 0 auto;
+        white-space: nowrap;
+    }
+
+    .st-key-nyse_heatmap_visual {
+        min-height: 0;
+        aspect-ratio: 16 / 9;
+    }
+}
