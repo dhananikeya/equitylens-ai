@@ -4,6 +4,8 @@ from datetime import datetime, timezone
 import pandas as pd
 import streamlit as st
 
+from market_units import market_cap_dollars
+
 from services.providers.finviz import fetch_screener
 import yfinance as yf
 
@@ -293,12 +295,11 @@ def finviz_numeric(value):
 
 
 def finviz_market_cap_dollars(value):
-    """Market-screener plain market-cap values are in millions unless suffixed."""
-    parsed = finviz_numeric(value)
-    if parsed is None:
-        return None
-    text = str(value).strip()
-    return parsed if text[-1:].upper() in {"K", "M", "B", "T"} else parsed * 1_000_000
+    """Normalize Finviz market-cap fields to dollars."""
+    return market_cap_dollars(
+        value,
+        plain_numbers_are_millions=True,
+    )
 
 
 @st.cache_data(ttl=900)
