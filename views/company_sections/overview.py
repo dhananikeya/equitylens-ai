@@ -35,6 +35,7 @@ def render_overview(
     income_selection,
     workspace_growth,
     workspace_revenue,
+    financial_currency,
     financial_period,
     revenue_source_label,
     filing_form,
@@ -663,7 +664,8 @@ def render_overview(
                 ),
                 "Revenue": (
                     format_money(
-                        workspace_revenue
+                        workspace_revenue,
+                        financial_currency,
                     )
                 ),
                 "Revenue growth": (
