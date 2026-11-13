@@ -328,6 +328,15 @@ def _sync_url(
             "ticker"
         ]
 
+    if (
+        destination
+        != "Company Research"
+        and "view" in st.query_params
+    ):
+        del st.query_params[
+            "view"
+        ]
+
 
 def navigate_to(destination):
     navigate_to_state(
@@ -366,6 +375,8 @@ def open_company_research(ticker):
     ][:6]
 
     reset_coverage_selection()
+    if "view" in st.query_params:
+        del st.query_params["view"]
     _sync_url(
         "Company Research",
         normalized_ticker,
