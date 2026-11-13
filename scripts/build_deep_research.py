@@ -578,6 +578,82 @@ def dedupe_period_points(points: list[dict]) -> list[dict]:
     )
 
 
+def dedupe_annual_period_points(
+    points: list[dict],
+) -> list[dict]:
+    """Keep one annual fact per actual reporting-period end.
+
+    SEC Company Facts can repeat a comparative prior-year value in a newer
+    filing with the newer filing's fiscal-year context. The period end is the
+    stable identity of the annual fact; the newest filed value wins.
+    """
+    output = {}
+    for point in points:
+        end = str(
+            point.get(
+                "end",
+                "",
+            )
+        ).strip()
+        key = (
+            end
+            or str(
+                point.get(
+                    "frame",
+                    "",
+                )
+            ).strip()
+            or str(
+                point.get(
+                    "filed",
+                    "",
+                )
+            ).strip()
+            or str(
+                point.get(
+                    "val",
+                    "",
+                )
+            )
+        )
+        previous = output.get(key)
+        if (
+            previous is None
+            or str(
+                point.get(
+                    "filed",
+                    "",
+                )
+            )
+            > str(
+                previous.get(
+                    "filed",
+                    "",
+                )
+            )
+        ):
+            output[key] = point
+
+    return sorted(
+        output.values(),
+        key=lambda item: (
+            str(
+                item.get(
+                    "end",
+                    "",
+                )
+            ),
+            str(
+                item.get(
+                    "filed",
+                    "",
+                )
+            ),
+        ),
+        reverse=True,
+    )
+
+
 def annual_points(companyfacts: dict, metric: str) -> list[dict]:
     points = fact_points(companyfacts, FACT_TAGS[metric])
     filtered = [
@@ -589,7 +665,9 @@ def annual_points(companyfacts: dict, metric: str) -> list[dict]:
             or not point.get("fp")
         )
     ]
-    return dedupe_period_points(filtered)
+    return dedupe_annual_period_points(
+        filtered
+    )
 
 
 def quarterly_points(companyfacts: dict, metric: str) -> list[dict]:
@@ -658,26 +736,86 @@ def build_financial_records(
     }
 
     revenue_annual = annual["revenue"]
-    latest_revenue_point = revenue_annual[0] if revenue_annual else {}
-    latest_end = latest_revenue_point.get("end")
-    latest_fy = latest_revenue_point.get("fy")
+    annual_report_end = str(
+        annual_filing.get(
+            "report_date",
+            "",
+        )
+        or ""
+    ).strip()
+
+    latest_revenue_point = next(
+        (
+            point
+            for point in revenue_annual
+            if annual_report_end
+            and str(
+                point.get(
+                    "end",
+                    "",
+                )
+            )
+            == annual_report_end
+        ),
+        (
+            revenue_annual[0]
+            if revenue_annual
+            else {}
+        ),
+    )
+    latest_end = latest_revenue_point.get(
+        "end"
+    )
+    latest_fy = (
+        int(
+            str(
+                latest_end
+            )[:4]
+        )
+        if (
+            latest_end
+            and str(
+                latest_end
+            )[:4].isdigit()
+        )
+        else latest_revenue_point.get(
+            "fy"
+        )
+    )
 
     history = []
     for point in revenue_annual[:3]:
-        fy = point.get("fy")
-        end = point.get("end")
+        end = str(
+            point.get(
+                "end",
+                "",
+            )
+            or ""
+        )
+        fiscal_year = (
+            int(end[:4])
+            if (
+                len(end) >= 4
+                and end[:4].isdigit()
+            )
+            else point.get("fy")
+        )
         history.append({
-            "fiscal_year": fy or (
-                int(end[:4]) if isinstance(end, str) and len(end) >= 4 else None
+            "fiscal_year": fiscal_year,
+            "period_end": (
+                end or None
             ),
             "revenue": numeric(point),
             "operating_income": metric_value_for_period(
                 annual["operating_income"],
-                end=end,
-                fy=fy,
+                end=(
+                    end or None
+                ),
             ),
         })
-    history = list(reversed(history))
+    history = list(
+        reversed(history)
+    )
 
     cash_point = latest_balance_point(companyfacts, "cash")
     investments_point = latest_balance_point(
@@ -715,11 +853,7 @@ def build_financial_records(
         "industry": company.get("Industry", "Unclassified"),
         "sector": company.get("Sector", ""),
         "country": company.get("Country", ""),
-        "fiscal_year": latest_fy or (
-            int(latest_end[:4])
-            if isinstance(latest_end, str) and len(latest_end) >= 4
-            else None
-        ),
+        "fiscal_year": latest_fy,
         "fiscal_year_end": latest_end,
         "source": annual_filing.get("form", "SEC annual filing"),
         "filing_url": annual_filing.get("url", ""),
