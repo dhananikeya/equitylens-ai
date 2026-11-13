@@ -1855,3 +1855,57 @@ hr {
         min-height: 0;
     }
 }
+
+
+/* Navigation state, breadcrumbs, and compact mobile command bar */
+.st-key-main_navigation [role="radiogroup"] label:has(input:checked) {
+    border: 1px solid rgba(22,199,178,.45);
+    border-radius: 7px;
+    background: rgba(22,199,178,.08);
+    color: var(--el-text);
+}
+
+.st-key-main_navigation [role="radiogroup"] label:has(input:checked) p {
+    color: var(--el-text) !important;
+    font-weight: 600;
+}
+
+.el-breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .38rem;
+    margin: .15rem 0 .65rem;
+    color: var(--el-muted-2);
+    font-family: var(--el-mono);
+    font-size: .68rem;
+}
+
+.el-breadcrumbs span:last-child {
+    color: var(--el-muted);
+}
+
+.el-breadcrumb-separator {
+    color: rgba(143,156,166,.45) !important;
+}
+
+@media (max-width: 640px) {
+    .st-key-top_command_bar .st-key-main_navigation [role="radiogroup"] {
+        display: flex;
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scrollbar-width: thin;
+        padding-bottom: .45rem;
+    }
+
+    .st-key-top_command_bar .st-key-main_navigation [role="radiogroup"] label {
+        flex: 0 0 auto;
+        white-space: nowrap;
+    }
+
+    .st-key-top_command_bar {
+        max-height: 48vh;
+        overflow: visible;
+    }
+}
