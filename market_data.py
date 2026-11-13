@@ -665,6 +665,11 @@ def get_company_financial_snapshot(symbol):
         ],
         latest_cash_flow_column,
     )
+    free_cash_flow_method = (
+        "reported"
+        if free_cash_flow is not None
+        else "unavailable"
+    )
     if (
         free_cash_flow is None
         and operating_cash_flow is not None
@@ -676,6 +681,9 @@ def get_company_financial_snapshot(symbol):
             if capital_expenditure < 0
             else operating_cash_flow
             - capital_expenditure
+        )
+        free_cash_flow_method = (
+            "calculated"
         )
 
     cash_and_investments = _statement_value(
@@ -754,6 +762,9 @@ def get_company_financial_snapshot(symbol):
             "operating_cash_flow": operating_cash_flow,
             "capital_expenditure": capital_expenditure,
             "free_cash_flow": free_cash_flow,
+            "free_cash_flow_method": (
+                free_cash_flow_method
+            ),
             "cash_flow_as_of": (
                 str(latest_cash_flow_column.date())
                 if hasattr(
