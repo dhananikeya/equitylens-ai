@@ -289,11 +289,52 @@ def clear_company_filters():
     clear_company_filters_state(st)
 
 
+def _sync_url(
+    destination,
+    ticker=None,
+):
+    current_section = str(
+        st.query_params.get(
+            "section",
+            "",
+        )
+    )
+    if current_section != destination:
+        st.query_params[
+            "section"
+        ] = destination
+
+    normalized_ticker = str(
+        ticker or ""
+    ).upper().strip()
+    current_ticker = str(
+        st.query_params.get(
+            "ticker",
+            "",
+        )
+    ).upper().strip()
+
+    if normalized_ticker:
+        if current_ticker != normalized_ticker:
+            st.query_params[
+                "ticker"
+            ] = normalized_ticker
+    elif (
+        destination
+        != "Company Research"
+        and "ticker" in st.query_params
+    ):
+        del st.query_params[
+            "ticker"
+        ]
+
+
 def navigate_to(destination):
     navigate_to_state(
         st,
         destination,
     )
+    _sync_url(destination)
 
 
 def open_company_research(ticker):
@@ -325,7 +366,14 @@ def open_company_research(ticker):
     ][:6]
 
     reset_coverage_selection()
-    navigate_to("Company Research")
+    _sync_url(
+        "Company Research",
+        normalized_ticker,
+    )
+    navigate_to_state(
+        st,
+        "Company Research",
+    )
 
 
 def compare_company(company_key):
@@ -397,6 +445,44 @@ def navigate_from_global_search():
         navigate_to(selected)
         return
 
+    selected_text = str(
+        selected or ""
+    )
+    if selected_text.startswith(
+        "filing::"
+    ):
+        form = selected_text.split(
+            "::",
+            1,
+        )[1]
+        remember_choice(
+            "sec_tracker_category",
+            "All forms",
+        )
+        remember_choice(
+            "sec_tracker_forms",
+            [form],
+        )
+        navigate_to("Filings")
+        return
+
+    if selected_text.startswith(
+        "learn::"
+    ):
+        term = selected_text.split(
+            "::",
+            1,
+        )[1]
+        remember_choice(
+            "learning_path",
+            "All Concepts",
+        )
+        st.session_state[
+            "learn_focus_term"
+        ] = term
+        navigate_to("Learn")
+        return
+
     company = global_company_lookup.get(
         selected,
         {},
@@ -406,14 +492,60 @@ def navigate_from_global_search():
         open_company_research(ticker)
 
 
-if not st.session_state.get("shared_link_loaded"):
-    shared_destination = st.query_params.get("section")
-    shared_ticker = str(st.query_params.get("ticker", "")).upper().strip()
-    if shared_destination in navigation_labels:
-        navigate_to(shared_destination)
-    if shared_ticker and shared_ticker in workspace_known_tickers:
-        open_company_research(shared_ticker)
-    st.session_state["shared_link_loaded"] = True
+query_destination = str(
+    st.query_params.get(
+        "section",
+        "",
+    )
+)
+query_ticker = str(
+    st.query_params.get(
+        "ticker",
+        "",
+    )
+).upper().strip()
+query_signature = (
+    query_destination,
+    query_ticker,
+)
+
+if (
+    st.session_state.get(
+        "_last_query_signature"
+    )
+    != query_signature
+):
+    if (
+        query_destination
+        in navigation_labels
+    ):
+        navigate_to_state(
+            st,
+            query_destination,
+        )
+
+    if (
+        query_ticker
+        and query_ticker
+        in workspace_known_tickers
+    ):
+        clear_company_filters()
+        remember_choice(
+            "workspace_company_search",
+            query_ticker,
+        )
+        st.session_state[
+            "last_research_ticker"
+        ] = query_ticker
+        navigate_to_state(
+            st,
+            "Company Research",
+        )
+
+    st.session_state[
+        "_last_query_signature"
+    ] = query_signature
+
 
 st.session_state.setdefault("main_navigation", "Home")
 inject_readability_styles(st)
@@ -433,11 +565,31 @@ with st.container(key="top_command_bar"):
         on_change=navigate_from_global_search,
         label_visibility="collapsed",
     )
+    def sync_main_navigation_url():
+        destination = st.session_state.get(
+            "main_navigation",
+            "Home",
+        )
+        ticker = (
+            st.session_state.get(
+                "last_research_ticker",
+                "",
+            )
+            if destination
+            == "Company Research"
+            else ""
+        )
+        _sync_url(
+            destination,
+            ticker,
+        )
+
     active_destination = st.radio(
         "Explore EquityLens",
         options=list(navigation_labels),
         horizontal=True,
         key="main_navigation",
+        on_change=sync_main_navigation_url,
         label_visibility="collapsed",
     )
 
