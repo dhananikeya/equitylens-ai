@@ -302,9 +302,28 @@ def open_company_research(ticker):
         "workspace_company_search",
         ticker,
     )
+    normalized_ticker = str(
+        ticker
+    ).upper().strip()
     st.session_state[
         "last_research_ticker"
-    ] = ticker
+    ] = normalized_ticker
+
+    recent = [
+        item
+        for item in st.session_state.get(
+            "recent_research_tickers",
+            [],
+        )
+        if item != normalized_ticker
+    ]
+    st.session_state[
+        "recent_research_tickers"
+    ] = [
+        normalized_ticker,
+        *recent,
+    ][:6]
+
     reset_coverage_selection()
     navigate_to("Company Research")
 
@@ -452,6 +471,7 @@ if active_destination == "Home":
         open_company_research=open_company_research,
         navigate_to=navigate_to,
         research_link=research_link,
+        remember_choice=remember_choice,
         ),
     )
 
