@@ -342,15 +342,48 @@ def render_company_research(
     core_snapshot = st.session_state.get(core_snapshot_key)
 
     if core_snapshot is None:
-        try:
-            with loading_panel(
-                "Loading financial statements",
-                "Retrieving the latest available supplemental company financials."
-            ):
-                core_financial_fallback = get_company_financial_snapshot(
-                    selected_ticker
-                )
-        except Exception:
+        capital_structure = (
+            selected_data.get(
+                "capital_structure",
+                {},
+            )
+            or {}
+        )
+        has_structured_balance = any(
+            value is not None
+            for value in [
+                selected_data.get("cash"),
+                selected_data.get("assets"),
+                capital_structure.get(
+                    "cash_and_investments"
+                ),
+                capital_structure.get(
+                    "total_debt"
+                ),
+            ]
+        )
+        needs_financial_fallback = (
+            not selected_coverage.get(
+                "annual_financials"
+            )
+            or not selected_coverage.get(
+                "quarterly_financials"
+            )
+            or not has_structured_balance
+        )
+
+        if needs_financial_fallback:
+            try:
+                with loading_panel(
+                    "Loading financial statements",
+                    "Retrieving supplemental company financials for missing structured fields."
+                ):
+                    core_financial_fallback = get_company_financial_snapshot(
+                        selected_ticker
+                    )
+            except Exception:
+                core_financial_fallback = {}
+        else:
             core_financial_fallback = {}
 
         try:
