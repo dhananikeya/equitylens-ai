@@ -707,6 +707,7 @@ if active_destination == "Industry Comparison":
         company_quarterly=company_quarterly,
         analysis_by_ticker=_analysis_by_ticker,
         company_analysis=company_analysis,
+        research_coverage=research_coverage,
         remember_choice=remember_choice,
         company_universe=company_universe,
         research_link=research_link,
