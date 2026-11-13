@@ -39,6 +39,10 @@ BATCH_SIZE = max(
     int(os.getenv("FINANCIAL_BATCH_SIZE", "50")),
 )
 
+FINANCIAL_PIPELINE_VERSION = (
+    "sec-period-end-v2"
+)
+
 
 def load_universe() -> list[dict]:
     with UNIVERSE_PATH.open(
@@ -126,10 +130,21 @@ def main() -> None:
         if ticker in hand_key_by_ticker:
             continue
 
+        existing_state = (
+            state.get(
+                ticker,
+                {},
+            )
+            or {}
+        )
         if (
             ticker in generated_metric_tickers
             and ticker
             in generated_quarterly_tickers
+            and existing_state.get(
+                "pipeline_version"
+            )
+            == FINANCIAL_PIPELINE_VERSION
         ):
             continue
 
@@ -229,6 +244,9 @@ def main() -> None:
             )
             state[ticker] = {
                 "status": "complete",
+                "pipeline_version": (
+                    FINANCIAL_PIPELINE_VERSION
+                ),
                 "cik": cik,
                 "key": key,
                 "annual_source": (
@@ -256,6 +274,9 @@ def main() -> None:
         except Exception as exc:
             state[ticker] = {
                 "status": "error",
+                "pipeline_version": (
+                    FINANCIAL_PIPELINE_VERSION
+                ),
                 "cik": cik,
                 "key": key,
                 "last_attempt_utc": (
