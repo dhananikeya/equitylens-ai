@@ -191,7 +191,7 @@ def render_company_research(
             key="workspace_country",
         )
 
-    secondary_filters = st.columns(2)
+    secondary_filters = st.columns(3)
     issuer_options = sorted(
         [
             str(value).strip()
@@ -224,6 +224,28 @@ def render_company_research(
             "SEC reporting",
             ["All reporting regimes"] + reporting_options,
             key="workspace_reporting_regime",
+        )
+
+    exchange_options = sorted(
+        [
+            str(value).strip()
+            for value in workspace_universe.get(
+                "Exchange",
+                pd.Series(dtype=str),
+            ).dropna().unique().tolist()
+            if str(value).strip()
+            and str(value).lower()
+            not in {"none", "nan"}
+        ]
+    )
+    with secondary_filters[2]:
+        workspace_exchange = st.selectbox(
+            "Exchange",
+            ["All exchanges"] + exchange_options,
+            key="workspace_exchange",
+            help=(
+                "Exchange filtering becomes available as the connected market-data source supplies exchange metadata."
+            ),
         )
 
     workspace_filtered = workspace_sector_df.copy()
@@ -273,6 +295,18 @@ def render_company_research(
                 "Reporting Regime"
             ]
             == workspace_reporting_regime
+        ].copy()
+    if (
+        workspace_exchange
+        != "All exchanges"
+        and "Exchange"
+        in workspace_filtered.columns
+    ):
+        workspace_filtered = workspace_filtered[
+            workspace_filtered[
+                "Exchange"
+            ].astype(str)
+            == workspace_exchange
         ].copy()
 
     search_text = workspace_search.strip()
@@ -413,6 +447,89 @@ def render_company_research(
             or 0
         )
     )
+
+    workspace_sort = st.selectbox(
+        "Sort companies",
+        [
+            "Research completeness · high to low",
+            "Market cap · high to low",
+            "Company · A to Z",
+            "Ticker · A to Z",
+        ],
+        key="workspace_sort",
+    )
+    if (
+        workspace_sort
+        == "Research completeness · high to low"
+    ):
+        coverage_display = (
+            coverage_display.sort_values(
+                by=[
+                    "Research %",
+                    "Company",
+                ],
+                ascending=[
+                    False,
+                    True,
+                ],
+                na_position="last",
+            )
+            .reset_index(drop=True)
+        )
+    elif (
+        workspace_sort
+        == "Market cap · high to low"
+        and "Market Cap"
+        in coverage_display.columns
+    ):
+        coverage_display[
+            "_MarketCapSort"
+        ] = pd.to_numeric(
+            coverage_display[
+                "Market Cap"
+            ],
+            errors="coerce",
+        )
+        coverage_display = (
+            coverage_display.sort_values(
+                by=[
+                    "_MarketCapSort",
+                    "Company",
+                ],
+                ascending=[
+                    False,
+                    True,
+                ],
+                na_position="last",
+            )
+            .drop(
+                columns=[
+                    "_MarketCapSort"
+                ]
+            )
+            .reset_index(drop=True)
+        )
+    elif (
+        workspace_sort
+        == "Company · A to Z"
+    ):
+        coverage_display = (
+            coverage_display.sort_values(
+                by="Company",
+                kind="stable",
+            ).reset_index(
+                drop=True
+            )
+        )
+    else:
+        coverage_display = (
+            coverage_display.sort_values(
+                by="Ticker",
+                kind="stable",
+            ).reset_index(
+                drop=True
+            )
+        )
 
     with st.expander(
         f"Browse companies · {len(coverage_pool):,} results",
