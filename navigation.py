@@ -12,6 +12,40 @@ NAVIGATION_LABELS = {
     "Learn": "Learn — learn the basics, lessons & financial terms",
 }
 
+
+GLOBAL_FILING_FORMS = (
+    "10-K",
+    "10-Q",
+    "8-K",
+    "S-1",
+    "F-1",
+    "20-F",
+    "6-K",
+)
+
+GLOBAL_LEARN_TERMS = (
+    "S-1 Registration Statement",
+    "8-K Current Report",
+    "Consumer Price Index (CPI)",
+    "Producer Price Index (PPI)",
+    "Employment Situation",
+    "JOLTS",
+    "Employment Cost Index (ECI)",
+    "10-Year Treasury Yield",
+    "SOFR",
+    "Interest-Rate Swap",
+    "Revenue",
+    "Year-over-Year (YoY) Growth",
+    "Gross Margin",
+    "Operating Margin",
+    "Net Income",
+    "LTM / Trailing Twelve Months",
+    "10-K",
+    "10-Q",
+    "Cash + Investments",
+    "Debt",
+)
+
 CHOICE_KEYS = {
     "workspace_company_search",
     "workspace_sector",
@@ -148,15 +182,26 @@ def build_global_company_lookup(
 def global_search_options(
     lookup,
 ):
+    company_options = sorted(
+        lookup,
+        key=lambda option: (
+            lookup[option]["company"].lower(),
+            lookup[option]["ticker"].lower(),
+        ),
+    )
+    filing_options = [
+        f"filing::{form}"
+        for form in GLOBAL_FILING_FORMS
+    ]
+    learn_options = [
+        f"learn::{term}"
+        for term in GLOBAL_LEARN_TERMS
+    ]
     return (
         list(NAVIGATION_LABELS)
-        + sorted(
-            lookup,
-            key=lambda option: (
-                lookup[option]["company"].lower(),
-                lookup[option]["ticker"].lower(),
-            ),
-        )
+        + company_options
+        + filing_options
+        + learn_options
     )
 
 
@@ -166,6 +211,26 @@ def format_global_search_option(
 ):
     if option in NAVIGATION_LABELS:
         return NAVIGATION_LABELS[option]
+
+    if str(option).startswith(
+        "filing::"
+    ):
+        form = str(option).split(
+            "::",
+            1,
+        )[1]
+        return (
+            f"SEC filing · {form}"
+        )
+
+    if str(option).startswith(
+        "learn::"
+    ):
+        term = str(option).split(
+            "::",
+            1,
+        )[1]
+        return f"Learn · {term}"
 
     company = lookup.get(option, {})
     ticker = company.get("ticker", "")
