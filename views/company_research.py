@@ -735,8 +735,21 @@ def render_company_research(
             st.caption("Peer comparison is not available for this company's industry yet.")
     with research_actions[1]:
         with st.expander("Share this research"):
-            st.caption("Copy this link to open the same company. Data may change as sources update.")
-            st.code(research_link(selected_ticker), language=None)
+            share_view = st.session_state.get(
+                f"workspace_section_{selected_ticker}",
+                "Overview",
+            )
+            st.caption(
+                "Copy this link to open the same company and research section. "
+                "Data may change as sources update."
+            )
+            st.code(
+                research_link(
+                    selected_ticker,
+                    view=share_view,
+                ),
+                language=None,
+            )
 
     with research_actions[2]:
         already_saved = selected_ticker in st.session_state.get(
@@ -897,12 +910,65 @@ def render_company_research(
             "Registration-era research is historical unless a section explicitly says otherwise."
         )
 
-    workspace_section_key = f"workspace_section_{selected_ticker}"
-    legacy_section = st.session_state.get(workspace_section_key)
+    workspace_section_key = (
+        f"workspace_section_{selected_ticker}"
+    )
+    company_sections = [
+        "Overview",
+        "Financials",
+        "Business & Risks",
+        "SEC Filings",
+        "IPO / Registration",
+        "Ownership",
+        "Analyst Research",
+        "Peers & ETFs",
+    ]
+
+    legacy_section = st.session_state.get(
+        workspace_section_key
+    )
     if legacy_section == "Snapshot":
-        st.session_state[workspace_section_key] = "Overview"
+        st.session_state[
+            workspace_section_key
+        ] = "Overview"
     elif legacy_section == "Filings":
-        st.session_state[workspace_section_key] = "SEC Filings"
+        st.session_state[
+            workspace_section_key
+        ] = "SEC Filings"
+
+    query_view = str(
+        st.query_params.get(
+            "view",
+            "",
+        )
+    ).strip()
+    if (
+        query_view in company_sections
+        and st.session_state.get(
+            workspace_section_key
+        )
+        != query_view
+    ):
+        st.session_state[
+            workspace_section_key
+        ] = query_view
+
+    def sync_company_section_url():
+        active_view = (
+            st.session_state.get(
+                workspace_section_key,
+                "Overview",
+            )
+        )
+        st.query_params[
+            "section"
+        ] = "Company Research"
+        st.query_params[
+            "ticker"
+        ] = selected_ticker
+        st.query_params[
+            "view"
+        ] = active_view
 
     st.markdown("### Research workspace")
     st.caption(
@@ -911,18 +977,10 @@ def render_company_research(
     )
     company_section = st.radio(
         "Company sections",
-        [
-            "Overview",
-            "Financials",
-            "Business & Risks",
-            "SEC Filings",
-            "IPO / Registration",
-            "Ownership",
-            "Analyst Research",
-            "Peers & ETFs",
-        ],
+        company_sections,
         horizontal=True,
         key=workspace_section_key,
+        on_change=sync_company_section_url,
         label_visibility="collapsed",
     )
     render_breadcrumbs(
