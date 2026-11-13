@@ -4797,26 +4797,26 @@
     }
   },
   "CoreWeave Inc (CRWV)": {
-    "quarter_label": "CY2026Q2",
-    "period_end": "2026-06-30",
-    "source_filing": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000465/crwv-20260930.htm",
     "latest_quarter": {
+      "revenue": 3661000000,
+      "gross_profit": null,
+      "operating_income": 207000000,
+      "net_income": -709000000
+    },
+    "prior_quarter": {
       "revenue": 2575000000,
       "gross_profit": null,
       "operating_income": -49000000,
       "net_income": -626000000
     },
-    "prior_quarter": {
-      "revenue": 2078000000,
-      "gross_profit": null,
-      "operating_income": -144000000,
-      "net_income": -740000000
-    },
     "prior_year_quarter": {
-      "revenue": 1212000000,
+      "revenue": 1365000000,
       "gross_profit": null,
-      "operating_income": 19000000,
-      "net_income": -290000000
+      "operating_income": 52000000,
+      "net_income": -110000000
     },
     "current_ytd": {
       "revenue": null,
@@ -4831,10 +4831,10 @@
       "net_income": null
     },
     "ltm": {
-      "revenue": 7229676000,
+      "revenue": 9679000000,
       "gross_profit": null,
-      "operating_income": -122150000,
-      "net_income": -1766124000
+      "operating_income": 66000000,
+      "net_income": -2185000000
     }
   },
   "Cisco Systems Inc (CSCO)": {
@@ -5043,26 +5043,26 @@
     }
   },
   "Corteva Inc (CTVA)": {
-    "quarter_label": "CY2026Q2",
-    "period_end": "2026-06-30",
-    "source_filing": "https://www.sec.gov/Archives/edgar/data/1755672/000175567226000025/ctva-20260630.htm",
+    "quarter_label": "CY2026Q3",
+    "period_end": "2026-09-30",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/1755672/000175567226000035/ctva-20260930.htm",
     "latest_quarter": {
+      "revenue": 2458000000,
+      "gross_profit": null,
+      "operating_income": null,
+      "net_income": -570000000
+    },
+    "prior_quarter": {
       "revenue": 6379000000,
       "gross_profit": null,
       "operating_income": null,
       "net_income": 1161000000
     },
-    "prior_quarter": {
-      "revenue": 4905000000,
-      "gross_profit": null,
-      "operating_income": null,
-      "net_income": 720000000
-    },
     "prior_year_quarter": {
-      "revenue": 6456000000,
+      "revenue": 2618000000,
       "gross_profit": null,
       "operating_income": null,
-      "net_income": 1314000000
+      "net_income": -320000000
     },
     "current_ytd": {
       "revenue": null,
@@ -5077,10 +5077,10 @@
       "net_income": null
     },
     "ltm": {
-      "revenue": 20358000000,
+      "revenue": 16360000000,
       "gross_profit": null,
       "operating_income": null,
-      "net_income": 2875000000
+      "net_income": 991000000
     }
   },
   "Carvana Co (CVNA)": {
@@ -10619,26 +10619,26 @@
     }
   },
   "Johnson Controls International plc (JCI)": {
-    "quarter_label": "CY2026Q1",
-    "period_end": "2026-03-31",
+    "quarter_label": "CY2026Q2",
+    "period_end": "2026-06-30",
     "source_filing": "https://www.sec.gov/Archives/edgar/data/833444/000083344426000087/jci-20260630.htm",
     "latest_quarter": {
+      "revenue": 6614000000,
+      "gross_profit": 2474000000,
+      "operating_income": null,
+      "net_income": 749000000
+    },
+    "prior_quarter": {
       "revenue": 6142000000,
       "gross_profit": 2262000000,
       "operating_income": null,
       "net_income": 613000000
     },
-    "prior_quarter": {
-      "revenue": 5797000000,
-      "gross_profit": 2074000000,
-      "operating_income": null,
-      "net_income": 524000000
-    },
     "prior_year_quarter": {
-      "revenue": 5676000000,
-      "gross_profit": 2069000000,
+      "revenue": 6052000000,
+      "gross_profit": 2246000000,
       "operating_income": null,
-      "net_income": 478000000
+      "net_income": 701000000
     },
     "current_ytd": {
       "revenue": null,
@@ -10653,10 +10653,10 @@
       "net_income": null
     },
     "ltm": {
-      "revenue": 23667000000,
-      "gross_profit": 8651000000,
+      "revenue": 24605000000,
+      "gross_profit": 9056000000,
       "operating_income": 1007000000,
-      "net_income": 2316000000
+      "net_income": 2587000000
     }
   },
   "Jack Henry & Associates Inc (JKHY)": {
@@ -17878,7 +17878,7 @@
   "Bio-Techne Corp (TECH)": {
     "quarter_label": "CY2026Q3",
     "period_end": "2026-09-30",
-    "source_filing": "https://www.sec.gov/Archives/edgar/data/842023/000110465926123907/tech-20260930x10q.htm",
+    "source_filing": "https://www.sec.gov/Archives/edgar/data/842023/000110465926126284/tech-20260930x10qa.htm",
     "latest_quarter": {
       "revenue": 299712000,
       "gross_profit": 196623000,

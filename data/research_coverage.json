@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-13T06:35:04+00:00",
+  "generated_at_utc": "2026-11-13T07:07:48+00:00",
   "totals": {
     "universe": 517,
     "sec_filings": 517,
@@ -2323,7 +2323,7 @@
       "completion_status": "Structured research available",
       "source_urls": [
         "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
-        "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm"
+        "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000465/crwv-20260930.htm"
       ]
     },
     "CSCO": {
@@ -2437,7 +2437,7 @@
       "completion_status": "Financial research available",
       "source_urls": [
         "https://www.sec.gov/Archives/edgar/data/1755672/000175567226000004/ctva-20251231.htm",
-        "https://www.sec.gov/Archives/edgar/data/1755672/000175567226000025/ctva-20260630.htm"
+        "https://www.sec.gov/Archives/edgar/data/1755672/000175567226000035/ctva-20260930.htm"
       ]
     },
     "CVNA": {
@@ -5076,8 +5076,8 @@
       "completeness_percent": 65,
       "completion_status": "Financial research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/833444/000083344425000097/jci-20250930.htm",
-        "https://www.sec.gov/Archives/edgar/data/833444/000083344426000087/jci-20260630.htm"
+        "https://www.sec.gov/Archives/edgar/data/833444/000083344426000087/jci-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/833444/000083344426000108/jci-20260930.htm"
       ]
     },
     "JKHY": {
@@ -7734,8 +7734,8 @@
       "completeness_percent": 65,
       "completion_status": "Financial research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000116/rok-20250930.htm",
-        "https://www.sec.gov/Archives/edgar/data/1024478/000102447826000030/rok-20260630.htm"
+        "https://www.sec.gov/Archives/edgar/data/1024478/000102447826000030/rok-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1024478/000102447826000048/rok-20260930.htm"
       ]
     },
     "ROL": {
@@ -7886,8 +7886,8 @@
       "completeness_percent": 65,
       "completion_status": "Financial research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/829224/000082922425000114/sbux-20250928.htm",
-        "https://www.sec.gov/Archives/edgar/data/829224/000082922426000130/sbux-20260628.htm"
+        "https://www.sec.gov/Archives/edgar/data/829224/000082922426000130/sbux-20260628.htm",
+        "https://www.sec.gov/Archives/edgar/data/829224/000082922426000162/sbux-20260927.htm"
       ]
     },
     "SCHW": {
@@ -8455,7 +8455,7 @@
       "completeness_percent": 65,
       "completion_status": "Financial research available",
       "source_urls": [
-        "https://www.sec.gov/Archives/edgar/data/842023/000110465926123907/tech-20260930x10q.htm",
+        "https://www.sec.gov/Archives/edgar/data/842023/000110465926126284/tech-20260930x10qa.htm",
         "https://www.sec.gov/Archives/edgar/data/842023/000114036126041062/ef20084361_10ka.htm"
       ]
     },
