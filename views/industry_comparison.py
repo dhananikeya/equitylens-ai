@@ -69,7 +69,12 @@ def _annual_snapshot(company, company_data, supplemental):
         ),
         "history": history,
         "source": (
-            "SEC filing"
+            str(
+                data.get(
+                    "source",
+                    "SEC filing",
+                )
+            )
             if data.get("filing_url")
             else "Yahoo Finance supplemental"
         ),
@@ -199,6 +204,7 @@ def render_industry_comparison(
     company_quarterly = context.company_quarterly
     analysis_by_ticker = context.analysis_by_ticker
     company_analysis = context.company_analysis
+    research_coverage = context.research_coverage
     remember_choice = context.remember_choice
     company_universe = context.company_universe
     research_link = context.research_link
@@ -434,6 +440,29 @@ def render_industry_comparison(
         "supplemental peer data",
     )
 
+    fiscal_years = {
+        str(
+            annual_by_company[
+                company
+            ].get(
+                "fiscal_year",
+                "",
+            )
+        )
+        for company in selected_companies
+        if annual_by_company[
+            company
+        ].get(
+            "fiscal_year"
+        )
+        is not None
+    }
+    if len(fiscal_years) > 1:
+        st.warning(
+            "Selected peers report different fiscal years. "
+            "Use the Reported FY and source columns when comparing annual figures."
+        )
+
     comparison_focus = st.radio(
         "Comparison view",
         [
@@ -477,6 +506,43 @@ def render_industry_comparison(
                 "Net Margin": annual.get("net_margin"),
                 "Market Cap": safe_float(
                     universe_row.get("Market Cap")
+                ),
+                "SEC Reporting": (
+                    universe_row.get(
+                        "Reporting Regime",
+                        "",
+                    )
+                ),
+                "Research %": int(
+                    (
+                        research_coverage.get(
+                            "companies",
+                            {},
+                        ).get(
+                            ticker,
+                            {},
+                        )
+                        or {}
+                    ).get(
+                        "completeness_percent",
+                        0,
+                    )
+                    or 0
+                ),
+                "Research Status": (
+                    (
+                        research_coverage.get(
+                            "companies",
+                            {},
+                        ).get(
+                            ticker,
+                            {},
+                        )
+                        or {}
+                    ).get(
+                        "completion_status",
+                        "Coverage unavailable",
+                    )
                 ),
                 "Data Source": annual.get("source"),
                 "SEC Filing": annual.get("source_url"),
