@@ -225,6 +225,37 @@ def render_filings(
             earliest_date = latest_date
             default_start = latest_date
 
+        seven_day_cutoff = pd.Timestamp(
+            latest_date
+        ) - pd.Timedelta(days=6)
+        recent_material_mask = (
+            tracker_df["Form"].isin(
+                MATERIAL_FORMS
+            )
+            & tracker_df[
+                "_FiledDate"
+            ].ge(
+                seven_day_cutoff
+            )
+        )
+        filing_pulse = st.columns(4)
+        filing_pulse[0].metric(
+            "Indexed filings",
+            f"{len(tracker_df):,}",
+        )
+        filing_pulse[1].metric(
+            "Issuers",
+            f"{tracker_df['Ticker'].nunique():,}",
+        )
+        filing_pulse[2].metric(
+            "Material · last 7 days",
+            f"{int(recent_material_mask.sum()):,}",
+        )
+        filing_pulse[3].metric(
+            "Newest filing",
+            str(latest_date),
+        )
+
         primary_filters = st.columns([1.6, 1, .75])
         with primary_filters[0]:
             tracker_search = st.text_input(
