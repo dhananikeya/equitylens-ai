@@ -433,7 +433,7 @@ def render_market_heatmap(
     )
     apply_equitylens_layout(
         fig,
-        height=680,
+        height=560,
         margin={
             "l": 0,
             "r": 0,
@@ -444,11 +444,16 @@ def render_market_heatmap(
     fig.update_layout(
         plot_bgcolor="#050B0E",
     )
-    st.plotly_chart(
-        fig,
-        use_container_width=True,
-        config={"displayModeBar": False},
-    )
+    with st.container(
+        key="nyse_heatmap_visual"
+    ):
+        st.plotly_chart(
+            fig,
+            use_container_width=True,
+            config={
+                "displayModeBar": False
+            },
+        )
     st.caption(
         "Click a sector to drill into it, then use the breadcrumb above the map to return. "
         "Tile size represents market capitalization. Color and the printed percentage both represent "
