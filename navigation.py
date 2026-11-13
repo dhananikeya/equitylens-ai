@@ -144,10 +144,17 @@ def navigate_to(st, destination):
 def research_link(
     ticker=None,
     destination="Company Research",
+    view=None,
 ):
     params = {"section": destination}
     if ticker:
         params["ticker"] = ticker
+    if (
+        view
+        and destination
+        == "Company Research"
+    ):
+        params["view"] = view
     return (
         PUBLIC_APP_URL
         + "?"
