@@ -55,6 +55,7 @@ class IndustryComparisonContext:
     company_quarterly: Mapping[str, dict]
     analysis_by_ticker: Mapping[str, dict]
     company_analysis: Mapping[str, dict]
+    research_coverage: Mapping[str, Any]
     remember_choice: Callable[..., Any]
     company_universe: Any
     research_link: Callable[..., str]
