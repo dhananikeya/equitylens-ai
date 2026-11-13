@@ -227,6 +227,23 @@ def _market_cap_dollars(value):
 
 
 @st.cache_data(show_spinner=False)
+def load_company_universe_metadata():
+    try:
+        return load_json(
+            "data/company_universe_metadata.json"
+        )
+    except (
+        FileNotFoundError,
+        json.JSONDecodeError,
+    ):
+        return {
+            "generated_at_utc": "",
+            "companies": {},
+            "field_policy": {},
+        }
+
+
+@st.cache_data(show_spinner=False)
 def load_company_universe():
     try:
         universe = pd.read_csv(
