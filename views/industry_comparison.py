@@ -653,6 +653,151 @@ def render_industry_comparison(
         for _, row in company_universe.iterrows()
     }
 
+    export_rows = []
+    for company in selected_companies:
+        ticker = str(
+            company_data[
+                company
+            ].get(
+                "ticker",
+                "",
+            )
+        ).upper()
+        annual = annual_by_company[
+            company
+        ]
+        quarter = quarter_by_company[
+            company
+        ]
+        universe_row = (
+            universe_by_ticker.get(
+                ticker,
+                {},
+            )
+        )
+        coverage = (
+            research_coverage.get(
+                "companies",
+                {},
+            ).get(
+                ticker,
+                {},
+            )
+            or {}
+        )
+        export_rows.append({
+            "Company": (
+                company.split(
+                    " ("
+                )[0]
+            ),
+            "Ticker": ticker,
+            "Industry": (
+                company_data[
+                    company
+                ].get(
+                    "industry",
+                    "",
+                )
+            ),
+            "Fiscal Year": annual.get(
+                "fiscal_year"
+            ),
+            "Annual Revenue": annual.get(
+                "revenue"
+            ),
+            "Annual Revenue Growth %": annual.get(
+                "growth"
+            ),
+            "Gross Margin %": annual.get(
+                "gross_margin"
+            ),
+            "Operating Margin %": annual.get(
+                "operating_margin"
+            ),
+            "Net Margin %": annual.get(
+                "net_margin"
+            ),
+            "Quarter": quarter.get(
+                "period"
+            ),
+            "Quarter Revenue": quarter.get(
+                "revenue"
+            ),
+            "Quarter YoY Growth %": quarter.get(
+                "yoy_growth"
+            ),
+            "Quarter QoQ Growth %": quarter.get(
+                "qoq_growth"
+            ),
+            "Market Cap": safe_float(
+                universe_row.get(
+                    "Market Cap"
+                )
+            ),
+            "SEC Reporting": (
+                universe_row.get(
+                    "Reporting Regime",
+                    "",
+                )
+            ),
+            "Research Completeness %": int(
+                coverage.get(
+                    "completeness_percent",
+                    0,
+                )
+                or 0
+            ),
+            "Annual Source": annual.get(
+                "source"
+            ),
+            "Annual Filing": annual.get(
+                "source_url"
+            ),
+            "Quarter Source": quarter.get(
+                "source"
+            ),
+            "Quarter Filing": quarter.get(
+                "source_url"
+            ),
+        })
+
+    export_df = pd.DataFrame(
+        export_rows
+    )
+    st.download_button(
+        "Download comparison data (CSV)",
+        data=export_df.to_csv(
+            index=False
+        ).encode("utf-8"),
+        file_name=(
+            "EquityLens_peer_comparison_"
+            + "_".join(
+                str(
+                    company_data[
+                        company
+                    ].get(
+                        "ticker",
+                        "",
+                    )
+                ).upper()
+                for company
+                in selected_companies
+            )
+            + ".csv"
+        ),
+        mime="text/csv",
+        key=(
+            "peer_comparison_csv_"
+            + str(
+                abs(
+                    hash(signature)
+                )
+            )
+        ),
+        use_container_width=True,
+    )
+
     if comparison_focus == "Overview":
         section(
             "Overview",
