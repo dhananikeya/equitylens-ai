@@ -547,6 +547,67 @@ def render_financials(
         )
 
     st.markdown(
+        "**Cash Flow Snapshot**"
+    )
+    fallback_cash_flow = (
+        selected_financial_fallback.get(
+            "cash_flow",
+            {},
+        )
+        or {}
+    )
+    operating_cash_flow = (
+        fallback_cash_flow.get(
+            "operating_cash_flow"
+        )
+    )
+    capital_expenditure = (
+        fallback_cash_flow.get(
+            "capital_expenditure"
+        )
+    )
+    free_cash_flow = (
+        fallback_cash_flow.get(
+            "free_cash_flow"
+        )
+    )
+    cash_flow_date = (
+        fallback_cash_flow.get(
+            "cash_flow_as_of"
+        )
+        or "Latest available"
+    )
+
+    cash_flow_cols = st.columns(3)
+    cash_flow_cols[0].metric(
+        "Operating Cash Flow · Reported",
+        format_money(
+            operating_cash_flow
+        ),
+    )
+    cash_flow_cols[1].metric(
+        "Capital Expenditure · Reported",
+        format_money(
+            capital_expenditure
+        ),
+    )
+    cash_flow_cols[2].metric(
+        "Free Cash Flow · Calculated",
+        format_money(
+            free_cash_flow
+        ),
+        help=(
+            "Uses Yahoo-reported free cash flow when available; "
+            "otherwise operating cash flow minus capital expenditures."
+        ),
+    )
+    st.caption(
+        "Cash-flow source: Yahoo Finance statement data · "
+        f"Period: {cash_flow_date}. "
+        "Unavailable values remain unavailable rather than being treated as zero."
+    )
+
+    st.markdown(
         "**Balance Sheet Snapshot**"
     )
     capital_structure = (
@@ -684,6 +745,20 @@ def render_financials(
             },
             {
                 "Dataset": (
+                    "Cash flow"
+                ),
+                "Period / date": (
+                    cash_flow_date
+                ),
+                "Source": (
+                    "Yahoo Finance cash-flow statement"
+                ),
+                "Original source": (
+                    "Supplemental Yahoo Finance statement"
+                ),
+            },
+            {
+                "Dataset": (
                     "Balance sheet"
                 ),
                 "Period / date": (
@@ -750,7 +825,8 @@ def render_financials(
             "- Revenue growth = (current revenue − comparable prior revenue) ÷ comparable prior revenue × 100.\n"
             "- Gross margin = gross profit ÷ revenue × 100.\n"
             "- Operating margin = operating income ÷ revenue × 100.\n"
-            "- Net margin = net income ÷ revenue × 100."
+            "- Net margin = net income ÷ revenue × 100.\n"
+            "- Free cash flow = operating cash flow − capital expenditures when a direct FCF row is unavailable."
         )
         st.caption(
             "EquityLens does not replace a missing reported figure with zero. "
