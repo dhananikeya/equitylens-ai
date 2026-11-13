@@ -133,6 +133,60 @@ def _quarter_snapshot(company, company_quarterly, supplemental):
     }
 
 
+def _needs_peer_supplemental(
+    company,
+    company_data,
+    company_quarterly,
+):
+    data = company_data.get(
+        company,
+        {},
+    )
+    qdata = company_quarterly.get(
+        company,
+        {},
+    )
+    structured = (
+        data.get(
+            "capital_structure",
+            {},
+        )
+        or {}
+    )
+
+    annual_missing = (
+        data.get("revenue") is None
+        or data.get("operating_income")
+        is None
+        or not data.get("history")
+    )
+    quarterly_missing = not bool(
+        qdata.get(
+            "latest_quarter"
+        )
+    )
+    balance_missing = any(
+        value is None
+        for value in [
+            structured.get(
+                "shares_outstanding"
+            ),
+            structured.get(
+                "total_debt"
+            ),
+            structured.get(
+                "cash_and_investments"
+            ),
+            data.get("assets"),
+        ]
+    )
+    return (
+        annual_missing
+        or quarterly_missing
+        or balance_missing
+    )
+
+
 def render_industry_comparison(
     context: IndustryComparisonContext,
 ):
@@ -297,6 +351,16 @@ def render_industry_comparison(
             "Retrieving supplemental statements for the selected comparison set."
         ):
             for company in selected_companies:
+                if not _needs_peer_supplemental(
+                    company,
+                    company_data,
+                    company_quarterly,
+                ):
+                    peer_financial_cache[
+                        company
+                    ] = {}
+                    continue
+
                 ticker = str(
                     company_data[company].get("ticker", "")
                 ).upper()
@@ -771,39 +835,98 @@ def render_industry_comparison(
                 {},
             ).get("capital_structure", {})
 
-            use_structured = any(
-                value is not None
-                for value in [
+            structured_values = {
+                "shares_outstanding": (
                     structured.get(
                         "shares_outstanding"
-                    ),
-                    structured.get("total_debt"),
+                    )
+                ),
+                "total_debt": (
+                    structured.get(
+                        "total_debt"
+                    )
+                ),
+                "cash_and_investments": (
                     structured.get(
                         "cash_and_investments"
-                    ),
-                    data.get("assets"),
-                ]
-            )
-            source = (
-                structured
-                if use_structured
-                else supplemental
-            )
-            shares = source.get(
-                "shares_outstanding"
-            )
-            debt = source.get("total_debt")
-            cash_investments = source.get(
-                "cash_and_investments"
-            )
-            assets = (
-                data.get("assets")
-                if use_structured
-                else (
-                    source.get("total_assets")
-                    or source.get("assets")
+                    )
+                ),
+                "assets": data.get(
+                    "assets"
+                ),
+            }
+            supplemental_values = {
+                "shares_outstanding": (
+                    supplemental.get(
+                        "shares_outstanding"
+                    )
+                ),
+                "total_debt": (
+                    supplemental.get(
+                        "total_debt"
+                    )
+                ),
+                "cash_and_investments": (
+                    supplemental.get(
+                        "cash_and_investments"
+                    )
+                ),
+                "assets": (
+                    supplemental.get(
+                        "total_assets"
+                    )
+                    or supplemental.get(
+                        "assets"
+                    )
+                ),
+            }
+
+            merged_values = {
+                key: (
+                    value
+                    if value is not None
+                    else supplemental_values.get(
+                        key
+                    )
+                )
+                for key, value in (
+                    structured_values.items()
+                )
+            }
+            used_structured = any(
+                value is not None
+                for value in (
+                    structured_values.values()
                 )
             )
+            used_supplemental = any(
+                (
+                    structured_values.get(
+                        key
+                    )
+                    is None
+                    and supplemental_values.get(
+                        key
+                    )
+                    is not None
+                )
+                for key in merged_values
+            )
+
+            shares = merged_values[
+                "shares_outstanding"
+            ]
+            debt = merged_values[
+                "total_debt"
+            ]
+            cash_investments = (
+                merged_values[
+                    "cash_and_investments"
+                ]
+            )
+            assets = merged_values[
+                "assets"
+            ]
             rows.append({
                 "Company": company.split(" (")[0],
                 "Ticker": str(
@@ -822,7 +945,10 @@ def render_industry_comparison(
                 ),
                 "Assets": format_money(assets),
                 "Balance Sheet Date": (
-                    source.get(
+                    structured.get(
+                        "balance_sheet_as_of"
+                    )
+                    or supplemental.get(
                         "balance_sheet_as_of"
                     )
                     or data.get(
@@ -831,17 +957,22 @@ def render_industry_comparison(
                     or "N/A"
                 ),
                 "Source": (
-                    "SEC filing"
-                    if use_structured
-                    else "Yahoo Finance supplemental"
+                    "SEC filing + Yahoo supplemental"
+                    if (
+                        used_structured
+                        and used_supplemental
+                    )
+                    else (
+                        "SEC filing"
+                        if used_structured
+                        else "Yahoo Finance supplemental"
+                    )
                 ),
                 "SEC Filing": (
                     structured.get(
                         "source_filing",
                         "",
                     )
-                    if use_structured
-                    else ""
                 ),
             })
 
