@@ -506,10 +506,11 @@ def get_company_financial_snapshot(symbol):
     ticker = yf.Ticker(str(symbol).upper())
 
     try:
+        info_value = ticker.info
         ticker_info = (
-            ticker.info
+            info_value
             if isinstance(
-                ticker.info,
+                info_value,
                 dict,
             )
             else {}
