@@ -1,8 +1,6 @@
 import unittest
 from pathlib import Path
 
-import pandas as pd
-
 from navigation import (
     format_global_search_option,
     global_search_options,
