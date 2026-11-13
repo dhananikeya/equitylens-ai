@@ -52,42 +52,12 @@ def render_home(
         {},
     )
 
-    homepage_proof = st.columns(4)
-    homepage_proof[0].metric(
-        "Universe companies",
-        f"{len(company_universe):,}",
-    )
-    homepage_proof[1].metric(
-        "Industries",
-        f"{company_universe['Industry'].nunique():,}",
-    )
-    homepage_proof[2].metric(
-        "SEC filing feeds",
-        (
-            f"{sec_synced_companies:,}"
-            if sec_summary.get("_ready")
-            else "Updating"
-        ),
-    )
-    homepage_proof[3].metric(
-        "Deep research",
-        (
-            f"{coverage_totals.get('deep_research', len(deep_research_tickers)):,}"
-        ),
-        (
-            f"{coverage_percentages.get('deep_research', 0):.1f}% of universe"
-        ),
-    )
-    st.caption(
-        "The 517-company universe is a discovery universe, not a claim that every company has complete research. "
-        "SEC coverage, financial coverage, and deep structured research are tracked separately."
-    )
-
     render_home_discovery(
         st,
         company_universe,
         open_company_research,
         sec_summary,
+        research_coverage,
     )
     render_watchlist(
         st,
