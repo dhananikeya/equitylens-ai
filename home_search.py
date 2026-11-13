@@ -7,8 +7,9 @@ from difflib import SequenceMatcher
 COMMON_ALIASES = {
     "GOOG": ("google",),
     "GOOGL": ("google",),
-    "META": ("facebook", "instagram", "whatsapp"),
+    "META": ("facebook", "instagram", "whatsapp", "fb"),
     "AMZN": ("amazon", "aws"),
+    "XYZ": ("square", "sq"),
     "MSFT": ("microsoft",),
     "AAPL": ("apple",),
     "NVDA": ("nvidia",),
