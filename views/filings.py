@@ -18,12 +18,31 @@ CURRENT_FORMS = {"8-K", "8-K/A", "6-K", "6-K/A"}
 REGISTRATION_FORMS = {
     "S-1", "S-1/A", "F-1", "F-1/A", "S-11", "S-11/A",
 }
-OWNERSHIP_FORMS = {
-    "3", "3/A", "4", "4/A", "5", "5/A",
-    "SC 13D", "SC 13D/A", "SC 13G", "SC 13G/A",
-    "DEF 14A", "DEFA14A", "144", "144/A",
+INSIDER_FORMS = {
+    "3", "3/A", "4", "4/A",
+    "5", "5/A", "144", "144/A",
 }
-MATERIAL_FORMS = FINANCIAL_FORMS | CURRENT_FORMS | REGISTRATION_FORMS
+BENEFICIAL_OWNERSHIP_FORMS = {
+    "SC 13D", "SC 13D/A",
+    "SC 13G", "SC 13G/A",
+    "SCHEDULE 13D", "SCHEDULE 13D/A",
+    "SCHEDULE 13G", "SCHEDULE 13G/A",
+}
+PROXY_FORMS = {
+    "DEF 14A",
+    "DEFA14A",
+    "PRE 14A",
+    "DEFM14A",
+}
+OWNERSHIP_FORMS = (
+    INSIDER_FORMS
+    | BENEFICIAL_OWNERSHIP_FORMS
+)
+MATERIAL_FORMS = (
+    FINANCIAL_FORMS
+    | CURRENT_FORMS
+    | REGISTRATION_FORMS
+)
 
 FORM_CATEGORIES = {
     "Material reports": MATERIAL_FORMS,
@@ -31,6 +50,7 @@ FORM_CATEGORIES = {
     "Current events": CURRENT_FORMS,
     "Registration": REGISTRATION_FORMS,
     "Ownership / insiders": OWNERSHIP_FORMS,
+    "Proxy / governance": PROXY_FORMS,
     "All filings": None,
 }
 
@@ -469,6 +489,11 @@ def render_filings(
                     "Form": "13D / 13G",
                     "Meaning": "Beneficial ownership disclosure",
                     "Use it for": "Certain holders crossing reporting thresholds",
+                },
+                {
+                    "Form": "DEF 14A",
+                    "Meaning": "Definitive proxy statement",
+                    "Use it for": "Board matters, executive compensation, shareholder votes, and governance",
                 },
             ])
             st.dataframe(
