@@ -1213,11 +1213,21 @@ def render_industry_comparison(
             display_metrics[field] = (
                 display_metrics[field].map(pct)
             )
-        display_metrics["Revenue"] = (
-            display_metrics["Revenue"].map(
-                format_money
+        display_metrics["Revenue"] = [
+            format_money(
+                revenue,
+                currency,
             )
-        )
+            for revenue, currency
+            in zip(
+                display_metrics[
+                    "Revenue"
+                ],
+                display_metrics[
+                    "Currency"
+                ],
+            )
+        ]
         st.dataframe(
             display_metrics,
             use_container_width=True,
