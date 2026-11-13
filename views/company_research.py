@@ -5,6 +5,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+from home_search import rank_company_matches
 from financial_utils import (
     build_change_notes,
     calc_growth,
@@ -180,44 +181,60 @@ def render_company_research(
     selected_workspace_row = None
 
     if search_text:
-        search_lower = search_text.lower()
-        ticker_lower = search_pool["Ticker"].fillna("").astype(str).str.lower()
-        company_lower = search_pool["Company"].fillna("").astype(str).str.lower()
-
-        exact_ticker = search_pool[ticker_lower == search_lower]
-        exact_company = search_pool[company_lower == search_lower]
-        starts_with = search_pool[
-            company_lower.str.startswith(search_lower, na=False)
-            | ticker_lower.str.startswith(search_lower, na=False)
+        ranked_matches = (
+            rank_company_matches(
+                search_pool,
+                search_text,
+                research_coverage=(
+                    research_coverage
+                ),
+                limit=20,
+            )
+        )
+        ranked_tickers = [
+            match["ticker"]
+            for match in ranked_matches
         ]
-        contains = search_pool[
-            company_lower.str.contains(search_lower, regex=False, na=False)
-            | ticker_lower.str.contains(search_lower, regex=False, na=False)
-        ]
 
-        if not exact_ticker.empty:
-            search_matches = exact_ticker
-        elif not exact_company.empty:
-            search_matches = exact_company
-        elif not starts_with.empty:
-            search_matches = starts_with
-        else:
-            search_matches = contains
+        if ranked_tickers:
+            ranked_rows = []
+            for ticker in ranked_tickers:
+                ticker_match = search_pool[
+                    search_pool[
+                        "Ticker"
+                    ].astype(
+                        str
+                    ).str.upper()
+                    == ticker
+                ]
+                if not ticker_match.empty:
+                    ranked_rows.append(
+                        ticker_match.iloc[[0]]
+                    )
 
-        if not search_matches.empty:
-            selected_workspace_row = search_matches.iloc[0]
+            search_matches = (
+                pd.concat(
+                    ranked_rows,
+                    ignore_index=True,
+                )
+                if ranked_rows
+                else search_pool.iloc[0:0]
+            )
+            selected_workspace_row = (
+                search_matches.iloc[0]
+            )
             if len(search_matches) > 1:
                 st.caption(
-                    f"{len(search_matches)} matches found. Showing "
-                    f"{selected_workspace_row['Company']} "
-                    f"({selected_workspace_row['Ticker']}). Keep typing to narrow the result."
+                    f"{len(search_matches)} ranked matches found. "
+                    f"Best match: {selected_workspace_row['Company']} "
+                    f"({selected_workspace_row['Ticker']})."
                 )
         else:
             st.info(
-                f'No company or ticker matched "{search_text}" in the current company universe.'
+                f'No close company or ticker match was found for "{search_text}".'
             )
             st.caption(
-                "Check the spelling or try the company ticker."
+                "Try a ticker, company name, familiar alias, or shorter spelling."
             )
             save_rendered_choices()
             st.stop()
@@ -227,18 +244,68 @@ def render_company_research(
         [
             column
             for column in [
-                "Ticker", "Company", "Sector", "Industry", "Country",
-                "Market Cap", "P/E", "Price", "Change",
+                "Ticker",
+                "Company",
+                "Sector",
+                "Industry",
+                "Country",
+                "Market Cap",
+                "P/E",
+                "Price",
+                "Change",
             ]
-            if column in workspace_filtered.columns
+            if column
+            in coverage_pool.columns
         ]
     ].copy().reset_index(drop=True)
 
+    coverage_by_ticker = (
+        research_coverage.get(
+            "companies",
+            {},
+        )
+        or {}
+    )
+    coverage_display[
+        "Research Status"
+    ] = coverage_display[
+        "Ticker"
+    ].astype(str).str.upper().map(
+        lambda ticker: (
+            coverage_by_ticker.get(
+                ticker,
+                {},
+            ).get(
+                "completion_status",
+                "SEC filings available",
+            )
+        )
+    )
+    coverage_display[
+        "Research %"
+    ] = coverage_display[
+        "Ticker"
+    ].astype(str).str.upper().map(
+        lambda ticker: int(
+            coverage_by_ticker.get(
+                ticker,
+                {},
+            ).get(
+                "completeness_percent",
+                0,
+            )
+            or 0
+        )
+    )
+
     with st.expander(
-        f"Matching companies · {len(coverage_pool):,} results",
-        expanded=False,
+        f"Browse companies · {len(coverage_pool):,} results",
+        expanded=True,
     ):
-        st.caption("Select a row to open that company directly in the research workspace.")
+        st.caption(
+            "Select a row to open that company directly. "
+            "Research status shows the current depth of structured coverage."
+        )
         coverage_event = None
         try:
             coverage_event = st.dataframe(
@@ -248,6 +315,7 @@ def render_company_research(
                 on_select="rerun",
                 selection_mode="single-row",
                 key="workspace_coverage_table",
+                height=480,
             )
         except TypeError:
             st.dataframe(
