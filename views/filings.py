@@ -503,23 +503,48 @@ def render_filings(
         registration_row.get("Ticker", "")
     )
 
-    try:
-        registration_feed = get_sec_company_research(
-            registration_ticker
+    archived_registration_feed = next(
+        (
+            feed
+            for feed in sec_filings.values()
+            if str(
+                feed.get(
+                    "ticker",
+                    "",
+                )
+            ).upper()
+            == registration_ticker.upper()
+        ),
+        {},
+    )
+
+    registration_feed = (
+        archived_registration_feed
+        if archived_registration_feed.get(
+            "registration_filings"
         )
-        registration_error = None
-    except Exception:
-        registration_feed = {}
-        registration_error = (
-            "SEC EDGAR is temporarily unavailable for this company."
-        )
+        else {}
+    )
+    registration_error = None
+
+    if not registration_feed:
+        try:
+            registration_feed = (
+                get_sec_company_research(
+                    registration_ticker
+                )
+            )
+        except Exception:
+            registration_feed = (
+                archived_registration_feed
+            )
+            registration_error = (
+                "Live SEC refresh is temporarily unavailable. "
+                "Showing the latest registration history from the synced archive."
+            )
 
     if registration_error:
-        st.info(
-            registration_error
-            + " The filing tracker above remains available from the synced archive."
-        )
-        return
+        st.info(registration_error)
 
     registration_rows = registration_feed.get(
         "registration_filings",
