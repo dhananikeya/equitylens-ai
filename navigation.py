@@ -54,6 +54,8 @@ CHOICE_KEYS = {
     "workspace_country",
     "workspace_issuer_type",
     "workspace_reporting_regime",
+    "workspace_exchange",
+    "workspace_sort",
     "peer_industry",
     "peer_subgroup",
     "peer_companies",
@@ -150,6 +152,14 @@ def clear_company_filters(st):
         (
             "workspace_reporting_regime",
             "All reporting regimes",
+        ),
+        (
+            "workspace_exchange",
+            "All exchanges",
+        ),
+        (
+            "workspace_sort",
+            "Research completeness · high to low",
         ),
     ]:
         remember_choice(
