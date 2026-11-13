@@ -1022,8 +1022,25 @@ def render_company_research(
     workspace_revenue = income_selection["record"].get("revenue")
     workspace_growth = income_selection["growth"]
     revenue_source_label = income_selection["source"]
+    financial_currency = str(
+        income_selection.get(
+            "currency",
+            "USD",
+        )
+        or "USD"
+    ).upper()
 
-    header_metrics[3].metric("Revenue", format_money(workspace_revenue), help="Sales before expenses. Check the period shown below before comparing companies.")
+    header_metrics[3].metric(
+        "Revenue",
+        format_money(
+            workspace_revenue,
+            financial_currency,
+        ),
+        help=(
+            "Sales before expenses in the company's reporting currency. "
+            "Check the period and source before comparing companies."
+        ),
+    )
     header_metrics[4].metric("Revenue Growth", pct(workspace_growth), help=income_selection["growth_basis"])
 
     quote_session = selected_quote.get(
@@ -1101,7 +1118,9 @@ def render_company_research(
                     or "Period unavailable"
                 ),
                 "Context": (
-                    "Reported source values; "
+                    "Reporting currency: "
+                    + financial_currency
+                    + " · reported source values; "
                     "EquityLens calculations are labeled separately"
                 ),
             },
@@ -1239,6 +1258,7 @@ def render_company_research(
             income_selection=income_selection,
             workspace_growth=workspace_growth,
             workspace_revenue=workspace_revenue,
+            financial_currency=financial_currency,
             financial_period=financial_period,
             revenue_source_label=revenue_source_label,
             filing_form=filing_form,
@@ -1263,6 +1283,7 @@ def render_company_research(
             selected_fallback_quarters=selected_fallback_quarters,
             income_selection=income_selection,
             workspace_growth=workspace_growth,
+            financial_currency=financial_currency,
         )
 
     if company_section == "SEC Filings":
