@@ -5,6 +5,8 @@ import re
 import pandas as pd
 import streamlit as st
 
+from market_units import market_cap_dollars
+
 from research_data import (
     index_dataset_by_ticker,
     merge_research_records,
@@ -192,37 +194,9 @@ def load_sec_summary():
 
 
 def _market_cap_dollars(value):
-    if value is None or pd.isna(value):
-        return None
-
-    text = str(value).strip().replace(",", "").replace("%", "")
-    if not text or text in {"-", "N/A", "nan"}:
-        return None
-
-    multiplier = 1.0
-    suffix = text[-1:].upper()
-    if suffix == "K":
-        multiplier = 1_000.0
-        text = text[:-1]
-    elif suffix == "M":
-        multiplier = 1_000_000.0
-        text = text[:-1]
-    elif suffix == "B":
-        multiplier = 1_000_000_000.0
-        text = text[:-1]
-    elif suffix == "T":
-        multiplier = 1_000_000_000_000.0
-        text = text[:-1]
-
-    try:
-        parsed = float(text) * multiplier
-    except ValueError:
-        return None
-
-    return (
-        parsed
-        if suffix in {"K", "M", "B", "T"}
-        else parsed * 1_000_000
+    return market_cap_dollars(
+        value,
+        plain_numbers_are_millions=True,
     )
 
 
