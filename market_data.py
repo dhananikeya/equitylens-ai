@@ -233,6 +233,7 @@ def normalize_finviz_screener(dataframe):
         "Company": ["Company", "Company Name"],
         "Sector": ["Sector"],
         "Industry": ["Industry"],
+        "Exchange": ["Exchange", "Exchange Code"],
         "Market Cap": ["Market Cap", "Market Cap."],
         "P/E": ["P/E", "PE"],
         "Price": ["Price"],
