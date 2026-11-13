@@ -1,3 +1,4 @@
+import html
 from contextlib import contextmanager
 import streamlit as st
 
@@ -12,6 +13,29 @@ def section(label, title):
             <div class="el-section-title">{title}</div>
         </div>
         """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_breadcrumbs(*parts):
+    clean_parts = [
+        str(part).strip()
+        for part in parts
+        if str(part or "").strip()
+    ]
+    if not clean_parts:
+        return
+
+    markup = (
+        '<nav class="el-breadcrumbs" aria-label="Breadcrumb">'
+        + '<span class="el-breadcrumb-separator">/</span>'.join(
+            f'<span>{html.escape(part)}</span>'
+            for part in clean_parts
+        )
+        + '</nav>'
+    )
+    st.markdown(
+        markup,
         unsafe_allow_html=True,
     )
 
