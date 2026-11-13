@@ -7,9 +7,7 @@ on:
       - perf/sec-company-shards
     paths:
       - "data/company_metrics.json"
-      - "data/generated_company_metrics.json"
       - "data/company_quarterly.json"
-      - "data/generated_company_quarterly.json"
       - "data/company_analysis.json"
       - "data/generated_company_analysis.json"
       - "data/company_s1.json"
