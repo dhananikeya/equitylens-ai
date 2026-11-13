@@ -57,6 +57,7 @@ CHOICE_KEYS = {
     "workspace_exchange",
     "workspace_sort",
     "peer_industry",
+    "peer_secondary_industry",
     "peer_subgroup",
     "peer_companies",
     "nyse_heatmap_sector",
