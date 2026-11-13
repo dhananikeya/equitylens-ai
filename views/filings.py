@@ -3,7 +3,11 @@ import json
 import pandas as pd
 import streamlit as st
 
-from ui_components import render_refresh_indicator, section
+from ui_components import (
+    render_breadcrumbs,
+    render_refresh_indicator,
+    section,
+)
 
 
 FINANCIAL_FORMS = {
@@ -37,6 +41,11 @@ def render_filings(
     get_sec_company_research,
     sec_summary=None,
 ):
+    render_breadcrumbs(
+        "Home",
+        "Filings",
+        "Filing Tracker",
+    )
     section("SEC Monitor", "Filing Tracker")
     render_refresh_indicator(
         "SEC archive refreshed",
