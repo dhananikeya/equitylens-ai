@@ -7,6 +7,7 @@ on:
   push:
     paths:
       - "scripts/build_financial_coverage.py"
+      - "scripts/build_deep_research.py"
       - "scripts/build_research_coverage.py"
       - ".github/workflows/build-financial-coverage.yml"
 
@@ -62,6 +63,7 @@ jobs:
               "data/research_coverage.json",
               "data/research_index.json",
           ]
+          loaded = {}
           for filename in files:
               payload = json.loads(
                   Path(filename).read_text(
@@ -72,7 +74,70 @@ jobs:
                   raise TypeError(
                       f"{filename} must contain a JSON object"
                   )
+              loaded[filename] = payload
               print(filename, len(payload))
+
+          metrics = loaded[
+              "data/generated_company_metrics.json"
+          ]
+          problems = []
+
+          for key, record in metrics.items():
+              if not isinstance(record, dict):
+                  continue
+
+              history = record.get(
+                  "history",
+                  [],
+              ) or []
+              period_ends = [
+                  str(
+                      row.get(
+                          "period_end",
+                          "",
+                      )
+                  )
+                  for row in history
+                  if isinstance(row, dict)
+                  and row.get("period_end")
+              ]
+              if len(period_ends) != len(
+                  set(period_ends)
+              ):
+                  problems.append(
+                      f"{key}: duplicate annual period_end"
+                  )
+
+              fiscal_year_end = str(
+                  record.get(
+                      "fiscal_year_end",
+                      "",
+                  )
+                  or ""
+              )
+              fiscal_year = record.get(
+                  "fiscal_year"
+              )
+              if (
+                  fiscal_year_end[:4].isdigit()
+                  and fiscal_year is not None
+                  and int(
+                      fiscal_year_end[:4]
+                  )
+                  != int(fiscal_year)
+              ):
+                  problems.append(
+                      f"{key}: fiscal_year={fiscal_year} "
+                      f"does not match fiscal_year_end={fiscal_year_end}"
+                  )
+
+          if problems:
+              raise ValueError(
+                  "Financial-period validation failed:\n"
+                  + "\n".join(
+                      problems[:50]
+                  )
+              )
           PY
 
       - name: Commit refreshed coverage
