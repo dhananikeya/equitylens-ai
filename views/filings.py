@@ -40,6 +40,7 @@ def render_filings(
     load_sec_filings,
     get_sec_company_research,
     sec_summary=None,
+    research_link=None,
 ):
     render_breadcrumbs(
         "Home",
@@ -99,6 +100,16 @@ def render_filings(
                     "",
                 ),
                 "SEC Filing": filing.get("url", ""),
+                "Research": (
+                    research_link(
+                        tracked_ticker
+                    )
+                    if (
+                        research_link
+                        and tracked_ticker
+                    )
+                    else ""
+                ),
             })
 
     tracker_df = pd.DataFrame(tracker_rows)
@@ -126,6 +137,37 @@ def render_filings(
         tracker_df["First Seen by EquityLens (ET)"] = (
             first_seen_dt.dt.tz_convert("America/New_York")
             .dt.strftime("%Y-%m-%d %I:%M:%S %p %Z")
+        )
+
+        detection_seconds = (
+            first_seen_dt
+            - accepted_dt
+        ).dt.total_seconds()
+
+        def format_detection_lag(value):
+            if pd.isna(value) or value < 0:
+                return "N/A"
+            seconds = int(value)
+            if seconds < 60:
+                return f"{seconds}s"
+            minutes, remaining = divmod(
+                seconds,
+                60,
+            )
+            if minutes < 60:
+                return (
+                    f"{minutes}m {remaining}s"
+                )
+            hours, minutes = divmod(
+                minutes,
+                60,
+            )
+            return f"{hours}h {minutes}m"
+
+        tracker_df[
+            "Detection Lag"
+        ] = detection_seconds.map(
+            format_detection_lag
         )
 
         tracker_df = tracker_df.drop(
@@ -335,9 +377,12 @@ def render_filings(
             "Form",
             "SEC Filed Date",
             "SEC Accepted (ET)",
+            "First Seen by EquityLens (ET)",
+            "Detection Lag",
             "Report Period",
             "Description",
             "SEC Filing",
+            "Research",
         ]
         visible_tracker = (
             filtered_tracker[
@@ -358,7 +403,11 @@ def render_filings(
                     "SEC Filing": st.column_config.LinkColumn(
                         "SEC Filing",
                         display_text="Open filing",
-                    )
+                    ),
+                    "Research": st.column_config.LinkColumn(
+                        "Research",
+                        display_text="Open research",
+                    ),
                 },
             )
 
