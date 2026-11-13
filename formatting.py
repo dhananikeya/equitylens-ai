@@ -1,4 +1,4 @@
-import pandas as pd
+from datetime import datetime, timezone
 
 
 def safe_float(value):
@@ -108,13 +108,41 @@ def format_utc_timestamp(
 ):
     if not value:
         return fallback
-    parsed = pd.to_datetime(
-        value,
-        errors="coerce",
-        utc=True,
-    )
-    if pd.isna(parsed):
+
+    try:
+        if isinstance(
+            value,
+            datetime,
+        ):
+            parsed = value
+        else:
+            text = str(
+                value
+            ).strip()
+            if text.endswith("Z"):
+                text = (
+                    text[:-1]
+                    + "+00:00"
+                )
+            parsed = datetime.fromisoformat(
+                text
+            )
+
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(
+                tzinfo=timezone.utc
+            )
+        else:
+            parsed = parsed.astimezone(
+                timezone.utc
+            )
+
+        return parsed.strftime(
+            "%Y-%m-%d %H:%M UTC"
+        )
+    except (
+        TypeError,
+        ValueError,
+        OverflowError,
+    ):
         return str(value)
-    return parsed.strftime(
-        "%Y-%m-%d %H:%M UTC"
-    )
