@@ -197,9 +197,7 @@ def build_global_company_lookup(
         ).upper().strip()
         if not ticker:
             continue
-        lookup[
-            f"ticker::{ticker}"
-        ] = {
+        company_record = {
             "ticker": ticker,
             "company": str(
                 row.get("Company", "")
@@ -207,7 +205,33 @@ def build_global_company_lookup(
             "industry": str(
                 row.get("Industry", "")
             ).strip(),
+            "alias": "",
         }
+        lookup[
+            f"ticker::{ticker}"
+        ] = company_record
+
+        aliases = row.get(
+            "Ticker Aliases",
+            [],
+        )
+        if not isinstance(
+            aliases,
+            (list, tuple, set),
+        ):
+            aliases = []
+        for alias in aliases:
+            alias_text = str(
+                alias
+            ).upper().strip()
+            if not alias_text:
+                continue
+            lookup[
+                f"alias::{alias_text}::{ticker}"
+            ] = {
+                **company_record,
+                "alias": alias_text,
+            }
     return lookup
 
 
@@ -274,9 +298,18 @@ def format_global_search_option(
         "industry",
         "",
     )
+    alias = company.get(
+        "alias",
+        "",
+    )
     suffix = (
         f" · {industry}"
         if industry
         else ""
     )
+    if alias:
+        return (
+            f"{alias} → {ticker} · "
+            f"{name}{suffix}"
+        )
     return f"{ticker} · {name}{suffix}"
