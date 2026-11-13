@@ -1940,3 +1940,34 @@ hr {
         white-space: nowrap;
     }
 }
+
+
+/* Industry Comparison view navigation */
+.st-key-peer_comparison_focus [role="radiogroup"] {
+    gap: .35rem;
+    padding: .35rem;
+    border: 1px solid var(--el-border);
+    border-radius: 9px;
+    background: rgba(9,18,23,.72);
+}
+
+.st-key-peer_comparison_focus [role="radiogroup"] label:has(input:checked) {
+    border: 1px solid rgba(22,199,178,.45);
+    border-radius: 7px;
+    background: rgba(22,199,178,.08);
+}
+
+@media (max-width: 760px) {
+    .st-key-peer_comparison_focus [role="radiogroup"] {
+        display: flex;
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scrollbar-width: thin;
+    }
+
+    .st-key-peer_comparison_focus [role="radiogroup"] label {
+        flex: 0 0 auto;
+        white-space: nowrap;
+    }
+}
