@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-14T03:09:49+00:00",
+  "generated_at_utc": "2026-11-16T11:04:30+00:00",
   "company_count": 517,
   "synced_companies": 517,
   "companies": {
@@ -1811,16 +1811,16 @@
       "entity_name": "CAPITAL ONE FINANCIAL CORP",
       "has_filings": true,
       "latest_filing": {
-        "form": "4",
-        "filing_date": "2026-11-12",
-        "report_date": "2026-11-09",
-        "description": "FORM 4",
-        "url": "https://www.sec.gov/Archives/edgar/data/927628/000118166926000009/xslF345X06/wk-form4_1794517529.xml"
+        "form": "8-K",
+        "filing_date": "2026-11-16",
+        "report_date": "2026-11-13",
+        "description": "8-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/927628/000092762826000160/cof-20261113.htm"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-12T22:30:42+00:00"
+      "last_checked_utc": "2026-11-16T11:04:30+00:00"
     },
     "COHR": {
       "ticker": "COHR",
@@ -3766,16 +3766,16 @@
       "entity_name": "GOLDMAN SACHS GROUP INC",
       "has_filings": true,
       "latest_filing": {
-        "form": "SCHEDULE 13G",
-        "filing_date": "2026-11-13",
+        "form": "424B2",
+        "filing_date": "2026-11-16",
         "report_date": "",
-        "description": "xslSCHEDULE_13G_X02/primary_doc.xml",
-        "url": "https://www.sec.gov/Archives/edgar/data/886982/000088698226000645/xslSCHEDULE_13G_X02/primary_doc.xml"
+        "description": "424B2",
+        "url": "https://www.sec.gov/Archives/edgar/data/886982/000119312526461178/wonrs872_prelim.htm"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-13T23:04:10+00:00"
+      "last_checked_utc": "2026-11-16T11:04:30+00:00"
     },
     "GWW": {
       "ticker": "GWW",
@@ -8795,6 +8795,15 @@
   },
   "recent_filings": [
     {
+      "ticker": "COF",
+      "company": "CAPITAL ONE FINANCIAL CORP",
+      "form": "8-K",
+      "filing_date": "2026-11-16",
+      "report_date": "2026-11-13",
+      "description": "8-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/927628/000092762826000160/cof-20261113.htm"
+    },
+    {
       "ticker": "AMT",
       "company": "AMERICAN TOWER CORP /MA/",
       "form": "8-K",
@@ -9009,15 +9018,6 @@
       "report_date": "2026-09-30",
       "description": "10-Q",
       "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000465/crwv-20260930.htm"
-    },
-    {
-      "ticker": "CTVA",
-      "company": "Corteva, Inc.",
-      "form": "8-K",
-      "filing_date": "2026-11-12",
-      "report_date": "2026-11-12",
-      "description": "8-K",
-      "url": "https://www.sec.gov/Archives/edgar/data/1755672/000175567226000037/ctva-20261112.htm"
     }
   ]
 }

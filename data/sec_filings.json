@@ -42399,10 +42399,24 @@
     "sector": "Financial",
     "industry": "Credit Services",
     "country": "USA",
-    "last_checked_utc": "2026-11-12T22:30:42+00:00",
+    "last_checked_utc": "2026-11-16T11:04:30+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=927628&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "8-K",
+        "filing_date": "2026-11-16",
+        "acceptance_datetime": "2026-11-13T22:31:59.000Z",
+        "report_date": "2026-11-13",
+        "accession_number": "0000927628-26-000160",
+        "primary_document": "cof-20261113.htm",
+        "description": "8-K",
+        "items": "7.01,9.01",
+        "is_xbrl": 1,
+        "is_inline_xbrl": 1,
+        "first_seen_utc": "2026-11-16T11:04:30+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/927628/000092762826000160/cof-20261113.htm"
+      },
       {
         "form": "4",
         "filing_date": "2026-11-12",
@@ -42738,20 +42752,6 @@
         "is_inline_xbrl": 0,
         "first_seen_utc": "2026-10-03T21:29:22+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/927628/000195004726009477/xsl144X01/primary_doc.xml"
-      },
-      {
-        "form": "8-K",
-        "filing_date": "2026-09-15",
-        "acceptance_datetime": "2026-09-15T20:12:17.000Z",
-        "report_date": "2026-09-15",
-        "accession_number": "0001193125-26-391921",
-        "primary_document": "d458116d8k.htm",
-        "description": "8-K",
-        "items": "8.01,9.01",
-        "is_xbrl": 1,
-        "is_inline_xbrl": 1,
-        "first_seen_utc": "2026-10-03T21:29:22+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/927628/000119312526391921/d458116d8k.htm"
       }
     ],
     "registration_filings": [],
@@ -87377,10 +87377,38 @@
     "sector": "Financial",
     "industry": "Capital Markets",
     "country": "USA",
-    "last_checked_utc": "2026-11-13T23:04:10+00:00",
+    "last_checked_utc": "2026-11-16T11:04:30+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=886982&owner=exclude&action=getcompany",
     "filings": [
+      {
+        "form": "424B2",
+        "filing_date": "2026-11-16",
+        "acceptance_datetime": "2026-11-13T23:21:12.000Z",
+        "report_date": "",
+        "accession_number": "0001193125-26-461178",
+        "primary_document": "wonrs872_prelim.htm",
+        "description": "424B2",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-11-16T11:04:30+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/886982/000119312526461178/wonrs872_prelim.htm"
+      },
+      {
+        "form": "424B2",
+        "filing_date": "2026-11-16",
+        "acceptance_datetime": "2026-11-13T23:15:39.000Z",
+        "report_date": "",
+        "accession_number": "0001193125-26-461160",
+        "primary_document": "spxfpp94_auto_prelim.htm",
+        "description": "424B2",
+        "items": "",
+        "is_xbrl": 0,
+        "is_inline_xbrl": 0,
+        "first_seen_utc": "2026-11-16T11:04:30+00:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/886982/000119312526461160/spxfpp94_auto_prelim.htm"
+      },
       {
         "form": "SCHEDULE 13G",
         "filing_date": "2026-11-13",
@@ -87702,34 +87730,6 @@
         "is_inline_xbrl": 1,
         "first_seen_utc": "2026-11-13T23:04:10+00:00",
         "url": "https://www.sec.gov/Archives/edgar/data/886982/000119312526460395/gs-20261113.htm"
-      },
-      {
-        "form": "424B2",
-        "filing_date": "2026-11-13",
-        "acceptance_datetime": "2026-11-13T20:07:57.000Z",
-        "report_date": "",
-        "accession_number": "0001193125-26-460377",
-        "primary_document": "wosxx009_amendment_no._1.htm",
-        "description": "424B2",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-11-13T23:04:10+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/886982/000119312526460377/wosxx009_amendment_no._1.htm"
-      },
-      {
-        "form": "424B2",
-        "filing_date": "2026-11-13",
-        "acceptance_datetime": "2026-11-13T20:07:55.000Z",
-        "report_date": "",
-        "accession_number": "0001193125-26-460376",
-        "primary_document": "fixco324_prelim.htm",
-        "description": "424B2",
-        "items": "",
-        "is_xbrl": 0,
-        "is_inline_xbrl": 0,
-        "first_seen_utc": "2026-11-13T23:04:10+00:00",
-        "url": "https://www.sec.gov/Archives/edgar/data/886982/000119312526460376/fixco324_prelim.htm"
       }
     ],
     "registration_filings": [],
