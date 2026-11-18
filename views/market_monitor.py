@@ -251,7 +251,7 @@ def render_nyse_market_monitor(nyse_finviz, workspace_known_tickers, research_li
         st.dataframe(
             matched_display,
             hide_index=True,
-            use_container_width=True,
+            width="stretch",
             column_config={
                 "Research": st.column_config.LinkColumn(
                     "Research",
@@ -385,7 +385,7 @@ def render_nyse_market_monitor(nyse_finviz, workspace_known_tickers, research_li
 
     st.plotly_chart(
         heat_fig,
-        use_container_width=True,
+        width="stretch",
         config={"displayModeBar": False}
     )
     st.caption(
@@ -409,7 +409,7 @@ def render_nyse_market_monitor(nyse_finviz, workspace_known_tickers, research_li
             st.dataframe(
                 map_research_rows,
                 hide_index=True,
-                use_container_width=True,
+                width="stretch",
                 column_config={"Research": st.column_config.LinkColumn("Research", display_text="Open research")},
             )
         else:
@@ -471,7 +471,7 @@ def render_market_monitor(
             f"Refresh {market_view.lower()} data",
             key=f"refresh_market_monitor_{market_view}",
             type="primary",
-            use_container_width=True,
+            width="stretch",
         ):
             if market_view == "Overview":
                 get_live_market_data.clear()
@@ -624,7 +624,7 @@ def render_market_monitor(
             st.link_button(
                 "Open Bloomberg Markets",
                 "https://www.bloomberg.com/markets",
-                use_container_width=True,
+                width="stretch",
             )
 
     if market_view == "Stocks":
@@ -1145,7 +1145,7 @@ def render_market_monitor(
             )
             st.plotly_chart(
                 curve_fig,
-                use_container_width=True,
+                width="stretch",
                 config={"displayModeBar": False},
             )
             st.caption(
@@ -1196,7 +1196,7 @@ def render_market_monitor(
             st.link_button(
                 "Open methodology & curve archive",
                 "https://checkmyswap.com/rates?ccy=USD",
-                use_container_width=True,
+                width="stretch",
             )
         else:
             st.info(
@@ -1301,7 +1301,7 @@ def render_market_monitor(
                     pd.DataFrame(
                         source_rows
                     ),
-                    use_container_width=True,
+                    width="stretch",
                     hide_index=True,
                 )
                 st.markdown(
@@ -1316,7 +1316,7 @@ def render_market_monitor(
                 st.link_button(
                     "Open BLS Public Data API",
                     "https://www.bls.gov/developers/",
-                    use_container_width=True,
+                    width="stretch",
                 )
 
     if market_view == "Calendar":
@@ -1394,7 +1394,7 @@ def render_market_monitor(
             st.link_button(
                 "Open Federal Reserve monetary-policy updates",
                 "https://www.federalreserve.gov/monetarypolicy.htm",
-                use_container_width=True,
+                width="stretch",
             )
 
     st.markdown(
