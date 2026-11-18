@@ -108,7 +108,7 @@ def render_home(
                 key=f"home_action_{action_index}",
                 on_click=navigate_to,
                 args=(destination,),
-                use_container_width=True,
+                width="stretch",
             )
             st.caption(description)
 
@@ -164,7 +164,7 @@ def render_home(
     if recent_filing_rows:
         st.dataframe(
             pd.DataFrame(recent_filing_rows),
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
             column_config={
                 "SEC Filing": st.column_config.LinkColumn(
