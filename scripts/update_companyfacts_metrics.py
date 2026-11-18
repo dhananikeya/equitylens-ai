@@ -144,7 +144,7 @@ def build_record(ticker: str, company: dict, facts: dict) -> dict | None:
     result = {
         "ticker": ticker,
         "industry": company.get("industry", ""),
-        "fiscal_year": int(selected_end[:4]),
+        "fiscal_year": int(anchor.get("fy") or selected_end[:4]),
         "fiscal_year_end": selected_end,
         "source": "SEC Company Facts / 10-K",
         "filing_url": filing_link(company["cik"], anchor),
