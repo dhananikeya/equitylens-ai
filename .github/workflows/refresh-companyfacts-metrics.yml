@@ -9,10 +9,6 @@ on:
         description: "Number of companies to process this run (1-517)"
         required: false
         default: "100"
-  push:
-    paths:
-      - "scripts/update_companyfacts_metrics.py"
-      - ".github/workflows/refresh-companyfacts-metrics.yml"
 
 permissions:
   contents: write
