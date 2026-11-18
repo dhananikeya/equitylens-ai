@@ -1,0 +1,55 @@
+name: Refresh SEC company financial metrics
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+    inputs:
+      batch_size:
+        description: "Number of companies to process this run (1-517)"
+        required: false
+        default: "100"
+  push:
+    paths:
+      - "scripts/update_companyfacts_metrics.py"
+      - ".github/workflows/refresh-companyfacts-metrics.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: equitylens-companyfacts-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh-companyfacts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Sync main branch
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Refresh financial facts
+        env:
+          BATCH_SIZE: ${{ github.event.inputs.batch_size || '100' }}
+        run: |
+          python -u scripts/update_companyfacts_metrics.py --limit "$BATCH_SIZE"
+      - name: Commit generated financial facts and status
+        run: |
+          if [ -z "$(git status --porcelain -- data/generated_company_metrics.json data/companyfacts_refresh_status.json)" ]; then
+            echo "No updated SEC Company Facts metrics."
+            exit 0
+          fi
+          git config user.name "EquityLens SEC Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/generated_company_metrics.json data/companyfacts_refresh_status.json
+          git commit -m "Refresh SEC annual financial metrics"
+          git pull --rebase origin main
+          git push origin HEAD:main
