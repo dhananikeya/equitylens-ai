@@ -261,7 +261,7 @@ def render_industry_comparison(
     compare_button = st.button(
         "Load comparison",
         type="primary",
-        use_container_width=True,
+        width="stretch",
     )
     signature = (
         selected_industry,
@@ -411,7 +411,7 @@ def render_industry_comparison(
 
         st.dataframe(
             display_overview,
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
             column_config={
                 "SEC Filing": st.column_config.LinkColumn(
@@ -556,7 +556,7 @@ def render_industry_comparison(
                 )
                 st.plotly_chart(
                     fig,
-                    use_container_width=True,
+                    width="stretch",
                     config={"displayModeBar": False},
                 )
             else:
@@ -600,7 +600,7 @@ def render_industry_comparison(
                 )
                 st.plotly_chart(
                     fig,
-                    use_container_width=True,
+                    width="stretch",
                     config={"displayModeBar": False},
                 )
             else:
@@ -625,7 +625,7 @@ def render_industry_comparison(
         )
         st.dataframe(
             display_metrics,
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
             column_config={
                 "SEC Filing": st.column_config.LinkColumn(
@@ -680,7 +680,7 @@ def render_industry_comparison(
 
         st.dataframe(
             pd.DataFrame(rows),
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
             column_config={
                 "SEC Filing": st.column_config.LinkColumn(
@@ -787,7 +787,7 @@ def render_industry_comparison(
 
         st.dataframe(
             pd.DataFrame(rows),
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
             column_config={
                 "SEC Filing": st.column_config.LinkColumn(
@@ -862,7 +862,7 @@ def render_industry_comparison(
 
         st.dataframe(
             pd.DataFrame(qualitative_rows),
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
             column_config={
                 "Source Filing": st.column_config.LinkColumn(
@@ -889,7 +889,7 @@ def render_industry_comparison(
                 st.link_button(
                     f"Open {ticker} research",
                     research_link(ticker),
-                    use_container_width=True,
+                    width="stretch",
                 )
 
     st.caption(
