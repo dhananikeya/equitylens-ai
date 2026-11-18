@@ -218,7 +218,7 @@ def render_company_research(
         try:
             coverage_event = st.dataframe(
                 coverage_display,
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
                 on_select="rerun",
                 selection_mode="single-row",
@@ -227,7 +227,7 @@ def render_company_research(
         except TypeError:
             st.dataframe(
                 coverage_display,
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
             )
 
@@ -548,7 +548,7 @@ def render_company_research(
                 key="research_compare_company",
                 on_click=compare_company,
                 args=(selected_company_key,),
-                use_container_width=True,
+                width="stretch",
             )
         else:
             st.caption("Peer comparison is not available for this company's industry yet.")
@@ -566,7 +566,7 @@ def render_company_research(
             key="company_watchlist_toggle_%s" % selected_ticker,
             on_click=toggle_watchlist,
             args=(st, selected_ticker),
-            use_container_width=True,
+            width="stretch",
         )
 
     if selected_sec_error or selected_price is None or not selected_financial_fallback:
@@ -916,7 +916,7 @@ def render_company_research(
                 )
                 st.plotly_chart(
                     price_fig,
-                    use_container_width=True,
+                    width="stretch",
                     config={"displayModeBar": False},
                 )
             else:
@@ -984,7 +984,7 @@ def render_company_research(
             ]
             st.dataframe(
                 pd.DataFrame(snapshot_filing_rows),
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
                 column_config={
                     "SEC Filing": st.column_config.LinkColumn("SEC Filing", display_text="Open")
@@ -1432,7 +1432,7 @@ def render_company_research(
         with st.expander("Show exact values, periods & calculation labels"):
             st.dataframe(
                 pd.DataFrame(exact_financial_rows),
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
             )
 
@@ -1466,7 +1466,7 @@ def render_company_research(
                     xaxis={"showgrid": False, "title": None},
                     yaxis={"gridcolor": "rgba(143,156,166,.12)", "title": None},
                 )
-                st.plotly_chart(annual_fig, use_container_width=True, config={"displayModeBar": False})
+                st.plotly_chart(annual_fig, width="stretch", config={"displayModeBar": False})
             else:
                 st.info("Annual revenue history is still being standardized.")
 
@@ -1497,7 +1497,7 @@ def render_company_research(
                     xaxis={"showgrid": False, "title": None},
                     yaxis={"gridcolor": "rgba(143,156,166,.12)", "title": None},
                 )
-                st.plotly_chart(pnl_fig, use_container_width=True, config={"displayModeBar": False})
+                st.plotly_chart(pnl_fig, width="stretch", config={"displayModeBar": False})
             else:
                 st.info("P&L data is still being standardized.")
 
@@ -1550,7 +1550,7 @@ def render_company_research(
                 xaxis={"showgrid": False, "title": None},
                 yaxis={"gridcolor": "rgba(143,156,166,.12)", "title": None},
             )
-            st.plotly_chart(quarter_fig, use_container_width=True, config={"displayModeBar": False})
+            st.plotly_chart(quarter_fig, width="stretch", config={"displayModeBar": False})
 
         st.markdown("**Balance Sheet Snapshot**")
         capital_structure = selected_data.get("capital_structure", {})
@@ -1638,7 +1638,7 @@ def render_company_research(
             source_display = pd.DataFrame(source_rows)
             st.dataframe(
                 source_display,
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
             )
             balance_source_url = (
@@ -1653,7 +1653,7 @@ def render_company_research(
                         "Open income-statement source",
                         financial_source,
                         key=f"financial_provenance_income_{selected_ticker}",
-                        use_container_width=True,
+                        width="stretch",
                     )
             with source_link_cols[1]:
                 if balance_source_url:
@@ -1661,7 +1661,7 @@ def render_company_research(
                         "Open balance-sheet source",
                         balance_source_url,
                         key=f"financial_provenance_balance_{selected_ticker}",
-                        use_container_width=True,
+                        width="stretch",
                     )
             st.markdown(
                 "**Calculated metrics**\n\n"
@@ -1731,7 +1731,7 @@ def render_company_research(
             ])
             st.dataframe(
                 filing_table,
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
                 column_config={
                     "SEC Filing": st.column_config.LinkColumn(
@@ -1783,7 +1783,7 @@ def render_company_research(
             ])
             st.dataframe(
                 registration_table,
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
                 column_config={
                     "SEC Filing": st.column_config.LinkColumn(
@@ -2113,7 +2113,7 @@ def render_company_research(
         if sec_ownership_rows:
             st.dataframe(
                 pd.DataFrame(sec_ownership_rows),
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
                 column_config={
                     "SEC Filing": st.column_config.LinkColumn(
@@ -2200,7 +2200,7 @@ def render_company_research(
         if not institutional_table.empty:
             st.dataframe(
                 institutional_table.head(15),
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
             )
         else:
@@ -2215,7 +2215,7 @@ def render_company_research(
         if not mutual_table.empty:
             st.dataframe(
                 mutual_table.head(15),
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
             )
         else:
@@ -2286,7 +2286,7 @@ def render_company_research(
         recommendations_table = analyst_data.get("recommendations", pd.DataFrame())
         st.markdown("**Recommendation summary**")
         if isinstance(recommendations_table, pd.DataFrame) and not recommendations_table.empty:
-            st.dataframe(recommendations_table, use_container_width=True, hide_index=True)
+            st.dataframe(recommendations_table, width="stretch", hide_index=True)
         else:
             st.caption("Consensus recommendation data is unavailable from the supplemental feed.")
 
@@ -2295,7 +2295,7 @@ def render_company_research(
         if isinstance(upgrades_table, pd.DataFrame) and not upgrades_table.empty:
             st.dataframe(
                 upgrades_table.tail(25).iloc[::-1],
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
             )
         else:
@@ -2331,7 +2331,7 @@ def render_company_research(
         if not peer_rows.empty:
             st.dataframe(
                 peer_rows[peer_columns].head(20),
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
             )
         else:
@@ -2367,7 +2367,7 @@ def render_company_research(
                             )
                         )
                     )
-                st.dataframe(etf_df, use_container_width=True, hide_index=True)
+                st.dataframe(etf_df, width="stretch", hide_index=True)
             else:
                 st.info(
                     "No match was found in the published top-holdings sample for the ETFs scanned. "

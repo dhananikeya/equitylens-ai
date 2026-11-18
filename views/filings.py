@@ -337,7 +337,7 @@ def render_filings(
         else:
             st.dataframe(
                 visible_tracker,
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
                 column_config={
                     "SEC Filing": st.column_config.LinkColumn(
@@ -366,7 +366,7 @@ def render_filings(
                 "equitylens_sec_filing_tracker.csv"
             ),
             mime="text/csv",
-            use_container_width=True,
+            width="stretch",
         )
 
         with st.expander("What do these SEC forms mean?"):
@@ -409,7 +409,7 @@ def render_filings(
             ])
             st.dataframe(
                 form_guide,
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
             )
             st.caption(
@@ -483,7 +483,7 @@ def render_filings(
 
         st.dataframe(
             registration_table,
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
             column_config={
                 "SEC Filing": st.column_config.LinkColumn(
@@ -507,5 +507,5 @@ def render_filings(
             "Open complete SEC filing history",
             registration_sec_url,
             key="registration_sec_history",
-            use_container_width=True,
+            width="stretch",
         )
