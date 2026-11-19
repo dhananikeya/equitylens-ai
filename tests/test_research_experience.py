@@ -73,8 +73,9 @@ class ResearchExperienceTests(unittest.TestCase):
             '"Learn":',
         ):
             self.assertIn(section, app)
-        self.assertIn('render_company_evidence(', app)
-        self.assertIn('render_report_download(', app)
+        company_view = (Path(__file__).resolve().parents[1] / "views" / "company_research.py").read_text(encoding="utf-8")
+        self.assertIn("render_company_evidence(", company_view)
+        self.assertIn("render_report_download(", company_view)
         self.assertNotIn("from supabase import", app)
 
 

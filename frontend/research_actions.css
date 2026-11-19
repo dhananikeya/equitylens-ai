@@ -1,0 +1,12 @@
+:host { display:block; color:#EEF3F5; font-family: "IBM Plex Sans",system-ui,sans-serif; }
+.el-action-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.el-action { position:relative; display:flex; flex-direction:column; align-items:flex-start; min-height:148px; text-align:left; padding:23px; background:#0D1920; border:1px solid #2A3C45; border-radius:12px; color:#EEF3F5; cursor:pointer; transition:background .18s ease,border-color .18s ease,transform .18s ease; }
+.el-action:hover { background:#12242C; border-color:#4C918A; transform:translateY(-2px); }
+.el-action:focus-visible { outline:2px solid #8BE0D1; outline-offset:3px; }
+.el-action-top { display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:22px; }
+.el-action-number { font:500 12px "IBM Plex Mono",monospace; letter-spacing:.08em; color:#74BEB1; }
+.el-action-arrow { font-size:22px; line-height:1; color:#8EB3AF; }
+.el-action-title { font-weight:600; font-size:17px; letter-spacing:-.025em; }
+.el-action-description { margin-top:7px; color:#A3B1B8; font-size:13px; line-height:1.6; }
+@media(max-width:700px) { .el-action-grid { grid-template-columns:1fr; } .el-action { min-height:125px; padding:18px; } .el-action-top { margin-bottom:12px; } }
+@media(prefers-reduced-motion:reduce) { .el-action { transition:none; } .el-action:hover { transform:none; } }
