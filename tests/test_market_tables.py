@@ -39,16 +39,16 @@ class MarketTableTests(unittest.TestCase):
         self.assertIn("No table entries available", table_markup(EmptyTable()))
 
     def test_market_monitor_retains_features_without_provider_brand_text(self):
-        app = Path("app.py").read_text(encoding="utf-8")
-        self.assertIn('section("Screener", "Market Intelligence")', app)
-        self.assertIn("render_crisp_table(st, covered_finviz[visible_columns])", app)
-        self.assertIn("render_crisp_table(", app)
-        self.assertIn("get_rates_bundle(", app)
-        self.assertIn("ThreadPoolExecutor(max_workers=3)", app)
-        self.assertIn("section(\"Rates\", \"Treasury, SOFR & Swap Monitor\")", app)
-        self.assertNotIn("Finviz Market Intelligence", app)
-        self.assertNotIn("Finviz supplies the screener", app)
-        self.assertNotIn("Finviz Elite · market timing", app)
+        view = (Path(__file__).resolve().parents[1] / "views" / "market_monitor.py").read_text(encoding="utf-8")
+        self.assertIn('section("Market", "Market Monitor")', view)
+        self.assertIn("render_crisp_table(", view)
+        self.assertIn("get_rates_bundle(", view)
+        self.assertIn("NYSE Heat Map", view)
+        self.assertIn("Treasury, SOFR & Swap Monitor", view)
+        self.assertNotIn("Finviz Market Intelligence", view)
+        self.assertNotIn("Finviz supplies the screener", view)
+        self.assertNotIn("Finviz Elite · market timing", view)
+
 
 
 if __name__ == "__main__":
