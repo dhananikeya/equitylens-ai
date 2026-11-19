@@ -1,12 +1,24 @@
 # EquityLens AI
 
-> **Understand companies. Not documents.**
+> **Understand the business. Follow the evidence.**
 
-EquityLens AI is a public-company research platform that turns SEC filings and structured financial data into clearer company research. It combines filing-linked financial analysis, quarterly and trailing-twelve-month metrics, business-model context, disclosed risk themes, peer comparisons, market context, ownership data, and third-party analyst context in one Streamlit application.
+EquityLens AI is an independent financial research workspace for exploring public companies through fundamentals, original SEC disclosures, market context, and peer comparisons. It brings financial statements, quarterly and trailing-twelve-month metrics, business-model context, disclosed risk themes, ownership information, and source-linked analysis into a single Streamlit application.
 
 The project is designed around a simple principle: **important research claims should stay connected to the underlying source.**
 
 **Always free and educational.** Users do not need to register, sign in, subscribe, or pay to explore the public research, SEC filings, comparisons, and market monitoring tools.
+
+## Interface and Design Principles
+
+EquityLens uses a dark-first research interface designed for legibility, clear navigation, and source traceability. Its presentation prioritizes the underlying financial evidence rather than decorative dashboards.
+
+- **Research-first homepage:** clear positioning, direct company discovery, and transparent coverage.
+- **Consistent navigation:** global company search and section navigation remain accessible across research views.
+- **Readable financial information:** restrained teal accents, consistent card styling, tabular figures, and clear section hierarchy.
+- **Responsive and accessible:** mobile-aware spacing, keyboard focus states, and reduced-motion support.
+- **Progressive disclosure:** research details, source links, and methodology remain available without overwhelming the main workflows.
+
+The interface improvements are presentation-only. SEC ingestion, calculations, data refresh jobs, and research logic remain independent of visual styling.
 
 ## What EquityLens Does
 
@@ -22,7 +34,7 @@ The project is designed around a simple principle: **important research claims s
 
 The application is organized into six primary areas:
 
-1. **Home** — a guided company search, example research entry points, a session-only research list (with CSV export), public company coverage, and the original product overview.
+1. **Home** — a focused research introduction, company and ticker discovery, example research entry points, a session-only research list (with CSV export), and transparent coverage indicators.
 2. **Company Research** — a research overview, balanced evidence prompts, a free PDF research brief with SEC links, a session-only save control, and the original sections: Snapshot, Financials, Filings, Ownership, Analyst Research, and Peers & ETFs.
 3. **Industry Comparison** — side-by-side peer research and financial comparison.
 4. **Market Monitor** — NYSE market tape and heat map, Treasury yield curve, SOFR reference rates, macroeconomic indicators, economic/FOMC calendars, Bloomberg headline links, and market-wide movement.
