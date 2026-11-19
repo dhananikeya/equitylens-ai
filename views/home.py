@@ -3,7 +3,7 @@ import streamlit as st
 
 from research_experience import render_home_discovery, render_watchlist
 from ui_components import format_utc_timestamp, section
-from frontend_components import render_research_actions
+from frontend_components import render_research_actions, supports_research_actions
 
 
 def render_home(
@@ -118,7 +118,7 @@ def render_home(
     ]
     # Progressive enhancement: interactive JS cards on modern Streamlit,
     # with native buttons preserved for older deployments.
-    v2_available = hasattr(getattr(st.components, "v2", None), "component")
+    v2_available = supports_research_actions()
     if v2_available:
         selected_destination = render_research_actions(quick_actions)
         if selected_destination in {item[1] for item in quick_actions}:
