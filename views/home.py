@@ -3,6 +3,7 @@ import streamlit as st
 
 from research_experience import render_home_discovery, render_watchlist
 from ui_components import format_utc_timestamp, section
+from frontend_components import render_research_actions
 
 
 def render_home(
@@ -115,17 +116,26 @@ def render_home(
             "Plain-language explanations of financial terms and concepts.",
         ),
     ]
-    action_columns = st.columns(2)
-    for action_index, (label, destination, description) in enumerate(quick_actions):
-        with action_columns[action_index % 2]:
-            st.button(
-                label,
-                key=f"home_action_{action_index}",
-                on_click=navigate_to,
-                args=(destination,),
-                use_container_width=True,
-            )
-            st.caption(description)
+    # Progressive enhancement: interactive JS cards on modern Streamlit,
+    # with native buttons preserved for older deployments.
+    v2_available = hasattr(getattr(st.components, "v2", None), "component")
+    if v2_available:
+        selected_destination = render_research_actions(quick_actions)
+        if selected_destination in {item[1] for item in quick_actions}:
+            navigate_to(selected_destination)
+            st.rerun()
+    else:
+        action_columns = st.columns(2)
+        for action_index, (label, destination, description) in enumerate(quick_actions):
+            with action_columns[action_index % 2]:
+                st.button(
+                    label,
+                    key=f"home_action_{action_index}",
+                    on_click=navigate_to,
+                    args=(destination,),
+                    use_container_width=True,
+                )
+                st.caption(description)
 
     with st.expander("Coverage & sources"):
         coverage_sec_copy = (
