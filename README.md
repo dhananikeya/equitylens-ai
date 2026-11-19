@@ -20,6 +20,17 @@ EquityLens uses a dark-first research interface designed for legibility, clear n
 
 The interface improvements are presentation-only. SEC ingestion, calculations, data refresh jobs, and research logic remain independent of visual styling.
 
+### Frontend component pilot
+
+The homepage's four research shortcuts now have an optional, isolated JavaScript/CSS presentation layer, backed by Streamlit Components v2. This is a progressive enhancement: the same destinations remain available through native Streamlit buttons if the installed version does not support Components v2.
+
+- `frontend/research_actions.css` — scoped dark card styles, responsive grid, focus indicators, and reduced-motion behavior.
+- `frontend/research_actions.js` — accessible buttons and lightweight click events. Text is inserted with `textContent`, not untrusted HTML.
+- `frontend_components.py` — Python/JavaScript bridge for the existing navigation destinations.
+- `views/home.py` — connects those destinations to the component with a native control fallback.
+
+**Compatibility:** Components v2 requires Streamlit 1.51 or newer. Verify both the modern and native-fallback paths before merging. No new npm build, React dependency, API, paid service, or backend migration is required for this pilot.
+
 ## What EquityLens Does
 
 - **Research public companies** through one unified workspace covering market snapshots, financials, filings, ownership, analyst context, peers, ETFs, capital structure, historical trends, and qualitative research.
