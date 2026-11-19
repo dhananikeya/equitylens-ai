@@ -1754,6 +1754,80 @@ hr {
     .el-evidence-strip { flex-direction:column; align-items:flex-start; }
     .el-evidence-note { white-space:normal; }
 }
+
+/* Research workspace polish: restrained, functional, dark-first. */
+.st-key-top_command_bar {
+    top: 2.9rem;
+    padding: .9rem 1rem .65rem !important;
+    border-color: rgba(80,108,117,.38) !important;
+    border-radius: 12px !important;
+    background: rgba(8,17,22,.97) !important;
+    box-shadow: 0 8px 30px rgba(0,0,0,.16) !important;
+}
+.st-key-top_command_bar .el-kicker {
+    font-family: var(--el-mono);
+    font-size: .71rem; letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #9EBAB6;
+    margin-bottom: .65rem;
+}
+.st-key-top_command_bar [data-testid="stSelectbox"] {
+    margin-bottom: .55rem;
+}
+.st-key-top_command_bar [data-baseweb="select"] > div {
+    background: #0E1D23 !important;
+    border: 1px solid #34515A !important;
+    border-radius: 8px !important;
+    min-height: 42px;
+}
+.st-key-main_navigation [role="radiogroup"],
+.st-key-top_command_bar [role="radiogroup"] {
+    border: 0 !important; padding: .15rem 0 !important;
+    background: transparent !important; gap: .35rem !important;
+}
+.st-key-main_navigation [role="radiogroup"] label,
+.st-key-top_command_bar [role="radiogroup"] label {
+    border: 1px solid transparent !important;
+    border-radius: 6px !important;
+    padding: .42rem .7rem !important;
+    transition: background-color .16s ease, border-color .16s ease;
+}
+.st-key-main_navigation [role="radiogroup"] label:hover,
+.st-key-top_command_bar [role="radiogroup"] label:hover {
+    background: rgba(113,153,157,.08) !important;
+    border-color: #2C424A !important;
+}
+.st-key-top_command_bar [role="radiogroup"] label:has(input:checked) {
+    background: rgba(22,199,178,.09) !important;
+    border-color: rgba(22,199,178,.27) !important;
+}
+.el-section { margin-top: 2.5rem; margin-bottom: 1rem; }
+.el-section-label { color: #8ABAB1; font-size: .68rem; letter-spacing: .1em; }
+.el-section-title { font-size: clamp(1.45rem,2.3vw,2rem); letter-spacing: -.035em; }
+.el-summary-card {
+    min-height: 108px; padding: 1rem 1.15rem;
+    background: #0C171D !important;
+    border-color: #293C45 !important;
+}
+.el-summary-value { font-variant-numeric: tabular-nums; }
+.stButton > button {
+    transition: border-color .16s ease,background-color .16s ease,transform .16s ease;
+}
+.stButton > button:hover { border-color: #4E9992 !important; }
+.stButton > button:focus-visible,
+.st-key-top_command_bar [role="radiogroup"] label:focus-within {
+    outline: 2px solid #7DD3C7 !important;
+    outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+    .stButton > button, .st-key-top_command_bar [role="radiogroup"] label { transition: none !important; }
+}
+@media (max-width: 640px) {
+    .st-key-top_command_bar { top: 2.8rem; padding: .65rem !important; }
+    .st-key-top_command_bar [role="radiogroup"] { gap: .15rem !important; }
+    .st-key-top_command_bar [role="radiogroup"] label { padding: .3rem .4rem !important; }
+}
+
 </style>
     """,
     unsafe_allow_html=True
@@ -2167,7 +2241,7 @@ inject_readability_styles(st)
 
 with st.container(key="top_command_bar"):
     st.markdown(
-        '<div class="el-kicker">EquityLens AI · Search and navigate</div>',
+        '<div class="el-kicker">EQUITYLENS / RESEARCH WORKSPACE</div>',
         unsafe_allow_html=True,
     )
     st.selectbox(
