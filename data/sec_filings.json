@@ -47385,7 +47385,7 @@
     "sector": "Technology",
     "industry": "Software - Infrastructure",
     "country": "USA",
-    "last_checked_utc": "2026-11-18T02:39:53+00:00",
+    "last_checked_utc": "2026-11-19T08:43:45+00:00",
     "sec_status": "available",
     "sec_company_url": "https://www.sec.gov/edgar/browse/?CIK=1535527&owner=exclude&action=getcompany",
     "filings": [
@@ -47420,7 +47420,7 @@
       {
         "form": "4",
         "filing_date": "2026-11-13",
-        "acceptance_datetime": "2026-11-13T20:00:07.000Z",
+        "acceptance_datetime": "2026-11-14T01:00:07.000Z",
         "report_date": "2026-11-10",
         "accession_number": "0001778564-26-000208",
         "primary_document": "xslF345X06/form4-11132026_081101.xml",

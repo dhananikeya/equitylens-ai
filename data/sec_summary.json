@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-19T01:10:03+00:00",
+  "generated_at_utc": "2026-11-19T08:43:45+00:00",
   "company_count": 517,
   "synced_companies": 517,
   "companies": {
@@ -2041,7 +2041,7 @@
       "registration_count": 3,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-18T02:39:53+00:00"
+      "last_checked_utc": "2026-11-19T08:43:45+00:00"
     },
     "CRWV": {
       "ticker": "CRWV",
