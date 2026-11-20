@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-19T23:48:22+00:00",
+  "generated_at_utc": "2026-11-20T04:51:56+00:00",
   "company_count": 517,
   "synced_companies": 517,
   "companies": {
@@ -587,16 +587,16 @@
       "entity_name": "Arista Networks, Inc.",
       "has_filings": true,
       "latest_filing": {
-        "form": "144",
-        "filing_date": "2026-11-18",
-        "report_date": "",
-        "description": "xsl144X01/primary_doc.xml",
-        "url": "https://www.sec.gov/Archives/edgar/data/1596532/000195824426000733/xsl144X01/primary_doc.xml"
+        "form": "4",
+        "filing_date": "2026-11-19",
+        "report_date": "2026-11-17",
+        "description": "PRIMARY DOCUMENT",
+        "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000267/xslF345X06/edgardoc.xml"
       },
       "registration_count": 4,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-19T01:10:03+00:00"
+      "last_checked_utc": "2026-11-20T04:51:56+00:00"
     },
     "AON": {
       "ticker": "AON",
@@ -1625,15 +1625,15 @@
       "has_filings": true,
       "latest_filing": {
         "form": "4",
-        "filing_date": "2026-11-17",
+        "filing_date": "2026-11-19",
         "report_date": "2026-11-16",
         "description": "PRIMARY DOCUMENT",
-        "url": "https://www.sec.gov/Archives/edgar/data/936395/000144415726000031/xslF345X06/edgardoc.xml"
+        "url": "https://www.sec.gov/Archives/edgar/data/936395/000208015726000020/xslF345X06/edgardoc.xml"
       },
       "registration_count": 10,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-18T02:39:53+00:00"
+      "last_checked_utc": "2026-11-20T04:51:56+00:00"
     },
     "CINF": {
       "ticker": "CINF",
@@ -3988,15 +3988,15 @@
       "has_filings": true,
       "latest_filing": {
         "form": "4",
-        "filing_date": "2026-11-18",
-        "report_date": "2026-11-16",
+        "filing_date": "2026-11-19",
+        "report_date": "2026-11-18",
         "description": "STATEMENT OF CHANGES IN BENEFICIAL OWNERSHIP OF SECURITIES",
-        "url": "https://www.sec.gov/Archives/edgar/data/1645590/000156084926000015/xslF345X06/form4.xml"
+        "url": "https://www.sec.gov/Archives/edgar/data/1645590/000205202226000011/xslF345X06/form4.xml"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-19T01:10:03+00:00"
+      "last_checked_utc": "2026-11-20T04:51:56+00:00"
     },
     "HPQ": {
       "ticker": "HPQ",
@@ -5297,15 +5297,15 @@
       "has_filings": true,
       "latest_filing": {
         "form": "4",
-        "filing_date": "2026-11-17",
-        "report_date": "2026-11-15",
+        "filing_date": "2026-11-19",
+        "report_date": "2026-11-17",
         "description": "FORM 4",
-        "url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326017707/xslF345X06/ownership.xml"
+        "url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326017904/xslF345X06/ownership.xml"
       },
       "registration_count": 9,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-18T02:39:53+00:00"
+      "last_checked_utc": "2026-11-20T04:51:56+00:00"
     },
     "MGM": {
       "ticker": "MGM",
@@ -7048,15 +7048,15 @@
       "has_filings": true,
       "latest_filing": {
         "form": "4",
-        "filing_date": "2026-11-18",
-        "report_date": "2026-11-17",
+        "filing_date": "2026-11-19",
+        "report_date": "2026-11-18",
         "description": "FORM 4",
-        "url": "https://www.sec.gov/Archives/edgar/data/316709/000156156326000027/xslF345X06/wk-form4_1795046880.xml"
+        "url": "https://www.sec.gov/Archives/edgar/data/316709/000092373826000054/xslF345X06/wk-form4_1795136832.xml"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-19T01:10:03+00:00"
+      "last_checked_utc": "2026-11-20T04:51:56+00:00"
     },
     "SHOP": {
       "ticker": "SHOP",
