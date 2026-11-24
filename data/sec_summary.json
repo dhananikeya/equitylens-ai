@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-24T01:04:00+00:00",
+  "generated_at_utc": "2026-11-24T10:53:27+00:00",
   "company_count": 517,
   "synced_companies": 517,
   "companies": {
@@ -60,16 +60,16 @@
       "entity_name": "Airbnb, Inc.",
       "has_filings": true,
       "latest_filing": {
-        "form": "144",
-        "filing_date": "2026-11-20",
-        "report_date": "",
-        "description": "xsl144X01/primary_doc.xml",
-        "url": "https://www.sec.gov/Archives/edgar/data/1559720/000195917326008177/xsl144X01/primary_doc.xml"
+        "form": "4",
+        "filing_date": "2026-11-23",
+        "report_date": "2026-11-19",
+        "description": "4",
+        "url": "https://www.sec.gov/Archives/edgar/data/1559720/000119312526472895/xslF345X06/ownership.xml"
       },
       "registration_count": 3,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-20T21:33:03+00:00"
+      "last_checked_utc": "2026-11-24T10:53:27+00:00"
     },
     "ABT": {
       "ticker": "ABT",
@@ -3681,16 +3681,16 @@
       "entity_name": "Alphabet Inc.",
       "has_filings": true,
       "latest_filing": {
-        "form": "CERT",
+        "form": "4",
         "filing_date": "2026-11-23",
-        "report_date": "",
-        "description": "ALPHABET BONDS - NOVEMBER 2026",
-        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000135445726001111/GOOG_8A_Cert_1652044.pdf"
+        "report_date": "2026-11-23",
+        "description": "4",
+        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526472910/xslF345X06/ownership.xml"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-24T01:04:00+00:00"
+      "last_checked_utc": "2026-11-24T10:53:27+00:00"
     },
     "GOOGL": {
       "ticker": "GOOGL",
@@ -3698,16 +3698,16 @@
       "entity_name": "Alphabet Inc.",
       "has_filings": true,
       "latest_filing": {
-        "form": "CERT",
+        "form": "4",
         "filing_date": "2026-11-23",
-        "report_date": "",
-        "description": "ALPHABET BONDS - NOVEMBER 2026",
-        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000135445726001111/GOOG_8A_Cert_1652044.pdf"
+        "report_date": "2026-11-23",
+        "description": "4",
+        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526472910/xslF345X06/ownership.xml"
       },
       "registration_count": 0,
       "registration_scan_complete": true,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-24T01:04:00+00:00"
+      "last_checked_utc": "2026-11-24T10:53:27+00:00"
     },
     "GPC": {
       "ticker": "GPC",
@@ -6843,16 +6843,16 @@
       "entity_name": "Rocket Lab Corp",
       "has_filings": true,
       "latest_filing": {
-        "form": "4",
-        "filing_date": "2026-11-18",
-        "report_date": "2026-11-17",
-        "description": "PRIMARY DOCUMENT",
-        "url": "https://www.sec.gov/Archives/edgar/data/1819994/000200101126000147/xslF345X06/edgardoc.xml"
+        "form": "144",
+        "filing_date": "2026-11-23",
+        "report_date": "",
+        "description": "xsl144X01/primary_doc.xml",
+        "url": "https://www.sec.gov/Archives/edgar/data/1819994/000200101126000152/xsl144X01/primary_doc.xml"
       },
       "registration_count": 6,
       "registration_scan_complete": false,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-19T01:10:03+00:00"
+      "last_checked_utc": "2026-11-24T10:53:27+00:00"
     },
     "RL": {
       "ticker": "RL",
