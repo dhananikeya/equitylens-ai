@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-27T22:57:55+00:00",
+  "generated_at_utc": "2026-11-28T04:30:13+00:00",
   "company_count": 517,
   "synced_companies": 517,
   "companies": {
@@ -6758,16 +6758,16 @@
       "entity_name": "Reddit, Inc.",
       "has_filings": true,
       "latest_filing": {
-        "form": "144",
-        "filing_date": "2026-11-25",
-        "report_date": "",
-        "description": "xsl144X01/primary_doc.xml",
-        "url": "https://www.sec.gov/Archives/edgar/data/1713445/000195004726011534/xsl144X01/primary_doc.xml"
+        "form": "4",
+        "filing_date": "2026-11-27",
+        "report_date": "2026-11-24",
+        "description": "FORM 4",
+        "url": "https://www.sec.gov/Archives/edgar/data/1713445/000171344526000130/xslF345X06/wk-form4_1795820523.xml"
       },
       "registration_count": 4,
       "registration_scan_complete": false,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-25T22:46:49+00:00"
+      "last_checked_utc": "2026-11-28T04:30:13+00:00"
     },
     "REG": {
       "ticker": "REG",
@@ -6844,15 +6844,15 @@
       "has_filings": true,
       "latest_filing": {
         "form": "4",
-        "filing_date": "2026-11-25",
-        "report_date": "2026-11-23",
+        "filing_date": "2026-11-27",
+        "report_date": "2026-11-25",
         "description": "PRIMARY DOCUMENT",
-        "url": "https://www.sec.gov/Archives/edgar/data/1819994/000200101126000157/xslF345X06/edgardoc.xml"
+        "url": "https://www.sec.gov/Archives/edgar/data/1819994/000200101126000159/xslF345X06/edgardoc.xml"
       },
       "registration_count": 6,
       "registration_scan_complete": false,
       "sec_status": "available",
-      "last_checked_utc": "2026-11-25T22:46:49+00:00"
+      "last_checked_utc": "2026-11-28T04:30:13+00:00"
     },
     "RL": {
       "ticker": "RL",
